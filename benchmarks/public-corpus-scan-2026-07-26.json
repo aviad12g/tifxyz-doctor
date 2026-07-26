@@ -1,0 +1,367 @@
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-07-26",
+  "bucket": "vesuvius-challenge-open-data",
+  "bucket_https_root": "https://vesuvius-challenge-open-data.s3.amazonaws.com/",
+  "registry": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/metadata.min.json",
+    "observed_last_modified": "2026-07-22T14:17:40.000Z",
+    "registered_tifxyz_original_roots": 186,
+    "registered_tifxyz_normalized_roots": 264
+  },
+  "scope": {
+    "downloaded_bytes": 82150850,
+    "download_limit_bytes": 100000000,
+    "coordinate_directories_audited": 242,
+    "coordinate_tiffs_audited": 726,
+    "coordinate_pixels_audited": 8836120,
+    "valid_vertices": 5772456,
+    "all_sentinel_vertices": 3063664,
+    "breakdown": {
+      "registered_downloads": {
+        "directories": 103,
+        "pixels": 5271929,
+        "valid_vertices": 3605829,
+        "all_sentinel_vertices": 1666100
+      },
+      "PHerc1203_raw_current_and_versions": {
+        "directories": 138,
+        "current_directories": 22,
+        "version_directories": 116,
+        "pixels": 2792613,
+        "valid_vertices": 1438409,
+        "all_sentinel_vertices": 1354204
+      },
+      "local_selected_PHerc1667_w013": {
+        "directories": 1,
+        "pixels": 771578,
+        "valid_vertices": 728218,
+        "all_sentinel_vertices": 43360
+      }
+    },
+    "global_coordinate_checks": {
+      "float32_single_page_coordinate_tiffs": 726,
+      "shape_mismatch_directories": 0,
+      "partial_sentinel_vertices": 0,
+      "nonfinite_coordinate_entries": 0,
+      "valid_bbox_mismatch_directories": 0,
+      "zero_valid_vertex_directories": 3,
+      "compression_tag_counts": {
+        "1_uncompressed": 609,
+        "5_lzw": 117
+      }
+    },
+    "python_reader_validity_rule_without_mask": "(z > 0) and finite(z)",
+    "portable_audit_rule_without_mask": "python-reader validity plus finite(x,y,z) and no partial -1 sentinel",
+    "reader_rule_source": "https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/reader.py#L567-L587"
+  },
+  "headline_finding_order": [
+    "uuid-reuse-output-tifxyz",
+    "area-schema-drift-pherc1203",
+    "registry-listed-zero-valid-normalized-surfaces"
+  ],
+  "findings": [
+    {
+      "id": "registry-listed-zero-valid-normalized-surfaces",
+      "severity": "error",
+      "category": "content_integrity",
+      "summary": "Three metadata-registered normalized TIFXYZ surfaces contain no valid vertex.",
+      "contract_source": "https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/API.md#file-format",
+      "reader_gap_source": "https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/types.py#L69-L87",
+      "common_evidence": {
+        "shape": [
+          2,
+          2
+        ],
+        "dtype": "float32",
+        "pages_per_coordinate_tiff": 1,
+        "unique_value_in_x_y_z": [
+          -1.0
+        ],
+        "valid_vertices": 0,
+        "all_sentinel_vertices": 4,
+        "metadata_bbox": [
+          [
+            -1.0,
+            -1.0,
+            -1.0
+          ],
+          [
+            -1.0,
+            -1.0,
+            -1.0
+          ]
+        ],
+        "metadata_uuid": "output_tifxyz",
+        "metadata_etag": "a0cad2057d9501d971a7d6d4d04cf8a5",
+        "metadata_size_bytes": 218
+      },
+      "affected_surfaces": [
+        {
+          "prefix": "PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/",
+          "registered_as": "tifxyz-normalized",
+          "urls": {
+            "meta": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/meta.json",
+            "x": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/x.tif",
+            "y": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/y.tif",
+            "z": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/z.tif"
+          },
+          "coordinate_size_bytes_each": 13358,
+          "coordinate_etag_each": "713fa9e42b70b3b2c70470ab96e536e8",
+          "coordinate_sha256_each": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36",
+          "observed_last_modified": {
+            "meta": "2026-07-08T14:16:38.000Z",
+            "x": "2026-07-08T14:16:39.000Z",
+            "y": "2026-07-08T14:16:41.000Z",
+            "z": "2026-07-08T14:16:43.000Z"
+          }
+        },
+        {
+          "prefix": "PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/",
+          "registered_as": "tifxyz-normalized",
+          "urls": {
+            "meta": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/meta.json",
+            "x": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/x.tif",
+            "y": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/y.tif",
+            "z": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/z.tif"
+          },
+          "coordinate_size_bytes_each": 13358,
+          "coordinate_etag_each": "713fa9e42b70b3b2c70470ab96e536e8",
+          "coordinate_sha256_each": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36",
+          "observed_last_modified": {
+            "meta": "2026-07-08T14:16:35.000Z",
+            "x": "2026-07-08T14:16:36.000Z",
+            "y": "2026-07-08T14:16:37.000Z",
+            "z": "2026-07-08T14:16:38.000Z"
+          }
+        },
+        {
+          "prefix": "PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/",
+          "registered_as": "tifxyz-normalized",
+          "identifier_note": "The segment identifier contains z_dbg. This may indicate a debug artifact, but naming alone does not establish intent.",
+          "urls": {
+            "meta": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/meta.json",
+            "x": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/x.tif",
+            "y": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/y.tif",
+            "z": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/z.tif"
+          },
+          "coordinate_size_bytes_each": 150,
+          "coordinate_etag_each": "4542918e6fc9b2535a77ceb629ef1a1a",
+          "coordinate_sha256_each": "72756e0517aebd4c9c274d502866984ce2a562044345d310cf64aa949b5f35b3",
+          "observed_last_modified": {
+            "meta": "2026-07-21T13:05:43.000Z",
+            "x": "2026-07-21T13:05:44.000Z",
+            "y": "2026-07-21T13:05:45.000Z",
+            "z": "2026-07-21T13:05:46.000Z"
+          },
+          "valid_original_counterpart": {
+            "prefix": "PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_original/",
+            "meta_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_original/meta.json",
+            "shape": [
+              576,
+              336
+            ],
+            "pixels": 193536,
+            "valid_vertices": 105111,
+            "all_sentinel_vertices": 88425,
+            "bbox_max_abs_error": 0.0
+          }
+        }
+      ],
+      "impact": "A consumer selecting one of these registered directories can load it because the pinned validator checks coordinate shape and dtype but not whether any vertex is valid. Downstream area, quad, interpolation, and geometry routines then receive an empty surface.",
+      "caveat": "The files are syntactically valid TIFF/JSON. The observed condition is semantic emptiness, not file corruption. One identifier contains z_dbg, which may indicate a debug artifact; no intent is inferred. The PHerc0500P2 original counterpart is non-empty, establishing that the registered normalized artifact is empty while the registered original is not, but not why either registry entry exists or whether a production workflow uses it."
+    },
+    {
+      "id": "uuid-reuse-output-tifxyz",
+      "severity": "warning",
+      "category": "metadata_interoperability",
+      "summary": "The literal UUID output_tifxyz is reused by 277 of 450 registered original and normalized surfaces.",
+      "contract_source": "https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/types.py#L24-L32",
+      "evidence": {
+        "registered_roots_scanned": 450,
+        "distinct_uuid_values": 174,
+        "roots_with_uuid_output_tifxyz": 277,
+        "normalized_roots_scanned": 264,
+        "normalized_roots_with_uuid_output_tifxyz": 264,
+        "original_roots_scanned": 186,
+        "original_roots_with_uuid_output_tifxyz": 13,
+        "affected_counts_by_sample": {
+          "PHercParis4": 81,
+          "PHerc0172": 53,
+          "PHerc0500P2": 52,
+          "PHerc0139": 38,
+          "PHerc1667": 20,
+          "PHerc0814": 19,
+          "PHerc0343P": 8,
+          "PHerc1447": 4,
+          "PHerc0332": 2
+        },
+        "representative_normalized_meta_urls_by_sample": {
+          "PHerc0139": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0139/segments/20250108000000-w025_2025010863/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc0172": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0172/segments/20250917143559-w062_20250917143559205_flatboi/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc0332": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc0343P": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0343P/segments/20250511003658-tifxyz/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc0500P2": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250609204953-z_dbg_gen_00612/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc0814": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0814/segments/20250925161630-auto_grown_20250925161630635/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc1447": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1447/segments/20250702235910-auto_grown_20250702235910292/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHerc1667": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1667/segments/20240304141531-w013_20240304141531_flatboi/mesh/intermediate/tifxyz_normalized/meta.json",
+          "PHercParis4": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHercParis4/segments/20230702185753/mesh/intermediate/tifxyz_normalized/meta.json"
+        },
+        "all_13_affected_original_meta_urls": [
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184428-0500P2-wrap01_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184429-0500P2-wrap02_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184430-0500P2-wrap03_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184431-0500P2-wrap04_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184432-0500P2-wrap05_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184433-0500P2-wrap06_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184434-0500P2-wrap07_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184435-0500P2-wrap08_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250919184436-0500P2-wrap09_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250920020222-0500P2-wrap10_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250920020223-0500P2-wrap12_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250920020224-0500P2-wrap13_0919/mesh/intermediate/tifxyz_original/meta.json",
+          "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250922024644-0500P2-wrap11_0919/mesh/intermediate/tifxyz_original/meta.json"
+        ]
+      },
+      "impact": "UUID-keyed caches, joins, deduplication, provenance, and result stores can overwrite or conflate unrelated surfaces.",
+      "caveat": "The path still distinguishes every object, so path-keyed consumers are unaffected. Counts cover every original and normalized root registered in the 2026-07-22 metadata snapshot, not transformed or flattened roots."
+    },
+    {
+      "id": "area-schema-drift-pherc1203",
+      "severity": "warning",
+      "category": "metadata_interoperability",
+      "summary": "All 138 inspected PHerc1203 raw surface snapshots carry area_vx2 and area_cm2 but omit the area key consumed by the pinned Python API.",
+      "reader_source": "https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/reader.py#L340-L348",
+      "example_meta_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1203/segments/raw/auto_grown_20250923163217042/meta.json",
+      "evidence": {
+        "snapshots_scanned": 138,
+        "current_snapshots": 22,
+        "version_snapshots": 116,
+        "with_area_vx2": 138,
+        "with_area_cm2": 138,
+        "with_area": 0,
+        "example": {
+          "area_vx2": 4438400.0,
+          "area_cm2": 3.890126943588257
+        }
+      },
+      "impact": "read_tifxyz populates surface.area from meta.json['area'], so surface.area is None for these public surfaces despite two area measurements being present.",
+      "caveat": "The two source fields remain available in surface.extra, so values are not destroyed. Choosing which unit belongs in surface.area requires an explicit compatibility policy."
+    }
+  ],
+  "observations": [
+    {
+      "id": "no-explicit-mask-in-registered-original-or-normalized-roots",
+      "classification": "coverage_gap_not_contract_failure",
+      "summary": "No mask.tif object was present under any of the 450 registered original or normalized TIFXYZ roots.",
+      "evidence": {
+        "original_roots_probed": 186,
+        "normalized_roots_probed": 264,
+        "mask_tif_objects_found": 0,
+        "all_required_x_y_z_meta_sets_complete": 450
+      },
+      "caveat": "mask.tif is optional, so absence is not itself a defect. This result does mean the registered original/normalized corpus does not exercise explicit-mask interoperability. The 817 transformed and 122 flattened registry roots were not exhaustively probed."
+    }
+  ],
+  "requested_fixture_results": [
+    {
+      "prefix": "PHerc0800/segments/20251029010146-auto_grown_20251029010146642/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0800/segments/20251029010146-auto_grown_20251029010146642/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        42,
+        42
+      ],
+      "valid_vertices": 1444,
+      "all_sentinel_vertices": 320,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc0800/segments/20251028220955-auto_grown_20251028220955262/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0800/segments/20251028220955-auto_grown_20251028220955262/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        90,
+        84
+      ],
+      "valid_vertices": 5600,
+      "all_sentinel_vertices": 1960,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc0800/segments/20251028220042-auto_grown_20251028220042762/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0800/segments/20251028220042-auto_grown_20251028220042762/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        93,
+        95
+      ],
+      "valid_vertices": 5772,
+      "all_sentinel_vertices": 3063,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc1447/segments/20250502183138-auto_grown_20250502162038685/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1447/segments/20250502183138-auto_grown_20250502162038685/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        94,
+        160
+      ],
+      "valid_vertices": 9025,
+      "all_sentinel_vertices": 6015,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc1447/segments/20250502180708-auto_grown_20250502160708188/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1447/segments/20250502180708-auto_grown_20250502160708188/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        109,
+        177
+      ],
+      "valid_vertices": 12152,
+      "all_sentinel_vertices": 7141,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc1447/segments/20250502184201-auto_grown_20250502163549332/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1447/segments/20250502184201-auto_grown_20250502163549332/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        113,
+        180
+      ],
+      "valid_vertices": 15165,
+      "all_sentinel_vertices": 5175,
+      "contract_anomalies": []
+    },
+    {
+      "prefix": "PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original/",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original/meta.json",
+      "shape": [
+        160,
+        136
+      ],
+      "valid_vertices": 16316,
+      "all_sentinel_vertices": 5444,
+      "contract_anomalies": []
+    }
+  ],
+  "methodology": {
+    "tiff_decoder": "Pillow 12.2.0",
+    "array_library": "NumPy 1.26.4",
+    "checks": [
+      "required x.tif, y.tif, z.tif, and meta.json presence",
+      "coordinate shape equality",
+      "float32 dtype and single-page layout",
+      "finite coordinate values",
+      "all-axis -1 sentinel agreement",
+      "z-derived validity",
+      "metadata format, type, scale, bbox, and uuid",
+      "metadata bbox versus valid-coordinate extrema",
+      "optional mask presence and mask-versus-coordinate validity when present"
+    ]
+  },
+  "caveats": [
+    "This is a bounded contract/interoperability scan, not a claim that geometry is scientifically correct.",
+    "Only 103 registered coordinate payloads were downloaded; selection favored small roots plus named fixtures. Metadata and object-presence checks were exhaustive for all 186 original and 264 normalized registered roots.",
+    "No explicit mask was found in the exhaustively probed original/normalized roots, so real public mask-value disagreement could not be tested.",
+    "One semantic-empty entry contains z_dbg in its identifier. The scan establishes the registered bytes and paths, not whether the entry is an intentional debug artifact or whether a production workflow uses it.",
+    "S3 objects can change after the observed timestamps. ETags, SHA-256 values, and Last-Modified evidence are included for the three empty surfaces."
+  ]
+}

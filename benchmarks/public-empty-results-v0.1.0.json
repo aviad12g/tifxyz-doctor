@@ -1,0 +1,96 @@
+{
+  "all_expectations_pass": true,
+  "benchmark": "tifxyz-doctor-public-empty-regressions",
+  "benchmark_manifest_sha256": "4d46b20b4e82c061a48c04fc19ac08df4b365c3e092c86183da3146c1bdc9443",
+  "interpretation": "A passing regression means the tool reproduced the expected semantic-empty-artifact detections; the source artifacts themselves are expected to have error status.",
+  "observations": [
+    {
+      "actual": {
+        "canonical_sentinel_vertices": 4,
+        "finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ],
+        "portable_valid_faces": 0,
+        "portable_valid_vertices": 0,
+        "shape_hw": [
+          2,
+          2
+        ],
+        "status": "error"
+      },
+      "checks": {
+        "canonical_sentinel_vertices": true,
+        "portable_valid_faces": true,
+        "portable_valid_vertices": true,
+        "required_finding_codes": true,
+        "shape_hw": true,
+        "status": true
+      },
+      "expectation_pass": true,
+      "id": "pherc0332-20240711124827-normalized-empty"
+    },
+    {
+      "actual": {
+        "canonical_sentinel_vertices": 4,
+        "finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ],
+        "portable_valid_faces": 0,
+        "portable_valid_vertices": 0,
+        "shape_hw": [
+          2,
+          2
+        ],
+        "status": "error"
+      },
+      "checks": {
+        "canonical_sentinel_vertices": true,
+        "portable_valid_faces": true,
+        "portable_valid_vertices": true,
+        "required_finding_codes": true,
+        "shape_hw": true,
+        "status": true
+      },
+      "expectation_pass": true,
+      "id": "pherc0332-20240828190516-normalized-empty"
+    },
+    {
+      "actual": {
+        "canonical_sentinel_vertices": 4,
+        "finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ],
+        "portable_valid_faces": 0,
+        "portable_valid_vertices": 0,
+        "shape_hw": [
+          2,
+          2
+        ],
+        "status": "error"
+      },
+      "checks": {
+        "canonical_sentinel_vertices": true,
+        "portable_valid_faces": true,
+        "portable_valid_vertices": true,
+        "required_finding_codes": true,
+        "shape_hw": true,
+        "status": true
+      },
+      "expectation_pass": true,
+      "id": "pherc0500p2-20250716055236-normalized-empty"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_data_license": {
+    "notice": "Downloaded Vesuvius data remains externally licensed and is not redistributed with this repository.",
+    "spdx": "CC-BY-NC-4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+  },
+  "tool": {
+    "name": "tifxyz-doctor",
+    "version": "0.1.0"
+  }
+}

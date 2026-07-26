@@ -1,0 +1,353 @@
+{
+  "cases": [
+    {
+      "actual": {
+        "doctor_modeled_cpp_finite_vertices": 25,
+        "doctor_modeled_python_valid_vertices": 25,
+        "pinned_python_reader_valid_vertices": 25,
+        "stable_cpp_loaded_grid_shape_hw": [
+          5,
+          5
+        ],
+        "stable_cpp_obj_faces": 18,
+        "stable_cpp_obj_vertices": 16
+      },
+      "description": "Control: no mask and every z value is positive.",
+      "expected": {
+        "doctor_modeled_cpp_valid_vertices": 25,
+        "python_valid_vertices": 25,
+        "stable_cpp_obj_faces": 18,
+        "stable_cpp_obj_vertices": 16
+      },
+      "mask_kind": "absent",
+      "name": "no-mask-all-positive",
+      "passed": true,
+      "z_center": 10.0
+    },
+    {
+      "actual": {
+        "doctor_modeled_cpp_finite_vertices": 24,
+        "doctor_modeled_python_valid_vertices": 24,
+        "pinned_python_reader_valid_vertices": 24,
+        "stable_cpp_loaded_grid_shape_hw": [
+          5,
+          5
+        ],
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "description": "Control: without a mask, both readers reject the center z <= 0.",
+      "expected": {
+        "doctor_modeled_cpp_valid_vertices": 24,
+        "python_valid_vertices": 24,
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "mask_kind": "absent",
+      "name": "no-mask-nonpositive-z",
+      "passed": true,
+      "z_center": -2.0
+    },
+    {
+      "actual": {
+        "doctor_modeled_cpp_finite_vertices": 24,
+        "doctor_modeled_python_valid_vertices": 25,
+        "pinned_python_reader_valid_vertices": 25,
+        "stable_cpp_loaded_grid_shape_hw": [
+          5,
+          5
+        ],
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "description": "Exact uint8 mask value 1 at center; Python keeps it and C++ rejects it.",
+      "expected": {
+        "doctor_modeled_cpp_valid_vertices": 24,
+        "python_valid_vertices": 25,
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "mask_kind": "exact",
+      "name": "exact-mask-low-nonzero",
+      "passed": true,
+      "z_center": 10.0
+    },
+    {
+      "actual": {
+        "doctor_modeled_cpp_finite_vertices": 24,
+        "doctor_modeled_python_valid_vertices": 25,
+        "pinned_python_reader_valid_vertices": 25,
+        "stable_cpp_loaded_grid_shape_hw": [
+          5,
+          5
+        ],
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "description": "Exact all-255 mask with center z <= 0; Python keeps it while the C++ loader's earlier z gate rejects it.",
+      "expected": {
+        "doctor_modeled_cpp_valid_vertices": 24,
+        "python_valid_vertices": 25,
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "mask_kind": "exact",
+      "name": "exact-mask-revalidates-nonpositive-z",
+      "passed": true,
+      "z_center": -2.0
+    },
+    {
+      "actual": {
+        "doctor_modeled_cpp_finite_vertices": 24,
+        "doctor_modeled_python_valid_vertices": 25,
+        "pinned_python_reader_valid_vertices": 25,
+        "stable_cpp_loaded_grid_shape_hw": [
+          5,
+          5
+        ],
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "description": "A 2x higher-resolution mask has one zero sample over the center; Python ignores the mismatched mask while C++ applies it.",
+      "expected": {
+        "doctor_modeled_cpp_valid_vertices": 24,
+        "python_valid_vertices": 25,
+        "stable_cpp_obj_faces": 10,
+        "stable_cpp_obj_vertices": 12
+      },
+      "mask_kind": "double",
+      "name": "integer-multiple-mask",
+      "passed": true,
+      "z_center": 10.0
+    }
+  ],
+  "exporter_boundary_probe": {
+    "domain": "all-valid grids with height >= 3 and width >= 3",
+    "formula": {
+      "obj_faces": "2 * (height - 2) * (width - 2)",
+      "obj_vertices": "(height - 1) * (width - 1)"
+    },
+    "observations": [
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            3,
+            3
+          ],
+          "obj_faces": 2,
+          "obj_vertices": 4
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            3,
+            3
+          ],
+          "obj_faces": 2,
+          "obj_vertices": 4
+        },
+        "input_grid_shape_hw": [
+          3,
+          3
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            4,
+            4
+          ],
+          "obj_faces": 8,
+          "obj_vertices": 9
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            4,
+            4
+          ],
+          "obj_faces": 8,
+          "obj_vertices": 9
+        },
+        "input_grid_shape_hw": [
+          4,
+          4
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            5,
+            5
+          ],
+          "obj_faces": 18,
+          "obj_vertices": 16
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            5,
+            5
+          ],
+          "obj_faces": 18,
+          "obj_vertices": 16
+        },
+        "input_grid_shape_hw": [
+          5,
+          5
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            6,
+            6
+          ],
+          "obj_faces": 32,
+          "obj_vertices": 25
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            6,
+            6
+          ],
+          "obj_faces": 32,
+          "obj_vertices": 25
+        },
+        "input_grid_shape_hw": [
+          6,
+          6
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            7,
+            7
+          ],
+          "obj_faces": 50,
+          "obj_vertices": 36
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            7,
+            7
+          ],
+          "obj_faces": 50,
+          "obj_vertices": 36
+        },
+        "input_grid_shape_hw": [
+          7,
+          7
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            3,
+            4
+          ],
+          "obj_faces": 4,
+          "obj_vertices": 6
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            3,
+            4
+          ],
+          "obj_faces": 4,
+          "obj_vertices": 6
+        },
+        "input_grid_shape_hw": [
+          3,
+          4
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            4,
+            7
+          ],
+          "obj_faces": 20,
+          "obj_vertices": 18
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            4,
+            7
+          ],
+          "obj_faces": 20,
+          "obj_vertices": 18
+        },
+        "input_grid_shape_hw": [
+          4,
+          7
+        ],
+        "passed": true
+      },
+      {
+        "actual": {
+          "loaded_grid_shape_hw": [
+            7,
+            4
+          ],
+          "obj_faces": 20,
+          "obj_vertices": 18
+        },
+        "expected": {
+          "loaded_grid_shape_hw": [
+            7,
+            4
+          ],
+          "obj_faces": 20,
+          "obj_vertices": 18
+        },
+        "input_grid_shape_hw": [
+          7,
+          4
+        ],
+        "passed": true
+      }
+    ],
+    "status": "pass"
+  },
+  "schema_version": "tifxyz-reader-differential-v1",
+  "status": "pass",
+  "summary": {
+    "case_count": 5,
+    "exporter_probe_count": 8,
+    "exporter_probe_failed": 0,
+    "exporter_probe_passed": 8,
+    "failed": 0,
+    "passed": 5
+  },
+  "villa_cpp": {
+    "binary": "vc_tifxyz2obj",
+    "binary_sha256": "71a32235924499dee93bd24944794c930dffdee8e95450220e2665bd2020e118",
+    "load_quad_from_tifxyz_symbol_present": true,
+    "observable": "vc_tifxyz2obj reports that it loaded the full 5x5 grid. At the tested release, loc_valid uses a half-open rows-2 by cols-2 rectangle, so only a 3x3 set of quad origins survives and the converter emits only their 4x4 corner union: 16 OBJ vertices and 18 faces. Rejecting the center removes four of those nine quads, leaving the calibrated 12-vertex/10-face signature. This is OBJ boundary filtering, not loader resizing; disputed cases are compared with the controls rather than treating OBJ counts as raw valid-grid counts.",
+    "relationship_to_pinned_commit": "At the 2026-07-26 audit date, this test paired the official stable Apple Silicon release with the Python reader at repository HEAD. The release commit predates the pinned repository revision by 94 commits, so this is intentionally a stable-release-versus-repository comparison, not a same-commit build comparison. Intervening path history shows no Python-reader edit and no change to the relevant C++ full-load mask rules.",
+    "release_asset_sha256": "d5fca566c8bc843f2350ab60e86e0def25ab88240e3f0ffcbd04662ba522c9a8",
+    "release_commit": "05ff9ea39bf1077f8749fc1fe06f43a548350143",
+    "release_source": {
+      "converter": {
+        "blob_sha": "eff32a4d0984bd6614308a4484f8dd70cb699d1a",
+        "path": "volume-cartographer/apps/src/vc_tifxyz2obj.cpp"
+      },
+      "geometry": {
+        "blob_sha": "edfec27becdda604281ad3d2feae26630d4ea62a",
+        "path": "volume-cartographer/core/src/Geometry.cpp"
+      },
+      "verification_scope": "The runner records the source blob identities used to explain the observable. Their equality at the release and pinned repository commits was established by a separate read-only repository-history check; the runner does not fetch or compare GitHub blobs."
+    }
+  },
+  "villa_python": {
+    "commit": "1162bcab4bc769b12993fc320c69c14fdb4a4fa5",
+    "reader_py_sha256": "46277973f06fd38020a05b84b66a4c1682338972d59c593fdc16c068236444b9",
+    "types_py_sha256": "d1aeb5f168c3c1f814d7acc215200ab2332856a478a3aba0c67b63cf64e02ca7"
+  }
+}

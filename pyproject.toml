@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tifxyz-doctor"
+version = "0.1.0"
+description = "TIFXYZ integrity, interoperability, and geometry review for Vesuvius surfaces"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Aviad"}]
+dependencies = [
+  "numpy>=1.24",
+  "Pillow>=10",
+]
+keywords = ["vesuvius-challenge", "tifxyz", "mesh", "geometry", "quality-assurance"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering :: Image Processing",
+]
+
+[project.urls]
+Repository = "https://github.com/aviad12g/tifxyz-doctor"
+Documentation = "https://github.com/aviad12g/tifxyz-doctor#readme"
+Issues = "https://github.com/aviad12g/tifxyz-doctor/issues"
+
+[project.optional-dependencies]
+tiff = ["tifffile>=2023.7.10"]
+
+[project.scripts]
+tifxyz-doctor = "tifxyz_doctor.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"

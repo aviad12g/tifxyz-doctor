@@ -1,0 +1,136 @@
+{
+  "schema_version": "1.0.0",
+  "name": "tifxyz-doctor-public-empty-regressions",
+  "description": "Three metadata-registered normalized TIFXYZ roots observed with zero valid vertices.",
+  "observed_on": "2026-07-26",
+  "registry": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/metadata.min.json",
+    "observed_last_modified": "2026-07-22T14:17:40Z"
+  },
+  "dataset_license": {
+    "spdx": "CC-BY-NC-4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+    "notice": "Downloaded Vesuvius data remains externally licensed and is not redistributed with this repository."
+  },
+  "cases": [
+    {
+      "id": "pherc0332-20240711124827-normalized-empty",
+      "scroll_id": "PHerc0332",
+      "segment_id": "20240711124827-20240618142020",
+      "artifact_variant": "tifxyz_normalized",
+      "role": "registered_zero_valid_regression",
+      "verification": "Observed as a registered tifxyz-normalized root; every coordinate value is -1.0.",
+      "base_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/",
+      "expected": {
+        "status": "error",
+        "shape_hw": [2, 2],
+        "canonical_sentinel_vertices": 4,
+        "portable_valid_vertices": 0,
+        "portable_valid_faces": 0,
+        "required_finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ]
+      },
+      "files": {
+        "meta.json": {
+          "bytes": 218,
+          "sha256": "579ea7f1c57bdba4d6e5e735bf6c8ed98b2df2ec8d69291323080b92ef729677"
+        },
+        "x.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        },
+        "y.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        },
+        "z.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        }
+      }
+    },
+    {
+      "id": "pherc0332-20240828190516-normalized-empty",
+      "scroll_id": "PHerc0332",
+      "segment_id": "20240828190516-20240716140050",
+      "artifact_variant": "tifxyz_normalized",
+      "role": "registered_zero_valid_regression",
+      "verification": "Observed as a registered tifxyz-normalized root; every coordinate value is -1.0.",
+      "base_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/",
+      "expected": {
+        "status": "error",
+        "shape_hw": [2, 2],
+        "canonical_sentinel_vertices": 4,
+        "portable_valid_vertices": 0,
+        "portable_valid_faces": 0,
+        "required_finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ]
+      },
+      "files": {
+        "meta.json": {
+          "bytes": 218,
+          "sha256": "579ea7f1c57bdba4d6e5e735bf6c8ed98b2df2ec8d69291323080b92ef729677"
+        },
+        "x.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        },
+        "y.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        },
+        "z.tif": {
+          "bytes": 13358,
+          "sha256": "9a2914900153e24fb01c104ddb330c792fc38521a3d54a4596bfb511e5758b36"
+        }
+      }
+    },
+    {
+      "id": "pherc0500p2-20250716055236-normalized-empty",
+      "scroll_id": "PHerc0500P2",
+      "segment_id": "20250716055236-z_dbg_gen_00356_inp_hr",
+      "artifact_variant": "tifxyz_normalized",
+      "role": "registered_zero_valid_regression_with_nonempty_original",
+      "verification": "Observed as a registered tifxyz-normalized root; its original counterpart has 105111 valid vertices.",
+      "source_counterpart": {
+        "meta_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_original/meta.json",
+        "shape_hw": [576, 336],
+        "valid_vertices": 105111
+      },
+      "base_url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/",
+      "expected": {
+        "status": "error",
+        "shape_hw": [2, 2],
+        "canonical_sentinel_vertices": 4,
+        "portable_valid_vertices": 0,
+        "portable_valid_faces": 0,
+        "required_finding_codes": [
+          "no-portable-valid-vertex",
+          "no-valid-face"
+        ]
+      },
+      "files": {
+        "meta.json": {
+          "bytes": 218,
+          "sha256": "579ea7f1c57bdba4d6e5e735bf6c8ed98b2df2ec8d69291323080b92ef729677"
+        },
+        "x.tif": {
+          "bytes": 150,
+          "sha256": "72756e0517aebd4c9c274d502866984ce2a562044345d310cf64aa949b5f35b3"
+        },
+        "y.tif": {
+          "bytes": 150,
+          "sha256": "72756e0517aebd4c9c274d502866984ce2a562044345d310cf64aa949b5f35b3"
+        },
+        "z.tif": {
+          "bytes": 150,
+          "sha256": "72756e0517aebd4c9c274d502866984ce2a562044345d310cf64aa949b5f35b3"
+        }
+      }
+    }
+  ]
+}

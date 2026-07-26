@@ -1,0 +1,392 @@
+{
+  "benchmark": "tifxyz-doctor-realdata-smoke",
+  "benchmark_manifest_sha256": "4d8945d37ec01ad9d03a39e71d394147d04bbd8b8e759f224c3379357701dc59",
+  "configuration": {
+    "area_ratio_high": 4.0,
+    "area_ratio_low": 0.25,
+    "condition_number": 4.0,
+    "expected_spacing_x": null,
+    "expected_spacing_y": null,
+    "long_edge_ratio": 2.0,
+    "max_proximity_pairs": 10000,
+    "max_proximity_points": 100000,
+    "nonlocal_distance_ratio": 0.25,
+    "nonlocal_uv_exclusion": 4,
+    "normal_jump_degrees": 75.0,
+    "shear": 0.8660254037844387,
+    "short_edge_ratio": 0.5,
+    "symmetric_dirichlet": 20.0,
+    "symmetric_stretch": 2.0
+  },
+  "interpretation": "Contract statuses are objective checks. Review cues are thresholded observations, not ground-truth quality labels.",
+  "observations": [
+    {
+      "contract_errors": 0,
+      "contract_status": "pass",
+      "contract_warnings": 0,
+      "distributions": {
+        "condition_number_max": 1.1516923111203932,
+        "condition_number_p95": 1.0384172020498479,
+        "normal_jump_degrees_max": 46.17461661542873,
+        "normal_jump_degrees_p95": 16.889715417391255,
+        "symmetric_stretch_max": 1.137256001004907,
+        "symmetric_stretch_p95": 1.0321667728665753
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0172-20241113070770",
+      "portable_valid_faces": 13632,
+      "review_cues": [],
+      "role": "villa_real_fixture_control",
+      "shape_hw": [
+        129,
+        129
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "pass",
+      "contract_warnings": 0,
+      "distributions": {
+        "condition_number_max": 1.239613862609286,
+        "condition_number_p95": 1.0321846652079192,
+        "normal_jump_degrees_max": 45.32140995474718,
+        "normal_jump_degrees_p95": 16.031386487851282,
+        "symmetric_stretch_max": 1.217049668156775,
+        "symmetric_stretch_p95": 1.0280849689033964
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0172-20241113080880",
+      "portable_valid_faces": 13458,
+      "review_cues": [],
+      "role": "villa_real_fixture_control",
+      "shape_hw": [
+        129,
+        129
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "pass",
+      "contract_warnings": 0,
+      "distributions": {
+        "condition_number_max": 1.1980884199203057,
+        "condition_number_p95": 1.0315708431542967,
+        "normal_jump_degrees_max": 47.73820263124242,
+        "normal_jump_degrees_p95": 15.876703919651575,
+        "symmetric_stretch_max": 1.2034922459281228,
+        "symmetric_stretch_p95": 1.0275784167502973
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0172-20241113090990",
+      "portable_valid_faces": 13403,
+      "review_cues": [],
+      "role": "villa_real_fixture_control",
+      "shape_hw": [
+        129,
+        129
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.3961729872574973,
+        "condition_number_p95": 1.0838300915682129,
+        "normal_jump_degrees_max": 30.19401715238115,
+        "normal_jump_degrees_p95": 12.491115286521763,
+        "symmetric_stretch_max": 1.202916503571508,
+        "symmetric_stretch_p95": 1.0585260903459395
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0800-20251029010146-original",
+      "portable_valid_faces": 1369,
+      "review_cues": [],
+      "role": "unverified_auto_grown_format_smoke",
+      "shape_hw": [
+        42,
+        42
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.7723178305308138,
+        "condition_number_p95": 1.1036660043794975,
+        "normal_jump_degrees_max": 36.19498480883538,
+        "normal_jump_degrees_p95": 12.90582560514772,
+        "symmetric_stretch_max": 1.703088689245704,
+        "symmetric_stretch_p95": 1.0727227319136077
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0800-20251028220955-original",
+      "portable_valid_faces": 5451,
+      "review_cues": [],
+      "role": "unverified_auto_grown_format_smoke",
+      "shape_hw": [
+        90,
+        84
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.3643899831694333,
+        "condition_number_p95": 1.0887078664905692,
+        "normal_jump_degrees_max": 35.444622358195346,
+        "normal_jump_degrees_p95": 11.816355584476163,
+        "symmetric_stretch_max": 1.3070451281740159,
+        "symmetric_stretch_p95": 1.0614924852944374
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 0,
+        "enclosed_face_holes": 0,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc0800-20251028220042-original",
+      "portable_valid_faces": 5621,
+      "review_cues": [],
+      "role": "unverified_auto_grown_format_smoke",
+      "shape_hw": [
+        93,
+        95
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.2302519011756132,
+        "condition_number_p95": 1.0323736451515508,
+        "normal_jump_degrees_max": 40.27684401496188,
+        "normal_jump_degrees_p95": 11.34362384355378,
+        "symmetric_stretch_max": 1.1628776452505216,
+        "symmetric_stretch_p95": 1.022598254241544
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 371,
+        "enclosed_face_holes": 16,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc1447-20250502183138-original",
+      "portable_valid_faces": 8527,
+      "review_cues": [
+        "enclosed-gaps"
+      ],
+      "role": "unverified_auto_grown_hard_candidate",
+      "shape_hw": [
+        94,
+        160
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.221572901080366,
+        "condition_number_p95": 1.0319050230693005,
+        "normal_jump_degrees_max": 40.814303326534784,
+        "normal_jump_degrees_p95": 10.147875976384242,
+        "symmetric_stretch_max": 1.1491407173005073,
+        "symmetric_stretch_p95": 1.0225750316858382
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 106,
+        "enclosed_face_holes": 8,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc1447-20250502180708-original",
+      "portable_valid_faces": 11682,
+      "review_cues": [
+        "enclosed-gaps"
+      ],
+      "role": "unverified_auto_grown_hard_candidate",
+      "shape_hw": [
+        109,
+        177
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.3107821805650077,
+        "condition_number_p95": 1.0425518678010337,
+        "normal_jump_degrees_max": 54.409310100637036,
+        "normal_jump_degrees_p95": 11.556792711259218,
+        "symmetric_stretch_max": 1.1890620815770099,
+        "symmetric_stretch_p95": 1.029215493268914
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 192,
+        "enclosed_face_holes": 18,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc1447-20250502184201-original",
+      "portable_valid_faces": 14671,
+      "review_cues": [
+        "enclosed-gaps"
+      ],
+      "role": "unverified_auto_grown_hard_candidate",
+      "shape_hw": [
+        113,
+        180
+      ]
+    },
+    {
+      "contract_errors": 0,
+      "contract_status": "warning",
+      "contract_warnings": 1,
+      "distributions": {
+        "condition_number_max": 1.5150284342914584,
+        "condition_number_p95": 1.0431379478172842,
+        "normal_jump_degrees_max": 52.85785423584991,
+        "normal_jump_degrees_p95": 11.434832140158129,
+        "symmetric_stretch_max": 1.3607942179639392,
+        "symmetric_stretch_p95": 1.0302143360606475
+      },
+      "facts": {
+        "area_distortion_cells": 0,
+        "degenerate_triangles": 0,
+        "enclosed_face_hole_cells": 436,
+        "enclosed_face_holes": 21,
+        "high_shear_cells": 0,
+        "long_edges": 0,
+        "normal_jumps": 0,
+        "official_split_folded_quads": 0,
+        "sampled_nonlocal_vertex_pairs": 0,
+        "short_edges": 0,
+        "symmetric_stretch_cells": 0,
+        "valid_face_components": 1
+      },
+      "id": "pherc1447-20250502185519-original",
+      "portable_valid_faces": 15702,
+      "review_cues": [
+        "enclosed-gaps"
+      ],
+      "role": "unverified_auto_grown_hard_candidate",
+      "shape_hw": [
+        160,
+        136
+      ]
+    }
+  ],
+  "schema_version": "1.0.0",
+  "source_data_license": {
+    "notice": "The benchmark manifest is MIT-licensed code-project metadata. Downloaded Vesuvius data remains under its source data license and is never redistributed by this repository.",
+    "spdx": "CC-BY-NC-4.0",
+    "url": "https://creativecommons.org/licenses/by-nc/4.0/"
+  },
+  "tool": {
+    "name": "tifxyz-doctor",
+    "version": "0.1.0"
+  }
+}
