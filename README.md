@@ -7,9 +7,10 @@ observed on 2026-07-22, 277 roots—including all 264 normalized roots—used th
 literal UUID `output_tifxyz`. Across 138 inspected PHerc1203 current/version
 snapshots, `area_vx2` and `area_cm2` were present while the `area` key consumed
 by the pinned Python API was absent, leaving `Tifxyz.area` unset. A separate
-regression reproduces three registry-listed normalized packages containing only
-a 2×2 sentinel grid. It also produces exact grid locations for thresholded
-geometry review cues.
+recorded regression reproduced three normalized packages that were registered
+at the time and contained only a 2×2 sentinel grid; the affected entries were
+repaired upstream after the report. The tool also produces exact grid locations
+for thresholded geometry review cues.
 
 The tool is read-only and CPU-only: it does not repair, rewrite, or silently
 normalize source data.
@@ -70,9 +71,10 @@ collection results:
 - all 138 inspected PHerc1203 current/version metadata snapshots use
   `area_vx2` and `area_cm2` without the `area` key consumed by the pinned
   Python API; and
-- three metadata-registered normalized packages contain no valid vertex or
-  face; their exact, hash-pinned public objects now form a 3/3 reproducible
-  regression.
+- three metadata-registered normalized packages contained no valid vertex or
+  face in a 2026-07-26 audit against the registry snapshot last modified on
+  2026-07-22; their exact, hash-pinned objects formed a 3/3 recorded regression
+  before upstream remediation.
 
 The first two observations do not depend on whether the semantic-empty registry
 entries were intentional. One empty entry contains `z_dbg` in its identifier;
@@ -80,12 +82,32 @@ the regression establishes only that the exact registry paths resolved to the
 recorded sentinel-only bytes, not why they exist or whether a production
 workflow uses them.
 
+### Upstream resolution (2026-07-27)
+
+A Villa administrator confirmed that the three empty packages came from
+legacy OBJ data sent through the wrong pipeline, then removed or regenerated
+the affected artifacts. A fresh audit against the registry published at
+2026-07-27 08:41:44 UTC found:
+
+- the two PHerc0332 segments now register valid `tifxyz_original` packages
+  with 132,462 and 134,880 portable-valid vertices; and
+- the PHerc0500P2 normalized path now contains a valid 583×339 package with
+  113,448 portable-valid vertices.
+
+All three current packages pass with zero findings. The exact current registry
+identity, replacement object hashes, and audit counts are recorded in
+[`benchmarks/public-empty-resolution-2026-07-27.json`](benchmarks/public-empty-resolution-2026-07-27.json).
+The original 3/3 manifest and result remain a dated, content-addressed record
+of the reported bytes; the affected entries were repaired upstream after the
+report, and a fresh live fetch is no longer expected to reproduce those
+retired/replaced objects.
+
 The complete bounded-scan evidence—including selection limits, exact URLs,
 hashes, timestamps, and caveats—is recorded in
 [`benchmarks/public-corpus-scan-2026-07-26.json`](benchmarks/public-corpus-scan-2026-07-26.json).
 These are package/interoperability observations, not claims about whether a
 surface traces the correct papyrus sheet. The concise
-[pre-publication claims review](docs/claims-review.md) states what each number
+[claims review](docs/claims-review.md) states what each number
 supports and what must not be inferred.
 
 ## Relation to the current unwrapping problem
@@ -276,14 +298,14 @@ The three PHerc0172 controls are files used by pinned Villa tests. The other
 seven cases are unlabeled auto-grown surfaces selected for format and stress
 coverage. Their roles are provenance labels, not geometry ground truth.
 
-The public empty-artifact regression suite independently fetches the three
-registered normalized packages identified by the corpus scan. The inputs total
-81,252 bytes and are also size- and SHA-256-pinned.
+The public empty-artifact regression suite records the three normalized
+packages identified by the 2026-07-26 corpus scan. The original inputs totaled
+81,252 bytes and were size- and SHA-256-pinned. Upstream repaired the entries
+on 2026-07-27, so the live fetch command is now expected to fail with a
+missing object or hash mismatch. The regression remains runnable only with an
+exact cache downloaded before remediation.
 
 ```bash
-python scripts/fetch_benchmark.py \
-  --manifest benchmarks/public-empty-regressions.json \
-  --output benchmark-regression-data
 python scripts/run_public_regressions.py
 ```
 
@@ -305,11 +327,10 @@ Useful release checks:
 PYTHONPATH=src python -m tifxyz_doctor.cli --help
 python scripts/fetch_benchmark.py
 python scripts/run_benchmark.py
-python scripts/fetch_benchmark.py \
-  --manifest benchmarks/public-empty-regressions.json \
-  --output benchmark-regression-data
-python scripts/run_public_regressions.py
 ```
+
+Run `scripts/run_public_regressions.py` separately only when the exact
+pre-remediation cache is present.
 
 ## Limits
 

@@ -1,0 +1,162 @@
+{
+  "schema_version": "1.0.0",
+  "generated_at": "2026-07-27T13:20:31Z",
+  "summary": "All three registry-listed sentinel-only packages reported on 2026-07-26 were removed or regenerated upstream; fresh audits of their current registered TIFXYZ packages pass.",
+  "upstream_response": {
+    "date": "2026-07-27",
+    "channel": "Vesuvius Challenge Discord #unrolling-vc3d",
+    "paraphrase": "A Villa administrator identified the source as legacy OBJ data sent through the wrong pipeline, then removed and regenerated the affected artifacts."
+  },
+  "current_registry": {
+    "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/metadata.min.json",
+    "observed_last_modified": "2026-07-27T08:41:44Z",
+    "etag": "9f439dd6226a8a2de2a318e351506333",
+    "content_encoding": "gzip",
+    "compressed_bytes": 57193,
+    "compressed_sha256": "68e2e81d993184265774433e659280b96415ff4421d3d07358424ed4522747fd",
+    "decoded_bytes": 1135989,
+    "decoded_sha256": "329bd1ee34ee2c3ecad6e42169e14f0d1a8be36f1e1ed29af942e638960ce14d"
+  },
+  "historical_snapshot": {
+    "manifest": "benchmarks/public-empty-regressions.json",
+    "recorded_result": "benchmarks/public-empty-results-v0.1.0.json",
+    "status": "retired-upstream",
+    "note": "The manifest and recorded result remain the content-addressed 2026-07-26 observation. A fresh live fetch is no longer expected to reproduce it because two normalized roots were unregistered and the third path was replaced with new bytes."
+  },
+  "all_current_audits_pass": true,
+  "resolved_cases": [
+    {
+      "historical_case_id": "pherc0332-20240711124827-normalized-empty",
+      "segment_id": "20240711124827-20240618142020",
+      "historical_registration": {
+        "type": "tifxyz-normalized",
+        "prefix": "PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_normalized/"
+      },
+      "current_registration": {
+        "type": "tifxyz",
+        "prefix": "PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_original/"
+      },
+      "current_audit": {
+        "status": "pass",
+        "shape_hw": [
+          126,
+          1286
+        ],
+        "portable_valid_vertices": 132462,
+        "portable_valid_faces": 130952,
+        "finding_codes": []
+      },
+      "files": {
+        "meta.json": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_original/meta.json",
+          "bytes": 392,
+          "sha256": "a683ca6c8354c0fc5f0a21f45437d9518f14ee5362eba0f6395a6a723e560a7a"
+        },
+        "x.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_original/x.tif",
+          "bytes": 648278,
+          "sha256": "97ba2c6192bb59a774f09f3f5a47d3a82bcd5d82bae502d627fa3152bde31740"
+        },
+        "y.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_original/y.tif",
+          "bytes": 648278,
+          "sha256": "e1c6f4756d86b555dc5230a7ec235d1791ad59b68899377d803bbe2f9dba830e"
+        },
+        "z.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240711124827-20240618142020/mesh/intermediate/tifxyz_original/z.tif",
+          "bytes": 648278,
+          "sha256": "f0c8a2d2dc6edd2787fa440f1a10a07d7d800dab2372cd5415f0bf15dfb917e3"
+        }
+      }
+    },
+    {
+      "historical_case_id": "pherc0332-20240828190516-normalized-empty",
+      "segment_id": "20240828190516-20240716140050",
+      "historical_registration": {
+        "type": "tifxyz-normalized",
+        "prefix": "PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_normalized/"
+      },
+      "current_registration": {
+        "type": "tifxyz",
+        "prefix": "PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_original/"
+      },
+      "current_audit": {
+        "status": "pass",
+        "shape_hw": [
+          138,
+          1266
+        ],
+        "portable_valid_vertices": 134880,
+        "portable_valid_faces": 133373,
+        "finding_codes": []
+      },
+      "files": {
+        "meta.json": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_original/meta.json",
+          "bytes": 395,
+          "sha256": "75f51ca0f2658099753e1d0483d9d5add5c93d01df7fe606932d0ffcc0c6e420"
+        },
+        "x.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_original/x.tif",
+          "bytes": 698966,
+          "sha256": "6057c129a9f9190bec085a80f246da017138a8360ec65657fe0a462afa885a09"
+        },
+        "y.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_original/y.tif",
+          "bytes": 698966,
+          "sha256": "8adf5503d2bb55a882de1b13500120a436bd065f1ed93be74446e1ace1d71496"
+        },
+        "z.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0332/segments/20240828190516-20240716140050/mesh/intermediate/tifxyz_original/z.tif",
+          "bytes": 698966,
+          "sha256": "c0e8781828b7540d1c0ffb10bf29c6ddfc53f6e6fd9714290aea28e21ee764b8"
+        }
+      }
+    },
+    {
+      "historical_case_id": "pherc0500p2-20250716055236-normalized-empty",
+      "segment_id": "20250716055236-z_dbg_gen_00356_inp_hr",
+      "historical_registration": {
+        "type": "tifxyz-normalized",
+        "prefix": "PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/"
+      },
+      "current_registration": {
+        "type": "tifxyz-normalized",
+        "prefix": "PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/"
+      },
+      "current_audit": {
+        "status": "pass",
+        "shape_hw": [
+          583,
+          339
+        ],
+        "portable_valid_vertices": 113448,
+        "portable_valid_faces": 111973,
+        "finding_codes": []
+      },
+      "files": {
+        "meta.json": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/meta.json",
+          "bytes": 286,
+          "sha256": "55c881a6e18ef57f40503309cda1f2f94024af399d97cf12770fc3b9419d85fa"
+        },
+        "x.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/x.tif",
+          "bytes": 790682,
+          "sha256": "aaee66c5dbc291fb93adad168ab5f2429cffaad9ded96ed143c34241de5539cf"
+        },
+        "y.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/y.tif",
+          "bytes": 790682,
+          "sha256": "b3799ac59da32995f58ba638efb6b57b8e6a207eeb86b0aaeca0096671aab0d7"
+        },
+        "z.tif": {
+          "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0500P2/segments/20250716055236-z_dbg_gen_00356_inp_hr/mesh/intermediate/tifxyz_normalized/z.tif",
+          "bytes": 790682,
+          "sha256": "33e9b963078ef7c8c2aaee644c61683cc2f73c0447d69f7c6a716222c0cc01c6"
+        }
+      }
+    }
+  ],
+  "interpretation": "The 2026-07-26 finding was valid for the pinned registry and object bytes observed then. The affected entries were repaired upstream after the report. It is no longer a claim about current live packages. UUID reuse and the PHerc1203 area-schema observation are separate findings and are not reevaluated by this resolution snapshot."
+}

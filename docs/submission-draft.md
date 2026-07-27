@@ -1,11 +1,19 @@
 # July 2026 Progress Prize submission: TIFXYZ Doctor
 
+Update, 2026-07-27: a Villa administrator confirmed that the three
+sentinel-only packages came from legacy OBJ data processed through the wrong
+pipeline, then removed or regenerated them. Fresh audits of all three current
+registrations pass. The original observation is now a dated, content-addressed
+finding whose report was followed by an upstream repair; see
+[`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
+
 ## One-sentence summary
 
 TIFXYZ Doctor is a deterministic, CPU-only preflight for Vesuvius TIFXYZ
 surfaces that identified collection-identity reuse across 277 of 450 registered
 roots and an area-schema/API mismatch in all 138 inspected PHerc1203 snapshots,
-reproduced three registry-listed sentinel-only normalized packages, and
+reproduced three registry-listed sentinel-only normalized packages that were
+repaired upstream the next day, and
 localizes thresholded topology and flattening-distortion cues for review.
 
 ## Concrete public-data findings
@@ -16,7 +24,7 @@ The strongest evidence is corpus-first:
 | --- | ---: | --- | --- |
 | Registered roots using the literal UUID `output_tifxyz` | 277 of 450 roots | UUID cannot uniquely identify those packages for collection consumers that use it as a key. | Reported as a collection warning, not per-surface coordinate corruption. |
 | PHerc1203 snapshots with `area_vx2`/`area_cm2` but no `area` | 138 of 138 snapshots | The pinned Python reader retains the suffixed values in `extra` while `Tifxyz.area` remains unset. | The suffixed measurements are preserved and are not called numerically wrong. |
-| Registered normalized packages with no valid vertex or face | 3 packages | A consumer selecting one receives no renderable surface. All three exact inputs are covered by a hash-pinned 3/3 regression. | One identifier contains `z_dbg`. The audit establishes the bytes and registry paths, not intent or production use. |
+| Registered normalized packages with no valid vertex or face on 2026-07-26 | 3 packages | A consumer selecting one received no renderable surface. All three exact inputs are covered by a hash-pinned recorded 3/3 regression; the live entries were repaired on 2026-07-27. | One identifier contains `z_dbg`. The audit establishes the observed bytes and registry paths, not intent or production use. |
 
 The UUID and area-schema observations do not depend on whether the
 semantic-empty registry entries were intentional.
@@ -26,13 +34,15 @@ and 726 coordinate TIFFs. Selection limits, exact URLs, sizes, SHA-256 hashes,
 timestamps, and caveats are recorded in
 `benchmarks/public-corpus-scan-2026-07-26.json`.
 
-The three semantic-empty artifacts are independently reproducible from an
-81,252-byte pinned manifest. All 3 of 3 expectations pass: each exact source
-reproduces `status: error`, zero portable-valid vertices and faces, and both
-`no-portable-valid-vertex` and `no-valid-face`. Here, a passing regression means
-the expected source error was detected; it does not mean the source package is
-healthy. One identifier contains `z_dbg`; no inference is made about why any of
-the three entries exists or whether a production workflow uses it.
+The three semantic-empty artifacts were independently reproduced from an
+81,252-byte pinned manifest before remediation. All 3 of 3 recorded
+expectations pass: each exact source produced `status: error`, zero
+portable-valid vertices and faces, and both `no-portable-valid-vertex` and
+`no-valid-face`. The original objects are no longer all available at those
+live paths, so this is a dated, content-addressed result rather than a
+currently refetchable corpus. One identifier contains `z_dbg`; no inference is
+made about why any of the three entries existed or whether a production
+workflow used it.
 
 ## Why this fits the current unwrapping problem
 
@@ -167,16 +177,17 @@ python -m pip install -e .
 PYTHONPATH=src python -m unittest discover -s tests -v
 python scripts/fetch_benchmark.py
 python scripts/run_benchmark.py
-python scripts/fetch_benchmark.py \
-  --manifest benchmarks/public-empty-regressions.json \
-  --output benchmark-regression-data
-python scripts/run_public_regressions.py
 python verification/run_reader_differential.py \
   --villa-root ../villa \
   --cpp-binary ../villa-release/extracted/VC3D.app/Contents/MacOS/vc_tifxyz2obj \
   --cpp-asset ../villa-release/VC3D-05ff9ea-2026-07-12-macos-arm64.zip \
   --output verification/reader-differential-results-v1.json
 ```
+
+The historical public-empty regression can be rerun with
+`python scripts/run_public_regressions.py` only when the exact
+pre-remediation cache is already present. A live refetch is expected to fail
+because two paths were retired and one was replaced.
 
 Example use:
 
@@ -228,8 +239,8 @@ the source license declared in each benchmark manifest, CC BY-NC 4.0.
 > Vesuvius TIFXYZ surfaces. A bounded metadata census found 277 of 450
 > registered roots reusing `output_tifxyz` and all 138 inspected PHerc1203
 > snapshots omitting the `area` key consumed by the pinned Python API. A
-> separate hash-pinned regression captures three registry-listed sentinel-only
-> normalized packages, including one whose identifier contains `z_dbg`, without
-> inferring whether those entries are intentional. The geometry audit localizes
-> topology and Symmetric Dirichlet distortion cues without relabeling them as
-> proven defects.
+> separate hash-pinned regression recorded three then-registered sentinel-only
+> normalized packages, including one whose identifier contained `z_dbg`; the
+> affected entries were repaired upstream after the report and all three
+> current registrations now pass. The geometry audit localizes topology and
+> Symmetric Dirichlet distortion cues without relabeling them as proven defects.

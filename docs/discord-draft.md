@@ -1,5 +1,11 @@
 # Discord launch note
 
+Status: posted 2026-07-27. A Villa administrator subsequently confirmed the
+three empty packages came from legacy OBJ data processed through the wrong
+pipeline, then removed or regenerated them. All three current registrations
+now pass; see
+[`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
+
 Hi — I released TIFXYZ Doctor, a read-only preflight and
 geometry-diagnostics CLI for Vesuvius TIFXYZ surfaces:
 https://github.com/aviad12g/tifxyz-doctor

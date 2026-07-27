@@ -14,9 +14,10 @@ The strongest demonstrated corpus observations are:
 2. all 138 inspected PHerc1203 current/version snapshots supply
    `area_vx2`/`area_cm2` without `area`, leaving the pinned Python API's
    `Tifxyz.area` property unset; and
-3. three metadata-registered normalized packages contain no valid vertex or
-   face, and all three exact public inputs reproduce the expected errors in a
-   hash-pinned 3/3 regression.
+3. three metadata-registered normalized packages contained no valid vertex or
+   face in a 2026-07-26 audit against the registry snapshot last modified on
+   2026-07-22, and all three exact inputs reproduced the expected errors in a
+   hash-pinned 3/3 regression before upstream remediation.
 
 The first two observations do not depend on whether the semantic-empty registry
 entries were intentional. One empty entry contains `z_dbg` in its identifier;
@@ -28,6 +29,30 @@ registered roots. Mask-reader differences are therefore synthetic,
 revision-pinned interoperability cases, not a claimed real-corpus finding.
 The exact scan scope and caveats appear under
 [Broader exploratory corpus scan](#broader-exploratory-corpus-scan).
+
+### Resolution update (2026-07-27)
+
+A Villa administrator identified the three empty packages as legacy OBJ data
+processed through the wrong pipeline, then removed or regenerated them. The
+current registry no longer registers the two PHerc0332 normalized roots; each
+segment now points to a valid `tifxyz_original` package. The PHerc0500P2
+normalized path was replaced with a valid 583×339 package.
+
+Fresh TIFXYZ Doctor audits of the three currently registered packages all pass
+with zero findings:
+
+| Segment | Current registration | Shape | Portable-valid vertices | Portable-valid faces |
+| --- | --- | ---: | ---: | ---: |
+| PHerc0332 `20240711124827-20240618142020` | `tifxyz_original` | 126×1,286 | 132,462 | 130,952 |
+| PHerc0332 `20240828190516-20240716140050` | `tifxyz_original` | 138×1,266 | 134,880 | 133,373 |
+| PHerc0500P2 `20250716055236-z_dbg_gen_00356_inp_hr` | `tifxyz_normalized` | 583×339 | 113,448 | 111,973 |
+
+The machine-readable
+[`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json)
+pins the current registry and replacement object hashes. This confirms the
+affected entries were repaired after the diagnostic was reported; it also
+means the original sentinel-only condition is no longer a claim about live
+packages.
 
 ## Executable reader differential v1
 
@@ -135,10 +160,10 @@ certified. The auto-grown cases have no official correct/incorrect geometry
 label. In particular, an enclosed region can be a deliberate boundary in a
 surface rather than a repair target.
 
-## Public empty-artifact regression v0.1.0
+## Public empty-artifact regression v0.1.0 (historical)
 
-The three zero-valid normalized packages discovered in the broader scan now
-have a standalone reproducible regression:
+The three zero-valid normalized packages discovered in the broader scan have a
+standalone recorded regression:
 
 - manifest:
   [`benchmarks/public-empty-regressions.json`](../benchmarks/public-empty-regressions.json);
@@ -147,12 +172,13 @@ have a standalone reproducible regression:
 - manifest SHA-256:
   `4d46b20b4e82c061a48c04fc19ac08df4b365c3e092c86183da3146c1bdc9443`.
 
-Reproduce the 81,252-byte download and checks with:
+The committed result was produced from the 81,252 original bytes before the
+2026-07-27 remediation. A live refetch is now expected to encounter missing
+objects for the retired PHerc0332 normalized roots or a hash mismatch for the
+replaced PHerc0500P2 path. If the exact pre-remediation inputs are already
+cached, reproduce the checks with:
 
 ```bash
-python scripts/fetch_benchmark.py \
-  --manifest benchmarks/public-empty-regressions.json \
-  --output benchmark-regression-data
 python scripts/run_public_regressions.py
 ```
 
@@ -163,6 +189,8 @@ vertices, zero portable-valid vertices, zero portable-valid faces, and both
 `no-portable-valid-vertex` and `no-valid-face` findings. One package identifier
 contains `z_dbg`; this evidence does not establish whether any entry is an
 intentional debug artifact or whether a production workflow uses it.
+See the [resolution snapshot](../benchmarks/public-empty-resolution-2026-07-27.json)
+for the current passing packages.
 
 ## Larger-surface exploratory spot check
 
@@ -255,16 +283,17 @@ area-schema warning rather than discarding either representation.
 
 The strongest demonstrated claims are:
 
-1. the same source bytes can be fetched and verified from small pinned
-   manifests;
+1. source bytes that remain live can be fetched and verified from small pinned
+   manifests, while retired inputs remain content-addressed historical
+   records;
 2. contract results and geometry observations serialize deterministically;
 3. official loader fixtures pass without spurious default cues in this small
    control set;
 4. the reports retain actionable row/column locations instead of returning
    only aggregate scores; and
-5. the three exact registry-listed semantic-empty packages reproducibly
-   trigger the two expected contract errors, without establishing why those
-   entries exist.
+5. the exact pre-remediation cache for the three then-registered
+   semantic-empty packages reproducibly triggers the two expected contract
+   errors, without relying on the repaired live entries.
 
 Claims not supported by this evidence include:
 

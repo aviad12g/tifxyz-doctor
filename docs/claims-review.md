@@ -1,4 +1,4 @@
-# Claims to approve before publication
+# Claims review
 
 This is the short human-readable companion to
 [`public-corpus-scan-2026-07-26.json`](../benchmarks/public-corpus-scan-2026-07-26.json).
@@ -51,18 +51,21 @@ Do not claim:
 - that the scan covered every PHerc1203 artifact outside those 138
   current/version snapshots.
 
-## Claim 3 — registry-listed semantic-empty packages
+## Claim 3 — registry-listed semantic-empty packages (dated)
 
 Defensible statement:
 
-> Three registered normalized paths resolved to hash-pinned 2×2 coordinate
+> In a 2026-07-26 audit against the registry snapshot last modified on
+> 2026-07-22, three registered normalized paths resolved to hash-pinned 2×2
+> coordinate
 > packages containing only the full `(-1,-1,-1)` sentinel. They therefore had
-> zero portable-valid vertices and faces, and the 3/3 regression reproduces
-> both expected contract errors.
+> zero portable-valid vertices and faces, and the recorded 3/3 regression
+> reproduced both expected contract errors.
 
-One identifier contains `z_dbg`, which may indicate a debug artifact.
+One identifier contained `z_dbg`; that string alone did not establish the
+entry's cause or intended use.
 
-Do not claim:
+The original scan alone did not establish:
 
 - why any entry exists;
 - that the entries are consumed by production;
@@ -70,8 +73,14 @@ Do not claim:
 - that the files are corrupt TIFF/JSON. They are syntactically valid and
   semantically empty under the pinned reader model.
 
-The UUID and area findings remain unchanged if maintainers confirm that all
-three empty entries are intentional registry artifacts.
+Later evidence resolved the cause: on 2026-07-27 a Villa administrator
+attributed the entries to legacy OBJ data processed through the wrong pipeline
+and removed or regenerated them. Fresh audits of the three current
+registrations pass. Treat Claim 3 as a dated finding whose report was followed
+by an upstream repair, not as a statement about current live objects. See
+[`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
+
+The UUID and area findings are independent of this remediation.
 
 ## Synthetic Python/C++ differential
 
