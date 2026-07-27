@@ -63,6 +63,28 @@ class BenchmarkManifestTests(unittest.TestCase):
         )
 
         self.assertTrue(resolution["all_current_audits_pass"])
+        upstream_response = resolution["upstream_response"]
+        expected_messages = {
+            "diagnosis": (
+                "1531206054682165309",
+                "2026-07-27T07:46:11.869Z",
+            ),
+            "remediation": (
+                "1531220162190245909",
+                "2026-07-27T08:42:15.361Z",
+            ),
+        }
+        for event, (message_id, timestamp) in expected_messages.items():
+            self.assertEqual(upstream_response[f"{event}_message_id"], message_id)
+            self.assertEqual(
+                upstream_response[f"{event}_message_url"],
+                "https://discord.com/channels/"
+                "1079907749569237093/1243576621722767412/"
+                f"{message_id}",
+            )
+            self.assertEqual(
+                upstream_response[f"{event}_message_timestamp"], timestamp
+            )
         registry = resolution["current_registry"]
         self.assertEqual(
             registry["url"],

@@ -34,9 +34,13 @@ The exact scan scope and caveats appear under
 
 A Villa administrator identified the three empty packages as legacy OBJ data
 processed through the wrong pipeline, then removed or regenerated them. The
-current registry no longer registers the two PHerc0332 normalized roots; each
-segment now points to a valid `tifxyz_original` package. The PHerc0500P2
-normalized path was replaced with a valid 583×339 package.
+[diagnosis](https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309)
+and
+[remediation confirmation](https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909)
+are linked to their exact Discord messages. The current registry no longer
+registers the two PHerc0332 normalized roots; each segment now points to a
+valid `tifxyz_original` package. The PHerc0500P2 normalized path was replaced
+with a valid 583×339 package.
 
 Fresh TIFXYZ Doctor audits of the three currently registered packages all pass
 with zero findings:

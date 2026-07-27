@@ -86,8 +86,11 @@ workflow uses them.
 
 A Villa administrator confirmed that the three empty packages came from
 legacy OBJ data sent through the wrong pipeline, then removed or regenerated
-the affected artifacts. A fresh audit against the registry published at
-2026-07-27 08:41:44 UTC found:
+the affected artifacts. The primary Discord evidence is linked directly:
+[diagnosis](https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309)
+and
+[remediation confirmation](https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909).
+A fresh audit against the registry published at 2026-07-27 08:41:44 UTC found:
 
 - the two PHerc0332 segments now register valid `tifxyz_original` packages
   with 132,462 and 134,880 portable-valid vertices; and

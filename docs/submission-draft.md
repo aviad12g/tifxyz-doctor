@@ -5,6 +5,10 @@ sentinel-only packages came from legacy OBJ data processed through the wrong
 pipeline, then removed or regenerated them. Fresh audits of all three current
 registrations pass. The original observation is now a dated, content-addressed
 finding whose report was followed by an upstream repair; see
+the exact
+[diagnosis](https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309),
+[remediation confirmation](https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909),
+and
 [`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
 
 ## One-sentence summary

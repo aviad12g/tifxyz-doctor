@@ -78,6 +78,10 @@ attributed the entries to legacy OBJ data processed through the wrong pipeline
 and removed or regenerated them. Fresh audits of the three current
 registrations pass. Treat Claim 3 as a dated finding whose report was followed
 by an upstream repair, not as a statement about current live objects. See
+the exact
+[diagnosis](https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309),
+[remediation confirmation](https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909),
+and
 [`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
 
 The UUID and area findings are independent of this remediation.

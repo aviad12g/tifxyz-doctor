@@ -3,7 +3,10 @@
 Status: posted 2026-07-27. A Villa administrator subsequently confirmed the
 three empty packages came from legacy OBJ data processed through the wrong
 pipeline, then removed or regenerated them. All three current registrations
-now pass; see
+now pass; see the exact
+[diagnosis](https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309),
+[remediation confirmation](https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909),
+and
 [`public-empty-resolution-2026-07-27.json`](../benchmarks/public-empty-resolution-2026-07-27.json).
 
 Hi — I released TIFXYZ Doctor, a read-only preflight and

@@ -5,6 +5,12 @@
   "upstream_response": {
     "date": "2026-07-27",
     "channel": "Vesuvius Challenge Discord #unrolling-vc3d",
+    "diagnosis_message_id": "1531206054682165309",
+    "diagnosis_message_timestamp": "2026-07-27T07:46:11.869Z",
+    "diagnosis_message_url": "https://discord.com/channels/1079907749569237093/1243576621722767412/1531206054682165309",
+    "remediation_message_id": "1531220162190245909",
+    "remediation_message_timestamp": "2026-07-27T08:42:15.361Z",
+    "remediation_message_url": "https://discord.com/channels/1079907749569237093/1243576621722767412/1531220162190245909",
     "paraphrase": "A Villa administrator identified the source as legacy OBJ data sent through the wrong pipeline, then removed and regenerated the affected artifacts."
   },
   "current_registry": {
