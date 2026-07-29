@@ -111,6 +111,14 @@ def _ids_sha256(ids: list[str]) -> str:
     return hashlib.sha256(("\n".join(ids) + "\n").encode()).hexdigest()
 
 
+def _portable_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return resolved.relative_to(PROJECT_ROOT.resolve()).as_posix()
+    except ValueError:
+        return str(resolved)
+
+
 def _audit_signature(report: dict[str, Any]) -> dict[str, Any]:
     cue_mask = np.asarray(report["_arrays"]["review_cue_mask"], dtype=bool)
     cue_digest = hashlib.sha256(np.packbits(cue_mask).tobytes()).hexdigest()
@@ -836,7 +844,7 @@ def main(argv: list[str] | None = None) -> int:
             "successfully_audited_patches": len(base_observations),
             "tree_sha256": tree_digest.hexdigest(),
             "split_manifest": {
-                "path": str(args.split_manifest),
+                "path": _portable_path(args.split_manifest),
                 "sha256": _sha256(args.split_manifest),
                 "selected_patch_ids_sha256": expected_ids_digest,
                 "overlap_graph": split_manifest["source"]["overlap_graph"],
