@@ -610,6 +610,14 @@ def main(argv: list[str] | None = None) -> int:
     result = {
         "schema_version": "reviewed-same-wrap-benchmark-v1",
         "tool": {"name": "tifxyz-doctor", "version": "0.1.0"},
+        "experiment_commits": {
+            "frozen_detector_and_protocol": (
+                "d3c8309ca707e2f18e7d64e38fb7be4ff4ca77c0"
+            ),
+            "cue_specific_reporting": (
+                "b4d70220b3c4ab33dcf53f0185749b2e751a61bd"
+            ),
+        },
         "source": {
             "bucket": SOURCE_BUCKET,
             "selection": (
@@ -628,6 +636,14 @@ def main(argv: list[str] | None = None) -> int:
             "selected_patches": len(candidates),
             "successfully_audited_patches": len(base_observations),
             "tree_sha256": tree_digest.hexdigest(),
+        },
+        "source_data_license": {
+            "spdx": "CC-BY-NC-4.0",
+            "url": "https://creativecommons.org/licenses/by-nc/4.0/",
+            "notice": (
+                "Downloaded Vesuvius data remains externally licensed and is "
+                "not redistributed by this repository."
+            ),
         },
         "configuration": {
             "doctor": asdict(config),
