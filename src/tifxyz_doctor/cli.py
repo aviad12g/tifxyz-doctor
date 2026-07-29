@@ -8,6 +8,7 @@ import sys
 from pathlib import Path
 from typing import Sequence
 
+from ._version import __version__
 from .audit import AuditConfig, audit_mesh, public_report
 from .integrity import audit_tifxyz_integrity, dumps_integrity_report
 from .io import load_tifxyz
@@ -216,7 +217,7 @@ def _run_audit(args: argparse.Namespace) -> int:
     except Exception as exc:
         failure = {
             "schema_version": "tifxyz-audit-failure-v1",
-            "tool": {"name": "tifxyz-doctor", "version": "0.1.0"},
+            "tool": {"name": "tifxyz-doctor", "version": __version__},
             "source": {"path": str(args.path)},
             "status": "error",
             "contract": contract,

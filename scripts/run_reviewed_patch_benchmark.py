@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Benchmark Doctor on reviewed same-wrap corridors and controlled switch proxies."""
+"""Benchmark Doctor in reviewed same-wrap neighborhoods and controlled proxies."""
 
 from __future__ import annotations
 
@@ -9,7 +9,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import asdict
 import hashlib
 import json
-import math
 from pathlib import Path
 import sys
 from typing import Any
@@ -20,20 +19,23 @@ import numpy as np
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
+from tifxyz_doctor import __version__  # noqa: E402
 from tifxyz_doctor.audit import AuditConfig, audit_mesh  # noqa: E402
+from tifxyz_doctor.audit import public_report  # noqa: E402
 from tifxyz_doctor.io import load_tifxyz  # noqa: E402
 from tifxyz_doctor.reviewed_benchmark import (  # noqa: E402
     inject_normal_offset_switch,
-    same_wrap_corridor,
+    same_wrap_annotation_neighborhoods,
 )
 
 
 DEFAULT_OUTPUT = PROJECT_ROOT / "benchmarks" / "reviewed-same-wrap-results-v0.2.0.json"
+DEFAULT_SPLIT_MANIFEST = (
+    PROJECT_ROOT / "benchmarks" / "reviewed-same-wrap-split-v1.json"
+)
 DEFAULT_OFFSETS_VOXELS = (4.0, 8.0, 16.0)
 DEFAULT_TRANSITION_WIDTHS = (1, 4, 12)
-DEFAULT_CORRIDOR_RADIUS = 4
-DEFAULT_CALIBRATION_LIMIT = 64
-DEFAULT_HOLDOUT_LIMIT = 64
+DEFAULT_ANNOTATION_RADIUS = 4
 REQUIRED_FILES = (
     "meta.json",
     "corr_points_results.json",
@@ -51,6 +53,11 @@ def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("data", type=Path, help="Root containing downloaded same_wrap* patches")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
+    parser.add_argument(
+        "--split-manifest",
+        type=Path,
+        default=DEFAULT_SPLIT_MANIFEST,
+    )
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument(
         "--retries",
@@ -60,18 +67,11 @@ def _parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--limit", type=int)
     parser.add_argument(
-        "--calibration-limit",
+        "--annotation-radius",
         type=int,
-        default=DEFAULT_CALIBRATION_LIMIT,
-        help="Original evenly spaced synthetic calibration cohort",
+        default=DEFAULT_ANNOTATION_RADIUS,
+        help="Chebyshev dilation radius around mapped annotation samples",
     )
-    parser.add_argument(
-        "--holdout-limit",
-        type=int,
-        default=DEFAULT_HOLDOUT_LIMIT,
-        help="Hash-ranked synthetic holdout cohort, excluding calibration patches",
-    )
-    parser.add_argument("--corridor-radius", type=int, default=DEFAULT_CORRIDOR_RADIUS)
     parser.add_argument(
         "--offsets",
         default=",".join(str(value) for value in DEFAULT_OFFSETS_VOXELS),
@@ -105,6 +105,10 @@ def _sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def _ids_sha256(ids: list[str]) -> str:
+    return hashlib.sha256(("\n".join(ids) + "\n").encode()).hexdigest()
 
 
 def _audit_signature(report: dict[str, Any]) -> dict[str, Any]:
@@ -155,7 +159,7 @@ def _same_wrap_point_count(results: dict[str, Any]) -> int:
 def _base_observation(
     path: Path,
     config: AuditConfig,
-    corridor_radius: int,
+    annotation_radius: int,
 ) -> tuple[dict[str, Any], Any, dict[str, Any], np.ndarray]:
     with (path / "meta.json").open("r", encoding="utf-8") as handle:
         metadata = json.load(handle)
@@ -169,16 +173,19 @@ def _base_observation(
         dtype=bool,
     )
     valid_cells = np.asarray(report["_arrays"]["valid_cells"], dtype=bool)
-    corridor = same_wrap_corridor(
+    annotation_neighborhoods = same_wrap_annotation_neighborhoods(
         corr_results,
         data.shape,
-        radius=corridor_radius,
+        radius=annotation_radius,
     )
-    labeled_cells = corridor & valid_cells
-    corridor_cues = cue_mask & labeled_cells
-    corridor_normal_steps = normal_step_mask & labeled_cells
-    legacy_cues = cue_mask & ~normal_step_mask
-    corridor_legacy_cues = legacy_cues & labeled_cells
+    labeled_cells = annotation_neighborhoods & valid_cells
+    neighborhood_cues = cue_mask & labeled_cells
+    neighborhood_normal_steps = normal_step_mask & labeled_cells
+    legacy_cues = np.asarray(
+        report["_arrays"]["v0_1_review_cue_mask"],
+        dtype=bool,
+    )
+    neighborhood_legacy_cues = legacy_cues & labeled_cells
     file_hashes = {name: _sha256(path / name) for name in REQUIRED_FILES}
     finding_codes = [finding["code"] for finding in report["findings"]]
     observation = {
@@ -189,26 +196,30 @@ def _base_observation(
         "same_wrap_annotation_points": _same_wrap_point_count(corr_results),
         "valid_vertices": report["integrity"]["valid_vertex_count"],
         "valid_cells": int(valid_cells.sum()),
-        "same_wrap_corridor_cells": int(labeled_cells.sum()),
+        "same_wrap_annotation_neighborhood_cells": int(labeled_cells.sum()),
         "all_review_cue_cells": int(cue_mask.sum()),
-        "same_wrap_corridor_cue_cells": int(corridor_cues.sum()),
-        "all_v0_1_equivalent_cue_cells": int(legacy_cues.sum()),
-        "same_wrap_corridor_v0_1_equivalent_cue_cells": int(
-            corridor_legacy_cues.sum()
+        "same_wrap_annotation_neighborhood_cue_cells": int(
+            neighborhood_cues.sum()
+        ),
+        "all_v0_1_cue_cells": int(legacy_cues.sum()),
+        "same_wrap_annotation_neighborhood_v0_1_cue_cells": int(
+            neighborhood_legacy_cues.sum()
         ),
         "all_coherent_normal_step_cells": int(normal_step_mask.sum()),
-        "same_wrap_corridor_coherent_normal_step_cells": int(
-            corridor_normal_steps.sum()
+        "same_wrap_annotation_neighborhood_coherent_normal_step_cells": int(
+            neighborhood_normal_steps.sum()
         ),
         "has_any_review_cue": bool(cue_mask.any()),
-        "has_review_cue_in_same_wrap_corridor": bool(corridor_cues.any()),
-        "has_v0_1_equivalent_cue": bool(legacy_cues.any()),
-        "has_v0_1_equivalent_cue_in_same_wrap_corridor": bool(
-            corridor_legacy_cues.any()
+        "has_review_cue_in_same_wrap_annotation_neighborhood": bool(
+            neighborhood_cues.any()
+        ),
+        "has_v0_1_cue": bool(legacy_cues.any()),
+        "has_v0_1_cue_in_same_wrap_annotation_neighborhood": bool(
+            neighborhood_legacy_cues.any()
         ),
         "has_coherent_normal_step": bool(normal_step_mask.any()),
-        "has_coherent_normal_step_in_same_wrap_corridor": bool(
-            corridor_normal_steps.any()
+        "has_coherent_normal_step_in_same_wrap_annotation_neighborhood": bool(
+            neighborhood_normal_steps.any()
         ),
         "finding_codes": finding_codes,
         "audit_signature": _audit_signature(report),
@@ -220,6 +231,7 @@ def _base_observation(
 def _synthetic_observations(
     patch_id: str,
     evaluation_split: str,
+    overlap_component_id: str,
     data: Any,
     base_report: dict[str, Any],
     config: AuditConfig,
@@ -231,7 +243,10 @@ def _synthetic_observations(
         base_report["_arrays"]["coherent_normal_step_cells"],
         dtype=bool,
     )
-    base_legacy_cues = base_cues & ~base_normal_steps
+    base_legacy_cues = np.asarray(
+        base_report["_arrays"]["v0_1_review_cue_mask"],
+        dtype=bool,
+    )
     observations: list[dict[str, Any]] = []
 
     null_case = inject_normal_offset_switch(
@@ -240,10 +255,15 @@ def _synthetic_observations(
         transition_width_cells=widths[0],
     )
     null_report = audit_mesh(null_case.data, config)
+    baseline_public = public_report(base_report)
+    null_public = public_report(null_report)
+    baseline_coordinate_bytes = data.coordinates.tobytes(order="C")
+    null_coordinate_bytes = null_case.data.coordinates.tobytes(order="C")
     observations.append(
         {
             "patch_id": patch_id,
             "evaluation_split": evaluation_split,
+            "overlap_component_id": overlap_component_id,
             "kind": "null",
             "offset_voxels": 0.0,
             "transition_width_cells": widths[0],
@@ -254,6 +274,18 @@ def _synthetic_observations(
             "signature_matches_baseline": (
                 _audit_signature(null_report) == _audit_signature(base_report)
             ),
+            "coordinates_byte_identical": (
+                data.coordinates.dtype == null_case.data.coordinates.dtype
+                and data.coordinates.shape == null_case.data.coordinates.shape
+                and baseline_coordinate_bytes == null_coordinate_bytes
+            ),
+            "validity_byte_identical": (
+                data.valid.dtype == null_case.data.valid.dtype
+                and data.valid.shape == null_case.data.valid.shape
+                and data.valid.tobytes(order="C")
+                == null_case.data.valid.tobytes(order="C")
+            ),
+            "public_report_matches_baseline": null_public == baseline_public,
         }
     )
 
@@ -277,7 +309,10 @@ def _synthetic_observations(
             incremental_localized_normal_steps = (
                 incremental_normal_steps & case.evaluation_cells
             )
-            legacy_cues = cues & ~normal_steps
+            legacy_cues = np.asarray(
+                report["_arrays"]["v0_1_review_cue_mask"],
+                dtype=bool,
+            )
             incremental_legacy_cues = legacy_cues & ~base_legacy_cues
             incremental_localized_legacy_cues = (
                 incremental_legacy_cues & case.evaluation_cells
@@ -286,9 +321,9 @@ def _synthetic_observations(
                 {
                     "patch_id": patch_id,
                     "evaluation_split": evaluation_split,
+                    "overlap_component_id": overlap_component_id,
                     "kind": "normal-offset-proxy",
                     "offset_voxels": float(offset),
-                    "nominal_winding_fraction": float(offset / 16.0),
                     "transition_width_cells": int(width),
                     "orientation": case.orientation,
                     "seam_index": case.seam_index,
@@ -306,10 +341,10 @@ def _synthetic_observations(
                     "incremental_localized_coherent_normal_step_cells": int(
                         incremental_localized_normal_steps.sum()
                     ),
-                    "incremental_v0_1_equivalent_cue_cells": int(
+                    "incremental_v0_1_cue_cells": int(
                         incremental_legacy_cues.sum()
                     ),
-                    "incremental_localized_v0_1_equivalent_cue_cells": int(
+                    "incremental_localized_v0_1_cue_cells": int(
                         incremental_localized_legacy_cues.sum()
                     ),
                     "raw_case_detected": bool(localized.any()),
@@ -317,7 +352,7 @@ def _synthetic_observations(
                     "incremental_coherent_normal_step_case_detected": bool(
                         incremental_localized_normal_steps.any()
                     ),
-                    "incremental_v0_1_equivalent_case_detected": bool(
+                    "incremental_v0_1_case_detected": bool(
                         incremental_localized_legacy_cues.any()
                     ),
                     "finding_codes": [
@@ -328,131 +363,165 @@ def _synthetic_observations(
     return observations
 
 
-def _wilson(successes: int, total: int, z: float = 1.959963984540054) -> list[float] | None:
-    if total <= 0:
+def _component_bootstrap_rate(
+    observations: list[dict[str, Any]],
+    success_key: str,
+    *,
+    iterations: int = 10_000,
+) -> list[float] | None:
+    """Deterministic cluster bootstrap over overlap-connected components."""
+
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for item in observations:
+        grouped[item["overlap_component_id"]].append(item)
+    components = [grouped[key] for key in sorted(grouped)]
+    if not components:
         return None
-    proportion = successes / total
-    denominator = 1.0 + z * z / total
-    center = (proportion + z * z / (2.0 * total)) / denominator
-    margin = (
-        z
-        * math.sqrt(
-            proportion * (1.0 - proportion) / total
-            + z * z / (4.0 * total * total)
-        )
-        / denominator
+    seed_material = (
+        f"tifxyz-doctor-component-bootstrap-v1\0{success_key}\0"
+        + "\0".join(sorted(grouped))
     )
-    return [max(0.0, center - margin), min(1.0, center + margin)]
+    seed = int.from_bytes(hashlib.sha256(seed_material.encode()).digest()[:8])
+    rng = np.random.default_rng(seed)
+    rates = np.empty(iterations, dtype=np.float64)
+    for iteration in range(iterations):
+        sampled = rng.integers(0, len(components), size=len(components))
+        numerator = 0
+        denominator = 0
+        for component_index in sampled:
+            component = components[int(component_index)]
+            numerator += sum(bool(item[success_key]) for item in component)
+            denominator += len(component)
+        rates[iteration] = numerator / denominator
+    return [
+        float(np.quantile(rates, 0.025)),
+        float(np.quantile(rates, 0.975)),
+    ]
+
+
+def _same_wrap_alert_summary(
+    observations: list[dict[str, Any]],
+    evaluation_group: str,
+) -> dict[str, Any]:
+    labeled = [
+        item
+        for item in observations
+        if item["same_wrap_annotation_points"] > 0
+        and item["same_wrap_annotation_neighborhood_cells"] > 0
+    ]
+    total_cells = sum(
+        item["same_wrap_annotation_neighborhood_cells"] for item in labeled
+    )
+    cue_cells = sum(
+        item["same_wrap_annotation_neighborhood_cue_cells"] for item in labeled
+    )
+    step_cells = sum(
+        item["same_wrap_annotation_neighborhood_coherent_normal_step_cells"]
+        for item in labeled
+    )
+    v0_1_cells = sum(
+        item["same_wrap_annotation_neighborhood_v0_1_cue_cells"]
+        for item in labeled
+    )
+    cue_patches = sum(
+        item["has_review_cue_in_same_wrap_annotation_neighborhood"]
+        for item in labeled
+    )
+    step_patches = sum(
+        item["has_coherent_normal_step_in_same_wrap_annotation_neighborhood"]
+        for item in labeled
+    )
+    v0_1_patches = sum(
+        item["has_v0_1_cue_in_same_wrap_annotation_neighborhood"]
+        for item in labeled
+    )
+    finding_prevalence = Counter(
+        code for item in observations for code in set(item["finding_codes"])
+    )
+    return {
+        "evaluation_group": evaluation_group,
+        "audited_patches": len(observations),
+        "overlap_components": len(
+            {item["overlap_component_id"] for item in observations}
+        ),
+        "patches_with_annotation_neighborhoods": len(labeled),
+        "same_wrap_annotation_points": sum(
+            item["same_wrap_annotation_points"] for item in labeled
+        ),
+        "annotation_neighborhood_cells": total_cells,
+        "annotation_neighborhood_cue_cells": cue_cells,
+        "annotation_neighborhood_cue_cell_rate": (
+            cue_cells / total_cells if total_cells else None
+        ),
+        "annotation_neighborhood_coherent_normal_step_cells": step_cells,
+        "annotation_neighborhood_coherent_normal_step_cell_rate": (
+            step_cells / total_cells if total_cells else None
+        ),
+        "annotation_neighborhood_v0_1_cue_cells": v0_1_cells,
+        "annotation_neighborhood_v0_1_cue_cell_rate": (
+            v0_1_cells / total_cells if total_cells else None
+        ),
+        "patches_with_annotation_neighborhood_cues": cue_patches,
+        "patch_annotation_neighborhood_cue_rate": (
+            cue_patches / len(labeled) if labeled else None
+        ),
+        "patch_annotation_neighborhood_cue_rate_component_bootstrap_95": (
+            _component_bootstrap_rate(
+                labeled,
+                "has_review_cue_in_same_wrap_annotation_neighborhood",
+            )
+        ),
+        "patches_with_annotation_neighborhood_coherent_normal_steps": (
+            step_patches
+        ),
+        "patch_annotation_neighborhood_coherent_normal_step_rate": (
+            step_patches / len(labeled) if labeled else None
+        ),
+        (
+            "patch_annotation_neighborhood_coherent_normal_step_rate_"
+            "component_bootstrap_95"
+        ): _component_bootstrap_rate(
+            labeled,
+            "has_coherent_normal_step_in_same_wrap_annotation_neighborhood",
+        ),
+        "patches_with_annotation_neighborhood_v0_1_cues": v0_1_patches,
+        "patch_annotation_neighborhood_v0_1_cue_rate": (
+            v0_1_patches / len(labeled) if labeled else None
+        ),
+        "patch_annotation_neighborhood_v0_1_cue_rate_component_bootstrap_95": (
+            _component_bootstrap_rate(
+                labeled,
+                "has_v0_1_cue_in_same_wrap_annotation_neighborhood",
+            )
+        ),
+        "patches_with_any_cue_anywhere": sum(
+            item["has_any_review_cue"] for item in observations
+        ),
+        "patches_with_coherent_normal_steps_anywhere": sum(
+            item["has_coherent_normal_step"] for item in observations
+        ),
+        "patches_with_v0_1_cues_anywhere": sum(
+            item["has_v0_1_cue"] for item in observations
+        ),
+        "finding_patch_prevalence": dict(sorted(finding_prevalence.items())),
+    }
 
 
 def _aggregate(
     base: list[dict[str, Any]],
     synthetic: list[dict[str, Any]],
 ) -> dict[str, Any]:
-    labeled_base = [
-        item
-        for item in base
-        if item["same_wrap_annotation_points"] > 0
-        and item["same_wrap_corridor_cells"] > 0
+    same_wrap_groups = [
+        _same_wrap_alert_summary(base, "all_reviewed_patches"),
+        _same_wrap_alert_summary(
+            [
+                item
+                for item in base
+                if item["evaluation_group"] == "overlap_isolated_holdout"
+            ],
+            "overlap_isolated_holdout",
+        ),
     ]
-    total_corridor = sum(
-        item["same_wrap_corridor_cells"] for item in labeled_base
-    )
-    total_corridor_cues = sum(
-        item["same_wrap_corridor_cue_cells"] for item in labeled_base
-    )
-    total_corridor_normal_steps = sum(
-        item["same_wrap_corridor_coherent_normal_step_cells"]
-        for item in labeled_base
-    )
-    total_corridor_legacy_cues = sum(
-        item["same_wrap_corridor_v0_1_equivalent_cue_cells"]
-        for item in labeled_base
-    )
-    patch_corridor_cues = sum(
-        item["has_review_cue_in_same_wrap_corridor"] for item in labeled_base
-    )
-    patch_corridor_normal_steps = sum(
-        item["has_coherent_normal_step_in_same_wrap_corridor"]
-        for item in labeled_base
-    )
-    patch_corridor_legacy_cues = sum(
-        item["has_v0_1_equivalent_cue_in_same_wrap_corridor"]
-        for item in labeled_base
-    )
-    finding_prevalence = Counter(
-        code for item in base for code in set(item["finding_codes"])
-    )
-    negative = {
-        "audited_patches": len(base),
-        "patches_with_labeled_corridors": len(labeled_base),
-        "same_wrap_annotation_points": sum(
-            item["same_wrap_annotation_points"] for item in labeled_base
-        ),
-        "same_wrap_corridor_cells": total_corridor,
-        "same_wrap_corridor_cue_cells": total_corridor_cues,
-        "corridor_cue_cell_rate": (
-            total_corridor_cues / total_corridor if total_corridor else None
-        ),
-        "same_wrap_corridor_coherent_normal_step_cells": (
-            total_corridor_normal_steps
-        ),
-        "corridor_coherent_normal_step_cell_rate": (
-            total_corridor_normal_steps / total_corridor
-            if total_corridor
-            else None
-        ),
-        "same_wrap_corridor_v0_1_equivalent_cue_cells": (
-            total_corridor_legacy_cues
-        ),
-        "corridor_v0_1_equivalent_cue_cell_rate": (
-            total_corridor_legacy_cues / total_corridor
-            if total_corridor
-            else None
-        ),
-        "patches_with_corridor_cues": patch_corridor_cues,
-        "patch_corridor_cue_rate": (
-            patch_corridor_cues / len(labeled_base) if labeled_base else None
-        ),
-        "patch_corridor_cue_rate_wilson_95": _wilson(
-            patch_corridor_cues,
-            len(labeled_base),
-        ),
-        "patches_with_corridor_coherent_normal_steps": (
-            patch_corridor_normal_steps
-        ),
-        "patch_corridor_coherent_normal_step_rate": (
-            patch_corridor_normal_steps / len(labeled_base)
-            if labeled_base
-            else None
-        ),
-        "patch_corridor_coherent_normal_step_rate_wilson_95": _wilson(
-            patch_corridor_normal_steps,
-            len(labeled_base),
-        ),
-        "patches_with_corridor_v0_1_equivalent_cues": (
-            patch_corridor_legacy_cues
-        ),
-        "patch_corridor_v0_1_equivalent_cue_rate": (
-            patch_corridor_legacy_cues / len(labeled_base)
-            if labeled_base
-            else None
-        ),
-        "patch_corridor_v0_1_equivalent_cue_rate_wilson_95": _wilson(
-            patch_corridor_legacy_cues,
-            len(labeled_base),
-        ),
-        "patches_with_any_cue_anywhere": sum(
-            item["has_any_review_cue"] for item in base
-        ),
-        "patches_with_coherent_normal_steps_anywhere": sum(
-            item["has_coherent_normal_step"] for item in base
-        ),
-        "patches_with_v0_1_equivalent_cues_anywhere": sum(
-            item["has_v0_1_equivalent_cue"] for item in base
-        ),
-        "finding_patch_prevalence": dict(sorted(finding_prevalence.items())),
-    }
 
     nulls = [item for item in synthetic if item["kind"] == "null"]
     groups: dict[tuple[str, float, int], list[dict[str, Any]]] = defaultdict(list)
@@ -475,41 +544,52 @@ def _aggregate(
             item["incremental_coherent_normal_step_case_detected"]
             for item in cases
         )
-        legacy_detected = sum(
-            item["incremental_v0_1_equivalent_case_detected"]
-            for item in cases
+        v0_1_detected = sum(
+            item["incremental_v0_1_case_detected"] for item in cases
         )
         positive_groups.append(
             {
                 "evaluation_split": evaluation_split,
                 "offset_voxels": offset,
-                "nominal_winding_fraction": offset / 16.0,
                 "transition_width_cells": width,
                 "cases": len(cases),
+                "overlap_components": len(
+                    {item["overlap_component_id"] for item in cases}
+                ),
                 "raw_cases_detected": raw_detected,
-                "raw_case_recall": raw_detected / len(cases),
-                "raw_case_recall_wilson_95": _wilson(raw_detected, len(cases)),
+                "raw_case_detection_rate": raw_detected / len(cases),
                 "incremental_cases_detected": incremental_detected,
-                "incremental_case_recall": incremental_detected / len(cases),
-                "incremental_case_recall_wilson_95": _wilson(
-                    incremental_detected,
-                    len(cases),
+                "incremental_case_detection_rate": (
+                    incremental_detected / len(cases)
+                ),
+                "incremental_case_detection_rate_component_bootstrap_95": (
+                    _component_bootstrap_rate(
+                        cases,
+                        "incremental_case_detected",
+                    )
                 ),
                 "incremental_coherent_normal_step_cases_detected": (
                     normal_step_detected
                 ),
-                "incremental_coherent_normal_step_case_recall": (
+                "incremental_coherent_normal_step_case_detection_rate": (
                     normal_step_detected / len(cases)
                 ),
-                "incremental_coherent_normal_step_case_recall_wilson_95": (
-                    _wilson(normal_step_detected, len(cases))
+                (
+                    "incremental_coherent_normal_step_case_detection_rate_"
+                    "component_bootstrap_95"
+                ): _component_bootstrap_rate(
+                    cases,
+                    "incremental_coherent_normal_step_case_detected",
                 ),
-                "incremental_v0_1_equivalent_cases_detected": legacy_detected,
-                "incremental_v0_1_equivalent_case_recall": (
-                    legacy_detected / len(cases)
+                "incremental_v0_1_cases_detected": v0_1_detected,
+                "incremental_v0_1_case_detection_rate": (
+                    v0_1_detected / len(cases)
                 ),
-                "incremental_v0_1_equivalent_case_recall_wilson_95": (
-                    _wilson(legacy_detected, len(cases))
+                "incremental_v0_1_case_detection_rate_component_bootstrap_95": (
+                    _component_bootstrap_rate(
+                        cases,
+                        "incremental_v0_1_case_detected",
+                    )
                 ),
                 "evaluation_cells": sum(item["evaluation_cells"] for item in cases),
                 "incremental_localized_cue_cells": sum(
@@ -519,20 +599,29 @@ def _aggregate(
                     item["incremental_localized_coherent_normal_step_cells"]
                     for item in cases
                 ),
-                "incremental_localized_v0_1_equivalent_cue_cells": sum(
-                    item["incremental_localized_v0_1_equivalent_cue_cells"]
+                "incremental_localized_v0_1_cue_cells": sum(
+                    item["incremental_localized_v0_1_cue_cells"]
                     for item in cases
                 ),
             }
         )
     return {
-        "reviewed_same_wrap_negative_control": negative,
+        "reviewed_same_wrap_annotation_neighborhood_alerts": same_wrap_groups,
         "synthetic_null_control": [
             {
                 "evaluation_split": evaluation_split,
                 "cases": len(cases),
                 "signature_mismatches": sum(
                     not item["signature_matches_baseline"] for item in cases
+                ),
+                "coordinate_byte_mismatches": sum(
+                    not item["coordinates_byte_identical"] for item in cases
+                ),
+                "validity_byte_mismatches": sum(
+                    not item["validity_byte_identical"] for item in cases
+                ),
+                "public_report_mismatches": sum(
+                    not item["public_report_matches_baseline"] for item in cases
                 ),
             }
             for evaluation_split in sorted(
@@ -550,30 +639,6 @@ def _aggregate(
     }
 
 
-def _select_evenly(paths: list[Path], limit: int) -> set[str]:
-    if limit <= 0 or not paths:
-        return set()
-    if limit >= len(paths):
-        return {path.name for path in paths}
-    indices = np.linspace(0, len(paths) - 1, num=limit, dtype=np.int64)
-    return {paths[int(index)].name for index in indices}
-
-
-def _select_hash_ranked(
-    paths: list[Path],
-    excluded_ids: set[str],
-    limit: int,
-) -> set[str]:
-    """Select a deterministic holdout without reusing the calibration cohort."""
-
-    eligible = [path for path in paths if path.name not in excluded_ids]
-    ranked = sorted(
-        eligible,
-        key=lambda path: (hashlib.sha256(path.name.encode()).hexdigest(), path.name),
-    )
-    return {path.name for path in ranked[: max(0, limit)]}
-
-
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     offsets = _parse_float_tuple(args.offsets)
@@ -582,48 +647,89 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--workers must be at least 1")
     if args.retries < 0:
         raise SystemExit("--retries must be non-negative")
-    if args.calibration_limit < 0 or args.holdout_limit < 0:
-        raise SystemExit("synthetic cohort limits must be non-negative")
-    if args.corridor_radius < 0:
-        raise SystemExit("--corridor-radius must be non-negative")
+    if args.annotation_radius < 0:
+        raise SystemExit("--annotation-radius must be non-negative")
     if not args.data.is_dir():
         raise SystemExit(f"data root not found: {args.data}")
+    if not args.split_manifest.is_file():
+        raise SystemExit(
+            f"split manifest not found: {args.split_manifest}; run "
+            "scripts/build_reviewed_patch_split.py first"
+        )
 
-    candidates = [
+    full_candidates = [
         path
         for path in sorted(args.data.glob("same_wrap*"))
         if path.is_dir() and all((path / name).is_file() for name in REQUIRED_FILES)
     ]
+    with args.split_manifest.open("r", encoding="utf-8") as handle:
+        split_manifest = json.load(handle)
+    if split_manifest.get("schema_version") != "reviewed-same-wrap-split-v1":
+        raise SystemExit("unsupported reviewed-patch split manifest")
+    candidate_ids = [path.name for path in full_candidates]
+    expected_ids_digest = split_manifest["source"]["selected_patch_ids_sha256"]
+    if _ids_sha256(candidate_ids) != expected_ids_digest:
+        raise SystemExit("selected patch IDs do not match the frozen split manifest")
+    config = AuditConfig()
+    if split_manifest["frozen_detector"]["configuration"] != asdict(config):
+        raise SystemExit("Doctor configuration differs from the frozen split manifest")
+    protocol = split_manifest["protocol"]
+    if list(offsets) != protocol["normal_offsets_voxels"]:
+        raise SystemExit("offset ladder differs from the frozen split manifest")
+    if list(widths) != protocol["transition_widths_cells"]:
+        raise SystemExit("transition widths differ from the frozen split manifest")
+    if (
+        args.annotation_radius
+        != protocol["annotation_neighborhood_radius_cells"]
+    ):
+        raise SystemExit("annotation radius differs from the frozen split manifest")
+
+    split = split_manifest["split"]
+    development_ids = set(split["development_ids"])
+    clean_holdout_ids = set(split["clean_holdout_pool_ids"])
+    selected_holdout_ids = set(split["selected_holdout_ids"])
+    component_ids = split["component_ids"]
+    if development_ids & selected_holdout_ids:
+        raise SystemExit("split manifest reuses a development patch in holdout")
+    if not (
+        development_ids | set(split["development_related_excluded_ids"])
+    ).isdisjoint(clean_holdout_ids):
+        raise SystemExit("split manifest leaks a development component into holdout")
+    synthetic_splits = {
+        **{patch_id: "development" for patch_id in development_ids},
+        **{patch_id: "holdout" for patch_id in selected_holdout_ids},
+    }
+    evaluation_groups = {
+        patch_id: (
+            "overlap_isolated_holdout"
+            if patch_id in clean_holdout_ids
+            else "development_connected"
+        )
+        for patch_id in candidate_ids
+    }
+    candidates = full_candidates
     if args.limit is not None:
         candidates = candidates[: args.limit]
     if not candidates:
         raise SystemExit("no complete same_wrap patches with correlation results found")
-    calibration_ids = _select_evenly(candidates, args.calibration_limit)
-    holdout_ids = _select_hash_ranked(
-        candidates,
-        calibration_ids,
-        args.holdout_limit,
-    )
-    synthetic_splits = {
-        **{patch_id: "calibration" for patch_id in calibration_ids},
-        **{patch_id: "holdout" for patch_id in holdout_ids},
-    }
-    config = AuditConfig()
 
     base_observations: list[dict[str, Any]] = []
     synthetic_observations: list[dict[str, Any]] = []
     failed_paths: list[tuple[Path, Exception]] = []
 
     def run(path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-        observation, data, report, _corridor = _base_observation(
+        observation, data, report, _annotation_neighborhoods = _base_observation(
             path,
             config,
-            args.corridor_radius,
+            args.annotation_radius,
         )
+        observation["evaluation_group"] = evaluation_groups[path.name]
+        observation["overlap_component_id"] = component_ids[path.name]
         generated = (
             _synthetic_observations(
                 path.name,
                 synthetic_splits[path.name],
+                component_ids[path.name],
                 data,
                 report,
                 config,
@@ -702,9 +808,9 @@ def main(argv: list[str] | None = None) -> int:
 
     result = {
         "schema_version": "reviewed-same-wrap-benchmark-v1",
-        "tool": {"name": "tifxyz-doctor", "version": "0.1.0"},
+        "tool": {"name": "tifxyz-doctor", "version": __version__},
         "experiment_commits": {
-            "frozen_detector_and_protocol": (
+            "frozen_detector_and_development_protocol": (
                 "d3c8309ca707e2f18e7d64e38fb7be4ff4ca77c0"
             ),
             "cue_specific_reporting": (
@@ -729,6 +835,12 @@ def main(argv: list[str] | None = None) -> int:
             "selected_patches": len(candidates),
             "successfully_audited_patches": len(base_observations),
             "tree_sha256": tree_digest.hexdigest(),
+            "split_manifest": {
+                "path": str(args.split_manifest),
+                "sha256": _sha256(args.split_manifest),
+                "selected_patch_ids_sha256": expected_ids_digest,
+                "overlap_graph": split_manifest["source"]["overlap_graph"],
+            },
         },
         "source_data_license": {
             "spdx": "CC-BY-NC-4.0",
@@ -740,53 +852,61 @@ def main(argv: list[str] | None = None) -> int:
         },
         "configuration": {
             "doctor": asdict(config),
-            "same_wrap_corridor_radius_cells": args.corridor_radius,
+            "same_wrap_annotation_neighborhood_radius_cells": (
+                args.annotation_radius
+            ),
             "synthetic_patch_selection": {
-                "calibration": (
-                    "The original cohort used while developing the cue: evenly "
-                    "spaced indices across sorted selected patch IDs."
+                "development": (
+                    "The exact original 64-patch cohort used while developing "
+                    "the cue."
                 ),
                 "holdout": (
-                    "The lowest SHA-256 ranks of patch IDs after excluding the "
-                    "calibration cohort; selected only after detector commit "
-                    "d3c8309ca707e2f18e7d64e38fb7be4ff4ca77c0 was frozen."
+                    "Whole overlap-connected components from the 492-patch clean "
+                    "pool, selected by the fixed hash protocol in the committed "
+                    "split manifest after the detector was frozen."
                 ),
             },
-            "synthetic_patch_limits": {
-                "calibration": args.calibration_limit,
-                "holdout": args.holdout_limit,
+            "synthetic_patch_counts": {
+                "development": len(development_ids),
+                "holdout": len(selected_holdout_ids),
             },
-            "synthetic_split_membership": {
-                "calibration": sorted(calibration_ids),
-                "holdout": sorted(holdout_ids),
-            },
-            "nominal_initial_dr_per_winding_voxels": 16.0,
             "normal_offsets_voxels": list(offsets),
             "transition_widths_cells": list(widths),
             "synthetic_evaluation_radius_cells": 1,
+            "component_bootstrap_iterations": 10_000,
         },
         "interpretation": {
             "negative_control": (
-                "The reviewed same-wrap annotation supports a negative label only "
-                "inside its mapped corridor. It does not prove that every other "
-                "cell in the patch is globally correct."
+                "A reviewed same-wrap annotation negates a sheet switch only in "
+                "the mapped sample neighborhoods. Other cue families can be "
+                "legitimate there, so these are descriptive alert rates—not "
+                "general false-positive rates."
             ),
             "positive_control": (
                 "The normal-offset cases are controlled proxies built from real "
-                "reviewed surfaces. They test sensitivity to a known seam but are "
-                "not a labeled sample of naturally occurring tracer failures."
+                "reviewed surfaces. They test sensitivity to an injected seam but "
+                "are not naturally occurring sheet switches or a measurement of "
+                "real-world sheet-switch recall."
             ),
             "threshold_policy": (
                 "The coherent-normal-step threshold and original 64-patch "
-                "calibration protocol were frozen in commit d3c8309 before the "
-                "disjoint hash-ranked holdout cohort was selected. The offset "
-                "and width ladders are declared in configuration, including an "
-                "exact zero-offset null for both cohorts."
+                "development protocol were frozen in commit d3c8309 before the "
+                "overlap-component-isolated holdout was selected. Development "
+                "and holdout results are never pooled."
             ),
-            "v0_1_equivalent": (
-                "The v0.1-equivalent mask is the union cue mask with only the "
-                "new coherent-normal-step cells removed. The new cue does not "
-                "alter any pre-existing metric, threshold, or cue family."
+            "v0_1_comparator": (
+                "The v0.1 mask is captured immediately before unioning the new "
+                "coherent-normal-step cells, so overlap between old and new cue "
+                "families is preserved correctly."
+            ),
+            "incremental_detection": (
+                "An incremental detection is a cue inside the evaluation band "
+                "that was absent in the unmodified baseline. It is a controlled "
+                "benchmark event rate, not conventional recall."
+            ),
+            "offset_ladder": (
+                "Offsets are reported only in voxels. No fixed winding fraction "
+                "is inferred from them."
             ),
         },
         "aggregate": _aggregate(base_observations, synthetic_observations),

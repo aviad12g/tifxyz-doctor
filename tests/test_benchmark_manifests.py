@@ -15,6 +15,33 @@ def _read_json(relative_path: str) -> tuple[dict, bytes]:
 
 
 class BenchmarkManifestTests(unittest.TestCase):
+    def test_reviewed_patch_split_is_overlap_isolated(self) -> None:
+        manifest, _ = _read_json(
+            "benchmarks/reviewed-same-wrap-split-v1.json"
+        )
+        counts = manifest["counts"]
+        split = manifest["split"]
+
+        self.assertEqual(counts["overlap_edges"], 478)
+        self.assertEqual(counts["overlap_components"], 358)
+        self.assertEqual(counts["development_patches"], 64)
+        self.assertEqual(counts["development_connected_patches"], 217)
+        self.assertEqual(counts["development_related_excluded_patches"], 153)
+        self.assertEqual(counts["clean_holdout_pool_patches"], 492)
+        self.assertEqual(counts["selected_holdout_patches"], 128)
+        self.assertEqual(
+            manifest["source"]["overlap_graph"]["sha256"],
+            "11fc0ef6112a2b9829f80242b7c67530"
+            "c841b1159aed1ed5bb45e4362aad5097",
+        )
+
+        development_connected = set(split["development_connected_ids"])
+        clean_holdout = set(split["clean_holdout_pool_ids"])
+        selected_holdout = set(split["selected_holdout_ids"])
+        self.assertTrue(development_connected.isdisjoint(clean_holdout))
+        self.assertTrue(selected_holdout <= clean_holdout)
+        self.assertEqual(len(development_connected | clean_holdout), 709)
+
     def test_realdata_snapshot_matches_manifest_identity(self) -> None:
         manifest, manifest_bytes = _read_json("benchmarks/realdata-smoke.json")
         snapshot, _ = _read_json("benchmarks/realdata-results-v0.1.0.json")

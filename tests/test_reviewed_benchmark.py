@@ -11,7 +11,9 @@ from tifxyz_doctor.reviewed_benchmark import (
     averaged_vertex_normals,
     dilate_cells,
     inject_normal_offset_switch,
-    same_wrap_corridor,
+    overlap_isolated_split,
+    patch_overlap_components,
+    same_wrap_annotation_neighborhoods,
 )
 
 
@@ -28,6 +30,47 @@ def plane(height: int = 24, width: int = 28) -> TifxyzData:
 
 
 class ReviewedBenchmarkTests(unittest.TestCase):
+    def test_overlap_components_include_isolates(self) -> None:
+        graph = {
+            "collections": {
+                "one": {"name": "between_patches__a__b"},
+                "two": {"name": "between_patches__b__c"},
+                "outside": {"name": "between_patches__c__z"},
+            }
+        }
+
+        edges, components = patch_overlap_components(
+            graph,
+            {"a", "b", "c", "d"},
+        )
+
+        self.assertEqual(edges, [("a", "b"), ("b", "c")])
+        self.assertEqual(components, [("a", "b", "c"), ("d",)])
+
+    def test_holdout_excludes_development_overlap_components(self) -> None:
+        graph = {
+            "collections": {
+                "one": {"name": "between_patches__a__b"},
+                "two": {"name": "between_patches__c__d"},
+            }
+        }
+
+        split = overlap_isolated_split(
+            graph,
+            {"a", "b", "c", "d", "e"},
+            {"a"},
+            holdout_target_patches=2,
+            salt="fixed-test-salt",
+        )
+
+        self.assertEqual(split["development_connected_ids"], ["a", "b"])
+        self.assertEqual(split["development_related_excluded_ids"], ["b"])
+        self.assertEqual(split["clean_holdout_pool_ids"], ["c", "d", "e"])
+        self.assertGreaterEqual(len(split["selected_holdout_ids"]), 2)
+        self.assertTrue(
+            set(split["selected_holdout_ids"]).isdisjoint({"a", "b"})
+        )
+
     def test_dilation_uses_chebyshev_radius(self) -> None:
         seed = np.zeros((7, 8), dtype=bool)
         seed[3, 4] = True
@@ -53,7 +96,11 @@ class ReviewedBenchmarkTests(unittest.TestCase):
             ]
         }
 
-        corridor = same_wrap_corridor(results, (10, 12), radius=0)
+        corridor = same_wrap_annotation_neighborhoods(
+            results,
+            (10, 12),
+            radius=0,
+        )
 
         expected = np.zeros((9, 11), dtype=bool)
         expected[3:5, 4:6] = True
@@ -85,6 +132,22 @@ class ReviewedBenchmarkTests(unittest.TestCase):
             control["_arrays"]["review_cue_mask"],
         )
         self.assertEqual(baseline["findings"], control["findings"])
+        self.assertEqual(baseline["source"], control["source"])
+
+    def test_v0_1_mask_preserves_cells_that_overlap_new_cue(self) -> None:
+        data = plane()
+        synthetic = inject_normal_offset_switch(
+            data,
+            offset_voxels=16.0,
+            transition_width_cells=1,
+        )
+
+        report = audit_mesh(synthetic.data)
+        current = report["_arrays"]["review_cue_mask"]
+        previous = report["_arrays"]["v0_1_review_cue_mask"]
+        new = report["_arrays"]["coherent_normal_step_cells"]
+
+        np.testing.assert_array_equal(current, previous | new)
 
     def test_abrupt_full_winding_proxy_is_detected_at_the_seam(self) -> None:
         data = plane()

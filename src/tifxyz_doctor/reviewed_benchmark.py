@@ -15,6 +15,7 @@ failures.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 from pathlib import Path
 from typing import Any
 
@@ -35,6 +36,126 @@ class SyntheticSwitch:
     seam_index: int
     offset_voxels: float
     transition_width_cells: int
+
+
+def patch_overlap_components(
+    overlap_graph: dict[str, Any],
+    patch_ids: set[str],
+) -> tuple[list[tuple[str, str]], list[tuple[str, ...]]]:
+    """Return overlap edges and connected components for selected patches."""
+
+    adjacency = {patch_id: set() for patch_id in patch_ids}
+    edges: set[tuple[str, str]] = set()
+    collections = overlap_graph.get("collections", {})
+    if not isinstance(collections, dict):
+        raise ValueError("overlap graph collections must be an object")
+    prefix = "between_patches__"
+    for collection in collections.values():
+        if not isinstance(collection, dict):
+            continue
+        name = collection.get("name")
+        if not isinstance(name, str) or not name.startswith(prefix):
+            continue
+        endpoints = name[len(prefix) :].split("__")
+        if len(endpoints) != 2:
+            continue
+        first, second = endpoints
+        if first not in patch_ids or second not in patch_ids or first == second:
+            continue
+        edge = tuple(sorted((first, second)))
+        edges.add(edge)
+        adjacency[first].add(second)
+        adjacency[second].add(first)
+
+    remaining = set(patch_ids)
+    components: list[tuple[str, ...]] = []
+    while remaining:
+        root = min(remaining)
+        stack = [root]
+        members: set[str] = set()
+        while stack:
+            current = stack.pop()
+            if current in members:
+                continue
+            members.add(current)
+            stack.extend(sorted(adjacency[current] - members, reverse=True))
+        remaining -= members
+        components.append(tuple(sorted(members)))
+    components.sort()
+    return sorted(edges), components
+
+
+def overlap_isolated_split(
+    overlap_graph: dict[str, Any],
+    patch_ids: set[str],
+    development_ids: set[str],
+    *,
+    holdout_target_patches: int,
+    salt: str,
+) -> dict[str, Any]:
+    """Build a component-isolated development/holdout split."""
+
+    if not development_ids <= patch_ids:
+        missing = sorted(development_ids - patch_ids)
+        raise ValueError(f"development patches are absent: {missing[:3]}")
+    if holdout_target_patches < 1:
+        raise ValueError("holdout target must be positive")
+    edges, components = patch_overlap_components(overlap_graph, patch_ids)
+    contaminated = [
+        component
+        for component in components
+        if development_ids.intersection(component)
+    ]
+    clean = [
+        component
+        for component in components
+        if not development_ids.intersection(component)
+    ]
+    clean_ranked = sorted(
+        clean,
+        key=lambda component: (
+            hashlib.sha256(
+                (salt + "\0" + "\0".join(component)).encode()
+            ).hexdigest(),
+            component,
+        ),
+    )
+    selected_holdout_components: list[tuple[str, ...]] = []
+    selected_count = 0
+    for component in clean_ranked:
+        selected_holdout_components.append(component)
+        selected_count += len(component)
+        if selected_count >= holdout_target_patches:
+            break
+    contaminated_ids = {
+        patch_id for component in contaminated for patch_id in component
+    }
+    clean_ids = {patch_id for component in clean for patch_id in component}
+    holdout_ids = {
+        patch_id
+        for component in selected_holdout_components
+        for patch_id in component
+    }
+    component_ids: dict[str, str] = {}
+    for component in components:
+        digest = hashlib.sha256("\0".join(component).encode()).hexdigest()
+        component_id = f"sha256:{digest}"
+        component_ids.update({patch_id: component_id for patch_id in component})
+    return {
+        "overlap_edges": [list(edge) for edge in edges],
+        "components": [list(component) for component in components],
+        "component_ids": component_ids,
+        "development_ids": sorted(development_ids),
+        "development_connected_ids": sorted(contaminated_ids),
+        "development_related_excluded_ids": sorted(
+            contaminated_ids - development_ids
+        ),
+        "clean_holdout_pool_ids": sorted(clean_ids),
+        "selected_holdout_components": [
+            list(component) for component in selected_holdout_components
+        ],
+        "selected_holdout_ids": sorted(holdout_ids),
+    }
 
 
 def dilate_cells(mask: np.ndarray, radius: int) -> np.ndarray:
@@ -61,13 +182,18 @@ def dilate_cells(mask: np.ndarray, radius: int) -> np.ndarray:
     return result
 
 
-def same_wrap_corridor(
+def same_wrap_annotation_neighborhoods(
     corr_points_results: dict[str, Any],
     vertex_shape: tuple[int, int],
     *,
     radius: int = 4,
 ) -> np.ndarray:
-    """Map valid annotation model locations to a dilated cell-space corridor."""
+    """Map valid annotation samples to dilated cell-space neighborhoods.
+
+    The public correlation result supplies mapped sample locations, not an
+    ordered polyline. This function deliberately does not imply labels between
+    samples.
+    """
     height, width = (int(vertex_shape[0]), int(vertex_shape[1]))
     if height < 2 or width < 2:
         return np.zeros((max(0, height - 1), max(0, width - 1)), dtype=bool)
@@ -211,12 +337,15 @@ def inject_normal_offset_switch(
         else np.broadcast_to(axis_coefficients[:, None], (height, width))
     )
 
-    coordinates = np.asarray(data.coordinates, dtype=np.float64).copy()
-    movable = data.valid & np.isfinite(normals).all(axis=-1)
-    coordinates[movable] += (
-        float(offset_voxels) * coefficients[movable, None] * normals[movable]
-    )
-    coordinates = coordinates.astype(np.float32)
+    if offset_voxels == 0:
+        coordinates = np.asarray(data.coordinates).copy()
+    else:
+        coordinates = np.asarray(data.coordinates, dtype=np.float64).copy()
+        movable = data.valid & np.isfinite(normals).all(axis=-1)
+        coordinates[movable] += (
+            float(offset_voxels) * coefficients[movable, None] * normals[movable]
+        )
+        coordinates = coordinates.astype(np.float32)
 
     cells = valid_quad_mask(data.valid)
     coefficient_span = np.maximum.reduce(
@@ -237,10 +366,18 @@ def inject_normal_offset_switch(
     seam_cells = cells & (coefficient_span > 1e-12)
     evaluation_cells = dilate_cells(seam_cells, evaluation_radius) & cells
     synthetic = TifxyzData(
-        path=Path(f"{data.path}__synthetic_switch"),
+        path=(
+            data.path
+            if offset_voxels == 0
+            else Path(f"{data.path}__synthetic_switch")
+        ),
         coordinates=coordinates,
         valid=data.valid.copy(),
-        metadata={**data.metadata, "synthetic_switch_proxy": True},
+        metadata=(
+            dict(data.metadata)
+            if offset_voxels == 0
+            else {**data.metadata, "synthetic_switch_proxy": True}
+        ),
         explicit_mask=(
             None if data.explicit_mask is None else data.explicit_mask.copy()
         ),
