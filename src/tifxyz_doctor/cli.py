@@ -61,6 +61,8 @@ def _build_parser() -> argparse.ArgumentParser:
     audit.add_argument("--area-ratio-low", type=float, default=0.25)
     audit.add_argument("--area-ratio-high", type=float, default=4.0)
     audit.add_argument("--shear", type=float, default=0.8660254037844387)
+    audit.add_argument("--normal-step-ratio", type=float, default=0.25)
+    audit.add_argument("--normal-step-min-component-cells", type=int, default=8)
     audit.add_argument("--nonlocal-distance-ratio", type=float, default=0.25)
     audit.add_argument("--nonlocal-uv-exclusion", type=int, default=4)
     audit.add_argument("--max-proximity-points", type=int, default=100_000)
@@ -201,6 +203,8 @@ def _run_audit(args: argparse.Namespace) -> int:
         area_ratio_low=args.area_ratio_low,
         area_ratio_high=args.area_ratio_high,
         shear=args.shear,
+        normal_step_ratio=args.normal_step_ratio,
+        normal_step_min_component_cells=args.normal_step_min_component_cells,
         nonlocal_distance_ratio=args.nonlocal_distance_ratio,
         nonlocal_uv_exclusion=args.nonlocal_uv_exclusion,
         max_proximity_points=args.max_proximity_points,
