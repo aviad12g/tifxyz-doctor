@@ -106,6 +106,40 @@ and found that the converter and `Geometry.cpp` source blobs are identical at
 both commits. The executable harness records those blob identities but does not
 itself fetch or compare GitHub source.
 
+## Reviewed same-wrap benchmark v0.2.0
+
+The committed
+[split manifest](../benchmarks/reviewed-same-wrap-split-v1.json) freezes an
+overlap-component-isolated evaluation before holdout, and the
+[complete result](../benchmarks/reviewed-same-wrap-results-v0.2.0.json)
+records all 709 patch observations and 1,920 synthetic cases.
+
+The original 64 development patches touch components containing 217 of the 709
+reviewed patches. The remaining 492 patches form a clean holdout pool; 128
+patches across 82 whole overlap components were selected by the frozen hash
+protocol.
+
+The sealed holdout reproduced the development behavior:
+
+- abrupt 8-voxel proxy: 124/128 incremental detections (96.875%);
+- abrupt 16-voxel proxy: 128/128 incremental detections (100%);
+- 8-voxel proxy spread across four cells: 0/128;
+- 16-voxel proxy spread across twelve cells: 8/128 (6.25%); and
+- exact null: 0/128 coordinate, validity, public-report, or signature
+  mismatches.
+
+In the full 492-patch overlap-isolated pool, the new cue touched 26 of 373,904
+mapped same-wrap annotation-neighborhood cells and 2 of 491 patches with
+nonempty neighborhoods. Every one of those 26 cells was already touched by a
+v0.1 cue, so v0.2 added no cells to the same-wrap neighborhood union.
+
+These are controlled normal-offset proxy detections and descriptive reviewed
+same-wrap alert rates. They are not natural sheet-switch precision or recall.
+See the
+[full benchmark note](reviewed-same-wrap-benchmark.md) for the cue definition,
+cluster-bootstrap intervals, exact hashes, reproduction commands, and
+limitations.
+
 ## Real-data smoke benchmark v0.1.0
 
 The committed snapshot is

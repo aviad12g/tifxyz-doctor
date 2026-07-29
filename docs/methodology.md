@@ -287,6 +287,34 @@ flip.
 A sharp normal change may be real papyrus geometry. The report provides the
 largest locations for inspection rather than treating them as defects.
 
+### Coherent normal steps
+
+The v0.2 `coherent-normal-step` cue measures a different signal from the angle
+between neighboring cell normals. Cell normals are averaged onto vertices and
+then across each valid horizontal or vertical grid edge. For edge vector `e`,
+local unit normal `n`, and direction-specific median spacing `s`, the score is:
+
+```text
+normal_component_ratio = abs(dot(e, n)) / s
+```
+
+An edge is a candidate when the ratio is at least `0.25`. Candidate edges are
+projected to incident valid cells, labeled with 8-connectivity, and retained
+only when the connected band contains at least eight cells. The component
+requirement rejects isolated spikes and makes this a coherent-band review cue,
+not a per-edge defect classifier.
+
+Both thresholds are configurable with `--normal-step-ratio` and
+`--normal-step-min-component-cells`. The public report records the thresholds,
+candidate-edge count, component sizes, and bounded row/column examples.
+
+The cue was developed for abrupt normal steps. A displacement distributed over
+several cells can keep every edge below threshold. The
+[reviewed-patch benchmark](reviewed-same-wrap-benchmark.md) confirms high
+controlled-proxy detection for abrupt 8- and 16-voxel steps and near-zero
+detection for most gradual proxies; it does not claim natural sheet-switch
+recall.
+
 ### Sampled nonlocal proximity
 
 The proximity pass searches for valid vertices that are close in 3-D but not
@@ -325,6 +353,14 @@ Public JSON excludes internal NumPy arrays, rejects NaN and infinity during
 serialization, sorts contract findings deterministically, and records every
 configuration threshold. Each benchmark snapshot also records the SHA-256 of
 its source manifest.
+
+The v0.2 reviewed-patch experiment treats overlap-connected patches as one
+cluster. Its 64 development patches and every patch connected to them in the
+official overlap graph are excluded from the synthetic holdout. The split
+manifest was committed before opening the 128-patch holdout, and reported
+patch-rate intervals resample overlap components rather than pretending
+overlapping patches are independent. Two complete runs produced the same
+result-file SHA-256.
 
 The downloader verifies every file against its recorded byte size and SHA-256.
 Downloaded datasets are ignored by version control and keep their source
