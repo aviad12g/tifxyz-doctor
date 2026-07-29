@@ -36,7 +36,7 @@
     "comparator_source": "635d66aa74c1ddad59d07ee921c3663b5649b4e2d38cb833fdea6a0f22876373",
     "run_patch_manifest_sha256": "020bdb2a5070cc0df5216ba8d95e6298ef3f2175a010d850c962eb86557914f9",
     "public_patch_manifest_sha256": "eb707b677446db592705f2461146a66ef446be57ca9b964e970f111352dda62d",
-    "packaging_script_sha256": "e363d7353a9508aae5117fe55557465557250b4d76fa371cbf12e27f33caecc9"
+    "packaging_script_sha256": "62c67dcc8931b8a0acdb70c580a78029a2e741a99adc2aa2fd370f57f4c384ac"
   },
   "variants": {
     "baseline": [

@@ -24,10 +24,10 @@ and parsed scientific log observations were identical within every variant.
 | Minimal full bounds | `9e15071` | 15,702 | 159 x 135 | 15,698 | 15,078 |
 | Actual PR | `6e2bba9` | 15,702 | 159 x 135 | 15,698 | 15,078 |
 
-Baseline and helper-only have the same 15,692 valid vertices and bit-identical
-XYZ values on those vertices; the helper-only output merely has an extra
-sentinel-padded row and column. Minimal-full versus helper-only recovers six
-valid vertices and four valid quads at exactly the six precomputed boundary
+Baseline and helper-only have the same 15,692 valid vertices and numerically
+identical XYZ values on those vertices; the helper-only output merely has an
+extra sentinel-padded row and column. Minimal-full versus helper-only recovers
+six valid vertices and four valid quads at exactly the six precomputed boundary
 locations. One adjacent common vertex at `[51,133]` moves by `0.001953125`
 stored coordinate units; all other common XYZ values are identical.
 
@@ -122,7 +122,8 @@ the baseline valid-vertex count.
   disabled, one deterministic rightward growth direction, CUDA disabled
 - Volume: metadata-only PHerc1447 Zarr stub, 7.91 micrometers per voxel. This
   `--src-segment` path reads only shape and voxel-size metadata before
-  `grow_surf_from_surfs`; all completed runs opened no volume chunk.
+  `grow_surf_from_surfs`; all completed runs succeeded without a volume chunk
+  file being present.
 - Controls: `OMP_NUM_THREADS=1`, `OMP_DYNAMIC=FALSE`
 - Replicates: three per source-built variant and three per release-ablation
   variant

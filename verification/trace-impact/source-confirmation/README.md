@@ -16,9 +16,11 @@ Every variant produced identical scientifically relevant output across three
 replicates. The minimal full-bounds build and actual PR have identical X, Y,
 Z, generation, and valid-mask hashes.
 
-That equality applies to every recorded output for this fixture and bounded
-configuration. It does not imply that the PR's additional finite-location,
-sentinel, and normal-guard changes are unnecessary on other inputs.
+That equality applies to every recorded scientifically relevant output listed
+above for this fixture and bounded configuration. Generated UUID/path metadata
+and complete stdout bytes are intentionally excluded. This does not imply that
+the PR's additional finite-location, sentinel, and normal-guard changes are
+unnecessary on other inputs.
 
 Helper-only changes the resume count and saved extent but not the valid output.
 Adding only the `SurfTrackerData.cpp` synchronization recovers six valid

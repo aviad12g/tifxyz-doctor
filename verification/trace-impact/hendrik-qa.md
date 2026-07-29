@@ -72,7 +72,7 @@ column. Across the deterministic source-built runs:
 
 - baseline emits 15,692 valid XYZ vertices and 15,074 valid quads;
 - helper-only expands the saved grid but emits the same 15,692 valid vertices
-  and 15,074 valid quads with bit-identical common XYZ;
+  and 15,074 valid quads with numerically identical common XYZ;
 - minimal-full emits 15,698 valid vertices and 15,078 valid quads, recovering
   exactly the six precomputed boundary locations; and
 - the actual PR has exactly the same X, Y, Z, generation, and mask hashes as
