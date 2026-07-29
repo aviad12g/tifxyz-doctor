@@ -1275,6 +1275,7 @@ def audit_mesh(data: TifxyzData, config: AuditConfig | None = None) -> dict[str,
     report["_arrays"] = {
         "review_score": review_score.astype(np.float32),
         "review_cue_mask": review_cue_mask,
+        "coherent_normal_step_cells": coherent_normal_step_cells,
         "valid_cells": cell_valid,
         "hole_labels": hole_labels,
     }

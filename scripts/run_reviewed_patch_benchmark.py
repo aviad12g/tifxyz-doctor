@@ -146,6 +146,10 @@ def _base_observation(
     data = load_tifxyz(path)
     report = audit_mesh(data, config)
     cue_mask = np.asarray(report["_arrays"]["review_cue_mask"], dtype=bool)
+    normal_step_mask = np.asarray(
+        report["_arrays"]["coherent_normal_step_cells"],
+        dtype=bool,
+    )
     valid_cells = np.asarray(report["_arrays"]["valid_cells"], dtype=bool)
     corridor = same_wrap_corridor(
         corr_results,
@@ -154,6 +158,9 @@ def _base_observation(
     )
     labeled_cells = corridor & valid_cells
     corridor_cues = cue_mask & labeled_cells
+    corridor_normal_steps = normal_step_mask & labeled_cells
+    legacy_cues = cue_mask & ~normal_step_mask
+    corridor_legacy_cues = legacy_cues & labeled_cells
     file_hashes = {name: _sha256(path / name) for name in REQUIRED_FILES}
     finding_codes = [finding["code"] for finding in report["findings"]]
     observation = {
@@ -167,8 +174,24 @@ def _base_observation(
         "same_wrap_corridor_cells": int(labeled_cells.sum()),
         "all_review_cue_cells": int(cue_mask.sum()),
         "same_wrap_corridor_cue_cells": int(corridor_cues.sum()),
+        "all_v0_1_equivalent_cue_cells": int(legacy_cues.sum()),
+        "same_wrap_corridor_v0_1_equivalent_cue_cells": int(
+            corridor_legacy_cues.sum()
+        ),
+        "all_coherent_normal_step_cells": int(normal_step_mask.sum()),
+        "same_wrap_corridor_coherent_normal_step_cells": int(
+            corridor_normal_steps.sum()
+        ),
         "has_any_review_cue": bool(cue_mask.any()),
         "has_review_cue_in_same_wrap_corridor": bool(corridor_cues.any()),
+        "has_v0_1_equivalent_cue": bool(legacy_cues.any()),
+        "has_v0_1_equivalent_cue_in_same_wrap_corridor": bool(
+            corridor_legacy_cues.any()
+        ),
+        "has_coherent_normal_step": bool(normal_step_mask.any()),
+        "has_coherent_normal_step_in_same_wrap_corridor": bool(
+            corridor_normal_steps.any()
+        ),
         "finding_codes": finding_codes,
         "audit_signature": _audit_signature(report),
         "files_sha256": file_hashes,
@@ -185,6 +208,11 @@ def _synthetic_observations(
     widths: tuple[int, ...],
 ) -> list[dict[str, Any]]:
     base_cues = np.asarray(base_report["_arrays"]["review_cue_mask"], dtype=bool)
+    base_normal_steps = np.asarray(
+        base_report["_arrays"]["coherent_normal_step_cells"],
+        dtype=bool,
+    )
+    base_legacy_cues = base_cues & ~base_normal_steps
     observations: list[dict[str, Any]] = []
 
     null_case = inject_normal_offset_switch(
@@ -218,9 +246,22 @@ def _synthetic_observations(
             )
             report = audit_mesh(case.data, config)
             cues = np.asarray(report["_arrays"]["review_cue_mask"], dtype=bool)
+            normal_steps = np.asarray(
+                report["_arrays"]["coherent_normal_step_cells"],
+                dtype=bool,
+            )
             localized = cues & case.evaluation_cells
             incremental = cues & ~base_cues
             incremental_localized = incremental & case.evaluation_cells
+            incremental_normal_steps = normal_steps & ~base_normal_steps
+            incremental_localized_normal_steps = (
+                incremental_normal_steps & case.evaluation_cells
+            )
+            legacy_cues = cues & ~normal_steps
+            incremental_legacy_cues = legacy_cues & ~base_legacy_cues
+            incremental_localized_legacy_cues = (
+                incremental_legacy_cues & case.evaluation_cells
+            )
             observations.append(
                 {
                     "patch_id": patch_id,
@@ -238,8 +279,26 @@ def _synthetic_observations(
                     "incremental_localized_cue_cells": int(
                         incremental_localized.sum()
                     ),
+                    "incremental_coherent_normal_step_cells": int(
+                        incremental_normal_steps.sum()
+                    ),
+                    "incremental_localized_coherent_normal_step_cells": int(
+                        incremental_localized_normal_steps.sum()
+                    ),
+                    "incremental_v0_1_equivalent_cue_cells": int(
+                        incremental_legacy_cues.sum()
+                    ),
+                    "incremental_localized_v0_1_equivalent_cue_cells": int(
+                        incremental_localized_legacy_cues.sum()
+                    ),
                     "raw_case_detected": bool(localized.any()),
                     "incremental_case_detected": bool(incremental_localized.any()),
+                    "incremental_coherent_normal_step_case_detected": bool(
+                        incremental_localized_normal_steps.any()
+                    ),
+                    "incremental_v0_1_equivalent_case_detected": bool(
+                        incremental_localized_legacy_cues.any()
+                    ),
                     "finding_codes": [
                         finding["code"] for finding in report["findings"]
                     ],
@@ -281,8 +340,24 @@ def _aggregate(
     total_corridor_cues = sum(
         item["same_wrap_corridor_cue_cells"] for item in labeled_base
     )
+    total_corridor_normal_steps = sum(
+        item["same_wrap_corridor_coherent_normal_step_cells"]
+        for item in labeled_base
+    )
+    total_corridor_legacy_cues = sum(
+        item["same_wrap_corridor_v0_1_equivalent_cue_cells"]
+        for item in labeled_base
+    )
     patch_corridor_cues = sum(
         item["has_review_cue_in_same_wrap_corridor"] for item in labeled_base
+    )
+    patch_corridor_normal_steps = sum(
+        item["has_coherent_normal_step_in_same_wrap_corridor"]
+        for item in labeled_base
+    )
+    patch_corridor_legacy_cues = sum(
+        item["has_v0_1_equivalent_cue_in_same_wrap_corridor"]
+        for item in labeled_base
     )
     finding_prevalence = Counter(
         code for item in base for code in set(item["finding_codes"])
@@ -298,6 +373,22 @@ def _aggregate(
         "corridor_cue_cell_rate": (
             total_corridor_cues / total_corridor if total_corridor else None
         ),
+        "same_wrap_corridor_coherent_normal_step_cells": (
+            total_corridor_normal_steps
+        ),
+        "corridor_coherent_normal_step_cell_rate": (
+            total_corridor_normal_steps / total_corridor
+            if total_corridor
+            else None
+        ),
+        "same_wrap_corridor_v0_1_equivalent_cue_cells": (
+            total_corridor_legacy_cues
+        ),
+        "corridor_v0_1_equivalent_cue_cell_rate": (
+            total_corridor_legacy_cues / total_corridor
+            if total_corridor
+            else None
+        ),
         "patches_with_corridor_cues": patch_corridor_cues,
         "patch_corridor_cue_rate": (
             patch_corridor_cues / len(labeled_base) if labeled_base else None
@@ -306,8 +397,38 @@ def _aggregate(
             patch_corridor_cues,
             len(labeled_base),
         ),
+        "patches_with_corridor_coherent_normal_steps": (
+            patch_corridor_normal_steps
+        ),
+        "patch_corridor_coherent_normal_step_rate": (
+            patch_corridor_normal_steps / len(labeled_base)
+            if labeled_base
+            else None
+        ),
+        "patch_corridor_coherent_normal_step_rate_wilson_95": _wilson(
+            patch_corridor_normal_steps,
+            len(labeled_base),
+        ),
+        "patches_with_corridor_v0_1_equivalent_cues": (
+            patch_corridor_legacy_cues
+        ),
+        "patch_corridor_v0_1_equivalent_cue_rate": (
+            patch_corridor_legacy_cues / len(labeled_base)
+            if labeled_base
+            else None
+        ),
+        "patch_corridor_v0_1_equivalent_cue_rate_wilson_95": _wilson(
+            patch_corridor_legacy_cues,
+            len(labeled_base),
+        ),
         "patches_with_any_cue_anywhere": sum(
             item["has_any_review_cue"] for item in base
+        ),
+        "patches_with_coherent_normal_steps_anywhere": sum(
+            item["has_coherent_normal_step"] for item in base
+        ),
+        "patches_with_v0_1_equivalent_cues_anywhere": sum(
+            item["has_v0_1_equivalent_cue"] for item in base
         ),
         "finding_patch_prevalence": dict(sorted(finding_prevalence.items())),
     }
@@ -325,6 +446,14 @@ def _aggregate(
         incremental_detected = sum(
             item["incremental_case_detected"] for item in cases
         )
+        normal_step_detected = sum(
+            item["incremental_coherent_normal_step_case_detected"]
+            for item in cases
+        )
+        legacy_detected = sum(
+            item["incremental_v0_1_equivalent_case_detected"]
+            for item in cases
+        )
         positive_groups.append(
             {
                 "offset_voxels": offset,
@@ -340,9 +469,33 @@ def _aggregate(
                     incremental_detected,
                     len(cases),
                 ),
+                "incremental_coherent_normal_step_cases_detected": (
+                    normal_step_detected
+                ),
+                "incremental_coherent_normal_step_case_recall": (
+                    normal_step_detected / len(cases)
+                ),
+                "incremental_coherent_normal_step_case_recall_wilson_95": (
+                    _wilson(normal_step_detected, len(cases))
+                ),
+                "incremental_v0_1_equivalent_cases_detected": legacy_detected,
+                "incremental_v0_1_equivalent_case_recall": (
+                    legacy_detected / len(cases)
+                ),
+                "incremental_v0_1_equivalent_case_recall_wilson_95": (
+                    _wilson(legacy_detected, len(cases))
+                ),
                 "evaluation_cells": sum(item["evaluation_cells"] for item in cases),
                 "incremental_localized_cue_cells": sum(
                     item["incremental_localized_cue_cells"] for item in cases
+                ),
+                "incremental_localized_coherent_normal_step_cells": sum(
+                    item["incremental_localized_coherent_normal_step_cells"]
+                    for item in cases
+                ),
+                "incremental_localized_v0_1_equivalent_cue_cells": sum(
+                    item["incremental_localized_v0_1_equivalent_cue_cells"]
+                    for item in cases
                 ),
             }
         )
@@ -503,6 +656,11 @@ def main(argv: list[str] | None = None) -> int:
                 "Doctor's published v0.1 defaults are used unchanged. The offset "
                 "and width ladders are declared in configuration, including the "
                 "zero-offset null."
+            ),
+            "v0_1_equivalent": (
+                "The v0.1-equivalent mask is the union cue mask with only the "
+                "new coherent-normal-step cells removed. The new cue does not "
+                "alter any pre-existing metric, threshold, or cue family."
             ),
         },
         "aggregate": _aggregate(base_observations, synthetic_observations),
