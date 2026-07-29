@@ -389,7 +389,10 @@ def _component_bootstrap_rate(
         f"tifxyz-doctor-component-bootstrap-v1\0{success_key}\0"
         + "\0".join(sorted(grouped))
     )
-    seed = int.from_bytes(hashlib.sha256(seed_material.encode()).digest()[:8])
+    seed = int.from_bytes(
+        hashlib.sha256(seed_material.encode()).digest()[:8],
+        byteorder="big",
+    )
     rng = np.random.default_rng(seed)
     rates = np.empty(iterations, dtype=np.float64)
     for iteration in range(iterations):

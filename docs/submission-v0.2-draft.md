@@ -43,7 +43,7 @@ The deliverable includes:
 - an official-overlap-graph split builder;
 - a 709-patch / 1,920-case deterministic benchmark;
 - overlap-component cluster-bootstrap intervals;
-- 59 passing tests, including leakage, exact-null, and result-snapshot checks;
+- 61 passing tests, including leakage, exact-null, and result-snapshot checks;
   and
 - source/data/split/result SHA-256 provenance.
 
