@@ -1,0 +1,127 @@
+{
+  "baseline_to_helper_only": {
+    "baseline": "${TRACE_OUTPUT}/baseline/replicate-1/auto_trace_20260729132708080",
+    "candidate": "${TRACE_OUTPUT}/helper_only/replicate-1/auto_trace_20260729132708853",
+    "baseline_shape": [
+      158,
+      134
+    ],
+    "candidate_shape": [
+      159,
+      135
+    ],
+    "baseline_valid_vertices": 15692,
+    "candidate_valid_vertices": 15692,
+    "common_valid_vertices": 15692,
+    "baseline_only_valid_vertices": 0,
+    "candidate_only_valid_vertices": 0,
+    "changed_common_xyz_vertices": 0,
+    "changed_common_mean_displacement": 0,
+    "changed_common_max_displacement": 0,
+    "changed_common_max_location": [
+      0,
+      0
+    ],
+    "candidate_only_locations": []
+  },
+  "helper_only_to_full_bounds": {
+    "baseline": "${TRACE_OUTPUT}/helper_only/replicate-1/auto_trace_20260729132708853",
+    "candidate": "${TRACE_OUTPUT}/full_bounds/replicate-1/auto_trace_20260729132709652",
+    "baseline_shape": [
+      159,
+      135
+    ],
+    "candidate_shape": [
+      159,
+      135
+    ],
+    "baseline_valid_vertices": 15692,
+    "candidate_valid_vertices": 15698,
+    "common_valid_vertices": 15692,
+    "baseline_only_valid_vertices": 0,
+    "candidate_only_valid_vertices": 6,
+    "changed_common_xyz_vertices": 1,
+    "changed_common_mean_displacement": 0.001953125,
+    "changed_common_max_displacement": 0.001953125,
+    "changed_common_max_location": [
+      51,
+      133
+    ],
+    "candidate_only_locations": [
+      [
+        51,
+        134
+      ],
+      [
+        52,
+        134
+      ],
+      [
+        53,
+        134
+      ],
+      [
+        158,
+        88
+      ],
+      [
+        158,
+        89
+      ],
+      [
+        158,
+        90
+      ]
+    ]
+  },
+  "baseline_to_full_bounds": {
+    "baseline": "${TRACE_OUTPUT}/baseline/replicate-1/auto_trace_20260729132708080",
+    "candidate": "${TRACE_OUTPUT}/full_bounds/replicate-1/auto_trace_20260729132709652",
+    "baseline_shape": [
+      158,
+      134
+    ],
+    "candidate_shape": [
+      159,
+      135
+    ],
+    "baseline_valid_vertices": 15692,
+    "candidate_valid_vertices": 15698,
+    "common_valid_vertices": 15692,
+    "baseline_only_valid_vertices": 0,
+    "candidate_only_valid_vertices": 6,
+    "changed_common_xyz_vertices": 1,
+    "changed_common_mean_displacement": 0.001953125,
+    "changed_common_max_displacement": 0.001953125,
+    "changed_common_max_location": [
+      51,
+      133
+    ],
+    "candidate_only_locations": [
+      [
+        51,
+        134
+      ],
+      [
+        52,
+        134
+      ],
+      [
+        53,
+        134
+      ],
+      [
+        158,
+        88
+      ],
+      [
+        158,
+        89
+      ],
+      [
+        158,
+        90
+      ]
+    ]
+  }
+}

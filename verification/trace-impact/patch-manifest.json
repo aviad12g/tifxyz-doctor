@@ -1,0 +1,165 @@
+{
+  "schema_version": 1,
+  "release_revision": "05ff9ea",
+  "platform": "macos-arm64",
+  "purpose": "Executable bounds ablation only; this is not a build of PR #1264.",
+  "semantic_scope": "Only high-side complete-cell bounds change from dimension-2 to dimension-1. Low-side checks, sentinel checks, interpolation, and all other release instructions remain unchanged.",
+  "helper_only": {
+    "libvc_core.dylib": {
+      "source": "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib",
+      "target": "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib",
+      "source_sha256": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032",
+      "patched_pre_sign_sha256": "404c65105f532caba7388006145c3dbe4106bb8fdb417daef449898480fc22b7",
+      "patched_signed_sha256": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc",
+      "source_size": 2082560,
+      "patched_size": 2070560,
+      "code_section_offset": 24008,
+      "code_section_size": 1186916,
+      "pre_sign_changed_byte_offsets": [
+        "0xdfd2d",
+        "0xdfd49"
+      ],
+      "signed_code_changed_byte_offsets": [
+        "0xdfd2d",
+        "0xdfd49"
+      ],
+      "patches": [
+        {
+          "file_offset_hex": "0xdfd2c",
+          "before_hex": "29090051",
+          "after_hex": "29050051",
+          "symbol": "loc_valid(cv::Mat_<cv::Vec3f> const&, cv::Vec2d const&)",
+          "instruction_before": "sub w9, w9, #2",
+          "instruction_after": "sub w9, w9, #1"
+        },
+        {
+          "file_offset_hex": "0xdfd48",
+          "before_hex": "6b090051",
+          "after_hex": "6b050051",
+          "symbol": "loc_valid(cv::Mat_<cv::Vec3f> const&, cv::Vec2d const&)",
+          "instruction_before": "sub w11, w11, #2",
+          "instruction_after": "sub w11, w11, #1"
+        }
+      ],
+      "codesign": "codesign --force --sign - TARGET; codesign --verify --strict TARGET"
+    }
+  },
+  "full_bounds": {
+    "libvc_core.dylib": {
+      "source": "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib",
+      "target": "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib",
+      "source_sha256": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032",
+      "patched_pre_sign_sha256": "404c65105f532caba7388006145c3dbe4106bb8fdb417daef449898480fc22b7",
+      "patched_signed_sha256": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc",
+      "source_size": 2082560,
+      "patched_size": 2070560,
+      "code_section_offset": 24008,
+      "code_section_size": 1186916,
+      "pre_sign_changed_byte_offsets": [
+        "0xdfd2d",
+        "0xdfd49"
+      ],
+      "signed_code_changed_byte_offsets": [
+        "0xdfd2d",
+        "0xdfd49"
+      ],
+      "patches": [
+        {
+          "file_offset_hex": "0xdfd2c",
+          "before_hex": "29090051",
+          "after_hex": "29050051",
+          "symbol": "loc_valid(cv::Mat_<cv::Vec3f> const&, cv::Vec2d const&)",
+          "instruction_before": "sub w9, w9, #2",
+          "instruction_after": "sub w9, w9, #1"
+        },
+        {
+          "file_offset_hex": "0xdfd48",
+          "before_hex": "6b090051",
+          "after_hex": "6b050051",
+          "symbol": "loc_valid(cv::Mat_<cv::Vec3f> const&, cv::Vec2d const&)",
+          "instruction_before": "sub w11, w11, #2",
+          "instruction_after": "sub w11, w11, #1"
+        }
+      ],
+      "codesign": "codesign --force --sign - TARGET; codesign --verify --strict TARGET"
+    },
+    "libvc_tracer.dylib": {
+      "source": "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+      "target": "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib",
+      "source_sha256": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+      "patched_pre_sign_sha256": "e3aab8ecd7a431144bc6a19c6a3ff80eda4ec261b13d7a86748b616c9f5f74b6",
+      "patched_signed_sha256": "3bd026d9949fa32393fbaeb7535cc4dbc73290830ac9311c8d6c0d7949b3f509",
+      "source_size": 1055280,
+      "patched_size": 1049232,
+      "code_section_offset": 28224,
+      "code_section_size": 589920,
+      "pre_sign_changed_byte_offsets": [
+        "0x8e58d",
+        "0x8e5a1",
+        "0x8e821",
+        "0x8e835",
+        "0x8e9f5",
+        "0x8ea11"
+      ],
+      "signed_code_changed_byte_offsets": [
+        "0x8e58d",
+        "0x8e5a1",
+        "0x8e821",
+        "0x8e835",
+        "0x8e9f5",
+        "0x8ea11"
+      ],
+      "patches": [
+        {
+          "file_offset_hex": "0x8e58c",
+          "before_hex": "a90a0051",
+          "after_hex": "a9060051",
+          "symbol": "SurfTrackerData::lookup_int",
+          "instruction_before": "sub w9, w21, #2",
+          "instruction_after": "sub w9, w21, #1"
+        },
+        {
+          "file_offset_hex": "0x8e5a0",
+          "before_hex": "c90a0051",
+          "after_hex": "c9060051",
+          "symbol": "SurfTrackerData::lookup_int",
+          "instruction_before": "sub w9, w22, #2",
+          "instruction_after": "sub w9, w22, #1"
+        },
+        {
+          "file_offset_hex": "0x8e820",
+          "before_hex": "a80a0051",
+          "after_hex": "a8060051",
+          "symbol": "SurfTrackerData::valid_int",
+          "instruction_before": "sub w8, w21, #2",
+          "instruction_after": "sub w8, w21, #1"
+        },
+        {
+          "file_offset_hex": "0x8e834",
+          "before_hex": "c80a0051",
+          "after_hex": "c8060051",
+          "symbol": "SurfTrackerData::valid_int",
+          "instruction_before": "sub w8, w22, #2",
+          "instruction_after": "sub w8, w22, #1"
+        },
+        {
+          "file_offset_hex": "0x8e9f4",
+          "before_hex": "c90a0051",
+          "after_hex": "c9060051",
+          "symbol": "SurfTrackerData::lookup_int_loc",
+          "instruction_before": "sub w9, w22, #2",
+          "instruction_after": "sub w9, w22, #1"
+        },
+        {
+          "file_offset_hex": "0x8ea10",
+          "before_hex": "e90a0051",
+          "after_hex": "e9060051",
+          "symbol": "SurfTrackerData::lookup_int_loc",
+          "instruction_before": "sub w9, w23, #2",
+          "instruction_after": "sub w9, w23, #1"
+        }
+      ],
+      "codesign": "codesign --force --sign - TARGET; codesign --verify --strict TARGET"
+    }
+  }
+}

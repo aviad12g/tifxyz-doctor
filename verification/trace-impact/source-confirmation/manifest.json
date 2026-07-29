@@ -1,0 +1,3557 @@
+{
+  "appimages": {
+    "baseline": {
+      "dispatch": "named symlink vc_grow_seg_from_segments -> AppRun",
+      "extraction_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "extraction_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "filename": "VC3D-208faea-2026-07-27-linux-x86_64.AppImage",
+      "filename_commit_date": "2026-07-27",
+      "filename_revision": "208faea",
+      "sha256": "0ae4a1537ed30326108a7399a12564eb191a9ba2b9002c71b117b53e1947291b",
+      "size_bytes": 122919416,
+      "verified_archive": {
+        "appimage_filename": "VC3D-208faea-2026-07-27-linux-x86_64.AppImage",
+        "appimage_sha256": "0ae4a1537ed30326108a7399a12564eb191a9ba2b9002c71b117b53e1947291b",
+        "archive_sha256": "047cdcbe9a0d4d36deed004cebd05516b557cb4cf9b2c6380338e08b58a31a38",
+        "archive_size_bytes": 613863853,
+        "artifact_id": 8720697165
+      }
+    },
+    "full": {
+      "dispatch": "named symlink vc_grow_seg_from_segments -> AppRun",
+      "extraction_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "extraction_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "filename": "VC3D-9e15071-2026-07-29-linux-x86_64.AppImage",
+      "filename_commit_date": "2026-07-29",
+      "filename_revision": "9e15071",
+      "sha256": "8ef6f94e40c971d744106a36cd63d7643d825d099ee6d5f600e6c988f814811c",
+      "size_bytes": 122919416,
+      "verified_archive": {
+        "appimage_filename": "VC3D-9e15071-2026-07-29-linux-x86_64.AppImage",
+        "appimage_sha256": "8ef6f94e40c971d744106a36cd63d7643d825d099ee6d5f600e6c988f814811c",
+        "archive_sha256": "7659ed946a9dc18bcacf0401a3cf5ba31026a2a1eba8cff98a4bc338fade0b66",
+        "archive_size_bytes": 613861881,
+        "artifact_id": 8720738643
+      }
+    },
+    "helper": {
+      "dispatch": "named symlink vc_grow_seg_from_segments -> AppRun",
+      "extraction_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "extraction_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "filename": "VC3D-d522691-2026-07-29-linux-x86_64.AppImage",
+      "filename_commit_date": "2026-07-29",
+      "filename_revision": "d522691",
+      "sha256": "5c25dabd30fa8d03571125c49f248c696c8218d8764fae4f216b2924ee21f21e",
+      "size_bytes": 122919416,
+      "verified_archive": {
+        "appimage_filename": "VC3D-d522691-2026-07-29-linux-x86_64.AppImage",
+        "appimage_sha256": "5c25dabd30fa8d03571125c49f248c696c8218d8764fae4f216b2924ee21f21e",
+        "archive_sha256": "f270d3d8e77a132f1e57690139e393ecaecc0da614546b0b2e69f4c83313bb58",
+        "archive_size_bytes": 613871240,
+        "artifact_id": 8720646739
+      }
+    },
+    "pr": {
+      "dispatch": "named symlink vc_grow_seg_from_segments -> AppRun",
+      "extraction_stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "extraction_stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "filename": "VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage",
+      "filename_commit_date": "2026-07-27",
+      "filename_revision": "6e2bba9",
+      "sha256": "107a87ab6cdb1c7396bb8c921f89a19f96d9a6217c849d4626cd74721db43c73",
+      "size_bytes": 122919416,
+      "verified_archive": {
+        "appimage_filename": "VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage",
+        "appimage_sha256": "107a87ab6cdb1c7396bb8c921f89a19f96d9a6217c849d4626cd74721db43c73",
+        "archive_sha256": "914747b9aacaa699cd190f058df62825abffeb1c0ee5c20e8e383ad68986ada4",
+        "archive_size_bytes": 613913820,
+        "artifact_id": 8720610248
+      }
+    }
+  },
+  "archive_verification": {
+    "baseline": {
+      "appimage_filename": "VC3D-208faea-2026-07-27-linux-x86_64.AppImage",
+      "appimage_sha256": "0ae4a1537ed30326108a7399a12564eb191a9ba2b9002c71b117b53e1947291b",
+      "archive_sha256": "047cdcbe9a0d4d36deed004cebd05516b557cb4cf9b2c6380338e08b58a31a38",
+      "archive_size_bytes": 613863853,
+      "artifact_id": 8720697165
+    },
+    "full": {
+      "appimage_filename": "VC3D-9e15071-2026-07-29-linux-x86_64.AppImage",
+      "appimage_sha256": "8ef6f94e40c971d744106a36cd63d7643d825d099ee6d5f600e6c988f814811c",
+      "archive_sha256": "7659ed946a9dc18bcacf0401a3cf5ba31026a2a1eba8cff98a4bc338fade0b66",
+      "archive_size_bytes": 613861881,
+      "artifact_id": 8720738643
+    },
+    "helper": {
+      "appimage_filename": "VC3D-d522691-2026-07-29-linux-x86_64.AppImage",
+      "appimage_sha256": "5c25dabd30fa8d03571125c49f248c696c8218d8764fae4f216b2924ee21f21e",
+      "archive_sha256": "f270d3d8e77a132f1e57690139e393ecaecc0da614546b0b2e69f4c83313bb58",
+      "archive_size_bytes": 613871240,
+      "artifact_id": 8720646739
+    },
+    "pr": {
+      "appimage_filename": "VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage",
+      "appimage_sha256": "107a87ab6cdb1c7396bb8c921f89a19f96d9a6217c849d4626cd74721db43c73",
+      "archive_sha256": "914747b9aacaa699cd190f058df62825abffeb1c0ee5c20e8e383ad68986ada4",
+      "archive_size_bytes": 613913820,
+      "artifact_id": 8720610248
+    }
+  },
+  "comparisons": {
+    "baseline_to_helper": {
+      "after": "helper",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "baseline",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 0,
+        "maximum_finite": 0.0,
+        "maximum_location_row_col": null,
+        "mean_over_all_common_finite": 0.0,
+        "mean_over_changed_finite": 0.0,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 0
+      },
+      "valid_quads": {
+        "after": 15074,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15692,
+        "before": 15692,
+        "common": 15692
+      }
+    },
+    "baseline_to_pr": {
+      "after": "pr",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "baseline",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 1,
+        "maximum_finite": 0.001953125,
+        "maximum_location_row_col": [
+          51,
+          133
+        ],
+        "mean_over_all_common_finite": 1.2446628855467755e-07,
+        "mean_over_changed_finite": 0.001953125,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 6,
+          "locations_row_col": [
+            [
+              51,
+              134
+            ],
+            [
+              52,
+              134
+            ],
+            [
+              53,
+              134
+            ],
+            [
+              158,
+              88
+            ],
+            [
+              158,
+              89
+            ],
+            [
+              158,
+              90
+            ]
+          ],
+          "locations_sha256": "9018703415da29959531912acac59605092a1670f9dca6b355b377d580a0bf88",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 6,
+            "full_values_sha256": "dab75141704a8c370dae808a9297558cb0f7c4b417670f7edd679fcdda7d4f92",
+            "samples": [
+              {
+                "location_row_col": [
+                  51,
+                  134
+                ],
+                "xyz": [
+                  5441.92236328125,
+                  4699.10595703125,
+                  23766.421875
+                ]
+              },
+              {
+                "location_row_col": [
+                  52,
+                  134
+                ],
+                "xyz": [
+                  5444.82373046875,
+                  4696.0673828125,
+                  23746.587890625
+                ]
+              },
+              {
+                "location_row_col": [
+                  53,
+                  134
+                ],
+                "xyz": [
+                  5447.26904296875,
+                  4693.8271484375,
+                  23726.61328125
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  88
+                ],
+                "xyz": [
+                  4799.8759765625,
+                  4396.43505859375,
+                  21601.109375
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  89
+                ],
+                "xyz": [
+                  4811.13134765625,
+                  4412.5263671875,
+                  21603.884765625
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  90
+                ],
+                "xyz": [
+                  4824.56494140625,
+                  4427.0185546875,
+                  21605.408203125
+                ]
+              }
+            ],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 6
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15692,
+        "common": 15692
+      }
+    },
+    "full_to_pr": {
+      "after": "pr",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "full",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 0,
+        "maximum_finite": 0.0,
+        "maximum_location_row_col": null,
+        "mean_over_all_common_finite": 0.0,
+        "mean_over_changed_finite": 0.0,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 0
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15078
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15698,
+        "common": 15698
+      }
+    },
+    "helper_to_full": {
+      "after": "full",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "helper",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 1,
+        "maximum_finite": 0.001953125,
+        "maximum_location_row_col": [
+          51,
+          133
+        ],
+        "mean_over_all_common_finite": 1.2446628855467755e-07,
+        "mean_over_changed_finite": 0.001953125,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 6,
+          "locations_row_col": [
+            [
+              51,
+              134
+            ],
+            [
+              52,
+              134
+            ],
+            [
+              53,
+              134
+            ],
+            [
+              158,
+              88
+            ],
+            [
+              158,
+              89
+            ],
+            [
+              158,
+              90
+            ]
+          ],
+          "locations_sha256": "9018703415da29959531912acac59605092a1670f9dca6b355b377d580a0bf88",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 6,
+            "full_values_sha256": "dab75141704a8c370dae808a9297558cb0f7c4b417670f7edd679fcdda7d4f92",
+            "samples": [
+              {
+                "location_row_col": [
+                  51,
+                  134
+                ],
+                "xyz": [
+                  5441.92236328125,
+                  4699.10595703125,
+                  23766.421875
+                ]
+              },
+              {
+                "location_row_col": [
+                  52,
+                  134
+                ],
+                "xyz": [
+                  5444.82373046875,
+                  4696.0673828125,
+                  23746.587890625
+                ]
+              },
+              {
+                "location_row_col": [
+                  53,
+                  134
+                ],
+                "xyz": [
+                  5447.26904296875,
+                  4693.8271484375,
+                  23726.61328125
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  88
+                ],
+                "xyz": [
+                  4799.8759765625,
+                  4396.43505859375,
+                  21601.109375
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  89
+                ],
+                "xyz": [
+                  4811.13134765625,
+                  4412.5263671875,
+                  21603.884765625
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  90
+                ],
+                "xyz": [
+                  4824.56494140625,
+                  4427.0185546875,
+                  21605.408203125
+                ]
+              }
+            ],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 6
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15692,
+        "common": 15692
+      }
+    }
+  },
+  "evaluator": {
+    "confirmation_run": {
+      "api_provenance_checked": true,
+      "event": "workflow_dispatch",
+      "evidence_run_attempt": "1",
+      "evidence_run_id": "30445977638",
+      "evidence_run_ref": "refs/heads/main",
+      "evidence_run_sha": "3a96f08b305b1446aaefb13dbb936acf2ebfcfb1",
+      "head_branch": "main",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30445977638",
+      "repository": "aviad12g/villa",
+      "runner_arch_name": "X64",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260720.247.2",
+      "runner_os_name": "Linux",
+      "status_during_evaluation": "in_progress",
+      "workflow_id": 322898192,
+      "workflow_path": ".github/workflows/vc3d-trace-confirm.yml"
+    },
+    "host": {
+      "machine": "x86_64",
+      "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+      "python_implementation": "CPython"
+    },
+    "runner": {
+      "filename": "vc3d_trace_evidence.py",
+      "sha256": "38d94ef9de01782c44b427f11df6ab4bf8c242d510ed8c24c8fb37090da18133"
+    },
+    "workflow": {
+      "filename": "vc3d-trace-confirm.yml",
+      "sha256": "dd7c28d479cd866541a91b1f73d38a242048a5e31d815eb87cc4b30e955b7262"
+    }
+  },
+  "fixture_files": {
+    "complete_tree": {
+      "fake-volume-pherc1447": {
+        "type": "directory"
+      },
+      "fake-volume-pherc1447/0": {
+        "type": "directory"
+      },
+      "fake-volume-pherc1447/0/.zarray": {
+        "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+        "size_bytes": 180,
+        "type": "file"
+      },
+      "fake-volume-pherc1447/meta.json": {
+        "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+        "size_bytes": 152,
+        "type": "file"
+      },
+      "input-parent": {
+        "type": "directory"
+      },
+      "input-parent/pherc1447-source": {
+        "type": "directory"
+      },
+      "input-parent/pherc1447-source/meta.json": {
+        "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+        "size_bytes": 13237,
+        "type": "file"
+      },
+      "input-parent/pherc1447-source/x.tif": {
+        "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+        "size_bytes": 87252,
+        "type": "file"
+      },
+      "input-parent/pherc1447-source/y.tif": {
+        "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+        "size_bytes": 87252,
+        "type": "file"
+      },
+      "input-parent/pherc1447-source/z.tif": {
+        "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+        "size_bytes": 87252,
+        "type": "file"
+      },
+      "resume-one-generation.json": {
+        "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+        "size_bytes": 288,
+        "type": "file"
+      }
+    },
+    "fake_volume": {
+      "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+      "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+    },
+    "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+    "source": {
+      "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+      "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+      "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+      "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+    }
+  },
+  "interpretation_guard": "Cross-variant outcomes are recorded, not asserted. Passing means the artifacts/input were pinned and each variant's TIFF arrays, selected metadata, and parsed scientific log observations were deterministic; generated UUID/path metadata is excluded.",
+  "preregistration_sha256": "6d2c34f9615984fc364361109b382473da79963db3c8361ad1a353fc280112e8",
+  "repository": "aviad12g/villa",
+  "runs": {
+    "baseline": {
+      "artifact": {
+        "created_at": "2026-07-29T10:34:15Z",
+        "digest": "sha256:047cdcbe9a0d4d36deed004cebd05516b557cb4cf9b2c6380338e08b58a31a38",
+        "expired": false,
+        "expires_at": "2026-10-27T10:16:21Z",
+        "id": 8720697165,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613863853
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443013824/job/90546543662",
+        "job_id": 90546543662,
+        "job_log_sha256": "956a49d7e0c9e12e2d14d0ed54eddb4125f838653ffb52fe92c551703d95c723",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "208faea7d7fec62da03ff75e118e26be0c08a117"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:16:19Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-208faea-2026-07-27-linux-x86_64.AppImage",
+      "expected_run_head_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "head_branch": "agent/trace-baseline-208faea",
+      "head_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443013824",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443013824,
+      "source_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:35:08Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "full": {
+      "artifact": {
+        "created_at": "2026-07-29T10:35:49Z",
+        "digest": "sha256:7659ed946a9dc18bcacf0401a3cf5ba31026a2a1eba8cff98a4bc338fade0b66",
+        "expired": false,
+        "expires_at": "2026-10-27T10:17:26Z",
+        "id": 8720738643,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613861881
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443085737/job/90546776777",
+        "job_id": 90546776777,
+        "job_log_sha256": "123e28b6b6581334ef19b9346148a133f3a54e393a0bfbe7aaccb201a8cf152e",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "9e15071df41a139ce77ada6aa64367e000387c5d"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:17:25Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-9e15071-2026-07-29-linux-x86_64.AppImage",
+      "expected_run_head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "head_branch": "agent/trace-bounds-full-208faea",
+      "head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443085737",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443085737,
+      "source_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:36:43Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "helper": {
+      "artifact": {
+        "created_at": "2026-07-29T10:32:14Z",
+        "digest": "sha256:f270d3d8e77a132f1e57690139e393ecaecc0da614546b0b2e69f4c83313bb58",
+        "expired": false,
+        "expires_at": "2026-10-27T10:16:58Z",
+        "id": 8720646739,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613871240
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443054997/job/90546675254",
+        "job_id": 90546675254,
+        "job_log_sha256": "837fb433d785f02cb8cdc7c138b7c48c8362cb0db60174611dcb0bd269c38be2",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:16:56Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-d522691-2026-07-29-linux-x86_64.AppImage",
+      "expected_run_head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "head_branch": "agent/trace-bounds-helper-208faea",
+      "head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443054997",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443054997,
+      "source_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:33:18Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "pr": {
+      "artifact": {
+        "created_at": "2026-07-29T10:30:56Z",
+        "digest": "sha256:914747b9aacaa699cd190f058df62825abffeb1c0ee5c20e8e383ad68986ada4",
+        "expired": false,
+        "expires_at": "2026-10-27T10:11:44Z",
+        "id": 8720610248,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613913820
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30442703266/job/90545712534",
+        "job_id": 90545712534,
+        "job_log_sha256": "f50e0e98c4cd228d6f7d3ec7d1d476eab7a18b530512f53f57ba5f30c1eaa1d9",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:11:43Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage",
+      "expected_run_head_sha": "d992fecf59a0fd9188376caad27d49c0d3f11858",
+      "head_branch": "main",
+      "head_sha": "d992fecf59a0fd9188376caad27d49c0d3f11858",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30442703266",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30442703266,
+      "source_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:31:52Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    }
+  },
+  "runtime": {
+    "credential_variable_names_purged": [],
+    "host_runtime_packages": {
+      "libegl1": "1.7.0-1build1",
+      "libfontconfig1": "2.15.0-1.1ubuntu2",
+      "libfreetype6": "2.13.2+dfsg-1ubuntu0.1",
+      "libgl1": "1.7.0-1build1",
+      "libgl1-mesa-dri": "25.2.8-0ubuntu0.24.04.2",
+      "libglvnd0": "1.7.0-1build1",
+      "libglx-mesa0": "25.2.8-0ubuntu0.24.04.2",
+      "libglx0": "1.7.0-1build1",
+      "libharfbuzz0b": "8.3.0-2build2",
+      "libice6": "2:1.0.10-1build3",
+      "libopengl0": "1.7.0-1build1",
+      "libsm6": "2:1.2.3-1build3",
+      "libx11-6": "2:1.8.7-1build1",
+      "libx11-xcb1": "2:1.8.7-1build1",
+      "libxcb1": "1.15-1ubuntu2"
+    },
+    "inherited_parent_environment": false,
+    "numpy": "2.2.6",
+    "python": "3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+    "secret_free_child_environment_keys": [
+      "HOME",
+      "LANG",
+      "LC_ALL",
+      "OMP_DYNAMIC",
+      "OMP_NUM_THREADS",
+      "PATH",
+      "TMPDIR",
+      "TZ"
+    ],
+    "tifffile": "2025.5.10"
+  },
+  "schema_version": 2,
+  "source_comparisons": {
+    "baseline_to_helper": {
+      "ahead_by": 1,
+      "base_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "changed_files": [
+        "volume-cartographer/core/src/Geometry.cpp"
+      ],
+      "head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "html_url": "https://github.com/aviad12g/villa/compare/208faea7d7fec62da03ff75e118e26be0c08a117...d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "status": "ahead",
+      "total_commits": 1
+    },
+    "baseline_to_pr": {
+      "ahead_by": 1,
+      "base_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "changed_files": [
+        "volume-cartographer/core/include/vc/core/util/Geometry.hpp",
+        "volume-cartographer/core/src/Geometry.cpp",
+        "volume-cartographer/core/src/QuadSurface.cpp",
+        "volume-cartographer/core/src/SurfTrackerData.cpp",
+        "volume-cartographer/core/test/test_geometry.cpp",
+        "volume-cartographer/core/test/test_quadsurface_basics.cpp",
+        "volume-cartographer/core/test/test_surf_tracker_data.cpp"
+      ],
+      "head_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "html_url": "https://github.com/aviad12g/villa/compare/208faea7d7fec62da03ff75e118e26be0c08a117...6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "status": "ahead",
+      "total_commits": 1
+    },
+    "helper_to_full": {
+      "ahead_by": 1,
+      "base_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "changed_files": [
+        "volume-cartographer/core/src/SurfTrackerData.cpp"
+      ],
+      "head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "html_url": "https://github.com/aviad12g/villa/compare/d5226910817be064d2ae1577f1fae0f850acc8c7...9e15071df41a139ce77ada6aa64367e000387c5d",
+      "status": "ahead",
+      "total_commits": 1
+    }
+  },
+  "status": "trace_confirmation_complete",
+  "variants": {
+    "baseline": [
+      {
+        "duration_seconds": 0.319435,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982069,
+            "final_area_estimate_vx2": 15696,
+            "generation_zero_area_vx2": 15678,
+            "generation_zero_processed_fringe": 281,
+            "resume_fringe_points": 281,
+            "resume_initialized_points": 15696,
+            "selected_lines": [
+              "resume_growth initialized 15696 low-res points, fringe 281, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [134 x 158 from (25, 25)]",
+              "gen 0 processing 281 fringe cands (total done 0 fringe: 15696) area 15678 vx^2 (0.009809 cm^2) best th: 0",
+              "area est: 15696 vx^2 (0.00982069 cm^2)"
+            ],
+            "used_area": {
+              "height": 158,
+              "width": 134,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "74a986448e5aa53d01e4a8abda36c130e4853ef3a2c565dd502daf4e662a59b9"
+        },
+        "output_file_sha256": {
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee",
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            158,
+            134
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 1,
+        "surface": {
+          "array_sha256": {
+            "x": "971d4f0f2b43c17667ffbc6b05c981e9ea6a3d974128076f77b19ac6de3b9def",
+            "y": "f75d118e998c379bb04044ebdcc389b661838dbf7ba433df5ffa102c85ee728f",
+            "z": "28e901158e2ddad69a6c339352011147765ee26bccc604607e8b9857846632ab"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.009820688515901566,
+            "area_vx2": 15696.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            158,
+            134
+          ],
+          "valid_mask_sha256": "10480f7d5c13e37ca8139b1063f28b62cd6600f46356a748bf70584c453a3f22",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      },
+      {
+        "duration_seconds": 0.276453,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982069,
+            "final_area_estimate_vx2": 15696,
+            "generation_zero_area_vx2": 15678,
+            "generation_zero_processed_fringe": 281,
+            "resume_fringe_points": 281,
+            "resume_initialized_points": 15696,
+            "selected_lines": [
+              "resume_growth initialized 15696 low-res points, fringe 281, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [134 x 158 from (25, 25)]",
+              "gen 0 processing 281 fringe cands (total done 0 fringe: 15696) area 15678 vx^2 (0.009809 cm^2) best th: 0",
+              "area est: 15696 vx^2 (0.00982069 cm^2)"
+            ],
+            "used_area": {
+              "height": 158,
+              "width": 134,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "f64d27e4eeded9111579f581ea85f5da50876df7d53bf17cc0644612943c4f41"
+        },
+        "output_file_sha256": {
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee",
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            158,
+            134
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 2,
+        "surface": {
+          "array_sha256": {
+            "x": "971d4f0f2b43c17667ffbc6b05c981e9ea6a3d974128076f77b19ac6de3b9def",
+            "y": "f75d118e998c379bb04044ebdcc389b661838dbf7ba433df5ffa102c85ee728f",
+            "z": "28e901158e2ddad69a6c339352011147765ee26bccc604607e8b9857846632ab"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.009820688515901566,
+            "area_vx2": 15696.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            158,
+            134
+          ],
+          "valid_mask_sha256": "10480f7d5c13e37ca8139b1063f28b62cd6600f46356a748bf70584c453a3f22",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      },
+      {
+        "duration_seconds": 0.277086,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982069,
+            "final_area_estimate_vx2": 15696,
+            "generation_zero_area_vx2": 15678,
+            "generation_zero_processed_fringe": 281,
+            "resume_fringe_points": 281,
+            "resume_initialized_points": 15696,
+            "selected_lines": [
+              "resume_growth initialized 15696 low-res points, fringe 281, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [134 x 158 from (25, 25)]",
+              "gen 0 processing 281 fringe cands (total done 0 fringe: 15696) area 15678 vx^2 (0.009809 cm^2) best th: 0",
+              "area est: 15696 vx^2 (0.00982069 cm^2)"
+            ],
+            "used_area": {
+              "height": 158,
+              "width": 134,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1fa8626f2be45b92f8eeb9c89db9020a57fb7d26741ba0c3c8422240389f5d04"
+        },
+        "output_file_sha256": {
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee",
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            158,
+            134
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 3,
+        "surface": {
+          "array_sha256": {
+            "x": "971d4f0f2b43c17667ffbc6b05c981e9ea6a3d974128076f77b19ac6de3b9def",
+            "y": "f75d118e998c379bb04044ebdcc389b661838dbf7ba433df5ffa102c85ee728f",
+            "z": "28e901158e2ddad69a6c339352011147765ee26bccc604607e8b9857846632ab"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.009820688515901566,
+            "area_vx2": 15696.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            158,
+            134
+          ],
+          "valid_mask_sha256": "10480f7d5c13e37ca8139b1063f28b62cd6600f46356a748bf70584c453a3f22",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      }
+    ],
+    "full": [
+      {
+        "duration_seconds": 0.276318,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1a90a14e5d362df7313eab069925775d27bbb183d616383f4e56141b0b58304c"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 1,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      },
+      {
+        "duration_seconds": 0.275724,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "079c02d851413549fd9e646aee930ad12b26aa92615f4386e2b6925e45e7b8eb"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 2,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      },
+      {
+        "duration_seconds": 0.276551,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "fd8ba41707f0e7d484c7070ccdcb1eb03d5b65824acf936788a77988a804fefb"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 3,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      }
+    ],
+    "helper": [
+      {
+        "duration_seconds": 0.276282,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "0e61a7602e78f02a6571624798a38120b81428eecdc6c51c04c3759e1928ded2"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 1,
+        "surface": {
+          "array_sha256": {
+            "x": "1c336ad3719d1e8f2ed921aa3381f6d602fc6693a5a5d6bffa4faa566acc8327",
+            "y": "7148651829d32bc911bb0aa8a0203e22e5805275f3372cd680c84f60b57b5e7d",
+            "z": "2119f559c5ef01b320a22eaa7b6069d4d738cac090d8c9836b547e3958fbccf7"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "40ded3b1a5ab143f38b95dcd06affb3ce7d1d3edc277447f15f43956e444b376",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      },
+      {
+        "duration_seconds": 0.276829,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "d52cb70855ef5c73f15dec229db5ed72f997757e12272f461c5c37d017b8a3ba"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 2,
+        "surface": {
+          "array_sha256": {
+            "x": "1c336ad3719d1e8f2ed921aa3381f6d602fc6693a5a5d6bffa4faa566acc8327",
+            "y": "7148651829d32bc911bb0aa8a0203e22e5805275f3372cd680c84f60b57b5e7d",
+            "z": "2119f559c5ef01b320a22eaa7b6069d4d738cac090d8c9836b547e3958fbccf7"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "40ded3b1a5ab143f38b95dcd06affb3ce7d1d3edc277447f15f43956e444b376",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      },
+      {
+        "duration_seconds": 0.276239,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "0b90dc260e986cabf6e9ac00f60c4d7cca0dbe4fb1e56d5dafe2183c00d392e9"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 3,
+        "surface": {
+          "array_sha256": {
+            "x": "1c336ad3719d1e8f2ed921aa3381f6d602fc6693a5a5d6bffa4faa566acc8327",
+            "y": "7148651829d32bc911bb0aa8a0203e22e5805275f3372cd680c84f60b57b5e7d",
+            "z": "2119f559c5ef01b320a22eaa7b6069d4d738cac090d8c9836b547e3958fbccf7"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "40ded3b1a5ab143f38b95dcd06affb3ce7d1d3edc277447f15f43956e444b376",
+          "valid_quads": 15074,
+          "valid_vertices": 15692
+        }
+      }
+    ],
+    "pr": [
+      {
+        "duration_seconds": 0.262923,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "8876cb4804177470f7347f74ba4e5636b122f1089e9bb2dbd5d56a9979ff24b0"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 1,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      },
+      {
+        "duration_seconds": 0.26567,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "1293762ea9f4b58da3c605feb908fc77049573bd0fa396eb6223806ee59be500"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 2,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      },
+      {
+        "duration_seconds": 0.261597,
+        "environment": {
+          "OMP_DYNAMIC": "FALSE",
+          "OMP_NUM_THREADS": "1"
+        },
+        "fixture_integrity": {
+          "after": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "before": {
+            "complete_tree": {
+              "fake-volume-pherc1447": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0": {
+                "type": "directory"
+              },
+              "fake-volume-pherc1447/0/.zarray": {
+                "sha256": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+                "size_bytes": 180,
+                "type": "file"
+              },
+              "fake-volume-pherc1447/meta.json": {
+                "sha256": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+                "size_bytes": 152,
+                "type": "file"
+              },
+              "input-parent": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source": {
+                "type": "directory"
+              },
+              "input-parent/pherc1447-source/meta.json": {
+                "sha256": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+                "size_bytes": 13237,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/x.tif": {
+                "sha256": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/y.tif": {
+                "sha256": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "input-parent/pherc1447-source/z.tif": {
+                "sha256": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+                "size_bytes": 87252,
+                "type": "file"
+              },
+              "resume-one-generation.json": {
+                "sha256": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+                "size_bytes": 288,
+                "type": "file"
+              }
+            },
+            "fake_volume": {
+              "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38",
+              "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732"
+            },
+            "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+            "source": {
+              "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+              "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+              "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+              "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+            }
+          },
+          "isolated_copy": true,
+          "unchanged": true
+        },
+        "log": {
+          "observations": {
+            "final_area_estimate_cm2": 0.00982444,
+            "final_area_estimate_vx2": 15702,
+            "generation_zero_area_vx2": 15696,
+            "generation_zero_processed_fringe": 282,
+            "resume_fringe_points": 282,
+            "resume_initialized_points": 15702,
+            "selected_lines": [
+              "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+              "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+              "area est: 15702 vx^2 (0.00982444 cm^2)"
+            ],
+            "used_area": {
+              "height": 159,
+              "width": 135,
+              "x": 25,
+              "y": 25
+            }
+          },
+          "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "stdout_sha256": "459e950c5455bf91e0ea643ca3b7201d049ebf2bcd918e92d196f70cca71f9dc"
+        },
+        "output_file_sha256": {
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4",
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf"
+        },
+        "output_integrity": {
+          "generation_max": 1,
+          "generation_min": 0,
+          "generations_dtype": "uint16",
+          "generations_shape_rows_cols": [
+            159,
+            135
+          ],
+          "metadata_area_is_finite_nonnegative": true,
+          "metadata_area_vx2_matches_final_log": true,
+          "valid_xyz_all_finite": true,
+          "xyz_dtype": "float32"
+        },
+        "replicate": 3,
+        "surface": {
+          "array_sha256": {
+            "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+            "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+            "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+          },
+          "grid_offset_col_row": [
+            0,
+            0
+          ],
+          "meta_observations": {
+            "area_cm2": 0.00982444267719984,
+            "area_vx2": 15702.0,
+            "grid_offset": [
+              0,
+              0
+            ]
+          },
+          "sentinel_mask_disagreement": {
+            "x_vs_y": 0,
+            "x_vs_z": 0
+          },
+          "shape_rows_cols": [
+            159,
+            135
+          ],
+          "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+          "valid_quads": 15078,
+          "valid_vertices": 15698
+        }
+      }
+    ]
+  }
+}

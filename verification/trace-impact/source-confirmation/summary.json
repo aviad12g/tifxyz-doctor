@@ -1,0 +1,1104 @@
+{
+  "assertions": {
+    "appimage_exact_filenames_checked": true,
+    "appimage_sha256_linked_to_verified_archive": true,
+    "artifact_id_and_archive_sha256_checked": true,
+    "build_logs_and_toolchain_checked": true,
+    "cross_variant_expected_outcome_asserted": false,
+    "evaluator_runner_and_workflow_hashes_recorded": true,
+    "fixture_boundary_cells_preregistered": 6,
+    "isolated_fixture_hashes_checked_before_and_after": true,
+    "native_subprocesses_received_secret_free_environment": true,
+    "public_source_hashes_checked": true,
+    "replicates_per_variant": 3,
+    "run_api_provenance_checked": true,
+    "scientifically_relevant_outputs_deterministic": true,
+    "source_ablation_changed_files_checked": true
+  },
+  "comparisons": {
+    "baseline_to_helper": {
+      "after": "helper",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "baseline",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 0,
+        "maximum_finite": 0.0,
+        "maximum_location_row_col": null,
+        "mean_over_all_common_finite": 0.0,
+        "mean_over_changed_finite": 0.0,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 0
+      },
+      "valid_quads": {
+        "after": 15074,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15692,
+        "before": 15692,
+        "common": 15692
+      }
+    },
+    "baseline_to_pr": {
+      "after": "pr",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "baseline",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 1,
+        "maximum_finite": 0.001953125,
+        "maximum_location_row_col": [
+          51,
+          133
+        ],
+        "mean_over_all_common_finite": 1.2446628855467755e-07,
+        "mean_over_changed_finite": 0.001953125,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 6,
+          "locations_row_col": [
+            [
+              51,
+              134
+            ],
+            [
+              52,
+              134
+            ],
+            [
+              53,
+              134
+            ],
+            [
+              158,
+              88
+            ],
+            [
+              158,
+              89
+            ],
+            [
+              158,
+              90
+            ]
+          ],
+          "locations_sha256": "9018703415da29959531912acac59605092a1670f9dca6b355b377d580a0bf88",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 6,
+            "full_values_sha256": "dab75141704a8c370dae808a9297558cb0f7c4b417670f7edd679fcdda7d4f92",
+            "samples": [
+              {
+                "location_row_col": [
+                  51,
+                  134
+                ],
+                "xyz": [
+                  5441.92236328125,
+                  4699.10595703125,
+                  23766.421875
+                ]
+              },
+              {
+                "location_row_col": [
+                  52,
+                  134
+                ],
+                "xyz": [
+                  5444.82373046875,
+                  4696.0673828125,
+                  23746.587890625
+                ]
+              },
+              {
+                "location_row_col": [
+                  53,
+                  134
+                ],
+                "xyz": [
+                  5447.26904296875,
+                  4693.8271484375,
+                  23726.61328125
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  88
+                ],
+                "xyz": [
+                  4799.8759765625,
+                  4396.43505859375,
+                  21601.109375
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  89
+                ],
+                "xyz": [
+                  4811.13134765625,
+                  4412.5263671875,
+                  21603.884765625
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  90
+                ],
+                "xyz": [
+                  4824.56494140625,
+                  4427.0185546875,
+                  21605.408203125
+                ]
+              }
+            ],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 6
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15692,
+        "common": 15692
+      }
+    },
+    "full_to_pr": {
+      "after": "pr",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "full",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 0,
+        "maximum_finite": 0.0,
+        "maximum_location_row_col": null,
+        "mean_over_all_common_finite": 0.0,
+        "mean_over_changed_finite": 0.0,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 0
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15078
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15698,
+        "common": 15698
+      }
+    },
+    "helper_to_full": {
+      "after": "full",
+      "alignment": {
+        "after_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "before_grid_offset_col_row": [
+          0,
+          0
+        ],
+        "coordinate_system": "global [row, col]",
+        "rule": "source_col=local_col-grid_offset[0]; source_row=local_row-grid_offset[1]"
+      },
+      "before": "helper",
+      "common_valid_xyz_displacement": {
+        "changed_vertices": 1,
+        "maximum_finite": 0.001953125,
+        "maximum_location_row_col": [
+          51,
+          133
+        ],
+        "mean_over_all_common_finite": 1.2446628855467755e-07,
+        "mean_over_changed_finite": 0.001953125,
+        "nonfinite_changed_displacements": 0
+      },
+      "valid_mask_symmetric_difference": {
+        "after_only": {
+          "count": 6,
+          "locations_row_col": [
+            [
+              51,
+              134
+            ],
+            [
+              52,
+              134
+            ],
+            [
+              53,
+              134
+            ],
+            [
+              158,
+              88
+            ],
+            [
+              158,
+              89
+            ],
+            [
+              158,
+              90
+            ]
+          ],
+          "locations_sha256": "9018703415da29959531912acac59605092a1670f9dca6b355b377d580a0bf88",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 6,
+            "full_values_sha256": "dab75141704a8c370dae808a9297558cb0f7c4b417670f7edd679fcdda7d4f92",
+            "samples": [
+              {
+                "location_row_col": [
+                  51,
+                  134
+                ],
+                "xyz": [
+                  5441.92236328125,
+                  4699.10595703125,
+                  23766.421875
+                ]
+              },
+              {
+                "location_row_col": [
+                  52,
+                  134
+                ],
+                "xyz": [
+                  5444.82373046875,
+                  4696.0673828125,
+                  23746.587890625
+                ]
+              },
+              {
+                "location_row_col": [
+                  53,
+                  134
+                ],
+                "xyz": [
+                  5447.26904296875,
+                  4693.8271484375,
+                  23726.61328125
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  88
+                ],
+                "xyz": [
+                  4799.8759765625,
+                  4396.43505859375,
+                  21601.109375
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  89
+                ],
+                "xyz": [
+                  4811.13134765625,
+                  4412.5263671875,
+                  21603.884765625
+                ]
+              },
+              {
+                "location_row_col": [
+                  158,
+                  90
+                ],
+                "xyz": [
+                  4824.56494140625,
+                  4427.0185546875,
+                  21605.408203125
+                ]
+              }
+            ],
+            "samples_truncated": false
+          }
+        },
+        "before_only": {
+          "count": 0,
+          "locations_row_col": [],
+          "locations_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "locations_truncated": false,
+          "xyz": {
+            "count": 0,
+            "full_values_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+            "samples": [],
+            "samples_truncated": false
+          }
+        },
+        "count": 6
+      },
+      "valid_quads": {
+        "after": 15078,
+        "before": 15074
+      },
+      "valid_vertices": {
+        "after": 15698,
+        "before": 15692,
+        "common": 15692
+      }
+    }
+  },
+  "evaluator": {
+    "confirmation_run": {
+      "api_provenance_checked": true,
+      "event": "workflow_dispatch",
+      "evidence_run_attempt": "1",
+      "evidence_run_id": "30445977638",
+      "evidence_run_ref": "refs/heads/main",
+      "evidence_run_sha": "3a96f08b305b1446aaefb13dbb936acf2ebfcfb1",
+      "head_branch": "main",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30445977638",
+      "repository": "aviad12g/villa",
+      "runner_arch_name": "X64",
+      "runner_image_os": "ubuntu24",
+      "runner_image_version": "20260720.247.2",
+      "runner_os_name": "Linux",
+      "status_during_evaluation": "in_progress",
+      "workflow_id": 322898192,
+      "workflow_path": ".github/workflows/vc3d-trace-confirm.yml"
+    },
+    "host": {
+      "machine": "x86_64",
+      "platform": "Linux-6.17.0-1020-azure-x86_64-with-glibc2.39",
+      "python_implementation": "CPython"
+    },
+    "runner": {
+      "filename": "vc3d_trace_evidence.py",
+      "sha256": "38d94ef9de01782c44b427f11df6ab4bf8c242d510ed8c24c8fb37090da18133"
+    },
+    "workflow": {
+      "filename": "vc3d-trace-confirm.yml",
+      "sha256": "dd7c28d479cd866541a91b1f73d38a242048a5e31d815eb87cc4b30e955b7262"
+    }
+  },
+  "preregistered_boundary_cells_row_col": [
+    [
+      51,
+      134
+    ],
+    [
+      52,
+      134
+    ],
+    [
+      53,
+      134
+    ],
+    [
+      158,
+      88
+    ],
+    [
+      158,
+      89
+    ],
+    [
+      158,
+      90
+    ]
+  ],
+  "provenance": {
+    "baseline": {
+      "artifact": {
+        "created_at": "2026-07-29T10:34:15Z",
+        "digest": "sha256:047cdcbe9a0d4d36deed004cebd05516b557cb4cf9b2c6380338e08b58a31a38",
+        "expired": false,
+        "expires_at": "2026-10-27T10:16:21Z",
+        "id": 8720697165,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613863853
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443013824/job/90546543662",
+        "job_id": 90546543662,
+        "job_log_sha256": "956a49d7e0c9e12e2d14d0ed54eddb4125f838653ffb52fe92c551703d95c723",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "208faea7d7fec62da03ff75e118e26be0c08a117"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:16:19Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-208faea-2026-07-27-linux-x86_64.AppImage",
+      "expected_run_head_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "head_branch": "agent/trace-baseline-208faea",
+      "head_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443013824",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443013824,
+      "source_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:35:08Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "full": {
+      "artifact": {
+        "created_at": "2026-07-29T10:35:49Z",
+        "digest": "sha256:7659ed946a9dc18bcacf0401a3cf5ba31026a2a1eba8cff98a4bc338fade0b66",
+        "expired": false,
+        "expires_at": "2026-10-27T10:17:26Z",
+        "id": 8720738643,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613861881
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443085737/job/90546776777",
+        "job_id": 90546776777,
+        "job_log_sha256": "123e28b6b6581334ef19b9346148a133f3a54e393a0bfbe7aaccb201a8cf152e",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "9e15071df41a139ce77ada6aa64367e000387c5d"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:17:25Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-9e15071-2026-07-29-linux-x86_64.AppImage",
+      "expected_run_head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "head_branch": "agent/trace-bounds-full-208faea",
+      "head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443085737",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443085737,
+      "source_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:36:43Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "helper": {
+      "artifact": {
+        "created_at": "2026-07-29T10:32:14Z",
+        "digest": "sha256:f270d3d8e77a132f1e57690139e393ecaecc0da614546b0b2e69f4c83313bb58",
+        "expired": false,
+        "expires_at": "2026-10-27T10:16:58Z",
+        "id": 8720646739,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613871240
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30443054997/job/90546675254",
+        "job_id": 90546675254,
+        "job_log_sha256": "837fb433d785f02cb8cdc7c138b7c48c8362cb0db60174611dcb0bd269c38be2",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:16:56Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-d522691-2026-07-29-linux-x86_64.AppImage",
+      "expected_run_head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "head_branch": "agent/trace-bounds-helper-208faea",
+      "head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30443054997",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30443054997,
+      "source_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:33:18Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    },
+    "pr": {
+      "artifact": {
+        "created_at": "2026-07-29T10:30:56Z",
+        "digest": "sha256:914747b9aacaa699cd190f058df62825abffeb1c0ee5c20e8e383ad68986ada4",
+        "expired": false,
+        "expires_at": "2026-10-27T10:11:44Z",
+        "id": 8720610248,
+        "name": "VC3D-linux-appimage",
+        "size_in_bytes": 613913820
+      },
+      "build_log": {
+        "builder_image_digest": "sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+        "cmake_preset": "ci-release-gcc",
+        "cxx_compiler": "GNU 15.2.0",
+        "interpretation_guard": "The logs establish identical resolved versions and configuration across these four builds; they do not make live APT or continuous packaging downloads bit-for-bit hermetic.",
+        "job_html_url": "https://github.com/aviad12g/villa/actions/runs/30442703266/job/90545712534",
+        "job_id": 90545712534,
+        "job_log_sha256": "f50e0e98c4cd228d6f7d3ec7d1d476eab7a18b530512f53f57ba5f30c1eaa1d9",
+        "required_fragments_checked": [
+          "appimagetool",
+          "apt_desktop_file_utils",
+          "apt_patchelf",
+          "apt_zstd",
+          "build_preset",
+          "builder_image",
+          "c_compiler",
+          "compiler_path",
+          "configure_preset",
+          "cxx_compiler",
+          "dockerfile_frontend",
+          "exact_source_revision",
+          "fortran_compiler",
+          "generator",
+          "linuxdeploy",
+          "linuxdeploy_qt",
+          "qt",
+          "runner_image",
+          "runner_image_version",
+          "runner_provisioner_commit",
+          "runner_provisioner_version",
+          "runner_version"
+        ],
+        "runner_image": "ubuntu-24.04",
+        "shared_toolchain_fingerprint": {
+          "appimagetool": "appimagetool, continuous build (git version 8c8c91f), build 295 built on 2025-12-04 17:56:36 UTC",
+          "apt_desktop_file_utils": "Setting up desktop-file-utils (0.28-1build1) ...",
+          "apt_patchelf": "Setting up patchelf (0.18.0-1.4build1) ...",
+          "apt_zstd": "Setting up zstd (1.5.7+dfsg-3) ...",
+          "build_preset": "cmake --build --preset ci-release-gcc",
+          "builder_image": "FROM ghcr.io/scrollprize/villa/volume-cartographer:builder-ubuntu-26.04@sha256:77be7988b71fca1d8a0657e1915368274729400e03e2e7edaacc9bb84ec707a2",
+          "c_compiler": "The C compiler identification is GNU 15.2.0",
+          "compiler_path": "-- Using /usr/bin/g++ compiler.",
+          "configure_preset": "cmake --preset ci-release-gcc",
+          "cxx_compiler": "The CXX compiler identification is GNU 15.2.0",
+          "dockerfile_frontend": "docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e",
+          "fortran_compiler": "The Fortran compiler identification is GNU 15.2.0",
+          "generator": "Targeting Ninja",
+          "linuxdeploy": "linuxdeploy version 1-alpha (git commit ID a9f929f), GitHub actions build 361 built on 2026-07-01 03:57:16 UTC",
+          "linuxdeploy_qt": "linuxdeploy-plugin-qt version 1-alpha (git commit ID 409307d), GitHub actions build 250 built on 2026-05-16 19:05:46 UTC",
+          "qt": "[qt/stdout] Using Qt version:  6.10.2  ( 6 )",
+          "runner_image": "Image: ubuntu-24.04",
+          "runner_image_version": "Version: 20260720.247.2",
+          "runner_provisioner_commit": "Commit: 02667638d2b423fbc733a8e32a88b44996a3ba6e",
+          "runner_provisioner_version": "Version: 20260707.563",
+          "runner_version": "Current runner version: '2.336.0'"
+        },
+        "source_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295"
+      },
+      "conclusion": "success",
+      "created_at": "2026-07-29T10:11:43Z",
+      "event": "workflow_dispatch",
+      "expected_appimage_name": "VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage",
+      "expected_run_head_sha": "d992fecf59a0fd9188376caad27d49c0d3f11858",
+      "head_branch": "main",
+      "head_sha": "d992fecf59a0fd9188376caad27d49c0d3f11858",
+      "html_url": "https://github.com/aviad12g/villa/actions/runs/30442703266",
+      "repository": "aviad12g/villa",
+      "run_attempt": 1,
+      "run_id": 30442703266,
+      "source_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "status": "completed",
+      "updated_at": "2026-07-29T10:31:52Z",
+      "workflow_id": 322868724,
+      "workflow_path": ".github/workflows/vc3d-linux.yml"
+    }
+  },
+  "schema_version": 2,
+  "source_comparisons": {
+    "baseline_to_helper": {
+      "ahead_by": 1,
+      "base_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "changed_files": [
+        "volume-cartographer/core/src/Geometry.cpp"
+      ],
+      "head_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "html_url": "https://github.com/aviad12g/villa/compare/208faea7d7fec62da03ff75e118e26be0c08a117...d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "status": "ahead",
+      "total_commits": 1
+    },
+    "baseline_to_pr": {
+      "ahead_by": 1,
+      "base_sha": "208faea7d7fec62da03ff75e118e26be0c08a117",
+      "changed_files": [
+        "volume-cartographer/core/include/vc/core/util/Geometry.hpp",
+        "volume-cartographer/core/src/Geometry.cpp",
+        "volume-cartographer/core/src/QuadSurface.cpp",
+        "volume-cartographer/core/src/SurfTrackerData.cpp",
+        "volume-cartographer/core/test/test_geometry.cpp",
+        "volume-cartographer/core/test/test_quadsurface_basics.cpp",
+        "volume-cartographer/core/test/test_surf_tracker_data.cpp"
+      ],
+      "head_sha": "6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "html_url": "https://github.com/aviad12g/villa/compare/208faea7d7fec62da03ff75e118e26be0c08a117...6e2bba940d8f93b53b0d1bcf7f66af19c5b81295",
+      "status": "ahead",
+      "total_commits": 1
+    },
+    "helper_to_full": {
+      "ahead_by": 1,
+      "base_sha": "d5226910817be064d2ae1577f1fae0f850acc8c7",
+      "changed_files": [
+        "volume-cartographer/core/src/SurfTrackerData.cpp"
+      ],
+      "head_sha": "9e15071df41a139ce77ada6aa64367e000387c5d",
+      "html_url": "https://github.com/aviad12g/villa/compare/d5226910817be064d2ae1577f1fae0f850acc8c7...9e15071df41a139ce77ada6aa64367e000387c5d",
+      "status": "ahead",
+      "total_commits": 1
+    }
+  },
+  "status": "trace_confirmation_complete",
+  "variants": {
+    "baseline": {
+      "deterministic_replicates": 3,
+      "log_observations": {
+        "final_area_estimate_cm2": 0.00982069,
+        "final_area_estimate_vx2": 15696,
+        "generation_zero_area_vx2": 15678,
+        "generation_zero_processed_fringe": 281,
+        "resume_fringe_points": 281,
+        "resume_initialized_points": 15696,
+        "selected_lines": [
+          "resume_growth initialized 15696 low-res points, fringe 281, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [134 x 158 from (25, 25)]",
+          "gen 0 processing 281 fringe cands (total done 0 fringe: 15696) area 15678 vx^2 (0.009809 cm^2) best th: 0",
+          "area est: 15696 vx^2 (0.00982069 cm^2)"
+        ],
+        "used_area": {
+          "height": 158,
+          "width": 134,
+          "x": 25,
+          "y": 25
+        }
+      },
+      "surface": {
+        "array_sha256": {
+          "x": "971d4f0f2b43c17667ffbc6b05c981e9ea6a3d974128076f77b19ac6de3b9def",
+          "y": "f75d118e998c379bb04044ebdcc389b661838dbf7ba433df5ffa102c85ee728f",
+          "z": "28e901158e2ddad69a6c339352011147765ee26bccc604607e8b9857846632ab"
+        },
+        "grid_offset_col_row": [
+          0,
+          0
+        ],
+        "meta_observations": {
+          "area_cm2": 0.009820688515901566,
+          "area_vx2": 15696.0,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "sentinel_mask_disagreement": {
+          "x_vs_y": 0,
+          "x_vs_z": 0
+        },
+        "shape_rows_cols": [
+          158,
+          134
+        ],
+        "valid_mask_sha256": "10480f7d5c13e37ca8139b1063f28b62cd6600f46356a748bf70584c453a3f22",
+        "valid_quads": 15074,
+        "valid_vertices": 15692
+      }
+    },
+    "full": {
+      "deterministic_replicates": 3,
+      "log_observations": {
+        "final_area_estimate_cm2": 0.00982444,
+        "final_area_estimate_vx2": 15702,
+        "generation_zero_area_vx2": 15696,
+        "generation_zero_processed_fringe": 282,
+        "resume_fringe_points": 282,
+        "resume_initialized_points": 15702,
+        "selected_lines": [
+          "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+          "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+          "area est: 15702 vx^2 (0.00982444 cm^2)"
+        ],
+        "used_area": {
+          "height": 159,
+          "width": 135,
+          "x": 25,
+          "y": 25
+        }
+      },
+      "surface": {
+        "array_sha256": {
+          "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+          "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+          "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+        },
+        "grid_offset_col_row": [
+          0,
+          0
+        ],
+        "meta_observations": {
+          "area_cm2": 0.00982444267719984,
+          "area_vx2": 15702.0,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "sentinel_mask_disagreement": {
+          "x_vs_y": 0,
+          "x_vs_z": 0
+        },
+        "shape_rows_cols": [
+          159,
+          135
+        ],
+        "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+        "valid_quads": 15078,
+        "valid_vertices": 15698
+      }
+    },
+    "helper": {
+      "deterministic_replicates": 3,
+      "log_observations": {
+        "final_area_estimate_cm2": 0.00982444,
+        "final_area_estimate_vx2": 15702,
+        "generation_zero_area_vx2": 15696,
+        "generation_zero_processed_fringe": 282,
+        "resume_fringe_points": 282,
+        "resume_initialized_points": 15702,
+        "selected_lines": [
+          "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+          "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+          "area est: 15702 vx^2 (0.00982444 cm^2)"
+        ],
+        "used_area": {
+          "height": 159,
+          "width": 135,
+          "x": 25,
+          "y": 25
+        }
+      },
+      "surface": {
+        "array_sha256": {
+          "x": "1c336ad3719d1e8f2ed921aa3381f6d602fc6693a5a5d6bffa4faa566acc8327",
+          "y": "7148651829d32bc911bb0aa8a0203e22e5805275f3372cd680c84f60b57b5e7d",
+          "z": "2119f559c5ef01b320a22eaa7b6069d4d738cac090d8c9836b547e3958fbccf7"
+        },
+        "grid_offset_col_row": [
+          0,
+          0
+        ],
+        "meta_observations": {
+          "area_cm2": 0.00982444267719984,
+          "area_vx2": 15702.0,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "sentinel_mask_disagreement": {
+          "x_vs_y": 0,
+          "x_vs_z": 0
+        },
+        "shape_rows_cols": [
+          159,
+          135
+        ],
+        "valid_mask_sha256": "40ded3b1a5ab143f38b95dcd06affb3ce7d1d3edc277447f15f43956e444b376",
+        "valid_quads": 15074,
+        "valid_vertices": 15692
+      }
+    },
+    "pr": {
+      "deterministic_replicates": 3,
+      "log_observations": {
+        "final_area_estimate_cm2": 0.00982444,
+        "final_area_estimate_vx2": 15702,
+        "generation_zero_area_vx2": 15696,
+        "generation_zero_processed_fringe": 282,
+        "resume_fringe_points": 282,
+        "resume_initialized_points": 15702,
+        "selected_lines": [
+          "resume_growth initialized 15702 low-res points, fringe 282, patch-index refs discovered 0, seeded patch-index refs 0 at 0 points used_area [135 x 159 from (25, 25)]",
+          "gen 0 processing 282 fringe cands (total done 0 fringe: 15702) area 15696 vx^2 (0.009821 cm^2) best th: 0",
+          "area est: 15702 vx^2 (0.00982444 cm^2)"
+        ],
+        "used_area": {
+          "height": 159,
+          "width": 135,
+          "x": 25,
+          "y": 25
+        }
+      },
+      "surface": {
+        "array_sha256": {
+          "x": "e2f90972a4c23071f8d21c2ace95a29c2c95c58a4837cb92e93aa0550b50bdc7",
+          "y": "bba01be63474fec58ef853df19470f1d915556ed0c482f10b4b9529af4c1cec5",
+          "z": "f77df7f2ff402f354a04a13325de96d3b9cac8a0c19668e7df4556453d1aae06"
+        },
+        "grid_offset_col_row": [
+          0,
+          0
+        ],
+        "meta_observations": {
+          "area_cm2": 0.00982444267719984,
+          "area_vx2": 15702.0,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "sentinel_mask_disagreement": {
+          "x_vs_y": 0,
+          "x_vs_z": 0
+        },
+        "shape_rows_cols": [
+          159,
+          135
+        ],
+        "valid_mask_sha256": "611a3a3a5c4e051ab3ff7423ac73084b22924b02bcc62526388251e57a55a124",
+        "valid_quads": 15078,
+        "valid_vertices": 15698
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "resume_growth": true,
+  "disable_grid_expansion": true,
+  "growth_directions": ["right"],
+  "steps": 1,
+  "step": 1,
+  "src_step": 1,
+  "max_width": 256,
+  "max_height": 256,
+  "global_steps_per_window": 1,
+  "debug_images": false,
+  "use_cuda": false,
+  "consensus_default_th": 2
+}

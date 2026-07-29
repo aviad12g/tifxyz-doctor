@@ -1,0 +1,647 @@
+{
+  "schema_version": 1,
+  "status": "release_binary_bounds_ablation_complete",
+  "warning": "This is a byte-validated bounds ablation of the official 05ff9ea macOS-arm64 release, not a build of PR #1264.",
+  "release_revision": "05ff9ea",
+  "input_public_url": "https://vesuvius-challenge-open-data.s3.us-east-1.amazonaws.com/PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original/",
+  "provenance": {
+    "executable": "aaee7adfda92304f5c22464a21aaff54e937131deea615a7c4e523238d7c8e58",
+    "input": {
+      "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+      "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+      "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+      "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634"
+    },
+    "params": "5606943e4f278ad8e2ec9f5522d2d0cad6914ba908f829464594e564ddd31093",
+    "volume": {
+      "meta.json": "55039b5c8430c34d579b1625fa94f70a1ed8f502420c21971e634e522273d732",
+      "0/.zarray": "a924d479b459f4b10de540d9e4b7967f2b95cb8f6bcdfd54c9a1b474fbea7f38"
+    },
+    "patch_manifest_release_revision": "05ff9ea",
+    "variant_library_hashes": {
+      "baseline": {
+        "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032",
+        "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235"
+      },
+      "helper_only": {
+        "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc",
+        "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235"
+      },
+      "full_bounds": {
+        "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc",
+        "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib": "3bd026d9949fa32393fbaeb7535cc4dbc73290830ac9311c8d6c0d7949b3f509"
+      }
+    },
+    "comparator_binary": "4b467ac1dbb900a2acb1da648be1e0e8b1b0c769c432b7b3d8478c6eaca7f5cb",
+    "comparator_source": "635d66aa74c1ddad59d07ee921c3663b5649b4e2d38cb833fdea6a0f22876373",
+    "run_patch_manifest_sha256": "020bdb2a5070cc0df5216ba8d95e6298ef3f2175a010d850c962eb86557914f9",
+    "public_patch_manifest_sha256": "eb707b677446db592705f2461146a66ef446be57ca9b964e970f111352dda62d",
+    "packaging_script_sha256": "e363d7353a9508aae5117fe55557465557250b4d76fa371cbf12e27f33caecc9"
+  },
+  "variants": {
+    "baseline": [
+      {
+        "replicate": 1,
+        "started_utc": "2026-07-29T10:27:07.717145+00:00",
+        "ended_utc": "2026-07-29T10:27:08.087278+00:00",
+        "duration_seconds": 0.370133,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/baseline/replicate-1 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${VC3D_APP}/Contents/Frameworks:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/baseline/replicate-1/auto_trace_20260729132708080",
+        "stdout_observations": {
+          "resume_initialized_points": 15696,
+          "resume_fringe_points": 281,
+          "used_area": {
+            "width": 134,
+            "height": 158,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 281,
+          "generation_zero_area_vx2": 15678,
+          "final_area_estimate_vx2": 15696,
+          "final_area_estimate_cm2": 0.00982069
+        },
+        "meta_observations": {
+          "area_vx2": 15696.0,
+          "area_cm2": 0.009820688515901566,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801",
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee"
+        }
+      },
+      {
+        "replicate": 2,
+        "started_utc": "2026-07-29T10:27:08.091202+00:00",
+        "ended_utc": "2026-07-29T10:27:08.330463+00:00",
+        "duration_seconds": 0.239261,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/baseline/replicate-2 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${VC3D_APP}/Contents/Frameworks:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/baseline/replicate-2/auto_trace_20260729132708325",
+        "stdout_observations": {
+          "resume_initialized_points": 15696,
+          "resume_fringe_points": 281,
+          "used_area": {
+            "width": 134,
+            "height": 158,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 281,
+          "generation_zero_area_vx2": 15678,
+          "final_area_estimate_vx2": 15696,
+          "final_area_estimate_cm2": 0.00982069
+        },
+        "meta_observations": {
+          "area_vx2": 15696.0,
+          "area_cm2": 0.009820688515901566,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801",
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee"
+        }
+      },
+      {
+        "replicate": 3,
+        "started_utc": "2026-07-29T10:27:08.334308+00:00",
+        "ended_utc": "2026-07-29T10:27:08.594225+00:00",
+        "duration_seconds": 0.259917,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/baseline/replicate-3 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${VC3D_APP}/Contents/Frameworks:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${VC3D_APP}/Contents/Frameworks/libvc_core.dylib": "1affb73fe548864e2f7a0a8afc9ddad1a52b5f3aaa17482d6a95e0fb6ede5032"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/baseline/replicate-3/auto_trace_20260729132708568",
+        "stdout_observations": {
+          "resume_initialized_points": 15696,
+          "resume_fringe_points": 281,
+          "used_area": {
+            "width": 134,
+            "height": 158,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 281,
+          "generation_zero_area_vx2": 15678,
+          "final_area_estimate_vx2": 15696,
+          "final_area_estimate_cm2": 0.00982069
+        },
+        "meta_observations": {
+          "area_vx2": 15696.0,
+          "area_cm2": 0.009820688515901566,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "d6cde9661eb5a56005964dbf8e3731199eac182a05f6d8939c7e81744201649c",
+          "y.tif": "28519855280ea7de72d32957d06ccf721fdd368a10990ea3d9a37368dcf436df",
+          "z.tif": "be801c6df3f7f41fa379c54a855fdc701dcf6b28b717e30348987f4c52551801",
+          "generations.tif": "ce427149aaa904b3aa35407bbb41a1a56f86a302edc2af2e7aa71add27fba0ee"
+        }
+      }
+    ],
+    "helper_only": [
+      {
+        "replicate": 1,
+        "started_utc": "2026-07-29T10:27:08.598166+00:00",
+        "ended_utc": "2026-07-29T10:27:08.858017+00:00",
+        "duration_seconds": 0.259851,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/helper_only/replicate-1 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/helper_only/replicate-1/auto_trace_20260729132708853",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      },
+      {
+        "replicate": 2,
+        "started_utc": "2026-07-29T10:27:08.861896+00:00",
+        "ended_utc": "2026-07-29T10:27:09.127877+00:00",
+        "duration_seconds": 0.265981,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/helper_only/replicate-2 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/helper_only/replicate-2/auto_trace_20260729132709123",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      },
+      {
+        "replicate": 3,
+        "started_utc": "2026-07-29T10:27:09.131731+00:00",
+        "ended_utc": "2026-07-29T10:27:09.393487+00:00",
+        "duration_seconds": 0.261756,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/helper_only/replicate-3 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${VC3D_APP}/Contents/Frameworks/libvc_tracer.dylib": "9f8e24d50fcbb8f94e9600caa861f86699799867fd148a97ebd66165b9d86235",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/helper-only/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/helper_only/replicate-3/auto_trace_20260729132709388",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "cb302492863c82b45f910a32d5e24179c85f6a8761c3c8fbc07b8f895f52fc67",
+          "y.tif": "d300ab58dc9e8605d3cb5aa480186c902d55c94b2214f2c77460a97c1be4df17",
+          "z.tif": "9539cf11e5b7cc51a88a0a6370eae099f667b77ec63cc83dda9bd9d3afde4225",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      }
+    ],
+    "full_bounds": [
+      {
+        "replicate": 1,
+        "started_utc": "2026-07-29T10:27:09.397880+00:00",
+        "ended_utc": "2026-07-29T10:27:09.657347+00:00",
+        "duration_seconds": 0.259467,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/full_bounds/replicate-1 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib": "3bd026d9949fa32393fbaeb7535cc4dbc73290830ac9311c8d6c0d7949b3f509",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/full_bounds/replicate-1/auto_trace_20260729132709652",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      },
+      {
+        "replicate": 2,
+        "started_utc": "2026-07-29T10:27:09.660874+00:00",
+        "ended_utc": "2026-07-29T10:27:09.979682+00:00",
+        "duration_seconds": 0.318808,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/full_bounds/replicate-2 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib": "3bd026d9949fa32393fbaeb7535cc4dbc73290830ac9311c8d6c0d7949b3f509",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/full_bounds/replicate-2/auto_trace_20260729132709975",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      },
+      {
+        "replicate": 3,
+        "started_utc": "2026-07-29T10:27:09.983434+00:00",
+        "ended_utc": "2026-07-29T10:27:10.244082+00:00",
+        "duration_seconds": 0.260648,
+        "command": "${VC3D_APP}/Contents/MacOS/vc_grow_seg_from_segments --volume ${TRACE_IMPACT_DIR}/fake-volume-pherc1447 --src-dir ${PHERC1447_SOURCE_PARENT} --target-dir ${TRACE_OUTPUT}/full_bounds/replicate-3 --params ${TRACE_IMPACT_DIR}/resume-one-generation.json --src-segment ${PHERC1447_SOURCE}",
+        "environment": {
+          "OMP_NUM_THREADS": "1",
+          "OMP_DYNAMIC": "FALSE",
+          "DYLD_PRINT_LIBRARIES": "1",
+          "DYLD_LIBRARY_PATH": "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds:${VC3D_APP}/Contents/Frameworks"
+        },
+        "loaded_vc_libraries": [
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib"
+        ],
+        "loaded_vc_library_hashes": {
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_tracer.dylib": "3bd026d9949fa32393fbaeb7535cc4dbc73290830ac9311c8d6c0d7949b3f509",
+          "${TRACE_IMPACT_DIR}/bounds-ablation/full-bounds/libvc_core.dylib": "fd79b7217c787adcdd1073e7cb9945bccecbabe7bf843dffe6209cdf31ecc3dc"
+        },
+        "trace_directory": "${TRACE_OUTPUT}/full_bounds/replicate-3/auto_trace_20260729132710240",
+        "stdout_observations": {
+          "resume_initialized_points": 15702,
+          "resume_fringe_points": 282,
+          "used_area": {
+            "width": 135,
+            "height": 159,
+            "x": 25,
+            "y": 25
+          },
+          "generation_zero_processed_fringe": 282,
+          "generation_zero_area_vx2": 15696,
+          "final_area_estimate_vx2": 15702,
+          "final_area_estimate_cm2": 0.00982444
+        },
+        "meta_observations": {
+          "area_vx2": 15702.0,
+          "area_cm2": 0.00982444267719984,
+          "grid_offset": [
+            0,
+            0
+          ]
+        },
+        "output_hashes": {
+          "x.tif": "e43ca1f89be084fe41e7c5a8238fb1182bb85372887bab7f9ad8531932fa1cbf",
+          "y.tif": "c25d67020185c96431797198fde205d743cb547002feaa6b8400a4c4ae8f5315",
+          "z.tif": "38a5f034f26de49595a13e01989979100e50bedc011b324287be7ddf2bc36edf",
+          "generations.tif": "45e8c61147f319dc6f64eb0e6a33058e28ede4d5ff1554232c7eef210741abd4"
+        }
+      }
+    ]
+  },
+  "deterministic": {
+    "baseline": {
+      "tiff_hashes_identical": true,
+      "observations_identical": true
+    },
+    "helper_only": {
+      "tiff_hashes_identical": true,
+      "observations_identical": true
+    },
+    "full_bounds": {
+      "tiff_hashes_identical": true,
+      "observations_identical": true
+    }
+  },
+  "comparisons": {
+    "baseline_to_helper_only": {
+      "baseline": "${TRACE_OUTPUT}/baseline/replicate-1/auto_trace_20260729132708080",
+      "candidate": "${TRACE_OUTPUT}/helper_only/replicate-1/auto_trace_20260729132708853",
+      "baseline_shape": [
+        158,
+        134
+      ],
+      "candidate_shape": [
+        159,
+        135
+      ],
+      "baseline_valid_vertices": 15692,
+      "candidate_valid_vertices": 15692,
+      "common_valid_vertices": 15692,
+      "baseline_only_valid_vertices": 0,
+      "candidate_only_valid_vertices": 0,
+      "changed_common_xyz_vertices": 0,
+      "changed_common_mean_displacement": 0,
+      "changed_common_max_displacement": 0,
+      "changed_common_max_location": [
+        0,
+        0
+      ],
+      "candidate_only_locations": []
+    },
+    "helper_only_to_full_bounds": {
+      "baseline": "${TRACE_OUTPUT}/helper_only/replicate-1/auto_trace_20260729132708853",
+      "candidate": "${TRACE_OUTPUT}/full_bounds/replicate-1/auto_trace_20260729132709652",
+      "baseline_shape": [
+        159,
+        135
+      ],
+      "candidate_shape": [
+        159,
+        135
+      ],
+      "baseline_valid_vertices": 15692,
+      "candidate_valid_vertices": 15698,
+      "common_valid_vertices": 15692,
+      "baseline_only_valid_vertices": 0,
+      "candidate_only_valid_vertices": 6,
+      "changed_common_xyz_vertices": 1,
+      "changed_common_mean_displacement": 0.001953125,
+      "changed_common_max_displacement": 0.001953125,
+      "changed_common_max_location": [
+        51,
+        133
+      ],
+      "candidate_only_locations": [
+        [
+          51,
+          134
+        ],
+        [
+          52,
+          134
+        ],
+        [
+          53,
+          134
+        ],
+        [
+          158,
+          88
+        ],
+        [
+          158,
+          89
+        ],
+        [
+          158,
+          90
+        ]
+      ]
+    },
+    "baseline_to_full_bounds": {
+      "baseline": "${TRACE_OUTPUT}/baseline/replicate-1/auto_trace_20260729132708080",
+      "candidate": "${TRACE_OUTPUT}/full_bounds/replicate-1/auto_trace_20260729132709652",
+      "baseline_shape": [
+        158,
+        134
+      ],
+      "candidate_shape": [
+        159,
+        135
+      ],
+      "baseline_valid_vertices": 15692,
+      "candidate_valid_vertices": 15698,
+      "common_valid_vertices": 15692,
+      "baseline_only_valid_vertices": 0,
+      "candidate_only_valid_vertices": 6,
+      "changed_common_xyz_vertices": 1,
+      "changed_common_mean_displacement": 0.001953125,
+      "changed_common_max_displacement": 0.001953125,
+      "changed_common_max_location": [
+        51,
+        133
+      ],
+      "candidate_only_locations": [
+        [
+          51,
+          134
+        ],
+        [
+          52,
+          134
+        ],
+        [
+          53,
+          134
+        ],
+        [
+          158,
+          88
+        ],
+        [
+          158,
+          89
+        ],
+        [
+          158,
+          90
+        ]
+      ]
+    }
+  },
+  "public_bundle": {
+    "schema_version": 2,
+    "release_binaries_redistributed": false,
+    "source_tifxyz_redistributed": false,
+    "full_run_tiffs_redistributed": false,
+    "note": "Commands use placeholders; acquire the hash-pinned official release and public PHerc1447 source separately."
+  }
+}

@@ -255,6 +255,12 @@ but does not itself fetch or compare GitHub source. The
 [machine-readable result](verification/reader-differential-results-v1.json)
 record the complete pairing and hashes.
 
+A separate source-built production-tracer boundary verification, developed
+after this stable-exporter discrepancy, is preserved in
+[`verification/trace-impact/`](verification/trace-impact/README.md). It records
+evidence for Villa PR #1264 rather than a TIFXYZ Doctor corpus finding and does
+not claim improved sheet accuracy.
+
 These observations come directly from the pinned
 [Python mask reader and load path](https://github.com/ScrollPrize/villa/blob/1162bcab4bc769b12993fc320c69c14fdb4a4fa5/vesuvius/src/vesuvius/tifxyz/reader.py#L437-L446)
 and

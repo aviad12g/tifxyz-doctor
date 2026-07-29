@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "input": {
+    "description": "Public PHerc1447 unverified auto-grown hard candidate",
+    "url": "https://vesuvius-challenge-open-data.s3.us-east-1.amazonaws.com/PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original/",
+    "shape_rows_cols": [
+      160,
+      136
+    ],
+    "sha256": {
+      "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+      "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+      "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f",
+      "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634"
+    }
+  },
+  "method": {
+    "valid_vertex": "x coordinate is not the canonical -1 sentinel",
+    "valid_quad": "all four x-coordinate corners are not -1",
+    "old_origins": "0 <= row < rows-2 and 0 <= col < cols-2",
+    "correct_origins": "0 <= row < rows-1 and 0 <= col < cols-1",
+    "scanner_source_sha256": "85e021fe443eeb725d7bcbc8e7041eae37801ec5897ca0f1152224c36eb8f8ea",
+    "scanner_binary_sha256": "41a19684d7c6faedff4bf069eb549491a8a389af4829e6db6d7d9a836dc00d97"
+  },
+  "observed": {
+    "valid_vertices": 16316,
+    "valid_quads": 15702,
+    "correct_minus_old_valid_quads": 6,
+    "last_row_quads": 3,
+    "last_column_quads": 3,
+    "corner_quad": 0,
+    "added_quad_origins_row_col": [
+      [
+        51,
+        134
+      ],
+      [
+        52,
+        134
+      ],
+      [
+        53,
+        134
+      ],
+      [
+        158,
+        88
+      ],
+      [
+        158,
+        89
+      ],
+      [
+        158,
+        90
+      ]
+    ]
+  }
+}

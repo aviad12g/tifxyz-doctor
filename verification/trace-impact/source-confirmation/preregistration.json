@@ -1,0 +1,54 @@
+{
+  "definitions": {
+    "boundary_cell": "a valid quad whose origin is on final legal row rows-2 or final legal column cols-2",
+    "valid_quad": "all four neighboring vertices are valid",
+    "valid_vertex": "all XYZ coordinates differ from the canonical -1 sentinel"
+  },
+  "observed_before_trace": {
+    "boundary_cell_count": 6,
+    "boundary_cells_row_col": [
+      [
+        51,
+        134
+      ],
+      [
+        52,
+        134
+      ],
+      [
+        53,
+        134
+      ],
+      [
+        158,
+        88
+      ],
+      [
+        158,
+        89
+      ],
+      [
+        158,
+        90
+      ]
+    ],
+    "valid_quads": 15702,
+    "valid_vertices": 16316
+  },
+  "schema_version": 2,
+  "source": {
+    "base_url": "https://vesuvius-challenge-open-data.s3.us-east-1.amazonaws.com/PHerc1447/segments/20250502185519-auto_grown_20250502164303733/mesh/intermediate/tifxyz_original",
+    "description": "Public PHerc1447 unverified auto-grown hard candidate",
+    "sha256": {
+      "meta.json": "158dc7ab72251dffb95df471f1789eb4b020e0bef70bd275714399f72b142634",
+      "x.tif": "179da10e706424a8479681555a03a68dee80e91c8ad241877ea62b4044039651",
+      "y.tif": "dae0c8d118cd8bfa40b8e38c04682801191402a6cc66b14544d649eb7fba8153",
+      "z.tif": "f7a028ea6121c492bf6c15c7174bcd379b3b00a780ef8361054f1c3266728b4f"
+    },
+    "shape_rows_cols": [
+      160,
+      136
+    ]
+  },
+  "status": "fixture_preregistered"
+}

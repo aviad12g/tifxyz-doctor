@@ -1,0 +1,6 @@
+bounds-ablation/
+compare_tifxyz
+scan_tifxyz_boundary
+runs/
+__pycache__/
+*.pyc

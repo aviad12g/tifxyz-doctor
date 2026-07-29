@@ -1,0 +1,8 @@
+{
+  "format": "zarr",
+  "name": "metadata-only PHerc1447 tracer fixture",
+  "voxelsize": 7.91,
+  "width": 50000,
+  "height": 50000,
+  "slices": 50000
+}

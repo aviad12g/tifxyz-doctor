@@ -1,0 +1,200 @@
+name: VC3D trace source confirmation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+concurrency:
+  group: vc3d-trace-source-confirmation
+  cancel-in-progress: false
+
+jobs:
+  confirm:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 75
+    env:
+      SOURCE_REPOSITORY: aviad12g/villa
+      ARTIFACT_ROOT: ${{ github.workspace }}/trace-appimages
+      EVIDENCE_DIR: ${{ github.workspace }}/trace-evidence
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - name: Check out the evidence evaluator
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+          sparse-checkout: |
+            .github/scripts/vc3d_trace_evidence.py
+            .github/workflows/vc3d-trace-confirm.yml
+          sparse-checkout-cone-mode: false
+
+      - name: Preflight runner capacity
+        shell: bash
+        run: |
+          set -euo pipefail
+          available_kib="$(df -Pk "$GITHUB_WORKSPACE" | awk 'NR == 2 {print $4}')"
+          test "$available_kib" -ge 8388608
+          df -h "$GITHUB_WORKSPACE"
+
+      - name: Install documented AppImage host libraries and Python readers
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends -y \
+            curl jq unzip \
+            libglvnd0 libglx0 libegl1 libopengl0 libgl1 \
+            libgl1-mesa-dri libglx-mesa0 \
+            libx11-6 libx11-xcb1 libxcb1 libice6 libsm6 \
+            libfontconfig1 libfreetype6 libharfbuzz0b \
+            libexpat1 zlib1g libuuid1 libcom-err2 libgmp10 libgpg-error0
+          python3 -m pip install --disable-pip-version-check --no-cache-dir \
+            numpy==2.2.6 tifffile==2025.5.10
+          sudo apt-get clean
+
+      - name: Download and SHA-256 verify the four immutable build archives
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p "$ARTIFACT_ROOT"
+          records_tsv="$ARTIFACT_ROOT/archive-verification.tsv"
+          : > "$records_tsv"
+
+          download_verify_extract() {
+            variant="$1"
+            artifact_id="$2"
+            expected_archive_size="$3"
+            expected_archive_sha="$4"
+            expected_appimage="$5"
+            archive="$RUNNER_TEMP/vc3d-${variant}.zip"
+            destination="$ARTIFACT_ROOT/$variant"
+            redirect_headers="$RUNNER_TEMP/vc3d-${variant}.headers"
+
+            mkdir "$destination"
+            curl --fail --silent --show-error --retry 3 \
+              --connect-timeout 30 --max-time 60 \
+              --header "Accept: application/vnd.github+json" \
+              --header "Authorization: Bearer $GH_TOKEN" \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              "https://api.github.com/repos/$SOURCE_REPOSITORY/actions/artifacts/$artifact_id/zip" \
+              --dump-header "$redirect_headers" \
+              --output /dev/null
+            signed_url="$(
+              sed -n 's/^[Ll]ocation: //p' "$redirect_headers" |
+                tail -n 1 |
+                tr -d '\r'
+            )"
+            rm "$redirect_headers"
+            case "$signed_url" in
+              https://*) ;;
+              *) exit 1 ;;
+            esac
+            curl --fail --silent --show-error --retry 3 --location \
+              --connect-timeout 30 --max-time 900 \
+              "$signed_url" --output "$archive"
+            unset signed_url
+
+            observed_archive_size="$(stat -c '%s' "$archive")"
+            observed_archive_sha="$(sha256sum "$archive" | cut -d ' ' -f 1)"
+            test "$observed_archive_size" = "$expected_archive_size"
+            test "$observed_archive_sha" = "$expected_archive_sha"
+            test "$(
+              unzip -Z1 "$archive" |
+                awk -v expected="$expected_appimage" \
+                  '$0 == expected { count += 1 } END { print count + 0 }'
+            )" -eq 1
+            unzip -p "$archive" "$expected_appimage" \
+              > "$destination/$expected_appimage"
+            rm "$archive"
+
+            test -f "$destination/$expected_appimage"
+            observed_appimage_sha="$(
+              sha256sum "$destination/$expected_appimage" | cut -d ' ' -f 1
+            )"
+            printf '%s\t%s\t%s\t%s\t%s\t%s\n' \
+              "$variant" "$artifact_id" "$observed_archive_size" \
+              "$observed_archive_sha" \
+              "$expected_appimage" "$observed_appimage_sha" >> "$records_tsv"
+          }
+
+          download_verify_extract \
+            baseline 8720697165 613863853 \
+            047cdcbe9a0d4d36deed004cebd05516b557cb4cf9b2c6380338e08b58a31a38 \
+            VC3D-208faea-2026-07-27-linux-x86_64.AppImage
+          download_verify_extract \
+            helper 8720646739 613871240 \
+            f270d3d8e77a132f1e57690139e393ecaecc0da614546b0b2e69f4c83313bb58 \
+            VC3D-d522691-2026-07-29-linux-x86_64.AppImage
+          download_verify_extract \
+            full 8720738643 613861881 \
+            7659ed946a9dc18bcacf0401a3cf5ba31026a2a1eba8cff98a4bc338fade0b66 \
+            VC3D-9e15071-2026-07-29-linux-x86_64.AppImage
+          download_verify_extract \
+            pr 8720610248 613913820 \
+            914747b9aacaa699cd190f058df62825abffeb1c0ee5c20e8e383ad68986ada4 \
+            VC3D-6e2bba9-2026-07-27-linux-x86_64.AppImage
+
+          jq -Rn '
+            [inputs | split("\t") | {
+              variant: .[0],
+              artifact_id: (.[1] | tonumber),
+              archive_size_bytes: (.[2] | tonumber),
+              archive_sha256: .[3],
+              appimage_filename: .[4],
+              appimage_sha256: .[5]
+            }] |
+            {
+              schema_version: 2,
+              verified_archives: (
+                map({key: .variant, value: del(.variant)}) | from_entries
+              )
+            }
+          ' < "$records_tsv" > "$ARTIFACT_ROOT/archive-verification.json"
+          rm "$records_tsv"
+          df -h "$GITHUB_WORKSPACE"
+
+      - name: Run the preregistered three-replicate confirmation
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          EVIDENCE_RUN_ID: ${{ github.run_id }}
+          EVIDENCE_RUN_ATTEMPT: ${{ github.run_attempt }}
+          EVIDENCE_RUN_SHA: ${{ github.sha }}
+          EVIDENCE_RUN_REF: ${{ github.ref }}
+          RUNNER_OS_NAME: ${{ runner.os }}
+          RUNNER_ARCH_NAME: ${{ runner.arch }}
+        run: |
+          set -euo pipefail
+          export RUNNER_IMAGE_OS="${ImageOS:-unknown}"
+          export RUNNER_IMAGE_VERSION="${ImageVersion:-unknown}"
+          python3 .github/scripts/vc3d_trace_evidence.py --self-test
+          python3 .github/scripts/vc3d_trace_evidence.py \
+            --artifact-root "$ARTIFACT_ROOT" \
+            --output "$EVIDENCE_DIR" \
+            --workflow-file .github/workflows/vc3d-trace-confirm.yml \
+            --repository "$SOURCE_REPOSITORY"
+
+      - name: Remove downloaded executables
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          if test -d "$ARTIFACT_ROOT"; then
+            find "$ARTIFACT_ROOT" -type f -delete
+            find "$ARTIFACT_ROOT" -depth -type d -empty -delete
+          fi
+
+      - name: Upload compact JSON evidence only
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: vc3d-trace-evidence-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.EVIDENCE_DIR }}/*.json
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 30

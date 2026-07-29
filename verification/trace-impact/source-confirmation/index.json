@@ -1,0 +1,17 @@
+{
+  "files": {
+    "manifest.json": {
+      "sha256": "39ece6d6a5ff700ddf2336f0d05e61d88c916b272a979b5c1a615e2767af2956",
+      "size_bytes": 146761
+    },
+    "preregistration.json": {
+      "sha256": "6d2c34f9615984fc364361109b382473da79963db3c8361ad1a353fc280112e8",
+      "size_bytes": 1423
+    },
+    "summary.json": {
+      "sha256": "f71b8dcd658d83c75f4ba0f52dbc51b3167ddab8d7a1713cf63b8045db99cf54",
+      "size_bytes": 40681
+    }
+  },
+  "schema_version": 2
+}
