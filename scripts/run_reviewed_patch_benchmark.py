@@ -51,6 +51,12 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("data", type=Path, help="Root containing downloaded same_wrap* patches")
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--workers", type=int, default=8)
+    parser.add_argument(
+        "--retries",
+        type=int,
+        default=2,
+        help="Sequential retries for transient file-read failures",
+    )
     parser.add_argument("--limit", type=int)
     parser.add_argument("--synthetic-limit", type=int, default=DEFAULT_SYNTHETIC_LIMIT)
     parser.add_argument("--corridor-radius", type=int, default=DEFAULT_CORRIDOR_RADIUS)
@@ -526,6 +532,8 @@ def main(argv: list[str] | None = None) -> int:
     widths = _parse_int_tuple(args.transition_widths)
     if args.workers < 1:
         raise SystemExit("--workers must be at least 1")
+    if args.retries < 0:
+        raise SystemExit("--retries must be non-negative")
     if args.corridor_radius < 0:
         raise SystemExit("--corridor-radius must be non-negative")
     if not args.data.is_dir():
@@ -545,7 +553,7 @@ def main(argv: list[str] | None = None) -> int:
 
     base_observations: list[dict[str, Any]] = []
     synthetic_observations: list[dict[str, Any]] = []
-    failures: list[dict[str, str]] = []
+    failed_paths: list[tuple[Path, Exception]] = []
 
     def run(path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
         observation, data, report, _corridor = _base_observation(
@@ -574,22 +582,46 @@ def main(argv: list[str] | None = None) -> int:
             try:
                 observation, generated = future.result()
             except Exception as exc:
-                failures.append(
-                    {
-                        "id": path.name,
-                        "exception_type": type(exc).__name__,
-                        "message": str(exc),
-                    }
-                )
+                failed_paths.append((path, exc))
             else:
                 base_observations.append(observation)
                 synthetic_observations.extend(generated)
             if index % 50 == 0 or index == len(futures):
                 print(
                     f"processed {index}/{len(futures)} "
-                    f"({len(failures)} failure(s))",
+                    f"({len(failed_paths)} pending retry)",
                     file=sys.stderr,
                 )
+
+    failures: list[dict[str, str]] = []
+    for path, first_error in failed_paths:
+        error: Exception = first_error
+        for attempt in range(1, args.retries + 1):
+            try:
+                observation, generated = run(path)
+            except Exception as exc:
+                error = exc
+                print(
+                    f"retry {attempt}/{args.retries} failed for {path.name}: "
+                    f"{type(exc).__name__}: {exc}",
+                    file=sys.stderr,
+                )
+            else:
+                base_observations.append(observation)
+                synthetic_observations.extend(generated)
+                print(
+                    f"retry {attempt}/{args.retries} recovered {path.name}",
+                    file=sys.stderr,
+                )
+                break
+        else:
+            failures.append(
+                {
+                    "id": path.name,
+                    "exception_type": type(error).__name__,
+                    "message": str(error),
+                }
+            )
 
     base_observations.sort(key=lambda item: item["id"])
     synthetic_observations.sort(
