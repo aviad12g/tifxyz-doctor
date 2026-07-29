@@ -32,7 +32,8 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "benchmarks" / "reviewed-same-wrap-results-v0.2.
 DEFAULT_OFFSETS_VOXELS = (4.0, 8.0, 16.0)
 DEFAULT_TRANSITION_WIDTHS = (1, 4, 12)
 DEFAULT_CORRIDOR_RADIUS = 4
-DEFAULT_SYNTHETIC_LIMIT = 64
+DEFAULT_CALIBRATION_LIMIT = 64
+DEFAULT_HOLDOUT_LIMIT = 64
 REQUIRED_FILES = (
     "meta.json",
     "corr_points_results.json",
@@ -58,7 +59,18 @@ def _parser() -> argparse.ArgumentParser:
         help="Sequential retries for transient file-read failures",
     )
     parser.add_argument("--limit", type=int)
-    parser.add_argument("--synthetic-limit", type=int, default=DEFAULT_SYNTHETIC_LIMIT)
+    parser.add_argument(
+        "--calibration-limit",
+        type=int,
+        default=DEFAULT_CALIBRATION_LIMIT,
+        help="Original evenly spaced synthetic calibration cohort",
+    )
+    parser.add_argument(
+        "--holdout-limit",
+        type=int,
+        default=DEFAULT_HOLDOUT_LIMIT,
+        help="Hash-ranked synthetic holdout cohort, excluding calibration patches",
+    )
     parser.add_argument("--corridor-radius", type=int, default=DEFAULT_CORRIDOR_RADIUS)
     parser.add_argument(
         "--offsets",
@@ -207,6 +219,7 @@ def _base_observation(
 
 def _synthetic_observations(
     patch_id: str,
+    evaluation_split: str,
     data: Any,
     base_report: dict[str, Any],
     config: AuditConfig,
@@ -230,6 +243,7 @@ def _synthetic_observations(
     observations.append(
         {
             "patch_id": patch_id,
+            "evaluation_split": evaluation_split,
             "kind": "null",
             "offset_voxels": 0.0,
             "transition_width_cells": widths[0],
@@ -271,6 +285,7 @@ def _synthetic_observations(
             observations.append(
                 {
                     "patch_id": patch_id,
+                    "evaluation_split": evaluation_split,
                     "kind": "normal-offset-proxy",
                     "offset_voxels": float(offset),
                     "nominal_winding_fraction": float(offset / 16.0),
@@ -440,14 +455,18 @@ def _aggregate(
     }
 
     nulls = [item for item in synthetic if item["kind"] == "null"]
-    groups: dict[tuple[float, int], list[dict[str, Any]]] = defaultdict(list)
+    groups: dict[tuple[str, float, int], list[dict[str, Any]]] = defaultdict(list)
     for item in synthetic:
         if item["kind"] == "normal-offset-proxy":
-            groups[(item["offset_voxels"], item["transition_width_cells"])].append(
-                item
-            )
+            groups[
+                (
+                    item["evaluation_split"],
+                    item["offset_voxels"],
+                    item["transition_width_cells"],
+                )
+            ].append(item)
     positive_groups = []
-    for (offset, width), cases in sorted(groups.items()):
+    for (evaluation_split, offset, width), cases in sorted(groups.items()):
         raw_detected = sum(item["raw_case_detected"] for item in cases)
         incremental_detected = sum(
             item["incremental_case_detected"] for item in cases
@@ -462,6 +481,7 @@ def _aggregate(
         )
         positive_groups.append(
             {
+                "evaluation_split": evaluation_split,
                 "offset_voxels": offset,
                 "nominal_winding_fraction": offset / 16.0,
                 "transition_width_cells": width,
@@ -507,12 +527,25 @@ def _aggregate(
         )
     return {
         "reviewed_same_wrap_negative_control": negative,
-        "synthetic_null_control": {
-            "cases": len(nulls),
-            "signature_mismatches": sum(
-                not item["signature_matches_baseline"] for item in nulls
-            ),
-        },
+        "synthetic_null_control": [
+            {
+                "evaluation_split": evaluation_split,
+                "cases": len(cases),
+                "signature_mismatches": sum(
+                    not item["signature_matches_baseline"] for item in cases
+                ),
+            }
+            for evaluation_split in sorted(
+                {item["evaluation_split"] for item in nulls}
+            )
+            for cases in [
+                [
+                    item
+                    for item in nulls
+                    if item["evaluation_split"] == evaluation_split
+                ]
+            ]
+        ],
         "normal_offset_proxy": positive_groups,
     }
 
@@ -526,6 +559,21 @@ def _select_evenly(paths: list[Path], limit: int) -> set[str]:
     return {paths[int(index)].name for index in indices}
 
 
+def _select_hash_ranked(
+    paths: list[Path],
+    excluded_ids: set[str],
+    limit: int,
+) -> set[str]:
+    """Select a deterministic holdout without reusing the calibration cohort."""
+
+    eligible = [path for path in paths if path.name not in excluded_ids]
+    ranked = sorted(
+        eligible,
+        key=lambda path: (hashlib.sha256(path.name.encode()).hexdigest(), path.name),
+    )
+    return {path.name for path in ranked[: max(0, limit)]}
+
+
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
     offsets = _parse_float_tuple(args.offsets)
@@ -534,6 +582,8 @@ def main(argv: list[str] | None = None) -> int:
         raise SystemExit("--workers must be at least 1")
     if args.retries < 0:
         raise SystemExit("--retries must be non-negative")
+    if args.calibration_limit < 0 or args.holdout_limit < 0:
+        raise SystemExit("synthetic cohort limits must be non-negative")
     if args.corridor_radius < 0:
         raise SystemExit("--corridor-radius must be non-negative")
     if not args.data.is_dir():
@@ -548,7 +598,16 @@ def main(argv: list[str] | None = None) -> int:
         candidates = candidates[: args.limit]
     if not candidates:
         raise SystemExit("no complete same_wrap patches with correlation results found")
-    synthetic_ids = _select_evenly(candidates, args.synthetic_limit)
+    calibration_ids = _select_evenly(candidates, args.calibration_limit)
+    holdout_ids = _select_hash_ranked(
+        candidates,
+        calibration_ids,
+        args.holdout_limit,
+    )
+    synthetic_splits = {
+        **{patch_id: "calibration" for patch_id in calibration_ids},
+        **{patch_id: "holdout" for patch_id in holdout_ids},
+    }
     config = AuditConfig()
 
     base_observations: list[dict[str, Any]] = []
@@ -564,13 +623,14 @@ def main(argv: list[str] | None = None) -> int:
         generated = (
             _synthetic_observations(
                 path.name,
+                synthetic_splits[path.name],
                 data,
                 report,
                 config,
                 offsets,
                 widths,
             )
-            if path.name in synthetic_ids
+            if path.name in synthetic_splits
             else []
         )
         return observation, generated
@@ -627,6 +687,7 @@ def main(argv: list[str] | None = None) -> int:
     synthetic_observations.sort(
         key=lambda item: (
             item["patch_id"],
+            item["evaluation_split"],
             item["kind"],
             item["offset_voxels"],
             item["transition_width_cells"],
@@ -680,10 +741,25 @@ def main(argv: list[str] | None = None) -> int:
         "configuration": {
             "doctor": asdict(config),
             "same_wrap_corridor_radius_cells": args.corridor_radius,
-            "synthetic_patch_selection": (
-                "Evenly spaced indices across the sorted selected patch IDs."
-            ),
-            "synthetic_patch_limit": args.synthetic_limit,
+            "synthetic_patch_selection": {
+                "calibration": (
+                    "The original cohort used while developing the cue: evenly "
+                    "spaced indices across sorted selected patch IDs."
+                ),
+                "holdout": (
+                    "The lowest SHA-256 ranks of patch IDs after excluding the "
+                    "calibration cohort; selected only after detector commit "
+                    "d3c8309ca707e2f18e7d64e38fb7be4ff4ca77c0 was frozen."
+                ),
+            },
+            "synthetic_patch_limits": {
+                "calibration": args.calibration_limit,
+                "holdout": args.holdout_limit,
+            },
+            "synthetic_split_membership": {
+                "calibration": sorted(calibration_ids),
+                "holdout": sorted(holdout_ids),
+            },
             "nominal_initial_dr_per_winding_voxels": 16.0,
             "normal_offsets_voxels": list(offsets),
             "transition_widths_cells": list(widths),
@@ -701,9 +777,11 @@ def main(argv: list[str] | None = None) -> int:
                 "not a labeled sample of naturally occurring tracer failures."
             ),
             "threshold_policy": (
-                "Doctor's published v0.1 defaults are used unchanged. The offset "
-                "and width ladders are declared in configuration, including the "
-                "zero-offset null."
+                "The coherent-normal-step threshold and original 64-patch "
+                "calibration protocol were frozen in commit d3c8309 before the "
+                "disjoint hash-ranked holdout cohort was selected. The offset "
+                "and width ladders are declared in configuration, including an "
+                "exact zero-offset null for both cohorts."
             ),
             "v0_1_equivalent": (
                 "The v0.1-equivalent mask is the union cue mask with only the "
