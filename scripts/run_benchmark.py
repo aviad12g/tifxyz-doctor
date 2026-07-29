@@ -14,6 +14,7 @@ import sys
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PROJECT_ROOT / "src"))
 
+from tifxyz_doctor import __version__  # noqa: E402
 from tifxyz_doctor.audit import AuditConfig, audit_mesh  # noqa: E402
 from tifxyz_doctor.integrity import audit_tifxyz_integrity  # noqa: E402
 from tifxyz_doctor.io import load_tifxyz  # noqa: E402
@@ -83,7 +84,7 @@ def main(argv: list[str] | None = None) -> int:
     ]
     snapshot = {
         "schema_version": "1.0.0",
-        "tool": {"name": "tifxyz-doctor", "version": "0.1.0"},
+        "tool": {"name": "tifxyz-doctor", "version": __version__},
         "benchmark": manifest["name"],
         "benchmark_manifest_sha256": hashlib.sha256(manifest_bytes).hexdigest(),
         "configuration": asdict(config),

@@ -9,8 +9,14 @@ from typing import Any, Iterable
 
 import numpy as np
 
+from ._version import __version__
 from .io import TifxyzData
-from .topology import enclosed_invalid_regions, label_components_4, valid_quad_mask
+from .topology import (
+    enclosed_invalid_regions,
+    label_components_4,
+    label_components_8,
+    valid_quad_mask,
+)
 
 
 @dataclass(frozen=True)
@@ -32,6 +38,8 @@ class AuditConfig:
     area_ratio_low: float = 0.25
     area_ratio_high: float = 4.0
     shear: float = math.cos(math.radians(30.0))
+    normal_step_ratio: float = 0.25
+    normal_step_min_component_cells: int = 8
     nonlocal_distance_ratio: float = 0.25
     nonlocal_uv_exclusion: int = 4
     max_proximity_points: int = 100_000
@@ -162,6 +170,7 @@ def _validate_config(config: AuditConfig) -> None:
         "area_ratio_low": config.area_ratio_low,
         "area_ratio_high": config.area_ratio_high,
         "shear": config.shear,
+        "normal_step_ratio": config.normal_step_ratio,
         "nonlocal_distance_ratio": config.nonlocal_distance_ratio,
     }
     for name, value in positive.items():
@@ -179,6 +188,8 @@ def _validate_config(config: AuditConfig) -> None:
         raise ValueError("area ratio thresholds must straddle 1")
     if config.shear >= 1:
         raise ValueError("shear must be less than 1")
+    if config.normal_step_min_component_cells < 1:
+        raise ValueError("normal_step_min_component_cells must be at least 1")
     for name, value in (
         ("expected_spacing_x", config.expected_spacing_x),
         ("expected_spacing_y", config.expected_spacing_y),
@@ -331,6 +342,152 @@ def _normal_jump_metrics(
         "jump_examples": jump_examples[:50],
         "orientation_flip_examples": flip_examples[:50],
     }
+
+
+def _coherent_normal_step_metrics(
+    horizontal_edges: np.ndarray,
+    vertical_edges: np.ndarray,
+    horizontal_valid: np.ndarray,
+    vertical_valid: np.ndarray,
+    cell_normals: np.ndarray,
+    cell_valid_normals: np.ndarray,
+    cell_valid: np.ndarray,
+    horizontal_reference: float | None,
+    vertical_reference: float | None,
+    config: AuditConfig,
+) -> tuple[dict[str, Any], np.ndarray]:
+    """Find spatially coherent edges with a large surface-normal component.
+
+    A single curved or noisy edge is weak evidence.  This cue keeps only
+    connected cell-space bands formed by multiple adjacent candidate edges.
+    """
+    height = horizontal_edges.shape[0]
+    width = vertical_edges.shape[1]
+    vertex_normal_sum = np.zeros((height, width, 3), dtype=np.float64)
+    vertex_normal_count = np.zeros((height, width), dtype=np.int32)
+    contribution = np.where(
+        cell_valid_normals[..., None],
+        cell_normals,
+        0.0,
+    )
+    for row_slice, col_slice in (
+        (slice(None, -1), slice(None, -1)),
+        (slice(None, -1), slice(1, None)),
+        (slice(1, None), slice(None, -1)),
+        (slice(1, None), slice(1, None)),
+    ):
+        vertex_normal_sum[row_slice, col_slice] += contribution
+        vertex_normal_count[row_slice, col_slice] += cell_valid_normals
+    vertex_normals, vertex_normal_lengths = _safe_unit(vertex_normal_sum)
+    vertex_normal_valid = (
+        (vertex_normal_count > 0)
+        & np.isfinite(vertex_normal_lengths)
+        & (vertex_normal_lengths > 1e-12)
+    )
+
+    horizontal_normal_sum = vertex_normals[:, :-1] + vertex_normals[:, 1:]
+    horizontal_normal, horizontal_normal_length = _safe_unit(horizontal_normal_sum)
+    vertical_normal_sum = vertex_normals[:-1, :] + vertex_normals[1:, :]
+    vertical_normal, vertical_normal_length = _safe_unit(vertical_normal_sum)
+    horizontal_score = np.full(horizontal_valid.shape, np.nan, dtype=np.float64)
+    vertical_score = np.full(vertical_valid.shape, np.nan, dtype=np.float64)
+    horizontal_supported = (
+        horizontal_valid
+        & vertex_normal_valid[:, :-1]
+        & vertex_normal_valid[:, 1:]
+        & np.isfinite(horizontal_normal_length)
+        & (horizontal_normal_length > 1e-12)
+    )
+    vertical_supported = (
+        vertical_valid
+        & vertex_normal_valid[:-1, :]
+        & vertex_normal_valid[1:, :]
+        & np.isfinite(vertical_normal_length)
+        & (vertical_normal_length > 1e-12)
+    )
+    if horizontal_reference is not None:
+        horizontal_score[horizontal_supported] = np.abs(
+            np.sum(
+                horizontal_edges[horizontal_supported]
+                * horizontal_normal[horizontal_supported],
+                axis=-1,
+            )
+        ) / horizontal_reference
+    if vertical_reference is not None:
+        vertical_score[vertical_supported] = np.abs(
+            np.sum(
+                vertical_edges[vertical_supported]
+                * vertical_normal[vertical_supported],
+                axis=-1,
+            )
+        ) / vertical_reference
+
+    horizontal_candidates = (
+        horizontal_supported
+        & np.isfinite(horizontal_score)
+        & (horizontal_score >= config.normal_step_ratio)
+    )
+    vertical_candidates = (
+        vertical_supported
+        & np.isfinite(vertical_score)
+        & (vertical_score >= config.normal_step_ratio)
+    )
+    candidate_cells = np.zeros(cell_valid.shape, dtype=bool)
+    _project_edge_flags_to_cells(
+        candidate_cells,
+        horizontal_candidates,
+        vertical_candidates,
+    )
+    candidate_cells &= cell_valid
+    labels, sizes = label_components_8(candidate_cells)
+    retained_labels = {
+        index
+        for index, size in enumerate(sizes, start=1)
+        if size >= config.normal_step_min_component_cells
+    }
+    coherent_cells = (
+        np.isin(labels, list(retained_labels))
+        if retained_labels
+        else np.zeros(cell_valid.shape, dtype=bool)
+    )
+    component_sizes = sorted(
+        (sizes[index - 1] for index in retained_labels),
+        reverse=True,
+    )
+    examples = [
+        {**item, "direction": "horizontal"}
+        for item in _top_locations(
+            horizontal_score,
+            horizontal_candidates,
+            limit=25,
+        )
+    ] + [
+        {**item, "direction": "vertical"}
+        for item in _top_locations(
+            vertical_score,
+            vertical_candidates,
+            limit=25,
+        )
+    ]
+    examples.sort(
+        key=lambda item: (-float(item["value"]), item["direction"], item["rc"])
+    )
+    return (
+        {
+            "normal_component_ratio_threshold": config.normal_step_ratio,
+            "minimum_component_cells": config.normal_step_min_component_cells,
+            "horizontal_score": _summary(horizontal_score),
+            "vertical_score": _summary(vertical_score),
+            "candidate_edges": int(
+                horizontal_candidates.sum() + vertical_candidates.sum()
+            ),
+            "coherent_components": len(component_sizes),
+            "coherent_component_sizes": component_sizes,
+            "coherent_cells": int(coherent_cells.sum()),
+            "candidate_edge_examples": examples[:50],
+        },
+        coherent_cells,
+    )
 
 
 def _nonlocal_proximity(
@@ -504,6 +661,16 @@ def _findings(
             "review",
             "normal-jumps",
             f"{geometry['normal_jumps']['jumps_above_threshold']} adjacent-cell normal jumps exceed the threshold.",
+        )
+    if geometry["coherent_normal_steps"]["coherent_components"] > 0:
+        add(
+            "review",
+            "coherent-normal-step",
+            (
+                f"{geometry['coherent_normal_steps']['coherent_components']} "
+                "spatially coherent band(s) contain a large surface-normal "
+                "edge component."
+            ),
         )
     if geometry["high_condition_cells"] > 0:
         add(
@@ -813,7 +980,20 @@ def audit_mesh(data: TifxyzData, config: AuditConfig | None = None) -> dict[str,
         review_score,
         review_cue_mask,
     )
-
+    coherent_normal_steps, coherent_normal_step_cells = (
+        _coherent_normal_step_metrics(
+            horizontal,
+            vertical,
+            horizontal_valid,
+            vertical_valid,
+            cell_normals,
+            cell_valid_normals,
+            cell_valid,
+            horizontal_reference,
+            vertical_reference,
+            cfg,
+        )
+    )
     long_edges = int(horizontal_long.sum() + vertical_long.sum())
     short_edges = int(horizontal_short.sum() + vertical_short.sum())
     long_edge_examples = [
@@ -997,6 +1177,7 @@ def audit_mesh(data: TifxyzData, config: AuditConfig | None = None) -> dict[str,
             high_dirichlet,
         ),
         "normal_jumps": normal_jumps,
+        "coherent_normal_steps": coherent_normal_steps,
     }
 
     valid_coordinates = coordinates[valid & finite_all]
@@ -1072,10 +1253,16 @@ def audit_mesh(data: TifxyzData, config: AuditConfig | None = None) -> dict[str,
     proximity_cells = _vertex_flags_to_cells(proximity_vertices) & cell_valid
     review_cue_mask |= proximity_cells
     review_score[proximity_cells] = 1.0
+    # Preserve the literal union produced by v0.1 before adding the new cue.
+    # Subtracting the new cue from the final union would incorrectly erase
+    # cells where old and new cue families overlap.
+    v0_1_review_cue_mask = review_cue_mask.copy()
+    review_cue_mask |= coherent_normal_step_cells
+    review_score[coherent_normal_step_cells] = 1.0
 
     report = {
         "schema_version": "1.0.0",
-        "tool": {"name": "tifxyz-doctor", "version": "0.1.0"},
+        "tool": {"name": "tifxyz-doctor", "version": __version__},
         "source": {
             "path": str(data.path),
             "uuid": str(data.metadata.get("uuid", data.path.name)),
@@ -1092,6 +1279,8 @@ def audit_mesh(data: TifxyzData, config: AuditConfig | None = None) -> dict[str,
     report["_arrays"] = {
         "review_score": review_score.astype(np.float32),
         "review_cue_mask": review_cue_mask,
+        "v0_1_review_cue_mask": v0_1_review_cue_mask,
+        "coherent_normal_step_cells": coherent_normal_step_cells,
         "valid_cells": cell_valid,
         "hole_labels": hole_labels,
     }

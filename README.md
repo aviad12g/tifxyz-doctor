@@ -53,7 +53,9 @@ within the scanned collection.
   alternate-diagonal sensitivity;
 - bilinear-center Jacobian condition, symmetric stretch, area ratio, shear,
   and symmetric Dirichlet energy;
-- adjacent-cell normal jumps; and
+- adjacent-cell normal jumps;
+- spatially coherent bands whose grid edges have a large surface-normal
+  component; and
 - sampled nonlocal vertex proximity candidates.
 
 See [Methodology](docs/methodology.md) for definitions and thresholds and
@@ -131,6 +133,26 @@ Dirichlet energy, according to the Challenge's
 [flattening documentation](https://scrollprize.org/2026_open_problems#2d-parameterization-and-flattening).
 TIFXYZ Doctor exposes the same distortion quantity as a local diagnostic; it
 does not reproduce or replace SLIM optimization.
+
+## v0.2 reviewed-patch evidence
+
+The new `coherent-normal-step` cue has a sealed,
+overlap-component-isolated benchmark on the official PHercParis4 reviewed
+patches. The detector and 64-patch development cohort were frozen before 128
+holdout patches from untouched overlap components were selected.
+
+On that holdout, the cue localized 124/128 abrupt 8-voxel normal-offset
+proxies and 128/128 abrupt 16-voxel proxies. The v0.1 cue union localized
+0/128 and 2/128 of those cases, respectively. All 128 holdout nulls were
+identical to baseline in coordinate bytes, validity bytes, the complete public
+audit report, and a reduced audit signature.
+
+The result is deliberately bounded: gradual four- and twelve-cell transitions
+were mostly missed, and the proxies are controlled perturbations of real
+reviewed surfaces—not naturally occurring sheet switches. The full split,
+component-bootstrap intervals, exact hashes, tables, reproduction command, and
+interpretation limits are in the
+[reviewed same-wrap benchmark](docs/reviewed-same-wrap-benchmark.md).
 
 ## Quick start
 
@@ -338,14 +360,19 @@ python scripts/fetch_benchmark.py
 python scripts/run_benchmark.py
 ```
 
+The v0.2 reviewed-patch benchmark additionally requires the official
+PHercParis4 reviewed-patch subset and overlap graph. See its
+[reproduction instructions](docs/reviewed-same-wrap-benchmark.md#reproduce).
+
 Run `scripts/run_public_regressions.py` separately only when the exact
 pre-remediation cache is present.
 
 ## Limits
 
-- There is no authoritative labeled corpus of correct and incorrect TIFXYZ
-  geometry in this repository. Review-cue precision and recall are therefore
-  not claimed.
+- There is no authoritative labeled corpus of naturally occurring correct and
+  incorrect TIFXYZ geometry in this repository. Natural sheet-switch precision
+  and recall are therefore not claimed; v0.2 reports only controlled-proxy
+  detection rates and reviewed same-wrap annotation-neighborhood alert rates.
 - Enclosed gaps may be intentional. Sharp normal changes may represent real
   folds. Stretch and edge thresholds depend on the intended parameterization.
 - Nonlocal proximity samples vertices; it does not test triangle-triangle

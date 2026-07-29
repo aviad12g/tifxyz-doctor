@@ -15,6 +15,114 @@ def _read_json(relative_path: str) -> tuple[dict, bytes]:
 
 
 class BenchmarkManifestTests(unittest.TestCase):
+    def test_reviewed_patch_split_is_overlap_isolated(self) -> None:
+        manifest, _ = _read_json(
+            "benchmarks/reviewed-same-wrap-split-v1.json"
+        )
+        counts = manifest["counts"]
+        split = manifest["split"]
+
+        self.assertEqual(counts["overlap_edges"], 478)
+        self.assertEqual(counts["overlap_components"], 358)
+        self.assertEqual(counts["development_patches"], 64)
+        self.assertEqual(counts["development_connected_patches"], 217)
+        self.assertEqual(counts["development_related_excluded_patches"], 153)
+        self.assertEqual(counts["clean_holdout_pool_patches"], 492)
+        self.assertEqual(counts["selected_holdout_patches"], 128)
+        self.assertEqual(
+            manifest["source"]["overlap_graph"]["sha256"],
+            "11fc0ef6112a2b9829f80242b7c67530"
+            "c841b1159aed1ed5bb45e4362aad5097",
+        )
+
+        development_connected = set(split["development_connected_ids"])
+        clean_holdout = set(split["clean_holdout_pool_ids"])
+        selected_holdout = set(split["selected_holdout_ids"])
+        self.assertTrue(development_connected.isdisjoint(clean_holdout))
+        self.assertTrue(selected_holdout <= clean_holdout)
+        self.assertEqual(len(development_connected | clean_holdout), 709)
+
+    def test_reviewed_patch_holdout_result_matches_frozen_protocol(self) -> None:
+        split, split_bytes = _read_json(
+            "benchmarks/reviewed-same-wrap-split-v1.json"
+        )
+        result, result_bytes = _read_json(
+            "benchmarks/reviewed-same-wrap-results-v0.2.0.json"
+        )
+
+        self.assertEqual(
+            hashlib.sha256(result_bytes).hexdigest(),
+            "74f243eb57a84eb2ee9aa8df2f5674ef"
+            "92d86fc1d54a8333c7b0b9e1fe21173c",
+        )
+        self.assertEqual(result["tool"]["version"], "0.2.0")
+        self.assertEqual(result["failures"], [])
+        self.assertEqual(result["source"]["selected_patches"], 709)
+        self.assertEqual(result["source"]["successfully_audited_patches"], 709)
+        self.assertEqual(
+            result["source"]["tree_sha256"],
+            "df51daa45ac762242c044a1fbe959140"
+            "30664ab96536e157289b4f7077964982",
+        )
+        self.assertEqual(
+            result["source"]["split_manifest"]["sha256"],
+            hashlib.sha256(split_bytes).hexdigest(),
+        )
+
+        nulls = {
+            item["evaluation_split"]: item
+            for item in result["aggregate"]["synthetic_null_control"]
+        }
+        self.assertEqual(nulls["development"]["cases"], 64)
+        self.assertEqual(nulls["holdout"]["cases"], 128)
+        for item in nulls.values():
+            self.assertEqual(item["coordinate_byte_mismatches"], 0)
+            self.assertEqual(item["validity_byte_mismatches"], 0)
+            self.assertEqual(item["public_report_mismatches"], 0)
+            self.assertEqual(item["signature_mismatches"], 0)
+
+        proxies = {
+            (
+                item["evaluation_split"],
+                item["offset_voxels"],
+                item["transition_width_cells"],
+            ): item
+            for item in result["aggregate"]["normal_offset_proxy"]
+        }
+        self.assertEqual(
+            proxies[("holdout", 8.0, 1)]["incremental_cases_detected"],
+            124,
+        )
+        self.assertEqual(
+            proxies[("holdout", 16.0, 1)]["incremental_cases_detected"],
+            128,
+        )
+        self.assertEqual(
+            proxies[("holdout", 8.0, 4)]["incremental_cases_detected"],
+            0,
+        )
+
+        synthetic = result["synthetic_cases"]
+        observed_development = {
+            item["patch_id"]
+            for item in synthetic
+            if item["evaluation_split"] == "development"
+        }
+        observed_holdout = {
+            item["patch_id"]
+            for item in synthetic
+            if item["evaluation_split"] == "holdout"
+        }
+        self.assertEqual(
+            observed_development,
+            set(split["split"]["development_ids"]),
+        )
+        self.assertEqual(
+            observed_holdout,
+            set(split["split"]["selected_holdout_ids"]),
+        )
+        self.assertTrue(observed_development.isdisjoint(observed_holdout))
+
     def test_realdata_snapshot_matches_manifest_identity(self) -> None:
         manifest, manifest_bytes = _read_json("benchmarks/realdata-smoke.json")
         snapshot, _ = _read_json("benchmarks/realdata-results-v0.1.0.json")
