@@ -15,6 +15,27 @@ for thresholded geometry review cues.
 The tool is read-only and CPU-only: it does not repair, rewrite, or silently
 normalize source data.
 
+![Four-panel view of the reviewed baseline, detected abrupt proxy, missed gradual proxy, and exact cue cells](docs/assets/reviewed-benchmark-four-panel.png)
+
+The figure shows one overlap-isolated holdout surface under the frozen v0.2
+thresholds: a 16-voxel abrupt normal-offset proxy is localized to 62 exact
+cells, while a 12-cell gradual transition is missed. These are controlled
+proxies on real reviewed geometry, not naturally occurring sheet-switch
+labels.
+
+An unchanged-threshold external probe did **not** justify expanding that claim:
+the normal-step cue did not separate a team-nominated PHerc1451 collection from
+a structurally different PHerc1667 comparator. The team describes PHerc1451's
+switches as black gaps—missing face-lattice data, not a connected normal
+discontinuity. The existing `enclosed-gaps` cue measures that observable, but a
+matched raw-tracer check prevents a specificity claim: gaps occur on 16/17
+PHerc1451 surfaces and 23/23 PHerc1447 `z_dbg_gen_*` surfaces. PHerc1451 has a
+higher gap-cell burden (4.551% versus 1.372% of the face lattice), while
+enclosed-region density is similar (692.7 versus 594.0 per million valid
+cells). Neither collection has exact switch labels. The exact counts,
+provenance, normalizations, and caveats are in the
+[external natural-data probe](docs/external-natural-probe.md).
+
 The distinction between its two result classes is intentional:
 
 | Result class | Meaning | Suitable for automation? |
