@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+real-data/
+synthetic_train/
+checkpoints/
+outputs/
+archives/
+extracted/
+
