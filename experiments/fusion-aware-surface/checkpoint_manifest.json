@@ -1,0 +1,209 @@
+{
+  "evaluation_access": {
+    "statement": "Only checkpoint identity JSON, file names, byte sizes, and SHA-256 digests were inspected while creating this freeze.",
+    "validation_or_test_outputs_inspected": false
+  },
+  "launcher_ledger_sha256": "594d23dfe645c6a6ea6d737e81cfdeef015f5e6251049b0ae13eee1413e9d8a4",
+  "preregistration": {
+    "commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+    "repository": "https://github.com/aviad12g/tifxyz-doctor"
+  },
+  "runs": [
+    {
+      "arm": "control",
+      "files": {
+        "checkpoint": {
+          "bytes": 409569594,
+          "path": "control-seed11/checkpoints/surface059_control_seed11.pth",
+          "sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f"
+        },
+        "metadata": {
+          "bytes": 668,
+          "path": "control-seed11/checkpoints/surface059_control_seed11.json",
+          "sha256": "a2d8f08202a91eb545c6553b52d4e903e80ba70fe58f6303be0397022b693857"
+        },
+        "training_log": {
+          "bytes": 6469,
+          "path": "control-seed11/training.log",
+          "sha256": "db88b5dee89696a86623c26efa2346dcf6a65bd27b1c382fa336423e386f9bd9"
+        },
+        "training_run_manifest": {
+          "bytes": 2481,
+          "path": "control-seed11/training_run_manifest.json",
+          "sha256": "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+        "version": 4
+      },
+      "seed": 11,
+      "training_status": "training complete; validation and test endpoints not computed"
+    },
+    {
+      "arm": "control",
+      "files": {
+        "checkpoint": {
+          "bytes": 409569594,
+          "path": "control-seed23/checkpoints/surface059_control_seed23.pth",
+          "sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3"
+        },
+        "metadata": {
+          "bytes": 668,
+          "path": "control-seed23/checkpoints/surface059_control_seed23.json",
+          "sha256": "ab171adf15a187df0e4b66e6f991cad13de90fdd583f914165ddef58619b135d"
+        },
+        "training_log": {
+          "bytes": 6469,
+          "path": "control-seed23/training.log",
+          "sha256": "dfba2fa2d554476353d1aa150adcd359f5eee2547d58afd0b183a2ef37c914bf"
+        },
+        "training_run_manifest": {
+          "bytes": 2481,
+          "path": "control-seed23/training_run_manifest.json",
+          "sha256": "9ad56528323f821e60c98faff48265c327a4ede351148e0596a14737aa493f2d"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+        "version": 4
+      },
+      "seed": 23,
+      "training_status": "training complete; validation and test endpoints not computed"
+    },
+    {
+      "arm": "control",
+      "files": {
+        "checkpoint": {
+          "bytes": 409569594,
+          "path": "control-seed47/checkpoints/surface059_control_seed47.pth",
+          "sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44"
+        },
+        "metadata": {
+          "bytes": 671,
+          "path": "control-seed47/checkpoints/surface059_control_seed47.json",
+          "sha256": "534000b3c786ecfb83fa181c6005dcf1e78c9f263ecd7f9f9c90e3436748380f"
+        },
+        "training_log": {
+          "bytes": 6472,
+          "path": "control-seed47/training.log",
+          "sha256": "440c76942811da3f4e58909ce0889637d3c97658184d5f9a4711be2d29d7f0c6"
+        },
+        "training_run_manifest": {
+          "bytes": 2481,
+          "path": "control-seed47/training_run_manifest.json",
+          "sha256": "2eede7befa96f01aed362040705da55643fffe287b11c9759596e5197f99ecb2"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+        "version": 1
+      },
+      "seed": 47,
+      "training_status": "training complete; validation and test endpoints not computed"
+    },
+    {
+      "arm": "gap8",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "path": "gap8-seed11/checkpoints/surface059_gap8_seed11.pth",
+          "sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3"
+        },
+        "metadata": {
+          "bytes": 662,
+          "path": "gap8-seed11/checkpoints/surface059_gap8_seed11.json",
+          "sha256": "5316d2e74a17fd4075a29744e7382846c867878eca47c381f3d256f8095254c1"
+        },
+        "training_log": {
+          "bytes": 6373,
+          "path": "gap8-seed11/training.log",
+          "sha256": "a98892ba09ab4def8556980455c0b6bac2f7a44d01266896a917fd426f1dd825"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "path": "gap8-seed11/training_run_manifest.json",
+          "sha256": "cb590391f03ce81f8f3d350490a367ec9618e59f689baccec2277b9b79d9680a"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+        "version": 1
+      },
+      "seed": 11,
+      "training_status": "training complete; validation and test endpoints not computed"
+    },
+    {
+      "arm": "gap8",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "path": "gap8-seed23/checkpoints/surface059_gap8_seed23.pth",
+          "sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde"
+        },
+        "metadata": {
+          "bytes": 662,
+          "path": "gap8-seed23/checkpoints/surface059_gap8_seed23.json",
+          "sha256": "8615d96c018e04fcb585461ed4d167a73efac597b31d6f4bb19139aed2a45665"
+        },
+        "training_log": {
+          "bytes": 6373,
+          "path": "gap8-seed23/training.log",
+          "sha256": "04f7caf52fcecd74a0e5ca9b0dbedb005ffb0e4610aafc6771d9d3d7fda7c575"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "path": "gap8-seed23/training_run_manifest.json",
+          "sha256": "963ef73888cb70066f0773bb2f75b1a7d11ab4c9b0568453bff005536c3e0021"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+        "version": 1
+      },
+      "seed": 23,
+      "training_status": "training complete; validation and test endpoints not computed"
+    },
+    {
+      "arm": "gap8",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "path": "gap8-seed47/checkpoints/surface059_gap8_seed47.pth",
+          "sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a"
+        },
+        "metadata": {
+          "bytes": 665,
+          "path": "gap8-seed47/checkpoints/surface059_gap8_seed47.json",
+          "sha256": "27b659c20bef2885059fb66ab458bc963da346ca55e6ecb0b991033f3f9bbdb6"
+        },
+        "training_log": {
+          "bytes": 6376,
+          "path": "gap8-seed47/training.log",
+          "sha256": "8bedc5889750ee80eb8c18228feaf79e92c35c42a36ee06ce8d76b2f537b5c83"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "path": "gap8-seed47/training_run_manifest.json",
+          "sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+        "url": "https://www.kaggle.com/code/aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+        "version": 1
+      },
+      "seed": 47,
+      "training_status": "training complete; validation and test endpoints not computed"
+    }
+  ],
+  "runs_payload_sha256": "f8db1b0bbe4236f9e58e3b6971cda2a54cb6f69c740f490addd5ac3453cb3ac9",
+  "schema_version": "1.0",
+  "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f",
+  "status": "all six training checkpoints frozen before validation or test evaluation"
+}
