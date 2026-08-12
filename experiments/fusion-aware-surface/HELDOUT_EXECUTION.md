@@ -26,6 +26,15 @@ It changes no input bytes, checkpoint, model, threshold, run, seed, panel,
 scientific code, or decision rule. A corrected public held-out plan must pin
 the corrected launcher before either failed job is rerun.
 
+Those corrected version-2 attempts then stopped at the next pre-inference
+mount gate because Kaggle had expanded `images_s4_s5.tar` and `labels.tar`
+into directories. The mount adapter therefore copies exactly the 38 test
+image/label pairs named by `real_split_manifest.json`, verifies every source
+and copied file against that manifest's frozen SHA-256, rejects any file-set
+difference, and still rejects any Scroll-1 file in scratch. This is an
+operational representation correction only; the held-out bytes remain bound
+to the original pre-inference split manifest.
+
 `build_heldout_execution_plan.py` is run only after the private threshold job
 has completed and both threshold artifacts have been published at an immutable
 GitHub commit.  It validates the threshold artifact identities and emits a

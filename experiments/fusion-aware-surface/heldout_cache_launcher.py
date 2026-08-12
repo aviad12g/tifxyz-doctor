@@ -14,9 +14,9 @@ import importlib.metadata
 import inspect
 import json
 import os
+import shutil
 import subprocess
 import sys
-import tarfile
 import urllib.request
 from pathlib import Path, PurePosixPath
 
@@ -70,16 +70,6 @@ DIRECT_SOURCE_IDENTITIES = {
     "model/Model_epoch499.pth": (
         SOURCE_CHECKPOINT_BYTES,
         SOURCE_CHECKPOINT_SHA256,
-    ),
-}
-ARCHIVES = {
-    "images_s4_s5.tar": (
-        444_723_200,
-        "960a152238df8fc60d108a13302af9676c096019c21f204447aa3bf7d9dce4ae",
-    ),
-    "labels.tar": (
-        83_087_360,
-        "6e01e4d5f0591796a060bda0a1357ed8cc8b801912a7d3e569ecb246764741a6",
     ),
 }
 EXPECTED_PROPERTIES = {
@@ -422,59 +412,47 @@ def verify_model_state(input_root: Path, job: dict) -> Path | None:
     return checkpoint
 
 
-def _safe_extract_test(archive: Path, destination: Path, *, kind: str) -> None:
-    selected = []
-    with tarfile.open(archive, "r") as bundle:
-        for member in bundle.getmembers():
-            relative = PurePosixPath(member.name)
-            name = relative.name
-            wanted = (
-                kind == "image"
-                and len(relative.parts) >= 2
-                and relative.parts[-2] == "imagesTr"
-                and name.startswith(("s4_", "s5_"))
-                and name.endswith("_0000.tif")
-            ) or (
-                kind == "label"
-                and len(relative.parts) >= 2
-                and relative.parts[-2] == "labelsTr"
-                and name.startswith(("s4_", "s5_"))
-                and name.endswith(".tif")
-            )
-            if not wanted:
-                continue
-            if not member.isfile() or member.issym() or member.islnk():
-                raise RuntimeError(f"invalid selected archive member: {member.name}")
-            target = (destination / member.name).resolve()
-            if destination.resolve() not in target.parents:
-                raise RuntimeError(f"archive path traversal: {member.name}")
-            selected.append(member)
-        if len(selected) != 38:
-            raise RuntimeError(
-                f"unexpected held-out {kind} member count: {len(selected)}"
-            )
-        for member in selected:
-            bundle.extract(member, destination, filter="data")
-
-
 def prepare_test_only(asset_root: Path, destination: Path) -> None:
     if destination.exists():
         raise RuntimeError("held-out scratch must start absent")
-    destination.mkdir(parents=True)
-    for name, (size, digest) in ARCHIVES.items():
-        path = asset_root / "archives" / name
-        if (
-            not path.is_file()
-            or path.stat().st_size != size
-            or sha256_file(path) != digest
+    split = verify_split(asset_root)
+    records = [record for record in split["records"] if record["split"] == "test"]
+    if len(records) != 38:
+        raise RuntimeError(f"unexpected held-out split count: {len(records)}")
+    source_images = asset_root / "archives" / "images_s4_s5" / "imagesTr"
+    source_labels = asset_root / "archives" / "labels" / "labelsTr"
+    expected_images = {record["image"] for record in records}
+    expected_labels = {record["label"] for record in records}
+    observed_images = {path.name for path in source_images.glob("*.tif")}
+    observed_labels = {
+        path.name
+        for path in source_labels.glob("*.tif")
+        if path.name.startswith(("s4_", "s5_"))
+    }
+    if observed_images != expected_images or observed_labels != expected_labels:
+        raise RuntimeError("expanded held-out source file set mismatch")
+    output_images = destination / "imagesTr"
+    output_labels = destination / "labelsTr"
+    output_images.mkdir(parents=True)
+    output_labels.mkdir(parents=True)
+    for record in records:
+        for source, target, digest in (
+            (
+                source_images / record["image"],
+                output_images / record["image"],
+                record["image_sha256"],
+            ),
+            (
+                source_labels / record["label"],
+                output_labels / record["label"],
+                record["label_sha256"],
+            ),
         ):
-            raise RuntimeError(f"held-out archive mismatch: {name}")
-    _safe_extract_test(
-        asset_root / "archives" / "images_s4_s5.tar", destination, kind="image"
-    )
-    _safe_extract_test(
-        asset_root / "archives" / "labels.tar", destination, kind="label"
-    )
+            if not source.is_file() or sha256_file(source) != digest:
+                raise RuntimeError(f"expanded held-out source hash mismatch: {source.name}")
+            shutil.copyfile(source, target)
+            if sha256_file(target) != digest:
+                raise RuntimeError(f"held-out scratch copy mismatch: {target.name}")
     if list(destination.rglob("s1_*.tif")):
         raise RuntimeError("Scroll-1 leaked into held-out scratch")
 
