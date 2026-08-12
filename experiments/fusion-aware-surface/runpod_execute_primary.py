@@ -98,6 +98,7 @@ def install_runtime() -> None:
             "--quiet",
             "--no-cache-dir",
             "numpy==1.26.4",
+            "scipy==1.16.3",
             "tifffile==2025.2.18",
             "imagecodecs==2024.12.30",
             "huggingface-hub==1.11.0",

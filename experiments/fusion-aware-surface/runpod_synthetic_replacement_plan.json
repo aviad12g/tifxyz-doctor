@@ -61,6 +61,7 @@
     "huggingface-hub": "1.11.0",
     "imagecodecs": "2024.12.30",
     "numpy": "1.26.4",
+    "scipy": "1.16.3",
     "tifffile": "2025.2.18",
     "timm": "1.0.27",
     "torch": "2.5.1+cu121",
@@ -146,7 +147,7 @@
     "role": "secondary cross-platform replication",
     "selection_between_platforms_permitted": false
   },
-  "payload_sha256": "065075f33f09601b189c8bd45b1f7981917d5f0d8fd37ae5a60a6e7087e968ae",
+  "payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984",
   "provenance": {
     "generated_packages_index_payload_sha256": "fe34eb21479130803b5fdfeb871380a01c44b76247b993923997895ef6c6ea33",
     "heldout_execution_plan_commit": "46d030245c14ecb2be63796a308581c462fc2e29",
@@ -195,9 +196,9 @@
       "sha256": "502e900b39204761e3ee6074962f2d0f7a15affd5d23073a237ef388e8ac8215"
     },
     "remote_executor": {
-      "bytes": 9569,
+      "bytes": 9598,
       "file": "runpod_execute_primary.py",
-      "sha256": "48df71a19e1ee75cd4fc7e9235edc0995ddcc10e5b3e48fd0fb09d20f6fba8d6"
+      "sha256": "99c2a5409a820fc84e80af23bc049185a6f47acc0aeb638642c982c051957dfb"
     },
     "single_job_wrapper": {
       "bytes": 3279,

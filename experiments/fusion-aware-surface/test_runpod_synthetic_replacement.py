@@ -66,6 +66,13 @@ class RunPodReplacementTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "exceeds frozen ceiling"):
             controller.validate_pod(pod, self.plan, 7)
 
+    def test_scipy_operational_dependency_is_exactly_pinned(self) -> None:
+        self.assertEqual(self.plan["frozen_runtime"]["scipy"], "1.16.3")
+        executor_source = (HERE / "runpod_execute_primary.py").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn('"scipy==1.16.3"', executor_source)
+
     def test_guarded_budget_gate_stops_before_cutoff(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             receipt_path = Path(directory) / "receipt.json"

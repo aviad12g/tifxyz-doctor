@@ -44,6 +44,13 @@ The immutable base image is
 Every frozen launcher installs and verifies the already specified PyTorch
 2.5.1/CUDA 12.1 runtime and companion package versions before inference.
 
+The first sealed RunPod executor attempt stopped before inference because the
+base image did not provide SciPy, which `gap_supervision.py` imports. No cache
+job completed and no scientific output was inspected. SciPy 1.16.3—the exact
+version in the recorded development environment—is therefore pinned here as a
+pre-inference operational dependency. This does not change any checkpoint,
+input, threshold, seed, shard, endpoint, gate, or authority rule.
+
 ## Hard budget gate
 
 The total RunPod authorization is USD 20.00. The controller accepts no GPU
