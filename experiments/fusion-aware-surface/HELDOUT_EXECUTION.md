@@ -35,6 +35,14 @@ difference, and still rejects any Scroll-1 file in scratch. This is an
 operational representation correction only; the held-out bytes remain bound
 to the original pre-inference split manifest.
 
+The private-slug status compatibility added later in the queue controller
+retains a two-argument default for the already-frozen manifest collector and
+paired scorer controller. The default still confirms absence through Aviad's
+owned-kernel listing before treating Kaggle's ambiguous permission-denied
+response as a missing slug. Queue launches continue to pass the stricter
+receipt-aware value explicitly. This helper-level compatibility changes no
+package, cache, scorer, threshold, or scientific record.
+
 `build_heldout_execution_plan.py` is run only after the private threshold job
 has completed and both threshold artifacts have been published at an immutable
 GitHub commit.  It validates the threshold artifact identities and emits a

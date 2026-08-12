@@ -197,7 +197,7 @@ def owned_kernel_exists(kaggle: str, kernel_id: str) -> bool:
 
 
 def kernel_status(
-    kaggle: str, kernel_id: str, *, allow_unaccepted_absence: bool
+    kaggle: str, kernel_id: str, *, allow_unaccepted_absence: bool = True
 ) -> str | None:
     result = run_cli([kaggle, "kernels", "status", kernel_id])
     combined = "\n".join(part for part in (result.stdout, result.stderr) if part)

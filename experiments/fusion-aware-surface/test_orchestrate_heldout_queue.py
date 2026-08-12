@@ -257,6 +257,23 @@ def test_permission_denied_is_absent_only_for_unaccepted_owned_slug(
     )
 
 
+def test_two_argument_status_call_retains_frozen_tool_compatibility(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    responses = iter(
+        [
+            subprocess.CompletedProcess(
+                [], 1, "", "Permission 'kernels.get' was denied"
+            ),
+            subprocess.CompletedProcess(
+                [], 0, "ref,title,author,lastRunTime,totalVotes\n", ""
+            ),
+        ]
+    )
+    monkeypatch.setattr(queue, "run_cli", lambda *args, **kwargs: next(responses))
+    assert queue.kernel_status("kaggle", "aviadcohen1/not-created") is None
+
+
 def test_permission_denied_never_masks_an_accepted_kernel(
     monkeypatch: pytest.MonkeyPatch,
 ) -> None:
