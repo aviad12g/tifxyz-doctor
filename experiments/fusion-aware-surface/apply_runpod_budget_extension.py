@@ -35,7 +35,7 @@ def require_commit(value: str) -> str:
     return value
 
 
-def validate(extension: dict, receipt: dict) -> None:
+def validate(extension: dict, receipt: dict) -> bool:
     if extension.get("status") != (
         "result-blind operational budget extension authorized before primary completion"
     ):
@@ -59,10 +59,32 @@ def validate(extension: dict, receipt: dict) -> None:
         raise RuntimeError("budget extension requires a sealed running primary")
     budget = extension["budget"]
     existing = receipt.get("budget_extensions", [])
-    if existing:
-        if len(existing) == 1 and existing[0].get("extension_payload_sha256") == extension["payload_sha256"]:
-            return
-        raise RuntimeError("receipt already contains another budget extension")
+    if not isinstance(existing, list):
+        raise RuntimeError("receipt budget-extension history is not a list")
+    predecessor = extension.get("predecessor_budget_extension")
+    expected_prior_count = 0
+    if predecessor is not None:
+        expected_prior_count = predecessor["expected_prior_extension_count"]
+        if expected_prior_count < 1:
+            raise RuntimeError("invalid predecessor extension count")
+    already_applied = (
+        len(existing) == expected_prior_count + 1
+        and existing[-1].get("extension_payload_sha256") == extension["payload_sha256"]
+    )
+    if already_applied:
+        if float(receipt.get("billing_cutoff_usd")) != budget["new_billing_cutoff_usd"]:
+            raise RuntimeError("applied receipt billing cutoff differs from extension")
+        if float(receipt.get("hard_total_cap_usd")) != budget["new_hard_total_cap_usd"]:
+            raise RuntimeError("applied receipt hard cap differs from extension")
+        return True
+    if len(existing) != expected_prior_count:
+        raise RuntimeError("receipt budget-extension history length differs from precondition")
+    if predecessor is not None:
+        prior = existing[-1]
+        if prior.get("extension_payload_sha256") != predecessor["extension_payload_sha256"]:
+            raise RuntimeError("receipt predecessor payload differs from extension precondition")
+        if prior.get("public_extension_commit") != predecessor["public_extension_commit"]:
+            raise RuntimeError("receipt predecessor commit differs from extension precondition")
     if float(receipt.get("billing_cutoff_usd")) != budget["prior_public_receipt_billing_cutoff_usd"]:
         raise RuntimeError("receipt billing cutoff differs from extension precondition")
     if float(receipt.get("hard_total_cap_usd")) != budget["prior_public_receipt_hard_total_cap_usd"]:
@@ -72,17 +94,17 @@ def validate(extension: dict, receipt: dict) -> None:
     scientific = extension["scientific_protocol"]
     if any(scientific.values()):
         raise RuntimeError("budget extension changes or opens scientific state")
+    return False
 
 
 def apply(extension_path: Path, receipt_path: Path, public_commit: str) -> dict:
     extension = load_hashed(extension_path)
     receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
-    validate(extension, receipt)
-    existing = receipt.get("budget_extensions", [])
-    if existing:
+    already_applied = validate(extension, receipt)
+    if already_applied:
         return receipt
     budget = extension["budget"]
-    receipt["budget_extensions"] = [
+    receipt.setdefault("budget_extensions", []).append(
         {
             "applied_at_utc": now(),
             "extension_file": extension_path.name,
@@ -90,7 +112,7 @@ def apply(extension_path: Path, receipt_path: Path, public_commit: str) -> dict:
             "public_extension_commit": require_commit(public_commit),
             "scientific_outputs_inspected_at_application": False,
         }
-    ]
+    )
     receipt["billing_cutoff_usd"] = budget["new_billing_cutoff_usd"]
     receipt["hard_total_cap_usd"] = budget["new_hard_total_cap_usd"]
     temporary = receipt_path.with_suffix(receipt_path.suffix + ".tmp")

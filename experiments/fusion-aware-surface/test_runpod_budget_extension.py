@@ -106,3 +106,76 @@ def test_rejects_changed_scientific_protocol(tmp_path: Path) -> None:
     extension_path.write_text(json.dumps(extension), encoding="utf-8")
     with pytest.raises(RuntimeError, match="changes or opens scientific state"):
         extension_tool.apply(extension_path, receipt_path, "c" * 40)
+
+
+def chained_extension(first: dict, first_commit: str) -> dict:
+    return canonical(
+        {
+            "authorization": {
+                "additional_authorized_usd": 12.0,
+                "authorized_at_utc": "2026-08-12T22:23:33Z",
+                "new_authorized_total_usd": 49.0,
+                "prior_authorized_total_usd": 37.0,
+            },
+            "budget": {
+                "maximum_accepted_gpu_hourly_price_usd": 0.4,
+                "new_billing_cutoff_usd": 47.5,
+                "new_hard_total_cap_usd": 49.0,
+                "non_compute_reserve_usd": 1.5,
+                "on_cutoff": "stop and preserve",
+                "prior_public_receipt_billing_cutoff_usd": 35.5,
+                "prior_public_receipt_hard_total_cap_usd": 37.0,
+            },
+            "frozen_primary": {
+                "active_aggregate_hourly_rate_usd": 2.38,
+                "job_count": 7,
+                "original_plan_payload_sha256": "a" * 64,
+                "original_public_replacement_commit": "b" * 40,
+                "pod_id": "pod",
+            },
+            "predecessor_budget_extension": {
+                "expected_prior_extension_count": 1,
+                "extension_payload_sha256": first["payload_sha256"],
+                "public_extension_commit": first_commit,
+            },
+            "scientific_protocol": {
+                "cache_or_endpoint_values_opened_before_extension": False,
+                "claim_or_selection_changed": False,
+                "datasets_changed": False,
+                "gates_changed": False,
+                "hardware_or_worker_layout_changed": False,
+                "models_or_checkpoints_changed": False,
+                "panels_changed": False,
+                "seeds_changed": False,
+                "thresholds_changed": False,
+            },
+            "status": "result-blind operational budget extension authorized before primary completion",
+        }
+    )
+
+
+def test_appends_hash_bound_chained_extension(tmp_path: Path) -> None:
+    extension_path, receipt_path = fixture_payloads(tmp_path)
+    first = json.loads(extension_path.read_text(encoding="utf-8"))
+    extension_tool.apply(extension_path, receipt_path, "c" * 40)
+    second = chained_extension(first, "c" * 40)
+    second_path = tmp_path / "second.json"
+    second_path.write_text(json.dumps(second), encoding="utf-8")
+    after = extension_tool.apply(second_path, receipt_path, "d" * 40)
+    assert after["billing_cutoff_usd"] == 47.5
+    assert after["hard_total_cap_usd"] == 49.0
+    assert [item["extension_payload_sha256"] for item in after["budget_extensions"]] == [
+        first["payload_sha256"],
+        second["payload_sha256"],
+    ]
+
+
+def test_rejects_chained_extension_with_wrong_predecessor(tmp_path: Path) -> None:
+    extension_path, receipt_path = fixture_payloads(tmp_path)
+    first = json.loads(extension_path.read_text(encoding="utf-8"))
+    extension_tool.apply(extension_path, receipt_path, "c" * 40)
+    second = chained_extension(first, "e" * 40)
+    second_path = tmp_path / "second.json"
+    second_path.write_text(json.dumps(second), encoding="utf-8")
+    with pytest.raises(RuntimeError, match="predecessor commit"):
+        extension_tool.apply(second_path, receipt_path, "d" * 40)

@@ -1,0 +1,42 @@
+{
+  "authorization": {
+    "additional_authorized_usd": 12.0,
+    "authorized_at_utc": "2026-08-12T22:23:33Z",
+    "new_authorized_total_usd": 49.0,
+    "prior_authorized_total_usd": 37.0
+  },
+  "budget": {
+    "maximum_accepted_gpu_hourly_price_usd": 0.4,
+    "new_billing_cutoff_usd": 47.5,
+    "new_hard_total_cap_usd": 49.0,
+    "non_compute_reserve_usd": 1.5,
+    "on_cutoff": "stop every primary RunPod pod, preserve sealed artifacts, report incomplete execution, and never score or select a partial result",
+    "prior_public_receipt_billing_cutoff_usd": 35.5,
+    "prior_public_receipt_hard_total_cap_usd": 37.0
+  },
+  "frozen_primary": {
+    "active_aggregate_hourly_rate_usd": 2.38,
+    "job_count": 7,
+    "original_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984",
+    "original_public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+    "pod_id": "9r1cm9r82aonih"
+  },
+  "payload_sha256": "84ca46d9219fac286432b9d3031412cd77db5e8266c5a725b3765c8e24171272",
+  "predecessor_budget_extension": {
+    "expected_prior_extension_count": 1,
+    "extension_payload_sha256": "caa292af9ba31cd87a7f2a98fd7f018bc64800e835b363a9c9c6443b99225f1f",
+    "public_extension_commit": "49bb1f76e80c858cfbc066da50e5600ec953624c"
+  },
+  "scientific_protocol": {
+    "cache_or_endpoint_values_opened_before_extension": false,
+    "claim_or_selection_changed": false,
+    "datasets_changed": false,
+    "gates_changed": false,
+    "hardware_or_worker_layout_changed": false,
+    "models_or_checkpoints_changed": false,
+    "panels_changed": false,
+    "seeds_changed": false,
+    "thresholds_changed": false
+  },
+  "status": "result-blind operational budget extension authorized before primary completion"
+}
