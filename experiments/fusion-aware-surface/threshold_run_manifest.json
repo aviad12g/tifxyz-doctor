@@ -1,0 +1,256 @@
+{
+  "invocation": {
+    "command": [
+      "/usr/bin/python3",
+      "/kaggle/input/datasets/aviadcohen1/vesuvius-fusion-aware-training-assets/project/freeze_thresholds.py",
+      "--validation-root",
+      "/kaggle/input/notebooks/aviadcohen1/vesuvius-fusion-validation-cache-all/fusion-aware-validation-cache",
+      "--split-manifest",
+      "/kaggle/input/datasets/aviadcohen1/vesuvius-fusion-aware-training-assets/project/real_split_manifest.json",
+      "--worker",
+      "/kaggle/input/datasets/aviadcohen1/vesuvius-fusion-aware-training-assets/project/official_metric.py",
+      "--out",
+      "/kaggle/working/fusion-aware-threshold-freeze/frozen_thresholds.json"
+    ],
+    "returncode": 0,
+    "stderr_bytes": 0,
+    "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_bytes": 4168,
+    "stdout_sha256": "9bb401a756bd6c15d3e4d85b239d0e52245b25b96cccb25e6e18763bce693fa4"
+  },
+  "metric": {
+    "build": {
+      "cmake_executable": "/usr/local/bin/cmake",
+      "cmake_version": "cmake version 3.31.6",
+      "configure_command": [
+        "/usr/local/bin/cmake",
+        "-S",
+        "/kaggle/temp/fusion-aware-threshold-freeze/metric-source/external/Betti-Matching-3D",
+        "-B",
+        "/kaggle/temp/fusion-aware-threshold-freeze/metric-source/external/Betti-Matching-3D/build",
+        "-DCMAKE_BUILD_TYPE=Release",
+        "-DPYBIND11_FINDPYTHON=ON",
+        "-DPython_EXECUTABLE=/usr/bin/python3",
+        "-DPython_ROOT_DIR=/usr",
+        "-Dpybind11_DIR=/usr/local/lib/python3.12/dist-packages/pybind11/share/cmake/pybind11"
+      ],
+      "executable": {
+        "bytes": 789680,
+        "file": "BettiMatching",
+        "sha256": "38db2096f8d6d0e90cab812d4c6b4e4a4b575f54719f6d249ac9fd39c3ab8804"
+      },
+      "module": {
+        "bytes": 766080,
+        "file": "betti_matching.cpython-312-x86_64-linux-gnu.so",
+        "sha256": "ad23324e651aaf1871da0a50f4276f97403e6d47dbf6aa08570bef60a71dcb88"
+      }
+    },
+    "dataset_id": "sohier/vesuvius-metric-resources",
+    "dataset_version": 1,
+    "identity_smoke": {
+      "stderr_bytes": 0,
+      "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stdout_bytes": 125,
+      "stdout_sha256": "c8ac87161a787f9a488cd2b3b90306eab187881c3527850d1b29d5f56a3ac493",
+      "values": {
+        "blend": 0.9999999999999999,
+        "surface_dice": 1.0,
+        "toposcore": 1.0,
+        "voi_score": 1.0
+      }
+    },
+    "source_hashes": {
+      "external/Betti-Matching-3D/CMakeLists.txt": "1dd442109ca75cd64b2399acab82721e4b7d3d9b8240b7b7afe289bf5fdc81a2",
+      "external/Betti-Matching-3D/src/_BettiMatching.cpp": "7b8c41dc4f9154abfdeaa392ae8e928f20f1967f3cb4405c7ef1b159a227fe2e",
+      "src/topometrics/__init__.py": "9f1f546d4404e10619fd2da78de6b3d7dbf91a078d4de764476bf21b7c37b69e",
+      "src/topometrics/_bm_loader.py": "c2abf08c60341f8da685c14d89a15f9f4bcfa4bc331139e3c78d5351e8a679eb",
+      "src/topometrics/leaderboard.py": "f0db94436eea4464a30f252ebc7c35553e539da5e4832e4efaf523ed664cd811",
+      "src/topometrics/toposcore.py": "ba09b873d40f7bc8681fcab9c0d5260d117ceb79bc2870f6d65cd18a4c5017c0",
+      "src/topometrics/voi.py": "1c8e5131c6102baa2b5e01539b6dde813a35bfc737d157c759c76d598732dc47"
+    },
+    "source_root": "topological-metrics-kaggle"
+  },
+  "metric_runtime": {
+    "dataset_id": "aviadcohen1/vesuvius-metric-runtime-cp312",
+    "dataset_version": 1,
+    "manifest": {
+      "bytes": 849,
+      "file": "runtime_manifest.json",
+      "payload_sha256": "f768df2789f680efcb6f412cce64567cc38b8916e128e6edb6b3eff6c802d3ad",
+      "sha256": "e4a78330328700f6a873d417f82073a454fff75e909c23757b325e9f195deb01"
+    },
+    "requirements": {
+      "bytes": 293,
+      "file": "requirements.txt",
+      "sha256": "2950f16b007540f8c0233af2d338cdbabaf367531e4d3b94dd94fb8c2af04f64"
+    },
+    "wheel_bytes": 139954739,
+    "wheel_count": 16,
+    "wheel_ledger": {
+      "bytes": 2011,
+      "file": "WHEEL_SHA256SUMS",
+      "record_count": 16,
+      "sha256": "569720cd792c2b8b73e9d703405b83ea61b9d587122253c355be9fdc9f5c83bf"
+    },
+    "wheels": {
+      "absl_py-2.3.1-py3-none-any.whl": {
+        "bytes": 135811,
+        "sha256": "eeecf07f0c2a93ace0772c92e596ace6d3d3996c042b2128459aaae2a76de11d"
+      },
+      "cmake-3.31.6-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+        "bytes": 27800904,
+        "sha256": "1c8b05df0602365da91ee6a3336fe57525b137706c4ab5675498f662ae1dbcec"
+      },
+      "connected_components_3d-3.26.0-cp312-cp312-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 4639251,
+        "sha256": "a9b0367538a01a01099f2345b977dce772665c7c75fb9da1857922da59877a0f"
+      },
+      "imagecodecs-2025.8.2-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 26718026,
+        "sha256": "f14a5eb8151e32316028c09212eed1d14334460e8adbbef819c1d8ec6ab7e633"
+      },
+      "imageio-2.37.0-py3-none-any.whl": {
+        "bytes": 315796,
+        "sha256": "11efa15b87bc7871b61590326b2d635439acc321cf7f8ce996f812543ce10eed"
+      },
+      "lazy_loader-0.4-py3-none-any.whl": {
+        "bytes": 12097,
+        "sha256": "342aa8e14d543a154047afb4ba8ef17f5563baad3fc610d7b15b213b0f119efc"
+      },
+      "networkx-3.5-py3-none-any.whl": {
+        "bytes": 2034406,
+        "sha256": "0030d386a9a06dee3565298b4a734b68589749a544acbb6c412dc9e2489ec6ec"
+      },
+      "numpy-1.26.4-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+        "bytes": 17950613,
+        "sha256": "675d61ffbfa78604709862923189bad94014bef562cc35cf61d3a07bba02a7ed"
+      },
+      "packaging-25.0-py3-none-any.whl": {
+        "bytes": 66469,
+        "sha256": "29572ef2b1f17581046b3a2227d5c611fb25ec70ca1ba8554b24b0e69331a484"
+      },
+      "pillow-12.0.0-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl": {
+        "bytes": 7040201,
+        "sha256": "b87843e225e74576437fd5b6a4c2205d422754f84a06942cfaf1dc32243e45a8"
+      },
+      "pybind11-2.13.6-py3-none-any.whl": {
+        "bytes": 243282,
+        "sha256": "237c41e29157b962835d356b370ededd57594a26d5894a795960f0047cb5caf5"
+      },
+      "pybind11_global-2.13.6-py3-none-any.whl": {
+        "bytes": 439480,
+        "sha256": "aa5142ebf5a1bdaf8945997f62cc2f2e883ded4f9aa48b4925fc2646ea4bea6d"
+      },
+      "scikit_image-0.25.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+        "bytes": 15003435,
+        "sha256": "a17e17eb8562660cc0d31bb55643a4da996a81944b82c54805c91b3fe66f4824"
+      },
+      "scipy-1.15.3-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl": {
+        "bytes": 37309455,
+        "sha256": "271e3713e645149ea5ea3e97b57fdab61ce61333f97cfae392c28ba786f9bb49"
+      },
+      "surface_distance-0.1-py3-none-any.whl": {
+        "bytes": 14713,
+        "sha256": "cc837ca7cd269136a1e16382384f6b9193f4519dd4659b8dbdbb794e4073f768"
+      },
+      "tifffile-2025.6.11-py3-none-any.whl": {
+        "bytes": 230800,
+        "sha256": "32effb78b10b3a283eb92d4ebf844ae7e93e151458b0412f38518b4e6d2d7542"
+      }
+    }
+  },
+  "outputs": {
+    "frozen_thresholds": {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    }
+  },
+  "payload_sha256": "fd1aec3be58e1bf8bbce5019c36bfeecb2e4ce5313300ce52a488f699123b798",
+  "public_checkpoint_freeze_commit": "5d98eb683d692c7d4fe7b8f9e4dd0a285e8bf4ff",
+  "public_checkpoint_freeze_manifest_sha256": "b8dec8f2c21d2e3686e3435a136de747b3e95f47820b2eb8a41b7044808f8564",
+  "public_evaluation_input_freeze_commit": "62521d98a1771f736cf48dc1e9609a04a5779bb2",
+  "public_evaluation_input_freeze_manifest_sha256": "9e0e70b1e98d9d879ac0b27ba902cbfdc960f4577580146488f076efebda9fad",
+  "runtime": {
+    "machine": "x86_64",
+    "packages": {
+      "absl-py": "2.3.1",
+      "cmake": "3.31.6",
+      "connected-components-3d": "3.26.0",
+      "imagecodecs": "2025.8.2",
+      "imageio": "2.37.0",
+      "lazy-loader": "0.4",
+      "networkx": "3.5",
+      "numpy": "1.26.4",
+      "packaging": "25.0",
+      "pillow": "12.0.0",
+      "pybind11": "2.13.6",
+      "pybind11-global": "2.13.6",
+      "scikit-image": "0.25.2",
+      "scipy": "1.15.3",
+      "surface-distance": "0.1",
+      "tifffile": "2025.6.11"
+    },
+    "platform": "Linux-6.12.90+-x86_64-with-glibc2.35",
+    "python": "3.12.13",
+    "python_implementation": "CPython"
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "held_out_test_or_synthetic_inference_or_scoring_executed": false,
+    "held_out_test_or_synthetic_outputs_opened_or_inspected": false,
+    "source_mount_contains_sealed_test_assets": true,
+    "threshold_selector_invocations": 1,
+    "thresholds_selected_from": "Scroll-1 validation only",
+    "validation_inputs_used": "Scroll-1 only"
+  },
+  "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f",
+  "source_files": {
+    "freeze_thresholds.py": {
+      "bytes": 6002,
+      "sha256": "e04e4c4540609388d5d6f1d18e766dd5da87c8b327102b304a3d024555910c40"
+    },
+    "official_metric.py": {
+      "bytes": 3918,
+      "sha256": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb"
+    },
+    "real_split_manifest.json": {
+      "bytes": 66251,
+      "sha256": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe"
+    },
+    "verify_official_metric.py": {
+      "bytes": 822,
+      "sha256": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00"
+    }
+  },
+  "source_split_manifest_sha256": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe",
+  "source_split_records_sha256": "20c600d6061bf8715ada20423a05c2f03a9bc14827b2c79bac7b7e1b3cc0499d",
+  "status": "thresholds frozen from verified Scroll-1 validation caches before test inference",
+  "threshold_launcher": {
+    "bytes": 52293,
+    "file": "script.py",
+    "sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9"
+  },
+  "validation_cache": {
+    "aggregate_index": {
+      "bytes": 6545,
+      "file": "validation_cache_index.json",
+      "payload_sha256": "921a47f2a4ed182e95863ae4cec2ccbd4484013c14b444070783fe2bebe53faf",
+      "sha256": "324ed664de681af291cd73064327aa2606bbf20d322b1c1274d12feaaa6ee7e0"
+    },
+    "kernel_id": "aviadcohen1/vesuvius-fusion-validation-cache-all",
+    "kernel_version": 4,
+    "launcher_sha256": "b741d2a031f88fe41c27ba218ebc3dfb7f274ac1d6efaa808ab3c345e38fe6bb",
+    "run_order": [
+      "baseline",
+      "control_seed11",
+      "control_seed23",
+      "control_seed47",
+      "gap8_seed11",
+      "gap8_seed23",
+      "gap8_seed47"
+    ],
+    "validation_patch_count_per_run": 24
+  }
+}
