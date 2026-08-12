@@ -28,6 +28,7 @@ ASSET_LEDGER_RECORDS = 278
 SOURCE_CHECKPOINT_SHA256 = (
     "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f"
 )
+SOURCE_CHECKPOINT_BYTES = 819_171_665
 REAL_SPLIT_MANIFEST_SHA256 = (
     "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe"
 )
@@ -64,7 +65,12 @@ SOURCE_HASHES = {
     "diagnostic/loader059.py": "49a1d4ea3ee611236d53b1291ca2e8cd6e1450f2fc032223ff89a5b53d9ec903",
     "diagnostic/fusion_readout.py": "a533ee940712f1a47111705e4d8fff4990ccffb0afb103c7337a68bff244781c",
     "painter/contrast_phantom.py": "41f2a097b819bc486819d6702ed3949d0bdfe722c2405b1fe86828062da1d9b8",
-    "model/Model_epoch499.pth": SOURCE_CHECKPOINT_SHA256,
+}
+DIRECT_SOURCE_IDENTITIES = {
+    "model/Model_epoch499.pth": (
+        SOURCE_CHECKPOINT_BYTES,
+        SOURCE_CHECKPOINT_SHA256,
+    ),
 }
 ARCHIVES = {
     "images_s4_s5.tar": (
@@ -208,6 +214,14 @@ def verify_asset_root(root: Path) -> None:
     for relative, expected in SOURCE_HASHES.items():
         if records.get(relative) != expected:
             raise RuntimeError(f"fixed source is not ledger-bound: {relative}")
+    for relative, (expected_bytes, expected_sha256) in DIRECT_SOURCE_IDENTITIES.items():
+        path = safe_relative(root, relative)
+        if (
+            not path.is_file()
+            or path.stat().st_size != expected_bytes
+            or sha256_file(path) != expected_sha256
+        ):
+            raise RuntimeError(f"fixed source direct identity mismatch: {relative}")
 
 
 def load_job_config() -> dict:

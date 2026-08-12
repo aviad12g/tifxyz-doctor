@@ -11,6 +11,21 @@ every seed. `score_synthetic_test_v2.py` implements that contract; the original
 stricter per-seed numeric checks remain reported as secondary diagnostics. The
 clarification and scorer were publicly frozen before held-out inference.
 
+## Operational source-binding correction
+
+The first `real-test-baseline` and `real-test-control-seed11` attempts stopped
+before inference on 2026-08-12. Both emitted the same fail-closed error: the
+preregistered `model/Model_epoch499.pth` existed in the version-1 asset mount
+but was not listed in that mount's otherwise valid 278-record
+`SOURCE_SHA256SUMS`. No probability cache or endpoint was produced or opened.
+
+The correction preserves all 278 original ledger checks and separately binds
+that checkpoint by its already-frozen byte count (819,171,665) and SHA-256
+(`f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f`).
+It changes no input bytes, checkpoint, model, threshold, run, seed, panel,
+scientific code, or decision rule. A corrected public held-out plan must pin
+the corrected launcher before either failed job is rerun.
+
 `build_heldout_execution_plan.py` is run only after the private threshold job
 has completed and both threshold artifacts have been published at an immutable
 GitHub commit.  It validates the threshold artifact identities and emits a
