@@ -92,6 +92,7 @@ def _run_main(
     packages: Path,
     index: Path,
     receipt: Path,
+    *extra_args: str,
 ) -> int:
     monkeypatch.setattr(
         sys,
@@ -104,6 +105,7 @@ def _run_main(
             str(index),
             "--receipt",
             str(receipt),
+            *extra_args,
         ],
     )
     return queue.main()
@@ -300,4 +302,60 @@ def test_permission_denied_never_masks_an_existing_owned_kernel(
             "kaggle",
             "aviadcohen1/vesuvius-fusion-real-test-baseline",
             allow_unaccepted_absence=True,
+        )
+
+
+def test_explicit_retry_accepts_only_contiguous_failed_unaccepted_prefix(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    packages, index, receipt, records = _write_fixture(tmp_path)
+    statuses = {record["kaggle_kernel_id"]: None for record in records}
+    statuses[records[0]["kaggle_kernel_id"]] = "ERROR"
+    statuses[records[1]["kaggle_kernel_id"]] = "ERROR"
+    pushed = []
+    monkeypatch.setattr(
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
+    )
+
+    def fake_push(_kaggle: str, _root: Path, record: dict) -> tuple[int, str]:
+        pushed.append(record["job_id"])
+        statuses[record["kaggle_kernel_id"]] = "PENDING"
+        return 2, "Kernel version 2 successfully pushed"
+
+    monkeypatch.setattr(queue, "push_package", fake_push)
+    assert (
+        _run_main(
+            monkeypatch,
+            packages,
+            index,
+            receipt,
+            "--retry-failed-unaccepted",
+        )
+        == 0
+    )
+    assert pushed == ["job00", "job01"]
+    accepted = queue.load_canonical(receipt)["accepted"]
+    assert [record["kernel_version"] for record in accepted] == [2, 2]
+
+
+def test_retry_rejects_failed_kernel_after_missing_position(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    packages, index, receipt, records = _write_fixture(tmp_path)
+    statuses = {record["kaggle_kernel_id"]: None for record in records}
+    statuses[records[1]["kaggle_kernel_id"]] = "ERROR"
+    monkeypatch.setattr(
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
+    )
+    with pytest.raises(RuntimeError, match="failed retry violates fixed push order"):
+        _run_main(
+            monkeypatch,
+            packages,
+            index,
+            receipt,
+            "--retry-failed-unaccepted",
         )

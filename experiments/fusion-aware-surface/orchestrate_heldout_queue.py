@@ -304,9 +304,14 @@ def receipt_map(receipt: dict, packages: list[dict]) -> dict[str, dict]:
 
 
 def validate_existing_prefix(
-    packages: list[dict], statuses: list[str | None], accepted: dict[str, dict]
+    packages: list[dict],
+    statuses: list[str | None],
+    accepted: dict[str, dict],
+    *,
+    allow_failed_unaccepted_retry: bool,
 ) -> None:
     missing_seen = False
+    unaccepted_failed_seen = False
     for record, status in zip(packages, statuses, strict=True):
         job_id = record["job_id"]
         receipt_record = accepted.get(job_id)
@@ -317,8 +322,21 @@ def validate_existing_prefix(
                     f"{job_id}: receipt exists but Kaggle kernel is absent"
                 )
             continue
+        if (
+            allow_failed_unaccepted_retry
+            and status in FAILED_STATUSES
+            and receipt_record is None
+        ):
+            if missing_seen:
+                raise RuntimeError(f"{job_id}: failed retry violates fixed push order")
+            unaccepted_failed_seen = True
+            continue
         if missing_seen:
             raise RuntimeError(f"{job_id}: existing kernel violates fixed push order")
+        if unaccepted_failed_seen:
+            raise RuntimeError(
+                f"{job_id}: existing kernel follows an unresolved failed retry"
+            )
         if receipt_record is None:
             raise RuntimeError(f"{job_id}: existing kernel lacks an acceptance receipt")
         if receipt_record.get("kernel_id") != record["kaggle_kernel_id"]:
@@ -346,6 +364,7 @@ def main() -> int:
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--kaggle", default="kaggle")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--retry-failed-unaccepted", action="store_true")
     args = parser.parse_args()
 
     index, packages = validate_packages(args.packages, args.index)
@@ -359,10 +378,17 @@ def main() -> int:
         )
         for record in packages
     ]
-    validate_existing_prefix(packages, statuses, accepted)
+    validate_existing_prefix(
+        packages,
+        statuses,
+        accepted,
+        allow_failed_unaccepted_retry=args.retry_failed_unaccepted,
+    )
 
     for record, status in zip(packages, statuses, strict=True):
         if status in FAILED_STATUSES:
+            if args.retry_failed_unaccepted and record["job_id"] not in accepted:
+                continue
             raise RuntimeError(
                 f"{record['job_id']}: operational failure ({status}); inspect only logs"
             )
@@ -386,7 +412,12 @@ def main() -> int:
     ):
         if active >= MAX_ACTIVE:
             break
-        if status is not None:
+        retry_failed = (
+            args.retry_failed_unaccepted
+            and status in FAILED_STATUSES
+            and record["job_id"] not in accepted
+        )
+        if status is not None and not retry_failed:
             continue
         version, _ = push_package(args.kaggle, args.packages, record)
         package_ledger = record["files"]["KERNEL_SHA256SUMS"]
