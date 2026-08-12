@@ -143,6 +143,7 @@ def test_provider_neutral_freeze_preserves_runpod_authority_and_old_consumer_sta
         "synthetic_primary_provider": "RunPod",
         "kaggle_synthetic_role": "sealed secondary cross-platform replication",
         "selection_between_synthetic_platforms_permitted": False,
+        "synthetic_kernel_locator_fields_are_non_authoritative_transport_placeholders": True,
     }
     assert [record["execution_origin"]["provider"] for record in delivered["jobs"]] == (
         ["Kaggle"] * 7 + ["RunPod"] * 7

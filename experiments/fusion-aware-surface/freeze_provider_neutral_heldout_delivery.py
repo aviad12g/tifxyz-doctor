@@ -145,7 +145,7 @@ def main() -> int:
                 "job_id": job["job_id"],
                 "mode": job["mode"],
                 "run": job["run"],
-                "kernel_id": f"runpod:{origin['pod_id']}:{job['job_id']}",
+                "kernel_id": f"aviadcohen1/vesuvius-fusion-{job['job_id']}",
                 "kernel_version": 1,
                 "execution_origin": origin,
                 "job_index": identity,
@@ -184,6 +184,7 @@ def main() -> int:
             "synthetic_primary_provider": "RunPod",
             "kaggle_synthetic_role": "sealed secondary cross-platform replication",
             "selection_between_synthetic_platforms_permitted": False,
+            "synthetic_kernel_locator_fields_are_non_authoritative_transport_placeholders": True,
         },
         "scientific_gate": {
             "all_cache_jobs_completed": True,
