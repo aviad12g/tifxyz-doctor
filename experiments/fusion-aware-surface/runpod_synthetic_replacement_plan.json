@@ -1,0 +1,208 @@
+{
+  "budget": {
+    "billing_cutoff_usd": 18.5,
+    "hard_total_cap_usd": 20.0,
+    "maximum_accepted_gpu_hourly_price_usd": 0.4,
+    "non_compute_reserve_usd": 1.5,
+    "on_cutoff": "stop every primary RunPod pod, preserve sealed artifacts, report incomplete execution, and never score or select a partial result",
+    "price_observed_before_freeze_usd_per_gpu_hour": 0.34,
+    "price_observation_is_a_selection_criterion": false
+  },
+  "assets": {
+    "ledger_bytes": 39233,
+    "ledger_file": "SOURCE_SHA256SUMS",
+    "ledger_records": 278,
+    "ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
+    "remote_full_hash_verification_before_inference": true,
+    "source_checkpoint_bytes": 819171665,
+    "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f"
+  },
+  "container": {
+    "config_digest": "sha256:ff5fe688608be260bd6c0cde161cf7bd394f41526610a9addf406a535cdc150a",
+    "image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "manifest_digest": "sha256:61a4aafb0094cd773f11eefa378929d5a687bd775febeb78eac62fc824141fb5"
+  },
+  "downstream_transport_and_scoring": {
+    "cache_origin": "the synthetic caches in the official result must be the authoritative RunPod primary outputs",
+    "cache_transport": "a private hash-bound Kaggle dataset may transport RunPod primary caches into the sealed synthetic one-shot scorer; transport does not change result authority",
+    "delivery_freeze": "mechanically validate all seven RunPod indexes, 70 manifests, 700 cache identities, provider receipt, bundle manifest, and blind gates; publish the provider-neutral delivery manifest before scoring",
+    "npz_opening_before_scoring": false,
+    "paired_launch": "launch the exact real and synthetic one-shot scorers before opening either sealed result",
+    "provider_neutral_adapter_must_be_public_before_results_are_unsealed": true,
+    "runpod_outputs_may_be_replaced_by_kaggle_replication": false
+  },
+  "execution": {
+    "allowed_layouts_in_order": [
+      {
+        "active_workers": 7,
+        "gpu_count_per_pod": 7,
+        "pod_count": 1
+      },
+      {
+        "active_workers": 7,
+        "gpu_count_per_pod": 8,
+        "pod_count": 1
+      },
+      {
+        "active_workers": 7,
+        "gpu_count_per_pod": 1,
+        "pod_count": 7
+      }
+    ],
+    "cloud_type": "COMMUNITY",
+    "gpu_type_id": "NVIDIA GeForce RTX 4090",
+    "interruptible": false,
+    "job_isolation": "one frozen launcher process and one visible GPU per scientific job",
+    "preferred_layout_reason": "one shared multi-GPU pod uploads the immutable 2.8 GB asset root once; every scientific job still has one process and one visible GPU",
+    "runpod_is_authoritative_primary": true
+  },
+  "frozen_runtime": {
+    "einops": "0.8.1",
+    "huggingface-hub": "1.11.0",
+    "imagecodecs": "2024.12.30",
+    "numpy": "1.26.4",
+    "tifffile": "2025.2.18",
+    "timm": "1.0.27",
+    "torch": "2.5.1+cu121",
+    "torchvision": "0.20.1"
+  },
+  "jobs": [
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-baseline-all-shards",
+      "launcher_bytes": 34439,
+      "launcher_sha256": "0df297d30c40e5de39c687769edf4a740fe5f7f66e2552e924b3893bfa79f522",
+      "model_state_sha256": null,
+      "run": "baseline",
+      "selected_threshold": 0.45,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-control-seed11-all-shards",
+      "launcher_bytes": 34451,
+      "launcher_sha256": "65151de80a02da6e656873887cc49dfb9672e241069aef2edb33a98a8e12d991",
+      "model_state_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "run": "control_seed11",
+      "selected_threshold": 0.6,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-control-seed23-all-shards",
+      "launcher_bytes": 34451,
+      "launcher_sha256": "17395897b8d94bd4e2bb55cec0d88766979248521de42f4165a085f9450311f8",
+      "model_state_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "run": "control_seed23",
+      "selected_threshold": 0.45,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-control-seed47-all-shards",
+      "launcher_bytes": 34451,
+      "launcher_sha256": "d4321c9c51c5a70b591b05ce308199eeba66da0ec4dc2cb92ae737844218e7ae",
+      "model_state_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "run": "control_seed47",
+      "selected_threshold": 0.55,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-gap8-seed11-all-shards",
+      "launcher_bytes": 34445,
+      "launcher_sha256": "b72f289cb2ac21b39ad816c994b7db99f7dcb57389dd3a4c3125db4df8cb1197",
+      "model_state_sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3",
+      "run": "gap8_seed11",
+      "selected_threshold": 0.6,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-gap8-seed23-all-shards",
+      "launcher_bytes": 34445,
+      "launcher_sha256": "0c8cedc2a28399c54cf5e8a8ed10d00d619431510dc650ff8afe0538072d5ada",
+      "model_state_sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde",
+      "run": "gap8_seed23",
+      "selected_threshold": 0.6,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    },
+    {
+      "cell_count": 100,
+      "job_id": "synthetic-gap8-seed47-all-shards",
+      "launcher_bytes": 34445,
+      "launcher_sha256": "29c6f2a8f5fc709cec963b76a405577babddead38e009344dc3c902015d82444",
+      "model_state_sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a",
+      "run": "gap8_seed47",
+      "selected_threshold": 0.5,
+      "shard_indices": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+    }
+  ],
+  "kaggle_replication": {
+    "already_accepted_baseline_kernel": "aviadcohen1/vesuvius-fusion-synthetic-baseline-all-shards",
+    "already_accepted_baseline_version": 1,
+    "may_not_delay_primary_scoring_or_publication": true,
+    "must_remain_sealed_until_the_runpod_primary_is_frozen": true,
+    "role": "secondary cross-platform replication",
+    "selection_between_platforms_permitted": false
+  },
+  "payload_sha256": "065075f33f09601b189c8bd45b1f7981917d5f0d8fd37ae5a60a6e7087e968ae",
+  "provenance": {
+    "generated_packages_index_payload_sha256": "fe34eb21479130803b5fdfeb871380a01c44b76247b993923997895ef6c6ea33",
+    "heldout_execution_plan_commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+    "heldout_execution_plan_payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+    "pre_inference_clarification_commit": "1e0ced2c928fa0842aa8c601f39dbcd49272247e",
+    "preregistration_commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+    "threshold_and_tooling_freeze_commit": "4aba9ec10c124cf7c4a473c4687b592c81fa5c9b"
+  },
+  "scientific_contract": {
+    "heldout_outputs_inspected_before_replacement_freeze": false,
+    "kaggle_result_may_override_runpod_result": false,
+    "models_thresholds_seeds_cells_shards_endpoints_or_gates_changed": false,
+    "partial_run_scoring_permitted": false,
+    "platform_disagreement_policy": "report both faithfully, investigate only operational causes, and never select the more favorable outcome",
+    "reason_for_replacement": "reduce execution latency only",
+    "result_inspection_before_all_primary_jobs_complete_and_delivery_is_frozen": false,
+    "runpod_result_is_primary_even_if_adverse": true,
+    "test_time_tuning_permitted": false
+  },
+  "schema_version": "1.0",
+  "staging_transport": {
+    "local_bundle_uses_absolute_source_symlinks": true,
+    "remote_transfer_must_dereference_links": true,
+    "rsync_required_flags": ["--archive", "--copy-links", "--partial", "--protect-args"]
+  },
+  "status": "frozen before any RunPod held-out inference",
+  "tooling": {
+    "deployer": {
+      "bytes": 5725,
+      "file": "deploy_runpod_primary.py",
+      "sha256": "b53cba041aee0986786389fe4d098f3e7da2a6b6c9a4aca028e100a5ee24fb78"
+    },
+    "input_validator": {
+      "bytes": 9507,
+      "file": "validate_runpod_synthetic_replacement.py",
+      "sha256": "867b66832a0929829734473cf33719d61b5609ee1acc83ba7b4009baeb124824"
+    },
+    "input_stager": {
+      "bytes": 7250,
+      "file": "stage_runpod_primary_bundle.py",
+      "sha256": "78a95eb060d9c33247db31d301d9eac6380cfd41adc097d950f07aa043e07169"
+    },
+    "provider_controller": {
+      "bytes": 10170,
+      "file": "orchestrate_runpod_primary.py",
+      "sha256": "502e900b39204761e3ee6074962f2d0f7a15affd5d23073a237ef388e8ac8215"
+    },
+    "remote_executor": {
+      "bytes": 9569,
+      "file": "runpod_execute_primary.py",
+      "sha256": "48df71a19e1ee75cd4fc7e9235edc0995ddcc10e5b3e48fd0fb09d20f6fba8d6"
+    },
+    "single_job_wrapper": {
+      "bytes": 3279,
+      "file": "runpod_launch_frozen_job.py",
+      "sha256": "e6bdaabe0b467cb425840d97b34066d1a93604358d2841d23c3220b213650d20"
+    }
+  }
+}
