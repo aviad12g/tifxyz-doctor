@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -115,7 +116,11 @@ def test_queue_fills_two_slots_and_resumes_in_order(
     statuses = {record["kaggle_kernel_id"]: None for record in records}
     pushed = []
 
-    monkeypatch.setattr(queue, "kernel_status", lambda _kaggle, kernel_id: statuses[kernel_id])
+    monkeypatch.setattr(
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
+    )
 
     def fake_push(_kaggle: str, _root: Path, record: dict) -> tuple[int, str]:
         pushed.append(record["job_id"])
@@ -143,7 +148,11 @@ def test_queue_rejects_existing_kernel_after_missing_prefix(
     packages, index, receipt, records = _write_fixture(tmp_path)
     statuses = {record["kaggle_kernel_id"]: None for record in records}
     statuses[records[1]["kaggle_kernel_id"]] = "COMPLETE"
-    monkeypatch.setattr(queue, "kernel_status", lambda _kaggle, kernel_id: statuses[kernel_id])
+    monkeypatch.setattr(
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
+    )
     with pytest.raises(RuntimeError, match="lacks an acceptance receipt|fixed push order"):
         _run_main(monkeypatch, packages, index, receipt)
 
@@ -178,7 +187,9 @@ def test_queue_rejects_more_than_two_active_jobs(
     for record in records[:3]:
         statuses[record["kaggle_kernel_id"]] = "RUNNING"
     monkeypatch.setattr(
-        queue, "kernel_status", lambda _kaggle, kernel_id: statuses[kernel_id]
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
     )
     with pytest.raises(RuntimeError, match="active GPU job count exceeds frozen cap"):
         _run_main(monkeypatch, packages, index, receipt)
@@ -205,7 +216,9 @@ def test_queue_failure_prevents_later_pushes(
     statuses[first["kaggle_kernel_id"]] = "ERROR"
     pushed = []
     monkeypatch.setattr(
-        queue, "kernel_status", lambda _kaggle, kernel_id: statuses[kernel_id]
+        queue,
+        "kernel_status",
+        lambda _kaggle, kernel_id, **_kwargs: statuses[kernel_id],
     )
     monkeypatch.setattr(
         queue,
@@ -215,3 +228,76 @@ def test_queue_failure_prevents_later_pushes(
     with pytest.raises(RuntimeError, match="operational failure"):
         _run_main(monkeypatch, packages, index, receipt)
     assert pushed == []
+
+
+def test_permission_denied_is_absent_only_for_unaccepted_owned_slug(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    responses = iter(
+        [
+            subprocess.CompletedProcess(
+                [], 1, "", "Permission 'kernels.get' was denied"
+            ),
+            subprocess.CompletedProcess(
+                [], 0, "ref,title,author,lastRunTime,totalVotes\n", ""
+            ),
+        ]
+    )
+    monkeypatch.setattr(queue, "run_cli", lambda *args, **kwargs: next(responses))
+
+    assert (
+        queue.kernel_status(
+            "kaggle",
+            "aviadcohen1/vesuvius-fusion-real-test-baseline",
+            allow_unaccepted_absence=True,
+        )
+        is None
+    )
+
+
+def test_permission_denied_never_masks_an_accepted_kernel(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        queue,
+        "run_cli",
+        lambda *args, **kwargs: subprocess.CompletedProcess(
+            [], 1, "", "Permission 'kernels.get' was denied"
+        ),
+    )
+
+    with pytest.raises(RuntimeError, match="status query failed"):
+        queue.kernel_status(
+            "kaggle",
+            "aviadcohen1/vesuvius-fusion-real-test-baseline",
+            allow_unaccepted_absence=False,
+        )
+
+
+def test_permission_denied_never_masks_an_existing_owned_kernel(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    responses = iter(
+        [
+            subprocess.CompletedProcess(
+                [], 1, "", "Permission 'kernels.get' was denied"
+            ),
+            subprocess.CompletedProcess(
+                [],
+                0,
+                (
+                    "ref,title,author,lastRunTime,totalVotes\n"
+                    "aviadcohen1/vesuvius-fusion-real-test-baseline,Title,Aviad,,0\n"
+                ),
+                "",
+            ),
+        ]
+    )
+    monkeypatch.setattr(queue, "run_cli", lambda *args, **kwargs: next(responses))
+
+    with pytest.raises(RuntimeError, match="status query failed"):
+        queue.kernel_status(
+            "kaggle",
+            "aviadcohen1/vesuvius-fusion-real-test-baseline",
+            allow_unaccepted_absence=True,
+        )

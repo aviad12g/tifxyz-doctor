@@ -8,7 +8,9 @@ It never downloads kernel outputs or reads scientific artifacts.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
+import io
 import json
 import re
 import subprocess
@@ -171,12 +173,43 @@ def run_cli(command: list[str], *, timeout: int = 120) -> subprocess.CompletedPr
     )
 
 
-def kernel_status(kaggle: str, kernel_id: str) -> str | None:
+def owned_kernel_exists(kaggle: str, kernel_id: str) -> bool:
+    result = run_cli(
+        [
+            kaggle,
+            "kernels",
+            "list",
+            "--mine",
+            "--page-size",
+            "200",
+            "--search",
+            kernel_id.rsplit("/", 1)[-1],
+            "--csv",
+        ]
+    )
+    combined = "\n".join(part for part in (result.stdout, result.stderr) if part)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"Kaggle owned-kernel lookup failed for {kernel_id}: {combined.strip()}"
+        )
+    rows = csv.DictReader(io.StringIO(result.stdout))
+    return any(row.get("ref") == kernel_id for row in rows)
+
+
+def kernel_status(
+    kaggle: str, kernel_id: str, *, allow_unaccepted_absence: bool
+) -> str | None:
     result = run_cli([kaggle, "kernels", "status", kernel_id])
     combined = "\n".join(part for part in (result.stdout, result.stderr) if part)
     if result.returncode != 0:
         lowered = combined.lower()
         if "404" in lowered or "not found" in lowered:
+            return None
+        if (
+            allow_unaccepted_absence
+            and "permission 'kernels.get' was denied" in lowered
+            and not owned_kernel_exists(kaggle, kernel_id)
+        ):
             return None
         raise RuntimeError(
             f"Kaggle status query failed for {kernel_id}: {combined.strip()}"
@@ -319,7 +352,12 @@ def main() -> int:
     receipt = load_receipt(args.receipt, args.index, index)
     accepted = receipt_map(receipt, packages)
     statuses = [
-        kernel_status(args.kaggle, record["kaggle_kernel_id"]) for record in packages
+        kernel_status(
+            args.kaggle,
+            record["kaggle_kernel_id"],
+            allow_unaccepted_absence=record["job_id"] not in accepted,
+        )
+        for record in packages
     ]
     validate_existing_prefix(packages, statuses, accepted)
 
