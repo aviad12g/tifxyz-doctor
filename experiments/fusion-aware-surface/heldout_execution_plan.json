@@ -1,0 +1,558 @@
+{
+  "final_evidence_renderer": {
+    "bytes": 21477,
+    "file": "render_final_evidence.py",
+    "sha256": "579cfe0c5ef9e6138c90be044e9b2a105ec1067d94b6444dec08c13e7076720c"
+  },
+  "final_result_validator": {
+    "bytes": 60587,
+    "file": "validate_final_results.py",
+    "sha256": "66b47ac34a564b6d15e1adfded0afe9e9e8c77dc4f1794c517340def3268733d"
+  },
+  "heldout_cache_launcher": {
+    "bytes": 33821,
+    "file": "heldout_cache_launcher.py",
+    "sha256": "431098730b53dca48f1ecb8867f0e5069c650cdd9521b5549c8221f1fa354fbd"
+  },
+  "heldout_delivery_collector": {
+    "bytes": 9840,
+    "file": "collect_heldout_delivery_inputs.py",
+    "sha256": "1d67d2f60bae28b531bc4e6dd1ae5748ebcb1bafd14e1bc35049c53645255662"
+  },
+  "heldout_delivery_freezer": {
+    "bytes": 14000,
+    "file": "freeze_heldout_cache_delivery.py",
+    "sha256": "e3e908ea5ff2e635f2cd46b80519a7df98735c382d756dfbc10f9ea9c635a09c"
+  },
+  "heldout_package_generator": {
+    "bytes": 7491,
+    "file": "generate_heldout_job_packages.py",
+    "sha256": "197aa51d05aadfc515f96360c9f181566e40e28f6d4cb5f28896ca9f7729f65d"
+  },
+  "heldout_queue_controller": {
+    "bytes": 15744,
+    "file": "orchestrate_heldout_queue.py",
+    "max_active_gpu_jobs": 2,
+    "sha256": "6f5ca1a6e3f61b4ec36b290650514ceefc79516f25143dca038d3963fb68db84"
+  },
+  "metric_runtime_preparer": {
+    "bytes": 13205,
+    "file": "prepare_metric_runtime.py",
+    "sha256": "d3ccf8e62353e105c12f7e44fad3c74063eb916d039176de499098da8099db91"
+  },
+  "one_shot_scorers": {
+    "real": {
+      "expected_manifests": 7,
+      "expected_probability_caches": 266,
+      "output": "sealed_real_test_results.json",
+      "requires_jobs": [
+        "real-test-baseline",
+        "real-test-control-seed11",
+        "real-test-control-seed23",
+        "real-test-control-seed47",
+        "real-test-gap8-seed11",
+        "real-test-gap8-seed23",
+        "real-test-gap8-seed47"
+      ],
+      "script": {
+        "file": "score_real_test.py",
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+      }
+    },
+    "synthetic": {
+      "expected_manifests": 70,
+      "expected_ray_caches": 700,
+      "output": "sealed_synthetic_test_results.json",
+      "requires_jobs": [
+        "synthetic-baseline-all-shards",
+        "synthetic-control-seed11-all-shards",
+        "synthetic-control-seed23-all-shards",
+        "synthetic-control-seed47-all-shards",
+        "synthetic-gap8-seed11-all-shards",
+        "synthetic-gap8-seed23-all-shards",
+        "synthetic-gap8-seed47-all-shards"
+      ],
+      "script": {
+        "file": "score_synthetic_test_v2.py",
+        "sha256": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05"
+      }
+    }
+  },
+  "one_shot_scoring_launcher": {
+    "bytes": 27354,
+    "file": "one_shot_scoring_launcher.py",
+    "sha256": "aa3af39500b43ddb5735d4aa85de561e5cc78dad4ee55ad3b2881d5c12853fd8"
+  },
+  "one_shot_scoring_stager": {
+    "bytes": 15238,
+    "file": "stage_heldout_for_scoring.py",
+    "sha256": "b2e211e73861a2c350cb698ced9db0d596faa52a4d1aef7ac74ab75f36ec05ea"
+  },
+  "payload_sha256": "cf3e5da24051d324223f61c27df7eede5758f5e27c0809c6c221961cda8634f6",
+  "plan_generator": {
+    "bytes": 31705,
+    "file": "build_heldout_execution_plan.py",
+    "sha256": "e135e027ae29e308e2a17421cdb242f6e3389f8b8aff298a20926f9c502ce9fd"
+  },
+  "pre_inference_protocol_clarification": {
+    "bytes": 2036,
+    "file": "PROTOCOL_CLARIFICATION.md",
+    "first_public_commit": "1e0ced2c928fa0842aa8c601f39dbcd49272247e",
+    "scope": "synthetic primary-gate pooling only",
+    "sha256": "c849d7a268465dd17b8c5d0c6774e7caab5caa343eb2dacb0cf4d862db3166dd"
+  },
+  "preregistration_commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+  "public_checkpoint_freeze_commit": "5d98eb683d692c7d4fe7b8f9e4dd0a285e8bf4ff",
+  "public_checkpoint_freeze_manifest_sha256": "b8dec8f2c21d2e3686e3435a136de747b3e95f47820b2eb8a41b7044808f8564",
+  "public_evaluation_input_freeze_commit": "62521d98a1771f736cf48dc1e9609a04a5779bb2",
+  "public_evaluation_input_freeze_manifest_sha256": "9e0e70b1e98d9d879ac0b27ba902cbfdc960f4577580146488f076efebda9fad",
+  "real_panel_manifest": {
+    "bytes": 25072,
+    "file": "real_panel_manifest.json",
+    "payload_sha256": "65dbd84d13aac0fe2e27baf877e5b836d58f2202f9c5e9bcf84bb41694500844",
+    "sha256": "e1799845c7b8bd428e6bd374f745d6b42399673a5b8c2c11d9282324b3e72779"
+  },
+  "real_panel_renderer": {
+    "bytes": 18206,
+    "file": "render_real_panels.py",
+    "sha256": "e05b746c17f0a2b2b33a60b41b72408c799204bbca533667b8169ca415343d15"
+  },
+  "real_test_jobs": [
+    {
+      "expected_cache_manifest": "cache_manifest_baseline_test.json",
+      "job_id": "real-test-baseline",
+      "kernel_id": null,
+      "kernel_version": null,
+      "mode": "real_test_cache",
+      "model_state_sha256": null,
+      "run": "baseline",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.45,
+      "test_patch_count": 38
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed11_test.json",
+      "job_id": "real-test-control-seed11",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+      "kernel_version": 4,
+      "mode": "real_test_cache",
+      "model_state_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "run": "control_seed11",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed23_test.json",
+      "job_id": "real-test-control-seed23",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+      "kernel_version": 4,
+      "mode": "real_test_cache",
+      "model_state_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "run": "control_seed23",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.45,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "9ad56528323f821e60c98faff48265c327a4ede351148e0596a14737aa493f2d"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed47_test.json",
+      "job_id": "real-test-control-seed47",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "run": "control_seed47",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.55,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "2eede7befa96f01aed362040705da55643fffe287b11c9759596e5197f99ecb2"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed11_test.json",
+      "job_id": "real-test-gap8-seed11",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3",
+      "run": "gap8_seed11",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "cb590391f03ce81f8f3d350490a367ec9618e59f689baccec2277b9b79d9680a"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed23_test.json",
+      "job_id": "real-test-gap8-seed23",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde",
+      "run": "gap8_seed23",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "963ef73888cb70066f0773bb2f75b1a7d11ab4c9b0568453bff005536c3e0021"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed47_test.json",
+      "job_id": "real-test-gap8-seed47",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a",
+      "run": "gap8_seed47",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.5,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
+    }
+  ],
+  "run_order": [
+    "baseline",
+    "control_seed11",
+    "control_seed23",
+    "control_seed47",
+    "gap8_seed11",
+    "gap8_seed23",
+    "gap8_seed47"
+  ],
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "held_out_outputs_inspected_when_plan_frozen": false,
+    "manual_threshold_entry_permitted": false,
+    "protocol_clarification_publicly_frozen_before_held_out_inference": true,
+    "scientific_run_order_or_shard_membership_changes_permitted": false,
+    "test_time_tuning_permitted": false,
+    "thresholds_publicly_frozen_before_held_out_inference": true
+  },
+  "scoring_package_generator": {
+    "bytes": 12925,
+    "file": "generate_scoring_job_packages.py",
+    "sha256": "e6fc940287e49ef68ddb81e257281ddab37b526a4910a7d49b2e70912e15a510"
+  },
+  "scoring_pair_controller": {
+    "bytes": 12644,
+    "file": "orchestrate_scoring_pair.py",
+    "sha256": "72e58f0ab51bd5ec64cf004f9044868b4ee15ecb053a720e34551fa6435dff69"
+  },
+  "scoring_result_collector": {
+    "bytes": 8380,
+    "file": "collect_scoring_results.py",
+    "sha256": "5cea8db41181c693e70b7088267445996b821f38b55b156061696ea6682f75a7"
+  },
+  "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f",
+  "source_split_manifest_sha256": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe",
+  "source_split_records_sha256": "20c600d6061bf8715ada20423a05c2f03a9bc14827b2c79bac7b7e1b3cc0499d",
+  "status": "held-out execution plan frozen before held-out inference",
+  "synthetic_ray_jobs": [
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_baseline_shard00.json",
+        "synthetic_manifest_baseline_shard01.json",
+        "synthetic_manifest_baseline_shard02.json",
+        "synthetic_manifest_baseline_shard03.json",
+        "synthetic_manifest_baseline_shard04.json",
+        "synthetic_manifest_baseline_shard05.json",
+        "synthetic_manifest_baseline_shard06.json",
+        "synthetic_manifest_baseline_shard07.json",
+        "synthetic_manifest_baseline_shard08.json",
+        "synthetic_manifest_baseline_shard09.json"
+      ],
+      "job_id": "synthetic-baseline-all-shards",
+      "kernel_id": null,
+      "kernel_version": null,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": null,
+      "run": "baseline",
+      "selected_threshold": 0.45,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed11_shard00.json",
+        "synthetic_manifest_control_seed11_shard01.json",
+        "synthetic_manifest_control_seed11_shard02.json",
+        "synthetic_manifest_control_seed11_shard03.json",
+        "synthetic_manifest_control_seed11_shard04.json",
+        "synthetic_manifest_control_seed11_shard05.json",
+        "synthetic_manifest_control_seed11_shard06.json",
+        "synthetic_manifest_control_seed11_shard07.json",
+        "synthetic_manifest_control_seed11_shard08.json",
+        "synthetic_manifest_control_seed11_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed11-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+      "kernel_version": 4,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "run": "control_seed11",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed23_shard00.json",
+        "synthetic_manifest_control_seed23_shard01.json",
+        "synthetic_manifest_control_seed23_shard02.json",
+        "synthetic_manifest_control_seed23_shard03.json",
+        "synthetic_manifest_control_seed23_shard04.json",
+        "synthetic_manifest_control_seed23_shard05.json",
+        "synthetic_manifest_control_seed23_shard06.json",
+        "synthetic_manifest_control_seed23_shard07.json",
+        "synthetic_manifest_control_seed23_shard08.json",
+        "synthetic_manifest_control_seed23_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed23-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+      "kernel_version": 4,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "run": "control_seed23",
+      "selected_threshold": 0.45,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "9ad56528323f821e60c98faff48265c327a4ede351148e0596a14737aa493f2d"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed47_shard00.json",
+        "synthetic_manifest_control_seed47_shard01.json",
+        "synthetic_manifest_control_seed47_shard02.json",
+        "synthetic_manifest_control_seed47_shard03.json",
+        "synthetic_manifest_control_seed47_shard04.json",
+        "synthetic_manifest_control_seed47_shard05.json",
+        "synthetic_manifest_control_seed47_shard06.json",
+        "synthetic_manifest_control_seed47_shard07.json",
+        "synthetic_manifest_control_seed47_shard08.json",
+        "synthetic_manifest_control_seed47_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed47-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "run": "control_seed47",
+      "selected_threshold": 0.55,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "2eede7befa96f01aed362040705da55643fffe287b11c9759596e5197f99ecb2"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed11_shard00.json",
+        "synthetic_manifest_gap8_seed11_shard01.json",
+        "synthetic_manifest_gap8_seed11_shard02.json",
+        "synthetic_manifest_gap8_seed11_shard03.json",
+        "synthetic_manifest_gap8_seed11_shard04.json",
+        "synthetic_manifest_gap8_seed11_shard05.json",
+        "synthetic_manifest_gap8_seed11_shard06.json",
+        "synthetic_manifest_gap8_seed11_shard07.json",
+        "synthetic_manifest_gap8_seed11_shard08.json",
+        "synthetic_manifest_gap8_seed11_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed11-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3",
+      "run": "gap8_seed11",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "cb590391f03ce81f8f3d350490a367ec9618e59f689baccec2277b9b79d9680a"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed23_shard00.json",
+        "synthetic_manifest_gap8_seed23_shard01.json",
+        "synthetic_manifest_gap8_seed23_shard02.json",
+        "synthetic_manifest_gap8_seed23_shard03.json",
+        "synthetic_manifest_gap8_seed23_shard04.json",
+        "synthetic_manifest_gap8_seed23_shard05.json",
+        "synthetic_manifest_gap8_seed23_shard06.json",
+        "synthetic_manifest_gap8_seed23_shard07.json",
+        "synthetic_manifest_gap8_seed23_shard08.json",
+        "synthetic_manifest_gap8_seed23_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed23-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde",
+      "run": "gap8_seed23",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "963ef73888cb70066f0773bb2f75b1a7d11ab4c9b0568453bff005536c3e0021"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed47_shard00.json",
+        "synthetic_manifest_gap8_seed47_shard01.json",
+        "synthetic_manifest_gap8_seed47_shard02.json",
+        "synthetic_manifest_gap8_seed47_shard03.json",
+        "synthetic_manifest_gap8_seed47_shard04.json",
+        "synthetic_manifest_gap8_seed47_shard05.json",
+        "synthetic_manifest_gap8_seed47_shard06.json",
+        "synthetic_manifest_gap8_seed47_shard07.json",
+        "synthetic_manifest_gap8_seed47_shard08.json",
+        "synthetic_manifest_gap8_seed47_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed47-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a",
+      "run": "gap8_seed47",
+      "selected_threshold": 0.5,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
+    }
+  ],
+  "threshold_binding": {
+    "frozen_thresholds": {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    },
+    "kernel_id": "aviadcohen1/vesuvius-fusion-aware-freeze-thresholds",
+    "kernel_version": 6,
+    "launcher_sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9",
+    "public_freeze_commit": "4aba9ec10c124cf7c4a473c4687b592c81fa5c9b",
+    "threshold_run_manifest": {
+      "bytes": 10760,
+      "file": "threshold_run_manifest.json",
+      "payload_sha256": "fd1aec3be58e1bf8bbce5019c36bfeecb2e4ce5313300ce52a488f699123b798",
+      "sha256": "68687d01042dea85aa9e2a56f4ec4ccad91b37b8d2b3667de1a7d3ea5b9f56db"
+    }
+  },
+  "visual_assessment_recorder": {
+    "bytes": 6637,
+    "file": "record_visual_assessment.py",
+    "sha256": "42ed230b13813edc14be410d0260a0dd42c3f1c13a5e9ecb232b327fbbf3fcf8"
+  }
+}
