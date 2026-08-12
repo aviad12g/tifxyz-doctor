@@ -10,9 +10,9 @@
     "sha256": "66b47ac34a564b6d15e1adfded0afe9e9e8c77dc4f1794c517340def3268733d"
   },
   "heldout_cache_launcher": {
-    "bytes": 34319,
+    "bytes": 33801,
     "file": "heldout_cache_launcher.py",
-    "sha256": "6ce9884e3f0c91c914f2f98dd8b844e04f944e22be74d87b67f7a481d3a9c4eb"
+    "sha256": "a2600783dd137c10ea281225ab5a47812d6a89e39463c553d885fd1684fff1aa"
   },
   "heldout_delivery_collector": {
     "bytes": 9840,
@@ -30,10 +30,10 @@
     "sha256": "197aa51d05aadfc515f96360c9f181566e40e28f6d4cb5f28896ca9f7729f65d"
   },
   "heldout_queue_controller": {
-    "bytes": 16809,
+    "bytes": 17857,
     "file": "orchestrate_heldout_queue.py",
     "max_active_gpu_jobs": 2,
-    "sha256": "c225416dd1e7a49766fc9f0a2005e374bc7ec21db540807a72df7deba8b53e76"
+    "sha256": "2563fd8bf67b99a29195328672541e0bbddfd895e1ea5b3d82be72aea8fcbb96"
   },
   "metric_runtime_preparer": {
     "bytes": 13205,
@@ -88,7 +88,7 @@
     "file": "stage_heldout_for_scoring.py",
     "sha256": "b2e211e73861a2c350cb698ced9db0d596faa52a4d1aef7ac74ab75f36ec05ea"
   },
-  "payload_sha256": "6b68f7ae7abc7fd161028d70a8440174ee790ea94479c6bb522259b0baf0648b",
+  "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
