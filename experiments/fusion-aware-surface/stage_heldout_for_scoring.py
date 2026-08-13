@@ -30,6 +30,9 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_scoring_cache_identity_schema_correction",
     "result_blind_scoring_runtime_transport_correction",
     "result_blind_scoring_runtime_projection_correction",
+    "result_blind_parallel_real_scoring_retry",
+    "result_blind_parallel_real_asset_transport",
+    "result_blind_runpod_real_scoring_retry",
 }
 
 

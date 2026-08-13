@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 29682,
+    "bytes": 29813,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "2a02962e84f69810af015d2f589d84ac93e6fa565540dd383b7bd74026f1e098"
+    "sha256": "e66106ee9957ea22de31cbbe1520ff5a7324ea3a716e62175bf1db22a3b0a4c9"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19413,
+    "bytes": 19557,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "385bed26994aa34a2e5d200ec737e20b8c74a84e5b40b061f62babba5f252a10"
+    "sha256": "ac85eab1a2a4eb453d58d318575b9271e87c1244ea1b82bebd8c76037f72d867"
   },
-  "payload_sha256": "42cb86c2a450ddaa08e5748e94284c19b59be622f8cb6888fb32a5a6667776d8",
+  "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -330,6 +330,66 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_runpod_real_scoring_retry": {
+    "budget": {
+      "absolute_cap_usd": 3.5,
+      "compute_cutoff_usd": 3.25,
+      "guard_seconds": 300,
+      "no_additional_spend_authorized": true,
+      "reserve_usd": 0.25
+    },
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_real_scorer": true,
+      "official_metric_subprocesses_run_concurrently": 32,
+      "only_sealed_real_caches_and_public_metric_assets_are_newly_transferred": true,
+      "per_cache_metric_function_changed": false,
+      "preexisting_private_assets_are_reused_in_place": true,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "failed_real_attempt": {
+      "failure_stage": "held-out input staging before fixed panels or scorer invocation",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+      "kernel_version": 6,
+      "scientific_result_created_or_opened": false,
+      "status": "ERROR"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18589,
+      "commit": "be34445c6ca3b1a82f213e0cce05a2379b30c14c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "c1e1b8482fd15cda44f7367a553c696276ea8c9db051580b8b349cb67d953287",
+      "sha256": "f1b94e74874c4625b60b4db2a70cc9e7bc81f5326992b538bf620d5702979dad"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 36548,
+      "commit": "9940f7db306e15398dcbe9ed44e270ac0d6d41e1",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "42cb86c2a450ddaa08e5748e94284c19b59be622f8cb6888fb32a5a6667776d8",
+      "sha256": "3d57362fea73943f4f884a0427c286537573e669f0e999f9cc6cef29d12a02e7"
+    },
+    "provider": {
+      "gpu_count": 7,
+      "gpu_type": "RTX 4090",
+      "machine_id": "zgxuf36p5h0i",
+      "memory_gb": 411,
+      "name": "RunPod",
+      "pod_id": "9r1cm9r82aonih",
+      "price_usd_per_hour": 2.38,
+      "reuse_existing_stopped_volume": true,
+      "vcpu_count": 224
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "failed_or_sealed_results_used_to_design_correction": false,
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind RunPod real-scoring retry frozen before private cache egress"
   },
   "result_blind_scoring_asset_correction": {
     "cause": {

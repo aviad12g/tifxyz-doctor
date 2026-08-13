@@ -56,5 +56,5 @@ def test_launcher_runs_panel_fail_fast_before_long_real_scorer() -> None:
     panel = main.index("panel_invocation = execute_real_panels(")
     scoring = main.index("result_path, invocation = execute_scorer(")
     assert panel < scoring
-    assert '"--parallel-workers",\n                "4"' in source
+    assert '"--parallel-workers",\n                str(REAL_PARALLEL_WORKERS)' in source
     assert "sys.stderr.buffer.write(completed.stderr)" in source

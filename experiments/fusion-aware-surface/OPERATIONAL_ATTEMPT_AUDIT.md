@@ -89,6 +89,14 @@ identities before scoring.
    training-asset ledger. The result-blind correction fetches that exact public
    file from the public plan commit and verifies its frozen SHA-256, matching
    the already-established transport for the corrected synthetic scorer.
+9. **Provider v6, real only:** the CPU-only kernel stopped during held-out input
+   staging before panel rendering or scorer invocation. The staging projection
+   allowlist did not yet classify the already-public parallel-scoring and
+   public-scorer-transport records as operational metadata. The correction adds
+   only those two records to the operational projection and preserves the exact
+   comparison of every scientific plan field. The launcher now relays only the
+   captured stager stderr on a staging failure so a future result-blind failure
+   is diagnosable without accessing cache payloads or scientific output.
 
 Provider versions 1--3 all failed before scorer invocation. The two v4 scorers
 were both accepted before any result access, as required by the frozen paired
@@ -115,6 +123,8 @@ The local immutable acceptance receipts are bound by these SHA-256 values:
 - scorer v2: `27aa047f265e7e14283a4d9569cb4b655a8360d3923f03e5ef62fd84498f2f47`
 - scorer v3: `99cc9f3732c51877562436071d068482ddff4e64968a032bbe2aa39a97eb6e83`
 - scorer v4: `a432b8a49f9a43af3f0b06a5b849bd8123d8aca311775aa100f5d50bb8283e6e`
+- scorer mixed v5/v4: `558967adf092aa918ab3c6202311ac4b0dbc72d3e7222639795f90d3c04f3fd1`
+- scorer mixed v6/v4: `0679d194fbf345c767768d1c14b80f899c4fdeaa266cfa22668147f5babba1eb`
 - final RunPod provider receipt: `0fe82b4014e4146e13806373acf8400cb6f28de90f44690e0a736433a5a5e1e0`
 
 Scientific null, mixed, adverse, or failed gates are separate from these

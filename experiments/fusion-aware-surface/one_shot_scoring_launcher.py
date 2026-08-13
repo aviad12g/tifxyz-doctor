@@ -45,6 +45,7 @@ RUN_ORDER = (
     "gap8_seed23",
     "gap8_seed47",
 )
+REAL_PARALLEL_WORKERS = 32
 PROJECT_HASHES = {
     "cache_real_predictions.py": "8f89910c6667a135bcc832a3348cbd264b883f04013eb779d704f3cb3fa99035",
     "cache_synthetic_rays.py": "a2d4baac41720d0b83d21a5f30ad3947ba7ca9162791995630eb178561e507bc",
@@ -474,6 +475,8 @@ def stage_inputs(
     ]
     result = subprocess.run(command, capture_output=True, check=False)
     if result.returncode != 0:
+        sys.stderr.buffer.write(result.stderr)
+        sys.stderr.buffer.flush()
         raise RuntimeError("held-out scoring input staging failed")
     index = load_json(staged / "score_input_index.json")
     canonical_payload_sha256(index)
@@ -552,7 +555,7 @@ def execute_scorer(
                 "--worker",
                 str(project / "official_metric.py"),
                 "--parallel-workers",
-                "4",
+                str(REAL_PARALLEL_WORKERS),
             ]
         )
     completed = subprocess.run(
