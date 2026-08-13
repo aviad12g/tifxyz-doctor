@@ -71,9 +71,14 @@ def validate_running_pod(pod: dict, plan: dict, gpu_count: int) -> None:
         minimum_memory = provider["memory_gb"]
         maximum_price = provider["price_usd_per_hour"]
     else:
-        fallback = provider["result_blind_capacity_fallback"]
-        if gpu_count != fallback["gpu_count"]:
+        matches = [
+            layout
+            for layout in provider["result_blind_capacity_fallbacks"]
+            if layout["gpu_count"] == gpu_count
+        ]
+        if len(matches) != 1:
             raise RuntimeError("requested GPU count is outside the frozen layouts")
+        fallback = matches[0]
         minimum_vcpu = fallback["minimum_vcpu_count"]
         minimum_memory = fallback["minimum_memory_gb"]
         maximum_price = fallback["maximum_price_usd_per_hour"]
@@ -97,16 +102,20 @@ def resume(args: argparse.Namespace) -> None:
     validate_stopped_pod(pod, plan)
     if pod.get("desiredStatus") != "EXITED":
         raise RuntimeError("frozen RunPod allocation is not stopped")
-    fallback = plan["provider"]["result_blind_capacity_fallback"]
-    allowed_gpu_counts = {plan["provider"]["gpu_count"], fallback["gpu_count"]}
+    fallbacks = plan["provider"]["result_blind_capacity_fallbacks"]
+    allowed_gpu_counts = {plan["provider"]["gpu_count"], *(layout["gpu_count"] for layout in fallbacks)}
     if args.gpu_count not in allowed_gpu_counts:
         raise RuntimeError("requested GPU count is outside the frozen layouts")
-    if args.gpu_count == fallback["gpu_count"] and not plan.get("pre_resume_capacity_event"):
-        raise RuntimeError("result-blind capacity fallback lacks the frozen rejection event")
+    if args.gpu_count != plan["provider"]["gpu_count"] and not plan.get("pre_resume_capacity_events"):
+        raise RuntimeError("result-blind capacity fallback lacks frozen rejection events")
+    selected_fallback = next(
+        (layout for layout in fallbacks if layout["gpu_count"] == args.gpu_count),
+        None,
+    )
     price_upper_bound = (
         plan["provider"]["price_usd_per_hour"]
         if args.gpu_count == plan["provider"]["gpu_count"]
-        else fallback["maximum_price_usd_per_hour"]
+        else selected_fallback["maximum_price_usd_per_hour"]
     )
     attempt_started_at = datetime.now(timezone.utc).isoformat()
     intent = {

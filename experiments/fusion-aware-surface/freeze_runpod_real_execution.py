@@ -106,13 +106,30 @@ def main() -> int:
             "price_usd_per_hour": 2.38,
             "desired_pre_resume_status": "EXITED",
             "reuse_existing_stopped_volume": True,
-            "result_blind_capacity_fallback": {
-                "allowed_only_after_primary_capacity_rejection": True,
-                "gpu_count": 6,
-                "minimum_vcpu_count": 192,
-                "minimum_memory_gb": 300,
-                "maximum_price_usd_per_hour": 2.04,
+            "result_blind_capacity_fallbacks": [
+                {
+                    "gpu_count": 6,
+                    "minimum_vcpu_count": 192,
+                    "minimum_memory_gb": 300,
+                    "maximum_price_usd_per_hour": 2.04,
+                },
+                {
+                    "gpu_count": 5,
+                    "minimum_vcpu_count": 160,
+                    "minimum_memory_gb": 240,
+                    "maximum_price_usd_per_hour": 1.70,
+                },
+                {
+                    "gpu_count": 4,
+                    "minimum_vcpu_count": 128,
+                    "minimum_memory_gb": 190,
+                    "maximum_price_usd_per_hour": 1.36,
+                },
+            ],
+            "capacity_fallback_contract": {
+                "allowed_only_after_larger_layout_capacity_rejection": True,
                 "same_pod_and_machine_required": True,
+                "order": [7, 6, 5, 4],
             },
         },
         "budget": {
@@ -156,13 +173,22 @@ def main() -> int:
             "partial_real_result_is_scorable": False,
             "all_adverse_null_or_failure_outcomes_must_be_published": True,
         },
-        "pre_resume_capacity_event": {
-            "attempted_gpu_count": 7,
-            "provider_result": "rejected because the original host lacked seven free GPUs",
-            "billing_started": False,
-            "private_transfer_started": False,
-            "scientific_outputs_inspected": False,
-        },
+        "pre_resume_capacity_events": [
+            {
+                "attempted_gpu_count": 7,
+                "provider_result": "rejected because the original host lacked seven free GPUs",
+                "billing_started": False,
+                "private_transfer_started": False,
+                "scientific_outputs_inspected": False,
+            },
+            {
+                "attempted_gpu_count": 6,
+                "provider_result": "rejected because the original host lacked six free GPUs",
+                "billing_started": False,
+                "private_transfer_started": False,
+                "scientific_outputs_inspected": False,
+            },
+        ],
     }
     payload["payload_sha256"] = canonical_sha256(payload)
     args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

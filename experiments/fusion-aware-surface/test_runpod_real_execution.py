@@ -57,5 +57,5 @@ def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
     assert '"private_npz_payloads_opened_before_transfer": False' in source
     assert '"new_private_checkpoint_or_research_input_upload": False' in source
     assert '"sealed_cache_layout_adapter"' in source
-    assert '"result_blind_capacity_fallback"' in source
-    assert '"pre_resume_capacity_event"' in source
+    assert '"result_blind_capacity_fallbacks"' in source
+    assert '"pre_resume_capacity_events"' in source
