@@ -15,7 +15,7 @@ def load(name: str, filename: str):
 
 def test_collector_download_is_npz_only_and_result_blind() -> None:
     source = (HERE / "collect_runpod_real_scoring_inputs.py").read_text(encoding="utf-8")
-    assert '"--page-size",\n            "1000"' in source
+    assert '"--page-size",\n            "100"' in source
     assert '"--page-token",\n            ""' in source
     assert '"npz_payloads_opened_or_parsed": False' in source
     assert "5_791_045_122" in source

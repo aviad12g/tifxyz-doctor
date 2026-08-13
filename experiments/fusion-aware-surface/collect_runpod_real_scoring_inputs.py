@@ -54,7 +54,7 @@ def download_caches(kaggle: str, kernel_id: str, names: list[str], destination: 
             "--file-pattern",
             pattern,
             "--page-size",
-            "1000",
+            "100",
             "--page-token",
             "",
             "--quiet",
