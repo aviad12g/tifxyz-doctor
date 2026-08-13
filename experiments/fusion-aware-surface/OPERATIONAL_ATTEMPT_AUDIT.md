@@ -81,6 +81,14 @@ identities before scoring.
    an accelerator-free scorer. The provider-metadata adapter therefore removes
    the scientifically unused GPU request and leaves the launcher, scorer,
    metric, caches, panels, and every scientific setting unchanged.
+8. **Provider v5, real only:** the CPU-only kernel stopped after six seconds at
+   asset-ledger validation, before held-out staging, panel rendering, or scorer
+   invocation. The exact error was
+   `project source is not asset-ledger bound: score_real_test.py`. The parallel
+   scorer was newly public and therefore absent from the older immutable
+   training-asset ledger. The result-blind correction fetches that exact public
+   file from the public plan commit and verifies its frozen SHA-256, matching
+   the already-established transport for the corrected synthetic scorer.
 
 Provider versions 1--3 all failed before scorer invocation. The two v4 scorers
 were both accepted before any result access, as required by the frozen paired

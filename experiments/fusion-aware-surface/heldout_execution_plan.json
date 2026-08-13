@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 29901,
+    "bytes": 29682,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "740ce88cada1e988c9551463993db9c6092e763565f5791aeafdb4abe9c6b38a"
+    "sha256": "2a02962e84f69810af015d2f589d84ac93e6fa565540dd383b7bd74026f1e098"
   },
   "one_shot_scoring_stager": {
     "bytes": 19413,
     "file": "stage_heldout_for_scoring.py",
     "sha256": "385bed26994aa34a2e5d200ec737e20b8c74a84e5b40b061f62babba5f252a10"
   },
-  "payload_sha256": "738383be47566aadc9b9695972c1ae6dae71e59fd443aa515d88a57999fb629c",
+  "payload_sha256": "42cb86c2a450ddaa08e5748e94284c19b59be622f8cb6888fb32a5a6667776d8",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -236,6 +236,45 @@
       "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
     }
   ],
+  "result_blind_parallel_real_asset_transport": {
+    "correction": {
+      "immutable_training_asset_ledger_changed": false,
+      "real_scorer_fetched_from_public_plan_commit": true,
+      "real_scorer_sha256_verified_before_execution": true,
+      "synthetic_public_scorer_transport_pattern_reused": true
+    },
+    "failed_attempt": {
+      "elapsed_seconds": 6,
+      "failure_stage": "asset-ledger validation before held-out staging",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+      "kernel_version": 5,
+      "message": "project source is not asset-ledger bound: score_real_test.py",
+      "status": "ERROR"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18296,
+      "commit": "012b0bb0587a217f737edb4176469bfde776ae60",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "5de4ab189a35bbc882553cfa52354e6a77d61c72d77efa246b43bcd78ed1e953",
+      "sha256": "d2a725e5f71afc0d01813e4275927f4c153b6cd3c7420a4fd029e21c5c9af9fe"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 34736,
+      "commit": "6540d1044cecf3a9a686daf207b2362c37be66a3",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "738383be47566aadc9b9695972c1ae6dae71e59fd443aa515d88a57999fb629c",
+      "sha256": "f425a1c33bd3597b81b5734912bcbf5ef7f9a1fcd5382aa12a9c2802c543d548"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "held_out_input_staging_started_in_failed_attempt": false,
+      "panel_renderer_started_in_failed_attempt": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started_in_failed_attempt": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind accelerated real scorer public-source transport correction"
+  },
   "result_blind_parallel_real_scoring_retry": {
     "correction": {
       "aggregation_bootstrap_or_json_serialization_changed": false,

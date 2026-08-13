@@ -254,7 +254,7 @@ def test_scoring_packages_are_single_file_and_fetch_hash_bound_helpers(
             plan, delivery, record["mode"], stager, metric, panel_renderer
         )
         if record["mode"] == "synthetic":
-            scorer = module.materialize_public_synthetic_scorer("a" * 40, scratch)
+            scorer = module.materialize_public_scorer("synthetic", "a" * 40, scratch)
             assert module.sha256_file(scorer) == module.PROJECT_HASHES[
                 "score_synthetic_test_v2.py"
             ]
