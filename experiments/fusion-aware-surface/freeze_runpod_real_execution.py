@@ -106,6 +106,14 @@ def main() -> int:
             "price_usd_per_hour": 2.38,
             "desired_pre_resume_status": "EXITED",
             "reuse_existing_stopped_volume": True,
+            "result_blind_capacity_fallback": {
+                "allowed_only_after_primary_capacity_rejection": True,
+                "gpu_count": 6,
+                "minimum_vcpu_count": 192,
+                "minimum_memory_gb": 300,
+                "maximum_price_usd_per_hour": 2.04,
+                "same_pod_and_machine_required": True,
+            },
         },
         "budget": {
             "absolute_cap_usd": 3.50,
@@ -147,6 +155,13 @@ def main() -> int:
             "synthetic_version_4_remains_complete_and_sealed": True,
             "partial_real_result_is_scorable": False,
             "all_adverse_null_or_failure_outcomes_must_be_published": True,
+        },
+        "pre_resume_capacity_event": {
+            "attempted_gpu_count": 7,
+            "provider_result": "rejected because the original host lacked seven free GPUs",
+            "billing_started": False,
+            "private_transfer_started": False,
+            "scientific_outputs_inspected": False,
         },
     }
     payload["payload_sha256"] = canonical_sha256(payload)

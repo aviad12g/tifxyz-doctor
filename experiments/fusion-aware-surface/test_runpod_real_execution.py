@@ -37,6 +37,8 @@ def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
     assert 'guard_seconds=receipt["guard_seconds"]' in source
     assert 'guarded >= receipt["compute_cutoff_usd"]' in source
     assert "runpod.stop_pod" in source
+    assert "validate_running_pod" in source
+    assert 'parser.add_argument("--gpu-count", type=int, default=7)' in source
     assert callable(module.spend)
 
 
@@ -55,3 +57,5 @@ def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
     assert '"private_npz_payloads_opened_before_transfer": False' in source
     assert '"new_private_checkpoint_or_research_input_upload": False' in source
     assert '"sealed_cache_layout_adapter"' in source
+    assert '"result_blind_capacity_fallback"' in source
+    assert '"pre_resume_capacity_event"' in source
