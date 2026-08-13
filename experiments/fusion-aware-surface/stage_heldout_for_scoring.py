@@ -18,6 +18,16 @@ RUN_ORDER = (
     "gap8_seed23",
     "gap8_seed47",
 )
+OPERATIONAL_PLAN_FIELDS = {
+    "payload_sha256",
+    "one_shot_scoring_launcher",
+    "one_shot_scoring_stager",
+    "scoring_package_generator",
+    "scoring_pair_controller",
+    "final_result_validator",
+    "result_blind_scoring_asset_correction",
+    "result_blind_scoring_job_plan_compatibility_correction",
+}
 
 
 def sha256_file(path: Path) -> str:
@@ -71,13 +81,15 @@ def jobs_for_mode(plan: dict, mode: str) -> list[dict]:
 
 def validate_plan_delivery(
     plan_path: Path,
+    cache_job_plan_path: Path,
     delivery_path: Path,
     public_plan_commit: str,
     public_delivery_commit: str,
-) -> tuple[dict, dict]:
+) -> tuple[dict, dict, dict]:
     require_hex(public_plan_commit, 40, "public plan commit")
     require_hex(public_delivery_commit, 40, "public delivery commit")
     plan = load_hashed(plan_path)
+    cache_job_plan = load_hashed(cache_job_plan_path)
     delivery = load_hashed(delivery_path)
     if plan.get("status") != "held-out execution plan frozen before held-out inference":
         raise RuntimeError("wrong public held-out plan status")
@@ -88,6 +100,27 @@ def validate_plan_delivery(
     }
     if plan.get("one_shot_scoring_stager") != local_stager:
         raise RuntimeError("running scoring stager differs from public plan")
+    correction = plan.get("result_blind_scoring_asset_correction", {})
+    cache_job_identity = correction.get("predecessor_public_execution_plan")
+    if cache_job_identity != {
+        "commit": cache_job_identity.get("commit") if isinstance(cache_job_identity, dict) else None,
+        "file": "heldout_execution_plan.json",
+        "bytes": cache_job_plan_path.stat().st_size,
+        "sha256": sha256_file(cache_job_plan_path),
+        "payload_sha256": cache_job_plan["payload_sha256"],
+    }:
+        raise RuntimeError("cache-job execution plan differs from public correction")
+    require_hex(cache_job_identity["commit"], 40, "cache-job plan commit")
+    current_scientific = {
+        key: value for key, value in plan.items() if key not in OPERATIONAL_PLAN_FIELDS
+    }
+    cache_job_scientific = {
+        key: value
+        for key, value in cache_job_plan.items()
+        if key not in OPERATIONAL_PLAN_FIELDS
+    }
+    if current_scientific != cache_job_scientific:
+        raise RuntimeError("corrected plan changes the cache-job scientific contract")
     if delivery.get("status") != (
         "all 14 publicly planned held-out caches sealed before one-shot scoring"
     ):
@@ -128,7 +161,7 @@ def validate_plan_delivery(
         "one_shot_scoring_permitted_after_this_public_freeze": True,
     }:
         raise RuntimeError("held-out delivery blind gate mismatch")
-    return plan, delivery
+    return plan, delivery, cache_job_plan
 
 
 def find_exact_index(input_root: Path, identity: dict) -> Path:
@@ -160,8 +193,9 @@ def verify_job_root(
     identity: dict,
     job: dict,
     plan: dict,
-    public_plan_commit: str,
-    plan_path: Path,
+    cache_job_plan: dict,
+    cache_job_plan_commit: str,
+    cache_job_plan_path: Path,
 ) -> tuple[dict, list[dict], list[dict]]:
     index = load_hashed(index_path)
     if index.get("payload_sha256") != identity.get("payload_sha256"):
@@ -173,14 +207,14 @@ def verify_job_root(
     if index.get("job") != job:
         raise RuntimeError(f"{job['job_id']}: job-index job record mismatch")
     if index.get("public_execution_plan") != {
-        "commit": public_plan_commit,
-        "file_sha256": sha256_file(plan_path),
-        "payload_sha256": plan["payload_sha256"],
+        "commit": cache_job_plan_commit,
+        "file_sha256": sha256_file(cache_job_plan_path),
+        "payload_sha256": cache_job_plan["payload_sha256"],
     }:
         raise RuntimeError(f"{job['job_id']}: job-index plan binding mismatch")
-    if index.get("threshold_binding") != plan.get("threshold_binding"):
+    if index.get("threshold_binding") != cache_job_plan.get("threshold_binding"):
         raise RuntimeError(f"{job['job_id']}: job-index threshold binding mismatch")
-    if index.get("launcher") != plan.get("heldout_cache_launcher"):
+    if index.get("launcher") != cache_job_plan.get("heldout_cache_launcher"):
         raise RuntimeError(f"{job['job_id']}: job-index launcher mismatch")
     if index.get("scientific_gate") != {
         "thresholds_were_publicly_frozen_before_this_job": True,
@@ -248,7 +282,9 @@ def stage_mode(
     input_root: Path,
     output_root: Path,
     plan_path: Path,
+    cache_job_plan_path: Path,
     plan: dict,
+    cache_job_plan: dict,
     delivery: dict,
     public_plan_commit: str,
     public_delivery_commit: str,
@@ -275,8 +311,11 @@ def stage_mode(
             identity=index_identity,
             job=job,
             plan=plan,
-            public_plan_commit=public_plan_commit,
-            plan_path=plan_path,
+            cache_job_plan=cache_job_plan,
+            cache_job_plan_commit=plan[
+                "result_blind_scoring_asset_correction"
+            ]["predecessor_public_execution_plan"]["commit"],
+            cache_job_plan_path=cache_job_plan_path,
         )
         source_root = index_path.parent
         for manifest in manifests:
@@ -317,6 +356,15 @@ def stage_mode(
             "commit": public_delivery_commit,
             "payload_sha256": delivery["payload_sha256"],
         },
+        "cache_job_execution_plan": {
+            "commit": plan["result_blind_scoring_asset_correction"][
+                "predecessor_public_execution_plan"
+            ]["commit"],
+            "file": cache_job_plan_path.name,
+            "bytes": cache_job_plan_path.stat().st_size,
+            "sha256": sha256_file(cache_job_plan_path),
+            "payload_sha256": cache_job_plan["payload_sha256"],
+        },
         "threshold_binding": plan["threshold_binding"],
         "job_order": [job["job_id"] for job in jobs],
         "jobs": staged,
@@ -352,6 +400,7 @@ def main() -> int:
     parser.add_argument("--mode", choices=("real", "synthetic"), required=True)
     parser.add_argument("--input-root", type=Path, required=True)
     parser.add_argument("--plan", type=Path, required=True)
+    parser.add_argument("--cache-job-plan", type=Path, required=True)
     parser.add_argument("--delivery", type=Path, required=True)
     parser.add_argument("--public-plan-commit", required=True)
     parser.add_argument("--public-delivery-commit", required=True)
@@ -359,8 +408,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.out.exists():
         raise RuntimeError(f"scorer staging root must start absent: {args.out}")
-    plan, delivery = validate_plan_delivery(
+    plan, delivery, cache_job_plan = validate_plan_delivery(
         args.plan,
+        args.cache_job_plan,
         args.delivery,
         args.public_plan_commit,
         args.public_delivery_commit,
@@ -370,7 +420,9 @@ def main() -> int:
         input_root=args.input_root,
         output_root=args.out,
         plan_path=args.plan,
+        cache_job_plan_path=args.cache_job_plan,
         plan=plan,
+        cache_job_plan=cache_job_plan,
         delivery=delivery,
         public_plan_commit=args.public_plan_commit,
         public_delivery_commit=args.public_delivery_commit,

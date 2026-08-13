@@ -214,6 +214,28 @@ def write_public_files(config: dict, scratch: Path) -> tuple[Path, Path, dict, d
     return plan_path, delivery_path, plan, delivery
 
 
+def materialize_cache_job_plan(plan: dict, scratch: Path) -> tuple[Path, dict]:
+    correction = plan.get("result_blind_scoring_asset_correction", {})
+    identity = correction.get("predecessor_public_execution_plan")
+    if not isinstance(identity, dict) or set(identity) != {
+        "commit",
+        "file",
+        "bytes",
+        "sha256",
+        "payload_sha256",
+    }:
+        raise RuntimeError("cache-job execution-plan identity is absent")
+    raw = fetch_public(identity["commit"], identity["file"], identity["sha256"])
+    if len(raw) != identity["bytes"]:
+        raise RuntimeError("cache-job execution-plan byte-size mismatch")
+    payload = json.loads(raw)
+    if canonical_payload_sha256(payload) != identity["payload_sha256"]:
+        raise RuntimeError("cache-job execution-plan payload mismatch")
+    destination = scratch / "cache_job_execution_plan.json"
+    destination.write_bytes(raw)
+    return destination, payload
+
+
 def local_identity(path: Path) -> dict:
     return {
         "file": path.name,
@@ -430,6 +452,7 @@ def stage_inputs(
     input_root: Path,
     scratch: Path,
     plan_path: Path,
+    cache_job_plan_path: Path,
     delivery_path: Path,
     config: dict,
     stager: Path,
@@ -444,6 +467,8 @@ def stage_inputs(
         str(input_root),
         "--plan",
         str(plan_path),
+        "--cache-job-plan",
+        str(cache_job_plan_path),
         "--delivery",
         str(delivery_path),
         "--public-plan-commit",
@@ -630,6 +655,7 @@ def main() -> int:
     config = load_config()
     mode = config["mode"]
     plan_path, delivery_path, plan, delivery = write_public_files(config, scratch)
+    cache_job_plan_path, cache_job_plan = materialize_cache_job_plan(plan, scratch)
     stager_path = materialize_public_helper(
         config["public_plan_commit"], plan["one_shot_scoring_stager"], scratch
     )
@@ -661,6 +687,7 @@ def main() -> int:
         input_root=input_root,
         scratch=scratch,
         plan_path=plan_path,
+        cache_job_plan_path=cache_job_plan_path,
         delivery_path=delivery_path,
         config=config,
         stager=stager_path,
@@ -695,6 +722,8 @@ def main() -> int:
     )
     if split.get("records_sha256") != REAL_SPLIT_RECORDS_SHA256:
         raise RuntimeError("verified split identity changed before scoring")
+    if cache_job_plan.get("threshold_binding") != plan.get("threshold_binding"):
+        raise RuntimeError("cache-job execution-plan threshold binding changed")
     if (
         thresholds.get("payload_sha256")
         != plan["threshold_binding"]["frozen_thresholds"]["payload_sha256"]
