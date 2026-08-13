@@ -337,13 +337,20 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "5de4ab189a35bbc882553cfa52354e6a77d61c72d77efa246b43bcd78ed1e953",
+  "payload_sha256": "c1e1b8482fd15cda44f7367a553c696276ea8c9db051580b8b349cb67d953287",
   "public_execution_plan": {
-    "bytes": 34736,
-    "commit": "6540d1044cecf3a9a686daf207b2362c37be66a3",
+    "bytes": 36548,
+    "commit": "9940f7db306e15398dcbe9ed44e270ac0d6d41e1",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "738383be47566aadc9b9695972c1ae6dae71e59fd443aa515d88a57999fb629c",
-    "sha256": "f425a1c33bd3597b81b5734912bcbf5ef7f9a1fcd5382aa12a9c2802c543d548"
+    "payload_sha256": "42cb86c2a450ddaa08e5748e94284c19b59be622f8cb6888fb32a5a6667776d8",
+    "sha256": "3d57362fea73943f4f884a0427c286537573e669f0e999f9cc6cef29d12a02e7"
+  },
+  "result_blind_parallel_real_asset_transport": {
+    "failed_real_version": 5,
+    "public_execution_plan_commit": "9940f7db306e15398dcbe9ed44e270ac0d6d41e1",
+    "real_v6_retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
   },
   "result_blind_parallel_real_scoring_retry": {
     "public_execution_plan_commit": "6540d1044cecf3a9a686daf207b2362c37be66a3",
