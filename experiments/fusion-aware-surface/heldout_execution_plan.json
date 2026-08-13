@@ -84,11 +84,11 @@
     "sha256": "260a93e9c77ba26c3e3bf515b628f77c637b26737286615e8572dda1b97f8e7a"
   },
   "one_shot_scoring_stager": {
-    "bytes": 17661,
+    "bytes": 19298,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "18551b1594a061ce93ade82b8a2a2382a176832968c68c6ce2c178c58609585e"
+    "sha256": "4b06652b651d5b802ecd7000172c3f9a30edffce4443586b8f3fdde942f02659"
   },
-  "payload_sha256": "02ac5205c7b59fbb2852ca9d2782263d9cf54526a4579656d74ad29239ebbbf0",
+  "payload_sha256": "d8cc6199483121145edddf141d33384b323e6a320448209394a0061265f9d361",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -292,6 +292,58 @@
       "threshold_seed_panel_gate_or_claim_changed": false
     },
     "status": "result-blind scorer transport correction after fail-closed pre-staging rejection"
+  },
+  "result_blind_scoring_cache_identity_schema_correction": {
+    "cause": "the scoring stager required a reduced file/bytes/sha256 schema while the already-verified cache indexes intentionally retain immutable source and geometry identity fields",
+    "correction": {
+      "cache_job_index_manifest_or_npz_changed": false,
+      "matches_public_delivery_validator": true,
+      "real_identity_fields": [
+        "file",
+        "bytes",
+        "sha256",
+        "source_image"
+      ],
+      "synthetic_identity_fields": [
+        "file",
+        "bytes",
+        "sha256",
+        "name",
+        "kind",
+        "seed",
+        "pitch_um",
+        "papyrus",
+        "kollesis"
+      ]
+    },
+    "local_preflight": {
+      "failure_message": "synthetic-baseline-all-shards: cache identity schema mismatch",
+      "mode": "synthetic",
+      "provider_scorer_version_created": false,
+      "stage": "sealed identity validation before symlink staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 16362,
+      "commit": "c668ba040cfcbc04905191169a6fc02b38b252bf",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "cd210bf8ba6e5dca0c767510ab4fff7ff5c38cb0d895ffa4e71b7292324075a9",
+      "sha256": "208e425e09241e940dc3a071bd1ef41b45ef26d4faf37d462517486e2adb8e43"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 25510,
+      "commit": "52d73f8fc3125e9c8ec471000795192011aee954",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "02ac5205c7b59fbb2852ca9d2782263d9cf54526a4579656d74ad29239ebbbf0",
+      "sha256": "726ae764a1829db155bb5a03d01a247959cf491f6d333712df58e981c5a40f35"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_parsed_or_scientifically_inspected": false,
+      "full_synthetic_staging_preflight_required_before_provider_retry": true,
+      "scientific_result_created_or_opened": false,
+      "threshold_seed_panel_gate_or_claim_changed": false
+    },
+    "status": "result-blind cache-identity schema correction after local preflight rejection"
   },
   "result_blind_scoring_job_plan_compatibility_correction": {
     "cache_job_execution_plan": {

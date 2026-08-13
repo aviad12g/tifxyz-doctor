@@ -27,6 +27,7 @@ OPERATIONAL_PLAN_FIELDS = {
     "final_result_validator",
     "result_blind_scoring_asset_correction",
     "result_blind_scoring_job_plan_compatibility_correction",
+    "result_blind_scoring_cache_identity_schema_correction",
 }
 
 
@@ -187,6 +188,46 @@ def find_exact_index(input_root: Path, identity: dict) -> Path:
     return matches[0]
 
 
+def validate_cache_identity_record(record: dict, mode: str, job_id: str) -> None:
+    base = {"file", "bytes", "sha256"}
+    expected = (
+        base | {"source_image"}
+        if mode == "real_test_cache"
+        else base
+        | {"name", "kind", "seed", "pitch_um", "papyrus", "kollesis"}
+    )
+    if set(record) != expected:
+        raise RuntimeError(f"{job_id}: cache identity schema mismatch")
+    if (
+        not isinstance(record["file"], str)
+        or not record["file"].endswith(".npz")
+        or not isinstance(record["bytes"], int)
+        or isinstance(record["bytes"], bool)
+        or record["bytes"] <= 0
+    ):
+        raise RuntimeError(f"{job_id}: cache identity is invalid")
+    require_hex(record["sha256"], 64, "cache SHA-256")
+    if mode == "real_test_cache":
+        if not isinstance(record["source_image"], str) or not record["source_image"]:
+            raise RuntimeError(f"{job_id}: real cache source identity is invalid")
+        return
+    if (
+        not isinstance(record["name"], str)
+        or not record["name"]
+        or record["kind"] not in {"primary", "single_sheet_control"}
+        or not isinstance(record["seed"], int)
+        or isinstance(record["seed"], bool)
+        or not isinstance(record["pitch_um"], (int, float))
+        or isinstance(record["pitch_um"], bool)
+        or record["pitch_um"] <= 0
+        or not isinstance(record["papyrus"], int)
+        or isinstance(record["papyrus"], bool)
+        or record["papyrus"] <= 0
+        or not isinstance(record["kollesis"], bool)
+    ):
+        raise RuntimeError(f"{job_id}: synthetic cache source identity is invalid")
+
+
 def verify_job_root(
     *,
     index_path: Path,
@@ -247,8 +288,7 @@ def verify_job_root(
             raise RuntimeError(f"{job['job_id']}: manifest identity mismatch")
     expected_names = set()
     for record in caches:
-        if set(record) != {"file", "bytes", "sha256"}:
-            raise RuntimeError(f"{job['job_id']}: cache identity schema mismatch")
+        validate_cache_identity_record(record, job["mode"], job["job_id"])
         name = record["file"]
         if (
             not isinstance(name, str)
