@@ -337,13 +337,13 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "8bf9473e690d25a8bb1462b0d1ac6afea7293e2cca317b07a39f6c3fabc60953",
+  "payload_sha256": "cd210bf8ba6e5dca0c767510ab4fff7ff5c38cb0d895ffa4e71b7292324075a9",
   "public_execution_plan": {
-    "bytes": 22974,
-    "commit": "393dee840bf4ef6c75f228023d089a8ea22c8785",
+    "bytes": 25510,
+    "commit": "52d73f8fc3125e9c8ec471000795192011aee954",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "68d649f1c97484d0ec9974763e60b64ca57004661dcf3d55806a86d7f112361c",
-    "sha256": "c01a9dc7274c638f1206eea1a68cf91721464b5ffc04acc319e93fe98d393b70"
+    "payload_sha256": "02ac5205c7b59fbb2852ca9d2782263d9cf54526a4579656d74ad29239ebbbf0",
+    "sha256": "726ae764a1829db155bb5a03d01a247959cf491f6d333712df58e981c5a40f35"
   },
   "result_blind_scoring_asset_correction": {
     "failed_attempts": [
@@ -359,6 +359,31 @@
       }
     ],
     "public_execution_plan_commit": "393dee840bf4ef6c75f228023d089a8ea22c8785",
+    "retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_job_plan_compatibility_correction": {
+    "cache_job_execution_plan": {
+      "bytes": 20443,
+      "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+      "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 2,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 2,
+        "mode": "synthetic"
+      }
+    ],
+    "public_execution_plan_commit": "52d73f8fc3125e9c8ec471000795192011aee954",
     "retry_permitted": true,
     "scientific_contract_changed": false,
     "scientific_result_created_or_opened": false
