@@ -62,6 +62,7 @@ PROJECT_HASHES = {
     "train_fusion_aware.py": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07",
     "verify_official_metric.py": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00",
 }
+PUBLIC_ONLY_PROJECT_FILES = frozenset({"score_synthetic_test_v2.py"})
 RUNTIME_PACKAGES = {
     "torch": "2.5.1",
     "torchvision": "0.20.1",
@@ -300,9 +301,19 @@ def find_asset_root(input_root: Path) -> Path:
             raise RuntimeError(f"asset ledger file mismatch: {relative}")
         records[relative] = digest
     for name, digest in PROJECT_HASHES.items():
+        if name in PUBLIC_ONLY_PROJECT_FILES:
+            continue
         if records.get(f"project/{name}") != digest:
             raise RuntimeError(f"project source is not asset-ledger bound: {name}")
     return root
+
+
+def materialize_public_synthetic_scorer(commit: str, scratch: Path) -> Path:
+    name = "score_synthetic_test_v2.py"
+    raw = fetch_public(commit, name, PROJECT_HASHES[name])
+    destination = scratch / name
+    destination.write_bytes(raw)
+    return destination
 
 
 def verify_split(project: Path) -> dict:
@@ -485,6 +496,7 @@ def execute_scorer(
     project: Path,
     split_path: Path,
     threshold_path: Path,
+    synthetic_scorer_path: Path | None,
     output: Path,
     environment: dict[str, str],
 ) -> tuple[Path, dict]:
@@ -498,9 +510,18 @@ def execute_scorer(
     )
     result_path = output / result_name
     root_flag = "--test-root" if mode == "real" else "--ray-root"
+    script_path = project / script_name
+    if mode == "synthetic":
+        if synthetic_scorer_path is None:
+            raise RuntimeError("public synthetic scorer was not materialized")
+        script_path = synthetic_scorer_path
+    if script_path.name != script_name or sha256_file(script_path) != PROJECT_HASHES[
+        script_name
+    ]:
+        raise RuntimeError("one-shot scorer source identity mismatch")
     command = [
         sys.executable,
-        str(project / script_name),
+        str(script_path),
         root_flag,
         str(staged),
         "--split-manifest",
@@ -628,6 +649,11 @@ def main() -> int:
     )
     asset_root = find_asset_root(input_root)
     project = asset_root / "project"
+    synthetic_scorer_path = None
+    if mode == "synthetic":
+        synthetic_scorer_path = materialize_public_synthetic_scorer(
+            config["public_plan_commit"], scratch
+        )
     split = verify_split(project)
     threshold_path, thresholds = find_threshold(input_root, plan)
     staged, staging = stage_inputs(
@@ -663,6 +689,7 @@ def main() -> int:
         project=project,
         split_path=project / "real_split_manifest.json",
         threshold_path=threshold_path,
+        synthetic_scorer_path=synthetic_scorer_path,
         output=output,
         environment=environment,
     )

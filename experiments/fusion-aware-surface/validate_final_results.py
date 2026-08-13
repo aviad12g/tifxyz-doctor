@@ -261,7 +261,7 @@ def validate_scoring_result_collection(
             raise RuntimeError(f"{mode}: scoring-package record schema mismatch")
         if (
             record.get("kaggle_kernel_id")
-            != f"aviadcohen1/vesuvius-fusion-one-shot-{mode}"
+            != f"aviadcohen1/vesuvius-fusion-one-shot-{mode}-scoring"
             or record.get("directory") != mode
             or record.get("required_cache_kernel_count") != 7
             or record.get("threshold_kernel")

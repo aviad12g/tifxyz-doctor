@@ -168,7 +168,7 @@ def metadata_for(mode: str, plan: dict, delivery: dict) -> dict:
     if mode == "real":
         datasets.extend([METRIC_SOURCE, METRIC_RUNTIME_SOURCE])
     return {
-        "id": f"aviadcohen1/vesuvius-fusion-one-shot-{mode}",
+        "id": f"aviadcohen1/vesuvius-fusion-one-shot-{mode}-scoring",
         "title": f"Vesuvius Fusion One Shot {mode.title()} Scoring",
         "code_file": "one_shot_scoring_launcher.py",
         "language": "python",

@@ -59,7 +59,7 @@ def validate_packages(root: Path, index_path: Path) -> tuple[dict, list[dict]]:
         }:
             raise RuntimeError(f"{record.get('mode')}: scoring package schema mismatch")
         if record["kaggle_kernel_id"] != (
-            f"aviadcohen1/vesuvius-fusion-one-shot-{record['mode']}"
+            f"aviadcohen1/vesuvius-fusion-one-shot-{record['mode']}-scoring"
         ):
             raise RuntimeError(f"{record['mode']}: scoring kernel identity mismatch")
         if record["required_cache_kernel_count"] != 7:

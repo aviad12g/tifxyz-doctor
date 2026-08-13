@@ -230,6 +230,9 @@ def test_scoring_packages_are_single_file_and_fetch_hash_bound_helpers(
             plan["real_panel_renderer"]["file"]: (
                 Path(__file__).resolve().with_name("render_real_panels.py")
             ).read_bytes(),
+            "score_synthetic_test_v2.py": (
+                Path(__file__).resolve().with_name("score_synthetic_test_v2.py")
+            ).read_bytes(),
         }
         monkeypatch.setattr(
             module,
@@ -250,6 +253,11 @@ def test_scoring_packages_are_single_file_and_fetch_hash_bound_helpers(
         module.verify_public_contract(
             plan, delivery, record["mode"], stager, metric, panel_renderer
         )
+        if record["mode"] == "synthetic":
+            scorer = module.materialize_public_synthetic_scorer("a" * 40, scratch)
+            assert module.sha256_file(scorer) == module.PROJECT_HASHES[
+                "score_synthetic_test_v2.py"
+            ]
 
 
 def test_pair_controller_accepts_both_before_result_collection(tmp_path: Path, monkeypatch) -> None:
