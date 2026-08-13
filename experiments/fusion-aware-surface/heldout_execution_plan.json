@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 29784,
+    "bytes": 29689,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "260a93e9c77ba26c3e3bf515b628f77c637b26737286615e8572dda1b97f8e7a"
+    "sha256": "24fe2028071227f9f44e71cd86b74a01fe584d56586b29e7b755d34ffc6a772e"
   },
   "one_shot_scoring_stager": {
     "bytes": 19298,
     "file": "stage_heldout_for_scoring.py",
     "sha256": "4b06652b651d5b802ecd7000172c3f9a30edffce4443586b8f3fdde942f02659"
   },
-  "payload_sha256": "d8cc6199483121145edddf141d33384b323e6a320448209394a0061265f9d361",
+  "payload_sha256": "a9d317bd50df2adb0d1e2b6e25103d0d8e9ce3b75efce170f81c0818f8b5880f",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -398,6 +398,70 @@
       "threshold_seed_panel_gate_or_claim_changed": false
     },
     "status": "result-blind cache-job-plan compatibility correction after pre-scoring rejection"
+  },
+  "result_blind_scoring_runtime_transport_correction": {
+    "cause": "the frozen CUDA 12.1 PyTorch wheel requested a transitive cuDNN build no longer present on the provider index; the scorer kernels request no GPU and consume already-produced caches",
+    "correction": {
+      "binary_wheels_only": true,
+      "cache_manifest_or_npz_changed": false,
+      "extra_index": "https://pypi.org/simple",
+      "other_runtime_versions_changed": false,
+      "primary_index": "https://download.pytorch.org/whl/cpu",
+      "scorer_kernel_accelerator": "none",
+      "torch": "2.5.1+cpu",
+      "torchvision": "0.20.1+cpu"
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 3,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 3,
+        "mode": "synthetic"
+      }
+    ],
+    "failure_message": "no matching distribution for the cu121 torch dependency nvidia-cudnn-cu12==9.1.0.70",
+    "failure_stage": "runtime installation before held-out input staging",
+    "predecessor_cache_delivery": {
+      "bytes": 16716,
+      "commit": "7fe1c06671b56c66554ca377d4808af3cf76187c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "607c83abc2db98f030b4b9802ccc467764b99ea525341b876a285c99cb502f08",
+      "sha256": "bab108e680dd493357361690b206c50d76ed63c1cfa99b4fd50e528c676ab47c"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 27580,
+      "commit": "e36169e53acbf83ae77642dc47b00c6f98a24ec1",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "d8cc6199483121145edddf141d33384b323e6a320448209394a0061265f9d361",
+      "sha256": "176291c91b0161e5761dc6efddfca1e2513166fd2893d3fea768b58f3cddd04a"
+    },
+    "python312_linux_resolution_preflight": {
+      "abi": "cp312",
+      "bytes": 260266954,
+      "files": 30,
+      "implementation": "cp",
+      "platform_tags": [
+        "linux_x86_64",
+        "manylinux2014_x86_64"
+      ],
+      "python_version": "3.12",
+      "sorted_wheel_ledger_sha256": "7e8967a004c7e6e97a1e223f33f8edb78731c1d1dfa7c21ea52df9c63747bfec",
+      "status": "all exact top-level requirements and transitive wheels resolved"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "held_out_input_staging_started_in_failed_attempts": false,
+      "runtime_package_versions_changed": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started_in_failed_attempts": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind Python 3.12 scorer runtime transport correction"
   },
   "run_order": [
     "baseline",
