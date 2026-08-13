@@ -87,8 +87,24 @@ def expected_jobs(plan: dict) -> list[dict]:
     return jobs
 
 
-def validate_identity_record(record: dict, *, expected_count: int) -> None:
-    if set(record) != {"file", "bytes", "sha256"}:
+def validate_identity_record(
+    record: dict, *, expected_count: int, mode: str
+) -> None:
+    base_keys = {"file", "bytes", "sha256"}
+    if mode == "real_test_cache":
+        expected_keys = base_keys | {"source_image"}
+    elif mode == "synthetic_ray_cache":
+        expected_keys = base_keys | {
+            "name",
+            "kind",
+            "seed",
+            "pitch_um",
+            "papyrus",
+            "kollesis",
+        }
+    else:
+        raise RuntimeError("sealed cache-file mode is unsupported")
+    if set(record) != expected_keys:
         raise RuntimeError("sealed cache-file identity schema mismatch")
     if (
         not isinstance(record["file"], str)
@@ -98,6 +114,26 @@ def validate_identity_record(record: dict, *, expected_count: int) -> None:
     ):
         raise RuntimeError("sealed cache-file identity is invalid")
     require_hex(record["sha256"], 64, "sealed cache-file SHA-256")
+    if mode == "real_test_cache":
+        if not isinstance(record["source_image"], str) or not record["source_image"]:
+            raise RuntimeError("real sealed cache-file source identity is invalid")
+    else:
+        if not isinstance(record["name"], str) or not record["name"]:
+            raise RuntimeError("synthetic sealed cache-file name is invalid")
+        if record["kind"] not in {"primary", "single_sheet_control"}:
+            raise RuntimeError("synthetic sealed cache-file kind is invalid")
+        if (
+            not isinstance(record["seed"], int)
+            or isinstance(record["seed"], bool)
+            or not isinstance(record["pitch_um"], (int, float))
+            or isinstance(record["pitch_um"], bool)
+            or record["pitch_um"] <= 0
+            or not isinstance(record["papyrus"], int)
+            or isinstance(record["papyrus"], bool)
+            or record["papyrus"] <= 0
+            or not isinstance(record["kollesis"], bool)
+        ):
+            raise RuntimeError("synthetic sealed cache-file geometry is invalid")
     if expected_count <= 0:
         raise AssertionError("expected cache-file count must be positive")
 
@@ -185,7 +221,9 @@ def validate_job_index(
     if observed_manifest_names != expected_manifest_names:
         raise RuntimeError(f"{job['job_id']}: cache-manifest file set mismatch")
     for record in sealed_files:
-        validate_identity_record(record, expected_count=expected_file_count)
+        validate_identity_record(
+            record, expected_count=expected_file_count, mode=mode
+        )
     names = [record["file"] for record in sealed_files]
     if len(set(names)) != expected_file_count:
         raise RuntimeError(f"{job['job_id']}: duplicate sealed cache-file identity")

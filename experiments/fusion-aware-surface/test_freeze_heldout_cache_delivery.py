@@ -128,11 +128,28 @@ def _write_index(root: Path, job: dict, plan_path: Path, plan: dict) -> Path:
                 for index, name in enumerate(manifest_names)
             ],
             "sealed_cache_files": [
-                {
-                    "file": f"cache_{index:03d}.npz",
-                    "bytes": index + 1,
-                    "sha256": f"{index + 201:064x}",
-                }
+                (
+                    {
+                        "file": f"cache_{index:03d}.npz",
+                        "bytes": index + 1,
+                        "sha256": f"{index + 201:064x}",
+                        "source_image": f"source_{index:03d}.tif",
+                    }
+                    if job["mode"] == "real_test_cache"
+                    else {
+                        "file": f"cache_{index:03d}.npz",
+                        "bytes": index + 1,
+                        "sha256": f"{index + 201:064x}",
+                        "name": f"cell_{index:03d}",
+                        "kind": (
+                            "primary" if index % 2 == 0 else "single_sheet_control"
+                        ),
+                        "seed": 300 + index % 5,
+                        "pitch_um": 170.0 + 30.0 * (index % 4),
+                        "papyrus": 35 + 15 * (index % 4),
+                        "kollesis": bool(index % 2),
+                    }
+                )
                 for index in range(cache_count)
             ],
             "scientific_gate": {
@@ -148,6 +165,51 @@ def _write_index(root: Path, job: dict, plan_path: Path, plan: dict) -> Path:
     path = destination / "heldout_job_index.json"
     path.write_text(json.dumps(index, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return path
+
+
+def test_identity_schema_matches_launcher_records() -> None:
+    real = {
+        "file": "patch.npz",
+        "bytes": 1,
+        "sha256": "a" * 64,
+        "source_image": "patch.tif",
+    }
+    synthetic = {
+        "file": "cell.npz",
+        "bytes": 1,
+        "sha256": "b" * 64,
+        "name": "cell",
+        "kind": "primary",
+        "seed": 300,
+        "pitch_um": 260.0,
+        "papyrus": 65,
+        "kollesis": True,
+    }
+    freezer.validate_identity_record(
+        real, expected_count=38, mode="real_test_cache"
+    )
+    freezer.validate_identity_record(
+        synthetic, expected_count=100, mode="synthetic_ray_cache"
+    )
+
+    missing_source = dict(real)
+    missing_source.pop("source_image")
+    with pytest.raises(RuntimeError, match="identity schema mismatch"):
+        freezer.validate_identity_record(
+            missing_source, expected_count=38, mode="real_test_cache"
+        )
+
+    extra_synthetic = dict(synthetic, unexpected=True)
+    with pytest.raises(RuntimeError, match="identity schema mismatch"):
+        freezer.validate_identity_record(
+            extra_synthetic, expected_count=100, mode="synthetic_ray_cache"
+        )
+
+    invalid_geometry = dict(synthetic, pitch_um=False)
+    with pytest.raises(RuntimeError, match="geometry is invalid"):
+        freezer.validate_identity_record(
+            invalid_geometry, expected_count=100, mode="synthetic_ray_cache"
+        )
 
 
 def test_delivery_freezer_accepts_only_canonical_collector_record(
