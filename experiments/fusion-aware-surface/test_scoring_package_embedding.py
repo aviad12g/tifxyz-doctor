@@ -105,7 +105,7 @@ def _write_public_inputs(tmp_path: Path) -> tuple[Path, Path, dict, dict]:
                 "real": {
                     "script": {
                         "file": "score_real_test.py",
-                        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+                        "sha256": generator.sha256_file(root / "score_real_test.py"),
                     }
                 },
                 "synthetic": {

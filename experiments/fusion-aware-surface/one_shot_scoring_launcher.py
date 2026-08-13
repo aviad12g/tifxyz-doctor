@@ -56,7 +56,7 @@ PROJECT_HASHES = {
     "normalization.py": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261",
     "official_metric.py": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb",
     "real_split_manifest.json": REAL_SPLIT_MANIFEST_SHA256,
-    "score_real_test.py": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+    "score_real_test.py": "06119047c636185f70455feac6ed780510dcd4b7f636404abfdbad819cae1b16",
     "score_synthetic_test.py": "d64049b1048dee8274f8416b979384b3342f671811db356ba79052726401063f",
     "score_synthetic_test_v2.py": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05",
     "train_fusion_aware.py": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07",
@@ -549,7 +549,14 @@ def execute_scorer(
         str(result_path),
     ]
     if mode == "real":
-        command.extend(["--worker", str(project / "official_metric.py")])
+        command.extend(
+            [
+                "--worker",
+                str(project / "official_metric.py"),
+                "--parallel-workers",
+                "4",
+            ]
+        )
     completed = subprocess.run(
         command,
         cwd=project,
@@ -615,6 +622,8 @@ def execute_real_panels(
         timeout=3_600,
     )
     if completed.returncode != 0:
+        sys.stderr.buffer.write(completed.stderr)
+        sys.stderr.buffer.flush()
         raise RuntimeError("fixed real-panel rendering failed; output remains sealed")
     manifest_path = panel_root / "real_panel_render_manifest.json"
     image_paths = [panel_root / f"real_panel_{index:02d}.png" for index in range(1, 5)]
@@ -702,16 +711,6 @@ def main() -> int:
         environment["FUSION_TOPOMETRICS_ROOT"] = str(metric_root)
     output = working / f"fusion-one-shot-{mode}"
     output.mkdir(parents=True, exist_ok=False)
-    result_path, invocation = execute_scorer(
-        mode=mode,
-        staged=staged,
-        project=project,
-        split_path=project / "real_split_manifest.json",
-        threshold_path=threshold_path,
-        synthetic_scorer_path=synthetic_scorer_path,
-        output=output,
-        environment=environment,
-    )
     if split.get("records_sha256") != REAL_SPLIT_RECORDS_SHA256:
         raise RuntimeError("verified split identity changed before scoring")
     if cache_job_plan.get("threshold_binding") != plan.get("threshold_binding"):
@@ -734,6 +733,16 @@ def main() -> int:
             output=output,
             environment=environment,
         )
+    result_path, invocation = execute_scorer(
+        mode=mode,
+        staged=staged,
+        project=project,
+        split_path=project / "real_split_manifest.json",
+        threshold_path=threshold_path,
+        synthetic_scorer_path=synthetic_scorer_path,
+        output=output,
+        environment=environment,
+    )
     run_manifest = {
         "schema_version": "1.0",
         "status": f"{mode} held-out result scored exactly once after public cache-delivery freeze",

@@ -56,7 +56,7 @@
       ],
       "script": {
         "file": "score_real_test.py",
-        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+        "sha256": "06119047c636185f70455feac6ed780510dcd4b7f636404abfdbad819cae1b16"
       }
     },
     "synthetic": {
@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 29689,
+    "bytes": 29901,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "24fe2028071227f9f44e71cd86b74a01fe584d56586b29e7b755d34ffc6a772e"
+    "sha256": "740ce88cada1e988c9551463993db9c6092e763565f5791aeafdb4abe9c6b38a"
   },
   "one_shot_scoring_stager": {
     "bytes": 19413,
     "file": "stage_heldout_for_scoring.py",
     "sha256": "385bed26994aa34a2e5d200ec737e20b8c74a84e5b40b061f62babba5f252a10"
   },
-  "payload_sha256": "d60199310fd589cef799a66b3a4513927aeba9edae1914c2f54da25384d383cf",
+  "payload_sha256": "738383be47566aadc9b9695972c1ae6dae71e59fd443aa515d88a57999fb629c",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -236,6 +236,62 @@
       "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
     }
   ],
+  "result_blind_parallel_real_scoring_retry": {
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_long_real_scorer": true,
+      "official_metric_subprocesses_run_concurrently": 4,
+      "panel_failure_stderr_may_be_emitted_as_operational_log": true,
+      "per_cache_metric_function_changed": false,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "failure_elapsed_seconds": 34706,
+    "failure_message": "fixed real-panel rendering failed; output remains sealed",
+    "failure_stage": "after real scorer completion, during fixed real-panel rendering",
+    "predecessor_cache_delivery": {
+      "bytes": 17685,
+      "commit": "367050ad1ff23f97be7996fffb978220678bd91c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "e76019aaba37574cbc8899ede3cc939f065246d3012ac2d4efd70d3c55571afd",
+      "sha256": "a249eb36c68ea4fe13b34c549adaf42c91754e3a45c24de1dff179aeb83189f0"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 32213,
+      "commit": "624c1ef41fa078ea9b3d3d97207a56ab6662e27b",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "d60199310fd589cef799a66b3a4513927aeba9edae1914c2f54da25384d383cf",
+      "sha256": "e1a2741bfae98eb5054c3c4a11195fa6ee265b3aa7848eb8117a68ac45ad09bd"
+    },
+    "provider_attempts": {
+      "real": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 4,
+        "status": "ERROR"
+      },
+      "synthetic": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 4,
+        "status": "COMPLETE"
+      }
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "sealed_v4_results_used_to_design_correction": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "sealed_state": {
+      "cache_npz_probability_endpoint_or_panel_opened": false,
+      "real_v4_kernel_complete_artifact_set_available": false,
+      "real_v4_result_opened_downloaded_or_used": false,
+      "real_v4_scorer_invocation_completed": true,
+      "synthetic_v4_result_opened_downloaded_or_used": false
+    },
+    "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
   "result_blind_scoring_asset_correction": {
     "cause": {
       "asset_dataset_source": "aviadcohen1/vesuvius-fusion-aware-training-assets/1",

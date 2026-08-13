@@ -1,9 +1,10 @@
 # Result-blind operational attempt audit
 
 This audit records the operational failures and unavailable optional replication
-that preceded the accepted one-shot scorer pair. It was written while the real
-v4 scorer was still running and before either v4 scientific result, probability
-cache, endpoint, or fixed panel was opened. These events are not scientific
+that preceded the final one-shot scorer artifacts. It was first written while
+the real v4 scorer was still running and was extended result-blind after v4
+failed during fixed-panel rendering. Neither v4 scientific result, probability
+cache, endpoint, nor fixed panel was opened. These events are not scientific
 outcomes, but they remain part of the public evidence rather than being erased
 by the successful retries.
 
@@ -64,10 +65,22 @@ identities before scoring.
    runtime record. No staging or provider execution began. The correction
    classifies only the runtime transport/projection records as operational
    metadata while retaining the exact scientific-projection comparison.
+6. **Provider v4, real only:** the frozen real scorer completed its long scorer
+   subprocess, but the kernel stopped after 34,706 seconds during the separate
+   fixed real-panel rendering stage with
+   `fixed real-panel rendering failed; output remains sealed`. The synthetic v4
+   kernel completed and remains sealed. No v4 output artifact was downloaded or
+   opened. The result-blind retry runs the unchanged fixed-panel procedure
+   before the expensive scorer, emits only panel-renderer stderr if that stage
+   fails, and distributes independent official-metric subprocesses over four
+   CPU workers while reassembling rows in the original frozen cache order.
 
-Provider versions 1--3 all failed before scorer invocation. No scientific
-result was created or opened in those attempts. The two v4 scorers were both
-accepted before any result access, as required by the frozen paired protocol.
+Provider versions 1--3 all failed before scorer invocation. The two v4 scorers
+were both accepted before any result access, as required by the frozen paired
+protocol. The real v4 kernel did not produce a complete collectible artifact
+set; its internal sealed result is neither used nor inspected. The completed
+synthetic v4 result remains sealed and is retained without a scientifically
+unnecessary repeat.
 
 ## Optional Kaggle synthetic replication
 
@@ -90,6 +103,6 @@ The local immutable acceptance receipts are bound by these SHA-256 values:
 - final RunPod provider receipt: `0fe82b4014e4146e13806373acf8400cb6f28de90f44690e0a736433a5a5e1e0`
 
 Scientific null, mixed, adverse, or failed gates are separate from these
-operational events. After both v4 scorers finish, every scientific gate and
-secondary diagnostic will be independently recomputed and published regardless
-of direction.
+operational events. After the result-blind real retry completes, every
+scientific gate and secondary diagnostic will be independently recomputed and
+published regardless of direction.
