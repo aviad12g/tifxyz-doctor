@@ -337,13 +337,13 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "607c83abc2db98f030b4b9802ccc467764b99ea525341b876a285c99cb502f08",
+  "payload_sha256": "f44893fb8d0107970f2e9e75e5226dab65b1ca4cd1d115ffcc2abaa31fe52efa",
   "public_execution_plan": {
-    "bytes": 27580,
-    "commit": "e36169e53acbf83ae77642dc47b00c6f98a24ec1",
+    "bytes": 30362,
+    "commit": "251ffa9111cc7f5d5977ddc26006c68fc1b0c0af",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "d8cc6199483121145edddf141d33384b323e6a320448209394a0061265f9d361",
-    "sha256": "176291c91b0161e5761dc6efddfca1e2513166fd2893d3fea768b58f3cddd04a"
+    "payload_sha256": "a9d317bd50df2adb0d1e2b6e25103d0d8e9ce3b75efce170f81c0818f8b5880f",
+    "sha256": "ef1be4c5bba0f165602d6885fabdd0e308d79059034863965e9d561e6a4266a3"
   },
   "result_blind_scoring_asset_correction": {
     "failed_attempts": [
@@ -392,6 +392,24 @@
     ],
     "public_execution_plan_commit": "52d73f8fc3125e9c8ec471000795192011aee954",
     "retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_runtime_transport_correction": {
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 3,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 3,
+        "mode": "synthetic"
+      }
+    ],
+    "public_execution_plan_commit": "251ffa9111cc7f5d5977ddc26006c68fc1b0c0af",
+    "retry_permitted_after_exact_wheel_resolution": true,
     "scientific_contract_changed": false,
     "scientific_result_created_or_opened": false
   },
