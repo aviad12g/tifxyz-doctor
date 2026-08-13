@@ -29,36 +29,67 @@
     "private_upload_authorized_by_aviad": true,
     "public": "pinned metric source, CPython 3.12 metric wheelhouse, launcher, and controllers"
   },
-  "payload_sha256": "ffd974cd6b98884d3bcd13df88c4c3428195bf7b164edd6049c3f625c678103c",
-  "pre_resume_capacity_event": {
-    "attempted_gpu_count": 7,
-    "billing_started": false,
-    "private_transfer_started": false,
-    "provider_result": "rejected because the original host lacked seven free GPUs",
-    "scientific_outputs_inspected": false
-  },
+  "payload_sha256": "176c3764948efa54f428229e6e6d005b8bc29bc88c521a7c85beba726e3f9d18",
+  "pre_resume_capacity_events": [
+    {
+      "attempted_gpu_count": 7,
+      "billing_started": false,
+      "private_transfer_started": false,
+      "provider_result": "rejected because the original host lacked seven free GPUs",
+      "scientific_outputs_inspected": false
+    },
+    {
+      "attempted_gpu_count": 6,
+      "billing_started": false,
+      "private_transfer_started": false,
+      "provider_result": "rejected because the original host lacked six free GPUs",
+      "scientific_outputs_inspected": false
+    }
+  ],
   "provider": {
+    "capacity_fallback_contract": {
+      "allowed_only_after_larger_layout_capacity_rejection": true,
+      "order": [
+        7,
+        6,
+        5,
+        4
+      ],
+      "same_pod_and_machine_required": true
+    },
     "desired_pre_resume_status": "EXITED",
     "gpu_count": 7,
     "id": "9r1cm9r82aonih",
     "machine_id": "zgxuf36p5h0i",
     "memory_gb": 411,
     "price_usd_per_hour": 2.38,
-    "result_blind_capacity_fallback": {
-      "allowed_only_after_primary_capacity_rejection": true,
-      "gpu_count": 6,
-      "maximum_price_usd_per_hour": 2.04,
-      "minimum_memory_gb": 300,
-      "minimum_vcpu_count": 192,
-      "same_pod_and_machine_required": true
-    },
+    "result_blind_capacity_fallbacks": [
+      {
+        "gpu_count": 6,
+        "maximum_price_usd_per_hour": 2.04,
+        "minimum_memory_gb": 300,
+        "minimum_vcpu_count": 192
+      },
+      {
+        "gpu_count": 5,
+        "maximum_price_usd_per_hour": 1.7,
+        "minimum_memory_gb": 240,
+        "minimum_vcpu_count": 160
+      },
+      {
+        "gpu_count": 4,
+        "maximum_price_usd_per_hour": 1.36,
+        "minimum_memory_gb": 190,
+        "minimum_vcpu_count": 128
+      }
+    ],
     "reuse_existing_stopped_volume": true,
     "vcpu_count": 224
   },
   "provider_orchestrator": {
-    "bytes": 8869,
+    "bytes": 9162,
     "file": "orchestrate_runpod_real_scoring.py",
-    "sha256": "0d7277993ff1cdde7d3c3cf9b370082faa91b9aad4e6db942e4d86176bb228a1"
+    "sha256": "dac29714a00021b256d18ff8dc41468498a980a4c356a1069d0eccd788b0460d"
   },
   "public_cache_delivery": {
     "bytes": 18917,
@@ -74,7 +105,7 @@
     "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
     "sha256": "1d67f9f87c17ca93cea612b2586ebfba4687a3e8ecbe9ed6f300a54d3b847494"
   },
-  "public_runpod_commit": "986691724513892740bead36d96aa35336e2d612",
+  "public_runpod_commit": "9f44c222bb9abd249555f2fca5cefb7025b8a39f",
   "remote_executor": {
     "bytes": 9459,
     "file": "runpod_execute_real_scoring.py",
