@@ -74,6 +74,13 @@ identities before scoring.
    before the expensive scorer, emits only panel-renderer stderr if that stage
    fails, and distributes independent official-metric subprocesses over four
    CPU workers while reassembling rows in the original frozen cache order.
+7. **Rejected accelerated-real push before v5:** Kaggle rejected the package
+   before creating a kernel version with
+   `Maximum weekly GPU quota of 30.00 hours reached`. The scorer uses only CPU
+   subprocesses, and the previously published runtime correction already froze
+   an accelerator-free scorer. The provider-metadata adapter therefore removes
+   the scientifically unused GPU request and leaves the launcher, scorer,
+   metric, caches, panels, and every scientific setting unchanged.
 
 Provider versions 1--3 all failed before scorer invocation. The two v4 scorers
 were both accepted before any result access, as required by the frozen paired
