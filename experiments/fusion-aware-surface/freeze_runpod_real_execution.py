@@ -136,6 +136,10 @@ def main() -> int:
             "real_parallel_workers": 32,
             "fixed_panels_before_scoring": True,
             "row_order": "original frozen cache order",
+            "sealed_cache_layout_adapter": (
+                "relative directory symlink from each frozen run name to its "
+                "verified sealed-caches directory; no NPZ is copied or opened"
+            ),
         },
         "scientific_gate": {
             "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": False,

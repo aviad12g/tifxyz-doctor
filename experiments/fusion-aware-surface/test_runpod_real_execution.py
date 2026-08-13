@@ -27,6 +27,8 @@ def test_executor_preserves_sealed_outputs_and_runs_fixed_launcher() -> None:
     assert '"KAGGLE_INPUT_PATH": "/workspace"' in source
     assert '"sealed_real_test_results.json"' in source
     assert '"REAL_SCORING_COMPLETE"' in source
+    assert "materialize_scoring_layout(args.input_root, manifest)" in source
+    assert "view.symlink_to(sealed.name, target_is_directory=True)" in source
 
 
 def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
@@ -52,3 +54,4 @@ def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
     assert '"compute_cutoff_usd": 3.25' in source
     assert '"private_npz_payloads_opened_before_transfer": False' in source
     assert '"new_private_checkpoint_or_research_input_upload": False' in source
+    assert '"sealed_cache_layout_adapter"' in source

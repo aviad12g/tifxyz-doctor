@@ -81,6 +81,30 @@ def verify_sealed_inputs(root: Path, manifest: dict) -> None:
         raise RuntimeError("sealed real-input aggregate mismatch")
 
 
+def materialize_scoring_layout(root: Path, manifest: dict) -> None:
+    """Expose each sealed cache directory under its frozen run name.
+
+    The transport bundle deliberately stores every NPZ under a uniform
+    ``sealed-caches`` directory.  The public scorer's result-blind stager
+    expects the original run directory recorded in each held-out job index.
+    A relative directory symlink provides that exact view without copying or
+    opening any NPZ payload and without creating duplicate job indexes.
+    """
+    for job in manifest["jobs"]:
+        job_root = root / "jobs" / job["job_id"]
+        index = load_hashed(job_root / job["job_index"]["file"])
+        run = index.get("job", {}).get("run")
+        if not isinstance(run, str) or not run or Path(run).name != run:
+            raise RuntimeError(f"{job['job_id']}: invalid frozen run directory")
+        sealed = job_root / "sealed-caches"
+        view = job_root / run
+        if view.exists() or view.is_symlink():
+            raise RuntimeError(f"{job['job_id']}: scoring run view must start absent")
+        view.symlink_to(sealed.name, target_is_directory=True)
+        if not view.is_dir() or view.resolve() != sealed.resolve():
+            raise RuntimeError(f"{job['job_id']}: scoring run view identity mismatch")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
@@ -106,6 +130,7 @@ def main() -> int:
             raise RuntimeError("sealed real-input manifest differs from frozen plan")
         write_status(status_path, "VERIFYING_SEALED_INPUTS", plan_payload_sha256=plan["payload_sha256"])
         verify_sealed_inputs(args.input_root, manifest)
+        materialize_scoring_layout(args.input_root, manifest)
         assets = Path("/workspace/bundle/input/assets/SOURCE_SHA256SUMS")
         threshold = Path("/workspace/bundle/input/threshold-freeze/frozen_thresholds.json")
         if sha256_file(assets) != plan["reused_private_assets"]["asset_ledger_sha256"]:
