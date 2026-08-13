@@ -125,11 +125,29 @@ def main() -> int:
                     "minimum_memory_gb": 190,
                     "maximum_price_usd_per_hour": 1.36,
                 },
+                {
+                    "gpu_count": 3,
+                    "minimum_vcpu_count": 96,
+                    "minimum_memory_gb": 140,
+                    "maximum_price_usd_per_hour": 1.02,
+                },
+                {
+                    "gpu_count": 2,
+                    "minimum_vcpu_count": 64,
+                    "minimum_memory_gb": 90,
+                    "maximum_price_usd_per_hour": 0.68,
+                },
+                {
+                    "gpu_count": 1,
+                    "minimum_vcpu_count": 32,
+                    "minimum_memory_gb": 45,
+                    "maximum_price_usd_per_hour": 0.34,
+                },
             ],
             "capacity_fallback_contract": {
                 "allowed_only_after_larger_layout_capacity_rejection": True,
                 "same_pod_and_machine_required": True,
-                "order": [7, 6, 5, 4],
+                "order": [7, 6, 5, 4, 3, 2, 1],
             },
         },
         "budget": {
@@ -184,6 +202,20 @@ def main() -> int:
             {
                 "attempted_gpu_count": 6,
                 "provider_result": "rejected because the original host lacked six free GPUs",
+                "billing_started": False,
+                "private_transfer_started": False,
+                "scientific_outputs_inspected": False,
+            },
+            {
+                "attempted_gpu_count": 5,
+                "provider_result": "rejected because the original host lacked five free GPUs",
+                "billing_started": False,
+                "private_transfer_started": False,
+                "scientific_outputs_inspected": False,
+            },
+            {
+                "attempted_gpu_count": 4,
+                "provider_result": "rejected because the original host lacked four free GPUs",
                 "billing_started": False,
                 "private_transfer_started": False,
                 "scientific_outputs_inspected": False,
