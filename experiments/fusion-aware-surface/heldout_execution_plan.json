@@ -84,11 +84,11 @@
     "sha256": "24fe2028071227f9f44e71cd86b74a01fe584d56586b29e7b755d34ffc6a772e"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19298,
+    "bytes": 19413,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "4b06652b651d5b802ecd7000172c3f9a30edffce4443586b8f3fdde942f02659"
+    "sha256": "385bed26994aa34a2e5d200ec737e20b8c74a84e5b40b061f62babba5f252a10"
   },
-  "payload_sha256": "a9d317bd50df2adb0d1e2b6e25103d0d8e9ce3b75efce170f81c0818f8b5880f",
+  "payload_sha256": "d60199310fd589cef799a66b3a4513927aeba9edae1914c2f54da25384d383cf",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -398,6 +398,43 @@
       "threshold_seed_panel_gate_or_claim_changed": false
     },
     "status": "result-blind cache-job-plan compatibility correction after pre-scoring rejection"
+  },
+  "result_blind_scoring_runtime_projection_correction": {
+    "cause": "the scientific projection allowlist predated the published runtime transport record and therefore compared that operational record to the original cache plan",
+    "correction": {
+      "cache_job_plan_or_delivery_records_changed": false,
+      "runtime_projection_record_is_operational_metadata": true,
+      "runtime_transport_record_is_operational_metadata": true,
+      "scientific_projection_comparison_retained": true
+    },
+    "local_preflight": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "provider_scorer_version_created": false,
+      "stage": "plan/delivery validation before sealed cache staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 17334,
+      "commit": "76f60591b72b4ec0b3def6d4bc2cc551722b0e3c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "f44893fb8d0107970f2e9e75e5226dab65b1ca4cd1d115ffcc2abaa31fe52efa",
+      "sha256": "2b8f1c659acf283f0c45ab2b868479bd27ed810914b00774013d2975b281cb10"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 30362,
+      "commit": "251ffa9111cc7f5d5977ddc26006c68fc1b0c0af",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "a9d317bd50df2adb0d1e2b6e25103d0d8e9ce3b75efce170f81c0818f8b5880f",
+      "sha256": "ef1be4c5bba0f165602d6885fabdd0e308d79059034863965e9d561e6a4266a3"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "cache_staging_started_in_failed_preflight": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind runtime-record scientific projection correction"
   },
   "result_blind_scoring_runtime_transport_correction": {
     "cause": "the frozen CUDA 12.1 PyTorch wheel requested a transitive cuDNN build no longer present on the provider index; the scorer kernels request no GPU and consume already-produced caches",

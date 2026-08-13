@@ -28,6 +28,8 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_scoring_asset_correction",
     "result_blind_scoring_job_plan_compatibility_correction",
     "result_blind_scoring_cache_identity_schema_correction",
+    "result_blind_scoring_runtime_transport_correction",
+    "result_blind_scoring_runtime_projection_correction",
 }
 
 
