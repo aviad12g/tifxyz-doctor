@@ -105,6 +105,27 @@ set; its internal sealed result is neither used nor inspected. The completed
 synthetic v4 result remains sealed and is retained without a scientifically
 unnecessary repeat.
 
+## RunPod CPU real-scorer transport events
+
+1. The original CPU-only pod could not be resumed after an account top-up
+   because its host no longer had enough free memory. Every zero-GPU resume
+   request was rejected before billing or transfer. A result-blind replacement
+   plan froze the same 32-vCPU/128-GB/zero-GPU shape, the unchanged USD 13.50
+   campaign cap, and the identical sealed-cache manifest before creating a new
+   temporary pod.
+2. The replacement pod's base image did not include `rsync`. The first deployer
+   attempt stopped before transferring any private file. Only empty remote
+   scaffolding directories had been created; they were verified empty, reset,
+   and the standard transfer utility was installed.
+3. The restarted single-stream transfer was stopped result-blind after
+   aggregate byte-only progress showed that it could threaten the public
+   budget cutoff. No cache was opened and no scientific output existed. The
+   correction retains the exact four frozen rsync flags, partial files,
+   destination, cache manifest, and remote identity verifier, but transfers the
+   seven already-frozen job directories through seven independent streams.
+   Remote scoring still cannot start until every manifest and cache identity
+   passes the unchanged fail-closed verification.
+
 ## Optional Kaggle synthetic replication
 
 RunPod remains the sole authoritative synthetic primary. The optional Kaggle
