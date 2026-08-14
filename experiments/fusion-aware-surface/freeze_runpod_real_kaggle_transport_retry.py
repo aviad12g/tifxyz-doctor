@@ -55,11 +55,12 @@ def tree_identity(root: Path) -> dict:
     }
 
 
-def write_hashed(path: Path, payload: dict) -> None:
+def write_hashed(path: Path, payload: dict) -> dict:
     content = dict(payload)
     content.pop("payload_sha256", None)
     content["payload_sha256"] = canonical_sha256(content)
     path.write_text(json.dumps(content, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return content
 
 
 def main() -> int:
@@ -157,8 +158,8 @@ def main() -> int:
     )
     if any(plan[key] != predecessor[key] for key in unchanged):
         raise RuntimeError("scientific predecessor identity changed during transport freeze")
-    write_hashed(args.out, plan)
-    print(plan["payload_sha256"])
+    frozen = write_hashed(args.out, plan)
+    print(frozen["payload_sha256"])
     return 0
 
 

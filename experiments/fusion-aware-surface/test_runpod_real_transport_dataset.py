@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 from pathlib import Path
 
 import pytest
@@ -89,3 +90,36 @@ def test_ephemeral_credential_is_never_recorded_or_logged() -> None:
     assert "remove_credentials(args.credentials)" in pull_source
     assert "args.credentials.unlink()" in wrapper_source
     assert "str(args.credentials)" not in deploy_source.split("receipt = {", 1)[1].split("}", 1)[0]
+
+
+def test_frozen_private_kaggle_retry_plan() -> None:
+    plan_path = HERE / "runpod_real_scoring_private_kaggle_transport_plan.json"
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    assert plan["payload_sha256"] == puller.canonical_sha256(plan)
+    assert plan["public_runpod_commit"] == "84488422d0ee075bae9d429a88f13ebfe2f1bfee"
+    assert plan["budget"] == {
+        "absolute_cap_usd": 13.5,
+        "compute_cutoff_usd": 1.8450102378888895,
+        "guard_seconds": 300,
+        "maximum_provider_wall_seconds_at_price_ceiling": 5189,
+        "maximum_runtime_seconds_before_guard_at_price_ceiling": 4889,
+        "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
+        "prior_guarded_spend_upper_bound_usd": 11.65498976211111,
+        "reserve_usd": 0.0,
+    }
+    transport = plan["private_kaggle_transport"]
+    assert transport["dataset_handle"] == (
+        "aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/versions/1"
+    )
+    assert transport["expected_total_files"] == 284
+    assert transport["expected_total_bytes"] == 5_791_288_517
+    assert transport["kagglehub_wheelhouse_tree"] == {
+        "files": 11,
+        "bytes": 2_332_451,
+        "ledger_sha256": "8ce5a93740006753f13fce6254b1c5487fa70679d9e5f6b5c39a42a9f36ece9e",
+    }
+    assert plan["private_kaggle_transport_retry"]["scientific_gate"] == {
+        "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": False,
+        "result_probability_endpoint_panel_or_npz_opened": False,
+        "test_time_tuning_permitted": False,
+    }
