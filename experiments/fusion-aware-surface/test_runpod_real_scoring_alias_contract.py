@@ -98,3 +98,24 @@ def test_publication_records_are_projection_metadata() -> None:
             (HERE / "stage_heldout_for_scoring.py").read_bytes()
         ).hexdigest(),
     }
+
+
+def test_projection_corrected_runpod_plan_preserves_scientific_contract() -> None:
+    predecessor = json.loads(
+        (HERE / "runpod_real_scoring_exact_source_plan.json").read_text()
+    )
+    corrected = json.loads(
+        (HERE / "runpod_real_scoring_projection_corrected_plan.json").read_text()
+    )
+    assert corrected["payload_sha256"] == canonical_sha256(corrected)
+    ignored = {
+        "payload_sha256",
+        "embedded_real_launcher",
+        "public_cache_delivery",
+        "public_execution_plan",
+        "result_blind_scoring_publication_projection_correction",
+    }
+    assert {k: v for k, v in corrected.items() if k not in ignored} == {
+        k: v for k, v in predecessor.items() if k not in ignored
+    }
+    assert corrected["scientific_gate"] == predecessor["scientific_gate"]
