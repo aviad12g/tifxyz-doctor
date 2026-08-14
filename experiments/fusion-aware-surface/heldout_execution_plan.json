@@ -81,14 +81,14 @@
   "one_shot_scoring_launcher": {
     "bytes": 32918,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "924fb633f49f703fdffdbad3cf3fb721426286c7eb184316adeb3a72b50a8a60"
+    "sha256": "3574d717a650ef2a8ea1e3aa1056a0d4784b8d2ce0dd6cb0f0fb462595ebc1fc"
   },
   "one_shot_scoring_stager": {
     "bytes": 20790,
     "file": "stage_heldout_for_scoring.py",
     "sha256": "791b62de3305ee77de9e94654c13b56e94df14febb24832f06ae29319cb9cc02"
   },
-  "payload_sha256": "673dd7bfe414a43df28d1beebe82c9e0d5aed4da5d45b1eedd69878309e05fcf",
+  "payload_sha256": "147a766f8a7a9690dc055960c12eb7d0b111c25b55ec45c87165b0691937a274",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -354,6 +354,14 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_public_commit_binding_correction": {
+    "actual_equivalence_commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+    "erroneous_unpublished_equivalence_commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "scientific_outputs_opened_or_used": false,
+    "status": "result-blind local Git commit binding corrected before provider retry"
   },
   "result_blind_public_real_scorer_source_correction": {
     "cause": "the exact-scorer plan recorded the original scorer hash but its public plan commit still contained the later parallel source file",
@@ -943,7 +951,7 @@
   "result_blind_verified_parallel_real_scoring": {
     "equivalence_report": {
       "bytes": 1838,
-      "commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+      "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
       "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
       "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
       "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960"

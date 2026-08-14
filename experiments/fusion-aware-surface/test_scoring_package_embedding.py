@@ -122,7 +122,7 @@ def _write_public_inputs(tmp_path: Path) -> tuple[Path, Path, dict, dict]:
                 "status": "result-blind verified parallel real scoring frozen before retry",
                 "parallel_workers": 32,
                 "equivalence_report": {
-                    "commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+                    "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
                     "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
                     "bytes": 1838,
                     "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960",

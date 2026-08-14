@@ -13,7 +13,7 @@ def test_public_equivalence_report_is_exact_and_complete() -> None:
         HERE / "PARALLEL_REAL_SCORER_EQUIVALENCE.json"
     )
     assert observed == {
-        "commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+        "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
         "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
         "bytes": 1838,
         "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960",
