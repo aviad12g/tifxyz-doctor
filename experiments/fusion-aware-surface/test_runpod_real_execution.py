@@ -29,6 +29,7 @@ def test_executor_preserves_sealed_outputs_and_runs_fixed_launcher() -> None:
     assert '"REAL_SCORING_COMPLETE"' in source
     assert "materialize_scoring_layout(args.input_root, manifest)" in source
     assert "view.symlink_to(sealed.name, target_is_directory=True)" in source
+    assert "existing scoring run view identity mismatch" in source
     assert 'observed_uv != "uv 0.8.22"' in source
     assert 'Path(plan["runtime"]["python_executable"])' in source
     assert 'plan["runtime"]["python_source_sha256"]' in source

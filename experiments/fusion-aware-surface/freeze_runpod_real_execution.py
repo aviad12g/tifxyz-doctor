@@ -178,8 +178,9 @@ def main() -> int:
             "fixed_panels_before_scoring": True,
             "row_order": "original frozen cache order",
             "sealed_cache_layout_adapter": (
-                "relative directory symlink from each frozen run name to its verified "
-                "sealed-caches directory; no NPZ is copied or opened"
+                "create a relative directory symlink from each frozen run name to its verified "
+                "sealed-caches directory, or accept only that exact pre-existing symlink after a "
+                "result-blind pre-runtime retry; no NPZ is copied or opened"
             ),
         },
         "scientific_gate": {

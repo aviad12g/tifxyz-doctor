@@ -100,8 +100,10 @@ def materialize_scoring_layout(root: Path, manifest: dict) -> None:
         sealed = job_root / "sealed-caches"
         view = job_root / run
         if view.exists() or view.is_symlink():
-            raise RuntimeError(f"{job['job_id']}: scoring run view must start absent")
-        view.symlink_to(sealed.name, target_is_directory=True)
+            if not view.is_symlink() or view.resolve() != sealed.resolve():
+                raise RuntimeError(f"{job['job_id']}: existing scoring run view identity mismatch")
+        else:
+            view.symlink_to(sealed.name, target_is_directory=True)
         if not view.is_dir() or view.resolve() != sealed.resolve():
             raise RuntimeError(f"{job['job_id']}: scoring run view identity mismatch")
 
