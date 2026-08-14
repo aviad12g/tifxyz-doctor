@@ -176,6 +176,13 @@ unnecessary repeat.
     scientific plan. Its result-blind budget deducts both earlier conservative
     spend bounds from the unchanged USD 13.50 campaign cap before provider
     creation.
+11. Before the second replacement received any private input, its transfer
+    helper was frozen to require the plan-declared launcher basename, bind the
+    second-replacement receipt explicitly, and use the already-audited ten-way
+    per-file transport. The public metric archive and pinned wheel runtime are
+    transferred in the same bounded pool. The helper still uses the four frozen
+    rsync flags, and the executor remains the sole authority that can accept all
+    sealed identities before scientific execution.
 
 ## Optional Kaggle synthetic replication
 

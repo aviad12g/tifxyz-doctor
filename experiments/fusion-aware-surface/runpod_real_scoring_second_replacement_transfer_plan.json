@@ -1,0 +1,44 @@
+{
+  "budget": {
+    "absolute_campaign_cap_usd": 13.5,
+    "guard_seconds": 300,
+    "second_replacement_compute_cutoff_usd": 6.220022743133333
+  },
+  "exact_scientific_route": {
+    "launcher_file": "one_shot_scoring_launcher_cpu_exact.py",
+    "launcher_sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179",
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "score_real_test_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+  },
+  "parallel_transport": {
+    "expected_metric_runtime_files": 20,
+    "expected_metric_source_files": 72,
+    "expected_regular_files": 280,
+    "granularity": "regular_file",
+    "maximum_workers": 10,
+    "parallel_public_regular_files": true,
+    "remote_executor_verifies_every_manifest_and_cache_identity_before_scoring": true,
+    "rsync_flags_unchanged": [
+      "--archive",
+      "--copy-links",
+      "--partial",
+      "--protect-args"
+    ],
+    "same_sealed_input_manifest_payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563"
+  },
+  "payload_sha256": "7a4632210a92a393052de0253e2140ce0fb382aa1b83496bbec51cd032f88630",
+  "predecessor_replacement_plan_payload_sha256": "a0975fdfb647cd9f104abe572bf555b48598b8c2cf36171577283795f907385f",
+  "public_metric_source": {
+    "dataset": "sohier/vesuvius-metric-resources",
+    "leaderboard_sha256": "f0db94436eea4464a30f252ebc7c35553e539da5e4832e4efaf523ed664cd811",
+    "zip_sha256": "64d24044b7381dbb660a0e9f602ad0f8fd37d1935c09a8ee3b78088433910e68"
+  },
+  "schema_version": "1.0",
+  "status": "result-blind second replacement transfer frozen before private upload",
+  "tool": {
+    "bytes": 12412,
+    "file": "resume_parallel_runpod_real_scoring_transfer.py",
+    "sha256": "6b4e1c96b1dbab54d21917db52b6f9990593ebc614c021ab936a647ef5fc315b"
+  },
+  "user_authorization": "go go im afk i approve all; work end to end i exped this to be fully done once im back"
+}

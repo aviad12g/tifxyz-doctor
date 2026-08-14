@@ -114,7 +114,10 @@ def main() -> int:
         raise RuntimeError("receipt is not in the expected interrupted-transfer state")
     if receipt["plan_payload_sha256"] != plan["payload_sha256"]:
         raise RuntimeError("receipt points to another scientific execution plan")
-    if transfer_plan["predecessor_replacement_plan_payload_sha256"] != receipt["replacement_plan"]["payload_sha256"]:
+    receipt_replacement = receipt.get("second_replacement_plan") or receipt.get("replacement_plan")
+    if not isinstance(receipt_replacement, dict):
+        raise RuntimeError("receipt lacks its replacement plan identity")
+    if transfer_plan["predecessor_replacement_plan_payload_sha256"] != receipt_replacement["payload_sha256"]:
         raise RuntimeError("transfer plan points to another replacement plan")
     jobs = validate_input_layout(args.sealed_input_root)
     transport = transfer_plan["parallel_transport"]
@@ -242,12 +245,15 @@ def main() -> int:
         ],
         timeout=300,
     )
+    launcher_name = plan["embedded_real_launcher"]["file"]
+    if Path(args.launcher).name != launcher_name:
+        raise RuntimeError("launcher basename differs from the frozen plan")
     remote = (
         "nohup python3 /workspace/real-scoring-controller/runpod_execute_real_scoring.py "
         "--plan /workspace/real-scoring-controller/runpod_real_scoring_plan.json "
         "--input-manifest /workspace/real-scoring-input/runpod_real_input_manifest.json "
         "--input-root /workspace/real-scoring-input "
-        "--launcher /workspace/real-scoring-controller/one_shot_scoring_launcher.py "
+        f"--launcher /workspace/real-scoring-controller/{launcher_name} "
         "--status-root /workspace/real-scoring-status "
         "--working-root /workspace/real-scoring-work "
         ">/workspace/real-scoring-bootstrap.log 2>&1 </dev/null &"
