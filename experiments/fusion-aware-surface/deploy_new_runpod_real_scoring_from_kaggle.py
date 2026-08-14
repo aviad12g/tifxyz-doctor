@@ -130,6 +130,15 @@ def main() -> int:
             "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=15",
             f"root@{host}",
         ]
+        run(
+            ssh
+            + [
+                "command -v rsync >/dev/null || "
+                "(apt-get update >/dev/null && "
+                "DEBIAN_FRONTEND=noninteractive apt-get install -y rsync >/dev/null)"
+            ],
+            timeout=300,
+        )
         roots = {
             "controller": "/workspace/real-scoring-controller-v12",
             "pipeline": "/workspace/real-scoring-pipeline-status-v12",

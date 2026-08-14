@@ -326,6 +326,15 @@ unnecessary repeat.
     The complete local deployer dry-run passed before provider creation. No
     held-out cache, panel, probability, endpoint, NPZ payload, or scientific
     result was opened or used.
+28. The first fresh verified-parallel CPU allocation passed its exact
+    32-vCPU/128-GB/zero-GPU price and shape gates, then stopped before any file
+    transfer because the base image did not contain `rsync`. Billing was
+    stopped about 31 seconds after creation; the private dataset pull and
+    executor never started. The result-blind correction installs only the
+    standard public transfer utility before the already-frozen identity-bound
+    transfer and deducts a conservative operational allowance from the retry.
+    No scientific input, output, cache payload, panel, probability, endpoint,
+    metric, threshold, seed, gate, aggregation, ordering, or claim changed.
 
 ## Optional Kaggle synthetic replication
 
