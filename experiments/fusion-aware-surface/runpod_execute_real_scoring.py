@@ -123,7 +123,7 @@ def materialize_public_metric_layout() -> None:
 
 
 def materialize_isolated_scoring_input(
-    working_root: Path, sealed_root: Path, manifest: dict
+    working_root: Path, sealed_root: Path, manifest: dict, metric_verifier: Path
 ) -> Path:
     view = working_root / "input-view"
     view.mkdir()
@@ -139,6 +139,8 @@ def materialize_isolated_scoring_input(
             raise RuntimeError(f"{job['job_id']}: isolated job-index view mismatch")
     assets = view / "scoring-assets"
     shutil.copytree(Path("/workspace/bundle/input/assets"), assets, symlinks=False)
+    verifier_destination = assets / "project" / "verify_official_metric.py"
+    shutil.copyfile(metric_verifier, verifier_destination)
     threshold_root = view / "threshold-freeze"
     threshold_root.mkdir()
     threshold = Path("/workspace/bundle/input/threshold-freeze/frozen_thresholds.json")
@@ -160,6 +162,7 @@ def main() -> int:
     parser.add_argument("--input-manifest", type=Path, required=True)
     parser.add_argument("--input-root", type=Path, required=True)
     parser.add_argument("--launcher", type=Path, required=True)
+    parser.add_argument("--metric-verifier", type=Path, required=True)
     parser.add_argument("--status-root", type=Path, required=True)
     parser.add_argument("--working-root", type=Path, required=True)
     args = parser.parse_args()
@@ -175,6 +178,8 @@ def main() -> int:
             raise RuntimeError("remote executor differs from frozen plan")
         if identity(args.launcher) != plan["embedded_real_launcher"]:
             raise RuntimeError("embedded real launcher differs from frozen plan")
+        if identity(args.metric_verifier) != plan["public_metric_verifier"]:
+            raise RuntimeError("public metric verifier differs from frozen plan")
         observed_manifest_identity = identity(args.input_manifest)
         observed_manifest_identity["payload_sha256"] = manifest["payload_sha256"]
         if observed_manifest_identity != plan["sealed_real_inputs"]:
@@ -237,8 +242,12 @@ def main() -> int:
         if observed != "(3, 12, 13)":
             raise RuntimeError(f"wrong scoring Python runtime: {observed}")
         scoring_input_root = materialize_isolated_scoring_input(
-            args.working_root, args.input_root, manifest
+            args.working_root, args.input_root, manifest, args.metric_verifier
         )
+        if identity(
+            scoring_input_root / "scoring-assets" / "project" / "verify_official_metric.py"
+        ) != plan["public_metric_verifier"]:
+            raise RuntimeError("isolated public metric verifier identity mismatch")
         kaggle_working = args.working_root / "kaggle-working"
         kaggle_temp = args.working_root / "kaggle-temp"
         kaggle_working.mkdir()

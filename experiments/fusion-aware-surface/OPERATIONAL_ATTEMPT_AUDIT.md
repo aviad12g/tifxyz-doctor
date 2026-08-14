@@ -259,6 +259,15 @@ unnecessary repeat.
     source, and metric runtime. All prior failed work remains preserved but is
     outside discovery; no cache or scientific byte is opened, changed, selected,
     or omitted.
+22. The isolated-input attempt progressed through the complete pinned CMake
+    build and then failed closed during the official-metric identity smoke
+    setup because the minimal scoring-asset subset did not transport
+    `verify_official_metric.py`. Billing was stopped before panels or scoring.
+    The metric preparer had already frozen that exact public helper at SHA-256
+    `09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00`;
+    the correction transports precisely those 822 public bytes into the isolated
+    view and changes no smoke test, metric, cache, scorer, panel, threshold,
+    gate, ordering, aggregation, or claim.
 
 ## Optional Kaggle synthetic replication
 

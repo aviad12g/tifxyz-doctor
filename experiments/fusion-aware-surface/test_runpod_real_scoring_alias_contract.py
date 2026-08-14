@@ -215,3 +215,31 @@ def test_isolated_input_plan_preserves_scientific_contract() -> None:
     assert "def materialize_isolated_scoring_input(" in executor
     assert '"KAGGLE_INPUT_PATH": str(scoring_input_root)' in executor
     assert 'working_root / "input-view"' in executor
+
+
+def test_metric_verifier_plan_preserves_scientific_contract() -> None:
+    predecessor = json.loads(
+        (HERE / "runpod_real_scoring_isolated_input_plan.json").read_text()
+    )
+    corrected = json.loads(
+        (HERE / "runpod_real_scoring_metric_verifier_plan.json").read_text()
+    )
+    assert corrected["payload_sha256"] == canonical_sha256(corrected)
+    ignored = {
+        "payload_sha256",
+        "public_metric_verifier",
+        "remote_executor",
+        "result_blind_public_metric_verifier_transport_correction",
+    }
+    assert {k: v for k, v in corrected.items() if k not in ignored} == {
+        k: v for k, v in predecessor.items() if k not in ignored
+    }
+    assert corrected["scientific_gate"] == predecessor["scientific_gate"]
+    assert corrected["public_metric_verifier"] == {
+        "bytes": 822,
+        "file": "verify_official_metric.py",
+        "sha256": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00",
+    }
+    executor = (HERE / "runpod_execute_real_scoring.py").read_text()
+    assert 'parser.add_argument("--metric-verifier", type=Path, required=True)' in executor
+    assert 'shutil.copyfile(metric_verifier, verifier_destination)' in executor
