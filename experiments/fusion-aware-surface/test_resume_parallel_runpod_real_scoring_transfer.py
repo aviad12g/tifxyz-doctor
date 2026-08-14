@@ -24,6 +24,9 @@ class ParallelTransferLayoutTest(unittest.TestCase):
                 tuple(path.name for path in MODULE.validate_input_layout(root)),
                 MODULE.EXPECTED_JOBS,
             )
+            for name in MODULE.EXPECTED_JOBS:
+                (jobs / name / "sealed.bin").write_bytes(b"sealed")
+            self.assertEqual(len(MODULE.regular_input_files(root)), 7)
 
     def test_rejects_extra_job(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -35,6 +38,19 @@ class ParallelTransferLayoutTest(unittest.TestCase):
                 (jobs / name).mkdir()
             with self.assertRaises(RuntimeError):
                 MODULE.validate_input_layout(root)
+
+    def test_rejects_symlinked_sealed_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            jobs = root / "jobs"
+            jobs.mkdir()
+            job = jobs / MODULE.EXPECTED_JOBS[0]
+            job.mkdir()
+            source = root / "source"
+            source.write_bytes(b"sealed")
+            (job / "sealed.bin").symlink_to(source)
+            with self.assertRaises(RuntimeError):
+                MODULE.regular_input_files(root)
 
 
 if __name__ == "__main__":

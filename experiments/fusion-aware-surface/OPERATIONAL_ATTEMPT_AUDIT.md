@@ -125,6 +125,13 @@ unnecessary repeat.
    seven already-frozen job directories through seven independent streams.
    Remote scoring still cannot start until every manifest and cache identity
    passes the unchanged fail-closed verification.
+4. Seven job-directory streams improved throughput substantially, but an
+   aggregate byte-only projection still risked consuming budget reserved for
+   the scorer. A second result-blind correction retains the same partial files,
+   exact rsync flags, paths, manifest, and verifier while assigning the 280
+   unique regular input files across at most 28 streams. No file is transferred
+   by more than one stream, and the executor retains the sole authority to
+   accept the complete sealed identity set before scientific execution.
 
 ## Optional Kaggle synthetic replication
 

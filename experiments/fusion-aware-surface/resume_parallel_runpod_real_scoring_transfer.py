@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shlex
 import subprocess
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
@@ -68,6 +69,17 @@ def validate_input_layout(root: Path) -> tuple[Path, ...]:
     return tuple(jobs_root / name for name in EXPECTED_JOBS)
 
 
+def regular_input_files(root: Path) -> tuple[Path, ...]:
+    jobs_root = root / "jobs"
+    symlinks = sorted(path.relative_to(root).as_posix() for path in jobs_root.rglob("*") if path.is_symlink())
+    if symlinks:
+        raise RuntimeError(f"sealed input tree contains symlinks: {symlinks}")
+    files = tuple(sorted((path for path in jobs_root.rglob("*") if path.is_file()), key=lambda path: path.as_posix()))
+    if not files:
+        raise RuntimeError("sealed input tree contains no regular files")
+    return files
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
@@ -93,6 +105,7 @@ def main() -> int:
     if transfer_plan["predecessor_replacement_plan_payload_sha256"] != receipt["replacement_plan"]["payload_sha256"]:
         raise RuntimeError("transfer plan points to another replacement plan")
     jobs = validate_input_layout(args.sealed_input_root)
+    transport = transfer_plan["parallel_transport"]
 
     host = receipt["ssh_host"]
     port = int(receipt["ssh_port"])
@@ -123,14 +136,41 @@ def main() -> int:
         "-e", ssh_options,
     ]
 
-    def transfer_job(job: Path) -> None:
-        run(
-            rsync_base + [str(job) + "/", f"root@{host}:/workspace/real-scoring-input/jobs/{job.name}/"],
-            timeout=7200,
-        )
+    granularity = transport.get("granularity", "job_directory")
+    if granularity == "job_directory":
+        sources = jobs
 
-    with ThreadPoolExecutor(max_workers=7) as pool:
-        futures = [pool.submit(transfer_job, job) for job in jobs]
+        def transfer(source: Path) -> None:
+            run(
+                rsync_base + [str(source) + "/", f"root@{host}:/workspace/real-scoring-input/jobs/{source.name}/"],
+                timeout=7200,
+            )
+
+    elif granularity == "regular_file":
+        sources = regular_input_files(args.sealed_input_root)
+        if len(sources) != int(transport["expected_regular_files"]):
+            raise RuntimeError(f"unexpected sealed regular-file count: {len(sources)}")
+        remote_parents = sorted(
+            {
+                "/workspace/real-scoring-input/" + source.relative_to(args.sealed_input_root).parent.as_posix()
+                for source in sources
+            }
+        )
+        run(ssh + ["mkdir -p " + " ".join(shlex.quote(path) for path in remote_parents)], timeout=30)
+
+        def transfer(source: Path) -> None:
+            relative = source.relative_to(args.sealed_input_root)
+            destination = f"root@{host}:/workspace/real-scoring-input/{relative.parent.as_posix()}/"
+            run(rsync_base + [str(source), destination], timeout=7200)
+
+    else:
+        raise RuntimeError(f"unsupported transfer granularity: {granularity}")
+
+    workers = int(transport["maximum_workers"])
+    if workers < 1 or workers > 32:
+        raise RuntimeError(f"invalid transfer worker count: {workers}")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = [pool.submit(transfer, source) for source in sources]
         for future in futures:
             future.result()
 
