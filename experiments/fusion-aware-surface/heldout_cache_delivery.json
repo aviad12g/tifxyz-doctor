@@ -337,13 +337,13 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "a22027c2068d40a6be83b63d925016600974c79264db3d60d844bed8bccbf70d",
+  "payload_sha256": "6b91f2e936119e61c756f118ccba136dd7da1d446b8ccf92fa7972a7d1c1e958",
   "public_execution_plan": {
-    "bytes": 39063,
-    "commit": "7ce0e780380525dd445e5ef2fc58631a3c9d2886",
+    "bytes": 42198,
+    "commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
-    "sha256": "1d67f9f87c17ca93cea612b2586ebfba4687a3e8ecbe9ed6f300a54d3b847494"
+    "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
+    "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
   },
   "result_blind_parallel_real_asset_transport": {
     "failed_real_version": 5,
@@ -367,6 +367,14 @@
       "kernel_version": 4,
       "status": "COMPLETE"
     },
+    "synthetic_v4_retained": true
+  },
+  "result_blind_runpod_cpu_real_scoring": {
+    "cpu_only_retry_permitted": true,
+    "gpu_compute_permitted": false,
+    "public_execution_plan_commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false,
     "synthetic_v4_retained": true
   },
   "result_blind_runpod_real_scoring_retry": {
