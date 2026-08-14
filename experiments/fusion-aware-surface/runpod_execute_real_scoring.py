@@ -108,6 +108,20 @@ def materialize_scoring_layout(root: Path, manifest: dict) -> None:
             raise RuntimeError(f"{job['job_id']}: scoring run view identity mismatch")
 
 
+def materialize_public_metric_layout() -> None:
+    source = Path("/workspace/real-scoring-public/metric-source")
+    view = Path("/workspace/topological-metrics-kaggle")
+    if not source.is_dir():
+        raise RuntimeError("pinned public metric source directory is absent")
+    if view.exists() or view.is_symlink():
+        if not view.is_symlink() or view.resolve() != source.resolve():
+            raise RuntimeError("existing public metric source view differs")
+    else:
+        view.symlink_to(source, target_is_directory=True)
+    if not view.is_dir() or view.resolve() != source.resolve():
+        raise RuntimeError("public metric source view mismatch")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
@@ -136,6 +150,7 @@ def main() -> int:
         write_status(status_path, "VERIFYING_SEALED_INPUTS", plan_payload_sha256=plan["payload_sha256"])
         verify_sealed_inputs(args.input_root, manifest)
         materialize_scoring_layout(args.input_root, manifest)
+        materialize_public_metric_layout()
         assets = Path("/workspace/bundle/input/assets/SOURCE_SHA256SUMS")
         threshold = Path("/workspace/bundle/input/threshold-freeze/frozen_thresholds.json")
         if sha256_file(assets) != plan["scoring_assets"]["ledger_sha256"]:

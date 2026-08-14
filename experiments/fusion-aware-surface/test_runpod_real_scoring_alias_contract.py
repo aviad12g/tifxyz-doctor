@@ -140,3 +140,28 @@ def test_pip_seeded_runpod_plan_preserves_scientific_contract() -> None:
     assert corrected["scientific_gate"] == predecessor["scientific_gate"]
     executor = (HERE / "runpod_execute_real_scoring.py").read_text()
     assert '"venv",\n                "--seed",' in executor
+
+
+def test_metric_layout_runpod_plan_preserves_scientific_contract() -> None:
+    predecessor = json.loads(
+        (HERE / "runpod_real_scoring_pip_seeded_plan.json").read_text()
+    )
+    corrected = json.loads(
+        (HERE / "runpod_real_scoring_metric_layout_plan.json").read_text()
+    )
+    assert corrected["payload_sha256"] == canonical_sha256(corrected)
+    ignored = {
+        "payload_sha256",
+        "remote_executor",
+        "result_blind_public_metric_layout_correction",
+    }
+    assert {k: v for k, v in corrected.items() if k not in ignored} == {
+        k: v for k, v in predecessor.items() if k not in ignored
+    }
+    assert corrected["scientific_gate"] == predecessor["scientific_gate"]
+    correction = corrected["result_blind_public_metric_layout_correction"]
+    assert correction["scientific_gate"]["metric_source_bytes_changed"] is False
+    executor = (HERE / "runpod_execute_real_scoring.py").read_text()
+    assert "def materialize_public_metric_layout()" in executor
+    assert 'Path("/workspace/real-scoring-public/metric-source")' in executor
+    assert 'Path("/workspace/topological-metrics-kaggle")' in executor

@@ -233,6 +233,14 @@ unnecessary repeat.
     `python -m pip`. Billing was stopped immediately. The correction adds only
     `--seed` to `uv venv`; it does not change the Python version, wheel versions,
     scorer, panels, metrics, thresholds, gates, ordering, or claims.
+19. The pip-seeded attempt passed sealed-input verification and runtime setup,
+    then failed closed before panels or scoring because the public metric source
+    bytes had been transferred under a neutral directory name while the frozen
+    runtime preparer searches for its canonical `topological-metrics-kaggle`
+    basename. Billing was stopped immediately. The correction creates only a
+    deterministic symlink from that canonical public path to the already-pinned
+    and hash-verified source tree; it changes no metric byte, cache, scorer,
+    panel, threshold, gate, ordering, aggregation, or claim.
 
 ## Optional Kaggle synthetic replication
 
