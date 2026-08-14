@@ -56,7 +56,7 @@
       ],
       "script": {
         "file": "score_real_test.py",
-        "sha256": "06119047c636185f70455feac6ed780510dcd4b7f636404abfdbad819cae1b16"
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
       }
     },
     "synthetic": {
@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 30883,
-    "file": "one_shot_scoring_launcher.py",
-    "sha256": "ddbe1a8f2d69c79e9f812b4a51aa29245fbfb32a65518fc5f2091063718a0cde"
+    "bytes": 30608,
+    "file": "one_shot_scoring_launcher_cpu_exact.py",
+    "sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19654,
+    "bytes": 19748,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "ab52bd4a3ef02d3771833c6665710a4d99e1869daa6b011550a21ad646f0a590"
+    "sha256": "ce5674507aae6d563586c5c88d4e80d142b77dbe72c3554c1b2c0b49c3b71300"
   },
-  "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
+  "payload_sha256": "3b63247a2ff6037c5e66784cc2672e06595fd91bacc679b6b36306fb6bad76a1",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -330,6 +330,49 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_runpod_cpu_exact_scorer_correction": {
+    "decision": {
+      "CPU_launcher_passes_no_parallel_worker_arguments": true,
+      "exact_original_real_scorer_restored": {
+        "file": "score_real_test.py",
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+      },
+      "fixed_panel_renderer_still_runs_before_the_scorer": true,
+      "parallel_scorer_scientific_equivalence_assumed": false,
+      "parallel_scorer_used_for_retry": false
+    },
+    "local_preflight": {
+      "provider_attempt_created": false,
+      "remaining_differences": [
+        "CPU scoring-asset stager identity is operational metadata",
+        "parallel real scorer identity differs from the cache-job scientific plan"
+      ]
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 19598,
+      "commit": "4b5baaf5e23af0b8efbe74b90cd17157c695f10c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "2c23316d23d087b1dcf9d95815bcb6c1097a8b228984465592c090a21f7810b0",
+      "sha256": "eebf95021f4d5d305298ea52e0b3059e1c5dc877d1dafaa8de99edc5574bab29"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 44210,
+      "commit": "99643d5ed891611ac333fc222c1040c37f8c2a3b",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
+      "sha256": "f1f4544a4b94cf5ba388d80d5dca441d1704db1d00821dbd6da899d140ab3f1f"
+    },
+    "public_tooling_commit": "ba7b1d76a15e9e902e148dabadb669b0c0d99000",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "probability_or_endpoint_opened": false,
+      "scientific_result_created_or_opened": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind restoration of exact original real scorer for CPU execution"
   },
   "result_blind_runpod_cpu_projection_correction": {
     "cause": "the scientific-projection allowlist did not classify the newly published result_blind_runpod_cpu_real_scoring record as operational metadata",
