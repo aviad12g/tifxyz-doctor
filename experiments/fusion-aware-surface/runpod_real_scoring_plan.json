@@ -17,7 +17,7 @@
   "embedded_real_launcher": {
     "bytes": 31797,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "b92c1a0a21ef10c4221ba729ec7e9a74bb22b2d4632543fa168424acbd582d0a"
+    "sha256": "bedd64f1232dfe12e54a09c433e5c39dcff0a8396d01b93afcf26d44bf20b049"
   },
   "frozen_thresholds": {
     "bytes": 345175,
@@ -36,7 +36,7 @@
     "private_upload_authorized_by_aviad": true,
     "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
   },
-  "payload_sha256": "b72087178ce3641bb240a5204c176afab5b2269648ff43c066405647f2deac5e",
+  "payload_sha256": "3497e8b7c8c87aea438c81884365f28f1b3092a26faa37fe5a84b686cab86174",
   "pre_create_events": [
     {
       "conservative_spend_upper_bound_usd": 0.05,
@@ -103,18 +103,18 @@
     "sha256": "947876efa54c7a30eaf0605cb305f85f888aee7557fb8d6fa3bb1a55a15154a0"
   },
   "public_cache_delivery": {
-    "bytes": 19246,
-    "commit": "3103a4d8b4825c52439cab5f965a5304c8ea33e4",
+    "bytes": 19598,
+    "commit": "4b5baaf5e23af0b8efbe74b90cd17157c695f10c",
     "file": "heldout_cache_delivery_manifest.json",
-    "payload_sha256": "6b91f2e936119e61c756f118ccba136dd7da1d446b8ccf92fa7972a7d1c1e958",
-    "sha256": "734d941916d0e5d3cc66a53dbc121651736d31136d0fec04382aee9f1e8b6ccb"
+    "payload_sha256": "2c23316d23d087b1dcf9d95815bcb6c1097a8b228984465592c090a21f7810b0",
+    "sha256": "eebf95021f4d5d305298ea52e0b3059e1c5dc877d1dafaa8de99edc5574bab29"
   },
   "public_execution_plan": {
-    "bytes": 42198,
-    "commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
+    "bytes": 44210,
+    "commit": "99643d5ed891611ac333fc222c1040c37f8c2a3b",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
-    "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
+    "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
+    "sha256": "f1f4544a4b94cf5ba388d80d5dca441d1704db1d00821dbd6da899d140ab3f1f"
   },
   "public_runpod_commit": "874c2019f98a51d381a3ddd53ddaa699bbcf8951",
   "remote_executor": {
