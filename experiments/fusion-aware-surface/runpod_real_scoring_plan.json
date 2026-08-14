@@ -1,12 +1,12 @@
 {
   "budget": {
     "absolute_cap_usd": 3.5,
-    "compute_cutoff_usd": 3.2,
+    "compute_cutoff_usd": 3.15,
     "guard_seconds": 300,
-    "maximum_provider_wall_seconds_at_price_ceiling": 9216,
-    "maximum_runtime_seconds_before_guard_at_price_ceiling": 8916,
+    "maximum_provider_wall_seconds_at_price_ceiling": 8859,
+    "maximum_runtime_seconds_before_guard_at_price_ceiling": 8559,
     "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
-    "prior_terminated_attempt_upper_bound_usd": 0.05,
+    "prior_terminated_attempt_upper_bound_usd": 0.1,
     "reserve_usd": 0.25
   },
   "deployer": {
@@ -36,7 +36,7 @@
     "private_upload_authorized_by_aviad": true,
     "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
   },
-  "payload_sha256": "ce4387de804110e41addc116abbb5c160b0a779ecaae47e19ccc24261dde59f5",
+  "payload_sha256": "f552b54e102ca1187cfc839dbffb42413f2b867e899bf68eb56dbc94b37cadac",
   "pre_create_events": [
     {
       "conservative_spend_upper_bound_usd": 0.05,
@@ -44,6 +44,20 @@
       "private_transfer_started": false,
       "result": "created allocation failed frozen provider-shape validation and was immediately terminated",
       "route": "RunPod v1 REST CPU placement",
+      "scientific_outputs_inspected": false
+    },
+    {
+      "conservative_spend_upper_bound_usd": 0.05,
+      "observed_shape": {
+        "gpu_count": 0,
+        "memory_gb": 128,
+        "price_usd_per_hour": 1.28,
+        "vcpu_count": 32
+      },
+      "pod_id": "f9izrr4i2y25kt",
+      "private_transfer_started": false,
+      "result": "exact CPU shape exceeded the frozen $1.25/hour ceiling by $0.03/hour and was immediately terminated",
+      "route": "RunPod exact CPU instance cpu3g-32-128",
       "scientific_outputs_inspected": false
     }
   ],
@@ -55,7 +69,7 @@
     "gpu_count": 0,
     "image": "runpod/stack",
     "instance_id": "cpu3g-32-128",
-    "maximum_price_usd_per_hour": 1.25,
+    "maximum_price_usd_per_hour": 1.28,
     "minimum_memory_gb": 120,
     "name": "vesuvius-real-scoring-cpu-32",
     "new_temporary_pod": true,
@@ -82,7 +96,7 @@
     "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
     "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
   },
-  "public_runpod_commit": "b3741e1450c385653c66839d47540fe8a20355d0",
+  "public_runpod_commit": "b16b2b75fa9ece3d6aaf7d07587ffe93b48d7793",
   "remote_executor": {
     "bytes": 9445,
     "file": "runpod_execute_real_scoring.py",
