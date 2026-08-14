@@ -169,6 +169,13 @@ unnecessary repeat.
    retry preserves the exact bytes and passes the original plan-declared
    filename; no cache, result, panel, probability, endpoint, or scientific
    output was opened.
+10. The stopped first replacement pod could not resume because its provider host
+    no longer had enough free memory. The resume request was rejected before
+    billing. A second replacement freezes the identical 32-vCPU/128-GB/zero-GPU
+    shape, exact sealed inputs, exact launcher filename and bytes, and unchanged
+    scientific plan. Its result-blind budget deducts both earlier conservative
+    spend bounds from the unchanged USD 13.50 campaign cap before provider
+    creation.
 
 ## Optional Kaggle synthetic replication
 
