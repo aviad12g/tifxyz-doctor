@@ -298,6 +298,22 @@ unnecessary repeat.
     dataset changes transport only; no scientific input, model, metric,
     threshold, seed, panel, endpoint, gate, aggregation, ordering, or claim is
     changed.
+26. The first two post-publication private-transport retries were rejected by
+    the provider before billing because the stopped host lacked enough free
+    memory. Aviad subsequently authorized a fresh CPU-only allocation and up to
+    USD 21 of additional RunPod spend. Before any paid replacement was created,
+    the previously retired concurrent real scorer was reintroduced under a new
+    filename and verified result-blind against the exact preregistered scorer.
+    A full deterministic orchestration fixture produced byte-for-byte identical
+    result JSON at 1, 4, 16, and 32 workers. Independently, the exact frozen
+    official metric subprocess produced identical Python values, cache order,
+    and canonical result SHA-256 at 1, 4, 16, and 32 workers on four generated
+    public volumes. The public equivalence report payload is
+    `d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67`.
+    No held-out cache, NPZ payload, panel, probability, endpoint, or scientific
+    result was opened. The only proposed execution change is scheduling
+    independent, otherwise unchanged official-metric subprocesses concurrently
+    and restoring their rows in the frozen cache order.
 
 ## Optional Kaggle synthetic replication
 
