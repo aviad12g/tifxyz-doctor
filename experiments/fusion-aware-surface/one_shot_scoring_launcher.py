@@ -21,8 +21,10 @@ from pathlib import Path, PurePosixPath
 
 PUBLIC_REPOSITORY = "aviad12g/tifxyz-doctor"
 PUBLIC_EXPERIMENT_PATH = "experiments/fusion-aware-surface"
-ASSET_LEDGER_SHA256 = "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
-ASSET_LEDGER_RECORDS = 278
+PARENT_ASSET_LEDGER_SHA256 = "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
+PARENT_ASSET_LEDGER_RECORDS = 278
+SCORING_ASSET_LEDGER_SHA256 = "77b8babe8c2641aa0f1ec082c8f4fcb7c5dc808df39c2262b9f43aa359d8bff9"
+SCORING_ASSET_LEDGER_RECORDS = 5
 REAL_SPLIT_MANIFEST_SHA256 = (
     "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe"
 )
@@ -65,6 +67,15 @@ PROJECT_HASHES = {
 }
 PUBLIC_ONLY_PROJECT_FILES = frozenset(
     {"score_real_test.py", "score_synthetic_test_v2.py"}
+)
+SCORING_ASSET_PROJECT_FILES = frozenset(
+    {
+        "cache_real_predictions.py",
+        "freeze_thresholds.py",
+        "official_metric.py",
+        "real_panel_manifest.json",
+        "real_split_manifest.json",
+    }
 )
 RUNTIME_PACKAGES = {
     "torch": "2.5.1",
@@ -310,25 +321,43 @@ def find_asset_root(input_root: Path) -> Path:
     matches = [
         path.parent.resolve()
         for path in input_root.rglob("SOURCE_SHA256SUMS")
-        if path.is_file() and sha256_file(path) == ASSET_LEDGER_SHA256
+        if path.is_file() and sha256_file(path) == SCORING_ASSET_LEDGER_SHA256
     ]
     if len(matches) != 1:
         raise RuntimeError(f"expected one frozen asset mount; found {matches}")
     root = matches[0]
     records = {}
     lines = (root / "SOURCE_SHA256SUMS").read_text(encoding="utf-8").splitlines()
-    if len(lines) != ASSET_LEDGER_RECORDS:
+    if len(lines) != SCORING_ASSET_LEDGER_RECORDS:
         raise RuntimeError("asset ledger count mismatch")
+    parent_ledger = root / "PARENT_SOURCE_SHA256SUMS"
+    if (
+        not parent_ledger.is_file()
+        or sha256_file(parent_ledger) != PARENT_ASSET_LEDGER_SHA256
+        or len(parent_ledger.read_text(encoding="utf-8").splitlines())
+        != PARENT_ASSET_LEDGER_RECORDS
+    ):
+        raise RuntimeError("parent asset ledger mismatch")
+    parent_records = {}
+    for line in parent_ledger.read_text(encoding="utf-8").splitlines():
+        digest, relative = line.split("  ", 1)
+        if relative in parent_records:
+            raise RuntimeError(f"duplicate parent asset path: {relative}")
+        parent_records[relative] = digest
     for line in lines:
         digest, relative = line.split("  ", 1)
         path = safe_relative(root, relative)
-        if relative in records or not path.is_file() or sha256_file(path) != digest:
+        if (
+            relative in records
+            or parent_records.get(relative) != digest
+            or not path.is_file()
+            or sha256_file(path) != digest
+        ):
             raise RuntimeError(f"asset ledger file mismatch: {relative}")
         records[relative] = digest
-    for name, digest in PROJECT_HASHES.items():
-        if name in PUBLIC_ONLY_PROJECT_FILES:
-            continue
-        if records.get(f"project/{name}") != digest:
+    for name in SCORING_ASSET_PROJECT_FILES:
+        expected = parent_records.get(f"project/{name}")
+        if expected is None or records.get(f"project/{name}") != expected:
             raise RuntimeError(f"project source is not asset-ledger bound: {name}")
     return root
 
@@ -698,7 +727,6 @@ def main() -> int:
     environment["PYTHONPATH"] = os.pathsep.join(
         [
             str(compat),
-            str(asset_root / "network-source" / "vesuvius" / "src"),
             str(project),
             environment.get("PYTHONPATH", ""),
         ]

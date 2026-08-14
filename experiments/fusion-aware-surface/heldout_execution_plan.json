@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 29813,
+    "bytes": 30883,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "e66106ee9957ea22de31cbbe1520ff5a7324ea3a716e62175bf1db22a3b0a4c9"
+    "sha256": "ddbe1a8f2d69c79e9f812b4a51aa29245fbfb32a65518fc5f2091063718a0cde"
   },
   "one_shot_scoring_stager": {
     "bytes": 19557,
     "file": "stage_heldout_for_scoring.py",
     "sha256": "ac85eab1a2a4eb453d58d318575b9271e87c1244ea1b82bebd8c76037f72d867"
   },
-  "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
+  "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -330,6 +330,71 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_runpod_cpu_real_scoring": {
+    "budget": {
+      "absolute_cap_usd": 3.5,
+      "compute_cutoff_usd": 3.25,
+      "guard_seconds": 300,
+      "reserve_usd": 0.25,
+      "user_authorized_new_cpu_pod_and_private_upload": true
+    },
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_real_scorer": true,
+      "minimal_asset_subset_is_byte_bound_to_original_278_record_ledger": true,
+      "official_metric_subprocesses_run_concurrently": 32,
+      "per_cache_metric_function_changed": false,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "sealed_cache_layout_adapter": "relative directory symlink from each frozen run name to its verified sealed-caches directory; no NPZ is copied or opened",
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18917,
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "a22027c2068d40a6be83b63d925016600974c79264db3d60d844bed8bccbf70d",
+      "sha256": "fc594e97f5d3a816cac4faac11fab545684ccc061b68a9c85f5a8bfe940303d6"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 39063,
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
+      "sha256": "1d67f9f87c17ca93cea612b2586ebfba4687a3e8ecbe9ed6f300a54d3b847494"
+    },
+    "provider": {
+      "compute_type": "CPU",
+      "cpu_flavor": "cpu3g",
+      "gpu_count": 0,
+      "maximum_price_usd_per_hour": 1.25,
+      "minimum_memory_gb": 120,
+      "name": "RunPod",
+      "new_temporary_pod": true,
+      "temporary_public_ssh": true,
+      "terminate_after_verified_result_copy": true,
+      "vcpu_count": 32
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "failed_or_sealed_results_used_to_design_correction": false,
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "sealed_predecessors": {
+      "failed_gpu_resume_attempts_billed_or_transferred_private_data": false,
+      "real_kaggle_version_6_error_and_unopened": true,
+      "scientific_outputs_used_to_design_correction": false,
+      "synthetic_version_4_complete_and_unopened": true
+    },
+    "status": "result-blind CPU-only RunPod real-scoring correction frozen before private cache egress",
+    "transfer": {
+      "model_checkpoints_excluded": true,
+      "new_private_checkpoint_or_research_input_upload": false,
+      "private": "266 sealed real NPZ caches, seven indexes, and seven manifests",
+      "private_npz_payloads_opened_before_transfer": false,
+      "public": "five scoring-only source assets, frozen thresholds, pinned metric source/runtime, and controllers"
+    }
   },
   "result_blind_runpod_real_scoring_retry": {
     "budget": {
@@ -664,6 +729,11 @@
     "gap8_seed23",
     "gap8_seed47"
   ],
+  "runpod_cpu_scoring_asset_stager": {
+    "bytes": 4547,
+    "file": "stage_runpod_cpu_scoring_assets.py",
+    "sha256": "e2387488c71fb76d07aaad15c9110ece387e61cce28907830ccda6a8746c3e4f"
+  },
   "schema_version": "1.0",
   "scientific_gate": {
     "held_out_outputs_inspected_when_plan_frozen": false,

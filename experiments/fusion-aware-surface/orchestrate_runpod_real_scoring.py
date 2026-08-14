@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Resume, monitor, and stop the frozen RunPod real-scoring allocation."""
+"""Create, monitor, and terminate the frozen CPU-only RunPod real scorer."""
 
 from __future__ import annotations
 
 import argparse
 import hashlib
 import json
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -26,6 +27,16 @@ def load_hashed(path: Path) -> dict:
 
 
 def write_hashed(path: Path, payload: dict) -> None:
+    if path.exists() or path.parent.exists():
+        raise RuntimeError("receipt target must start absent")
+    content = dict(payload)
+    content.pop("payload_sha256", None)
+    content["payload_sha256"] = canonical_sha256(content)
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps(content, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def rewrite_hashed(path: Path, payload: dict) -> None:
     content = dict(payload)
     content.pop("payload_sha256", None)
     content["payload_sha256"] = canonical_sha256(content)
@@ -37,7 +48,10 @@ def parse_time(value: str) -> datetime:
 
 
 def spend(receipt: dict, *, guard_seconds: int = 0) -> float:
-    elapsed = max(0.0, (datetime.now(timezone.utc) - parse_time(receipt["resumed_at"])).total_seconds())
+    elapsed = max(
+        0.0,
+        (datetime.now(timezone.utc) - parse_time(receipt["created_at"])).total_seconds(),
+    )
     return receipt["price_usd_per_hour"] * (elapsed + guard_seconds) / 3600.0
 
 
@@ -47,113 +61,108 @@ def load_runpod():
     return runpod
 
 
-def validate_stopped_pod(pod: dict, plan: dict) -> None:
-    expected = plan["provider"]
-    observed = {
-        "id": pod.get("id"),
-        "machine_id": pod.get("machineId"),
-        "gpu_count": pod.get("gpuCount"),
-        "vcpu_count": pod.get("vcpuCount"),
-        "memory_gb": pod.get("memoryInGb"),
-        "price_usd_per_hour": float(pod.get("costPerHr")),
-    }
-    frozen = {key: expected[key] for key in observed}
-    if observed != frozen:
-        raise RuntimeError(f"RunPod allocation differs from frozen plan: {observed}")
-
-
-def validate_running_pod(pod: dict, plan: dict, gpu_count: int) -> None:
+def validate_running_pod(pod: dict, plan: dict) -> None:
     provider = plan["provider"]
-    if pod.get("id") != provider["id"] or pod.get("machineId") != provider["machine_id"]:
-        raise RuntimeError("RunPod allocation moved away from the frozen pod or machine")
-    if gpu_count == provider["gpu_count"]:
-        minimum_vcpu = provider["vcpu_count"]
-        minimum_memory = provider["memory_gb"]
-        maximum_price = provider["price_usd_per_hour"]
-    else:
-        matches = [
-            layout
-            for layout in provider["result_blind_capacity_fallbacks"]
-            if layout["gpu_count"] == gpu_count
-        ]
-        if len(matches) != 1:
-            raise RuntimeError("requested GPU count is outside the frozen layouts")
-        fallback = matches[0]
-        minimum_vcpu = fallback["minimum_vcpu_count"]
-        minimum_memory = fallback["minimum_memory_gb"]
-        maximum_price = fallback["maximum_price_usd_per_hour"]
+    price = float(pod.get("costPerHr") or 0.0)
     if (
-        pod.get("gpuCount") != gpu_count
-        or int(pod.get("vcpuCount") or 0) < minimum_vcpu
-        or int(pod.get("memoryInGb") or 0) < minimum_memory
-        or float(pod.get("costPerHr")) > maximum_price
+        int(pod.get("gpuCount") or 0) != 0
+        or int(pod.get("vcpuCount") or 0) < provider["vcpu_count"]
+        or int(pod.get("memoryInGb") or 0) < provider["minimum_memory_gb"]
+        or price <= 0.0
+        or price > provider["maximum_price_usd_per_hour"]
     ):
-        raise RuntimeError("running RunPod layout is outside the frozen capacity bounds")
+        raise RuntimeError("RunPod allocation is outside the frozen CPU-only bounds")
 
 
-def resume(args: argparse.Namespace) -> None:
-    if args.receipt.exists():
-        raise RuntimeError("RunPod real-scoring receipt already exists")
+def create(args: argparse.Namespace) -> None:
     plan = load_hashed(args.plan)
     if args.public_runpod_commit != plan["public_runpod_commit"]:
         raise RuntimeError("public RunPod commit mismatch")
-    runpod = load_runpod()
-    pod = runpod.get_pod(plan["provider"]["id"])
-    validate_stopped_pod(pod, plan)
-    if pod.get("desiredStatus") != "EXITED":
-        raise RuntimeError("frozen RunPod allocation is not stopped")
-    fallbacks = plan["provider"]["result_blind_capacity_fallbacks"]
-    allowed_gpu_counts = {plan["provider"]["gpu_count"], *(layout["gpu_count"] for layout in fallbacks)}
-    if args.gpu_count not in allowed_gpu_counts:
-        raise RuntimeError("requested GPU count is outside the frozen layouts")
-    if args.gpu_count != plan["provider"]["gpu_count"] and not plan.get("pre_resume_capacity_events"):
-        raise RuntimeError("result-blind capacity fallback lacks frozen rejection events")
-    selected_fallback = next(
-        (layout for layout in fallbacks if layout["gpu_count"] == args.gpu_count),
-        None,
-    )
-    price_upper_bound = (
-        plan["provider"]["price_usd_per_hour"]
-        if args.gpu_count == plan["provider"]["gpu_count"]
-        else selected_fallback["maximum_price_usd_per_hour"]
-    )
-    attempt_started_at = datetime.now(timezone.utc).isoformat()
+    public_key = args.public_key.read_text(encoding="utf-8").strip()
+    if not public_key.startswith(("ssh-ed25519 ", "ssh-rsa ")):
+        raise RuntimeError("invalid SSH public key")
     intent = {
         "schema_version": "1.0",
-        "status": "resume intent recorded before provider mutation",
+        "status": "CPU-only create intent recorded before provider mutation",
         "plan_payload_sha256": plan["payload_sha256"],
         "public_runpod_commit": args.public_runpod_commit,
-        "pod_id": plan["provider"]["id"],
-        "gpu_count": args.gpu_count,
-        "price_usd_per_hour": price_upper_bound,
+        "compute_type": "CPU",
+        "gpu_count": 0,
+        "vcpu_count": plan["provider"]["vcpu_count"],
         "absolute_cap_usd": plan["budget"]["absolute_cap_usd"],
         "compute_cutoff_usd": plan["budget"]["compute_cutoff_usd"],
         "reserve_usd": plan["budget"]["reserve_usd"],
         "guard_seconds": plan["budget"]["guard_seconds"],
-        "resume_attempt_started_at": attempt_started_at,
+        "create_attempt_started_at": datetime.now(timezone.utc).isoformat(),
         "scientific_outputs_inspected": False,
     }
     write_hashed(args.receipt, intent)
+    import requests
+    from runpod_flash.core.credentials import get_api_key
+
+    api_key = get_api_key()
+    if not api_key:
+        raise RuntimeError("RunPod API key is unavailable")
+    provider = plan["provider"]
+    body = {
+        "name": provider["name"],
+        "imageName": provider["image"],
+        "computeType": "CPU",
+        "cloudType": provider["cloud_type"],
+        "cpuFlavorIds": [provider["cpu_flavor"]],
+        "cpuFlavorPriority": "custom",
+        "vcpuCount": provider["vcpu_count"],
+        "containerDiskInGb": provider["container_disk_gb"],
+        "volumeInGb": provider["persistent_volume_gb"],
+        "volumeMountPath": "/workspace",
+        "ports": ["22/tcp"],
+        "supportPublicIp": True,
+        "env": {"PUBLIC_KEY": public_key},
+    }
+    response = requests.post(
+        "https://rest.runpod.io/v1/pods",
+        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
+        json=body,
+        timeout=60,
+    )
+    if response.status_code >= 400:
+        intent["status"] = "provider rejected CPU-only create before billing or private transfer"
+        intent["provider_http_status"] = response.status_code
+        intent["provider_error_message"] = response.text[:500]
+        rewrite_hashed(args.receipt, intent)
+        response.raise_for_status()
+    created = response.json()
+    pod_id = created.get("id")
+    if not isinstance(pod_id, str) or not pod_id:
+        raise RuntimeError("provider did not return a CPU Pod id")
+    intent["pod_id"] = pod_id
+    rewrite_hashed(args.receipt, intent)
+    runpod = load_runpod()
     try:
-        runpod.resume_pod(plan["provider"]["id"], gpu_count=args.gpu_count)
-    except Exception as error:
-        intent["status"] = "provider rejected resume before billing or private transfer"
-        intent["provider_error_type"] = type(error).__name__
-        intent["provider_error_message"] = str(error)
-        write_hashed(args.receipt, intent)
+        pod = None
+        for _ in range(90):
+            pod = runpod.get_pod(pod_id)
+            if pod.get("desiredStatus") == "RUNNING" and float(pod.get("costPerHr") or 0.0) > 0:
+                break
+            time.sleep(2)
+        if not pod:
+            raise RuntimeError("provider did not return the created CPU Pod")
+        validate_running_pod(pod, plan)
+        if pod.get("desiredStatus") != "RUNNING":
+            raise RuntimeError("provider did not return the CPU Pod as RUNNING")
+    except Exception:
+        runpod.terminate_pod(pod_id)
+        intent["status"] = "created CPU Pod rejected by frozen bounds and terminated before transfer"
+        intent["terminated_at"] = datetime.now(timezone.utc).isoformat()
+        rewrite_hashed(args.receipt, intent)
         raise
-    running = runpod.get_pod(plan["provider"]["id"])
-    validate_running_pod(running, plan, args.gpu_count)
-    if running.get("desiredStatus") != "RUNNING":
-        runpod.stop_pod(plan["provider"]["id"])
-        raise RuntimeError("provider did not return the resumed allocation as RUNNING")
-    intent["resumed_at"] = attempt_started_at
-    intent["price_usd_per_hour"] = float(running.get("costPerHr"))
-    intent["observed_vcpu_count"] = int(running.get("vcpuCount"))
-    intent["observed_memory_gb"] = int(running.get("memoryInGb"))
-    intent["status"] = "RunPod allocation resumed for sealed real scoring"
-    write_hashed(args.receipt, intent)
-    print("RUNPOD_REAL_SCORING_RESUME_ACCEPTED")
+    intent["created_at"] = datetime.now(timezone.utc).isoformat()
+    intent["price_usd_per_hour"] = float(pod["costPerHr"])
+    intent["observed_vcpu_count"] = int(pod["vcpuCount"])
+    intent["observed_memory_gb"] = int(pod["memoryInGb"])
+    intent["status"] = "RunPod CPU allocation created for sealed real scoring"
+    rewrite_hashed(args.receipt, intent)
+    print("RUNPOD_CPU_REAL_SCORING_CREATE_ACCEPTED")
 
 
 def status(args: argparse.Namespace) -> None:
@@ -163,56 +172,56 @@ def status(args: argparse.Namespace) -> None:
         raise RuntimeError("receipt points to another RunPod plan")
     runpod = load_runpod()
     pod = runpod.get_pod(receipt["pod_id"])
-    validate_running_pod(pod, plan, receipt["gpu_count"])
+    if pod.get("desiredStatus") == "RUNNING":
+        validate_running_pod(pod, plan)
     manual = spend(receipt)
     guarded = spend(receipt, guard_seconds=receipt["guard_seconds"])
     stopped = False
     if args.enforce and guarded >= receipt["compute_cutoff_usd"] and pod.get("desiredStatus") == "RUNNING":
         runpod.stop_pod(receipt["pod_id"])
-        receipt["status"] = "budget cutoff enforced; allocation stopped"
+        receipt["status"] = "budget cutoff enforced; CPU allocation stopped"
         receipt["stopped_at"] = datetime.now(timezone.utc).isoformat()
         receipt["manual_spend_upper_bound_usd"] = manual
         receipt["guarded_spend_upper_bound_usd"] = guarded
-        write_hashed(args.receipt, receipt)
+        rewrite_hashed(args.receipt, receipt)
         stopped = True
-    print(
-        json.dumps(
-            {
-                "provider_status": pod.get("desiredStatus"),
-                "manual_spend_upper_bound_usd": manual,
-                "guarded_spend_upper_bound_usd": guarded,
-                "compute_cutoff_usd": receipt["compute_cutoff_usd"],
-                "budget_stop_enforced": stopped,
-            },
-            sort_keys=True,
-        )
-    )
+    print(json.dumps({
+        "provider_status": pod.get("desiredStatus"),
+        "manual_spend_upper_bound_usd": manual,
+        "guarded_spend_upper_bound_usd": guarded,
+        "compute_cutoff_usd": receipt["compute_cutoff_usd"],
+        "budget_stop_enforced": stopped,
+    }, sort_keys=True))
 
 
-def stop(args: argparse.Namespace) -> None:
+def terminate(args: argparse.Namespace) -> None:
     receipt = load_hashed(args.receipt)
     runpod = load_runpod()
     pod = runpod.get_pod(receipt["pod_id"])
-    if pod.get("desiredStatus") == "RUNNING":
-        runpod.stop_pod(receipt["pod_id"])
-    receipt["status"] = "RunPod real-scoring allocation stopped after sealed copy"
-    receipt["stopped_at"] = datetime.now(timezone.utc).isoformat()
+    if pod.get("desiredStatus") != "TERMINATED":
+        runpod.terminate_pod(receipt["pod_id"])
+    receipt["status"] = "RunPod CPU real-scoring allocation terminated after sealed copy"
+    receipt["terminated_at"] = datetime.now(timezone.utc).isoformat()
     receipt["manual_spend_upper_bound_usd"] = spend(receipt)
-    receipt["guarded_spend_upper_bound_usd"] = spend(receipt, guard_seconds=receipt["guard_seconds"])
-    write_hashed(args.receipt, receipt)
-    print("RUNPOD_REAL_SCORING_STOPPED")
+    receipt["guarded_spend_upper_bound_usd"] = spend(
+        receipt, guard_seconds=receipt["guard_seconds"]
+    )
+    rewrite_hashed(args.receipt, receipt)
+    print("RUNPOD_CPU_REAL_SCORING_TERMINATED")
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "status", "stop"))
+    parser.add_argument("command", choices=("create", "status", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-runpod-commit", default="")
-    parser.add_argument("--gpu-count", type=int, default=7)
+    parser.add_argument("--public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
     args = parser.parse_args()
-    {"resume": resume, "status": status, "stop": stop}[args.command](args)
+    if args.command == "create" and args.public_key is None:
+        parser.error("create requires --public-key")
+    {"create": create, "status": status, "terminate": terminate}[args.command](args)
     return 0
 
 

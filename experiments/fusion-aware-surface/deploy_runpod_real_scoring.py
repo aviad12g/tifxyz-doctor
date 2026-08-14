@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Upload frozen real-scoring inputs to the resumed RunPod allocation."""
+"""Upload frozen real-scoring inputs to the CPU-only RunPod allocation."""
 
 from __future__ import annotations
 
@@ -57,6 +57,8 @@ def main() -> int:
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--sealed-input-root", type=Path, required=True)
+    parser.add_argument("--scoring-assets", type=Path, required=True)
+    parser.add_argument("--frozen-thresholds", type=Path, required=True)
     parser.add_argument("--metric-source", type=Path, required=True)
     parser.add_argument("--metric-runtime", type=Path, required=True)
     parser.add_argument("--launcher", type=Path, required=True)
@@ -64,8 +66,8 @@ def main() -> int:
     args = parser.parse_args()
     plan = load_hashed(args.plan)
     receipt = load_hashed(args.receipt)
-    if receipt.get("status") != "RunPod allocation resumed for sealed real scoring":
-        raise RuntimeError("RunPod allocation is not in the expected resumed state")
+    if receipt.get("status") != "RunPod CPU allocation created for sealed real scoring":
+        raise RuntimeError("RunPod CPU allocation is not in the expected created state")
     if receipt["plan_payload_sha256"] != plan["payload_sha256"]:
         raise RuntimeError("receipt points to another RunPod plan")
     import runpod
@@ -83,8 +85,25 @@ def main() -> int:
         "ConnectTimeout=15",
         f"root@{host}",
     ]
-    run(ssh + ["test ! -e /workspace/real-scoring-status && test ! -e /workspace/real-scoring-input"], timeout=30)
-    run(ssh + ["mkdir -p /workspace/real-scoring-controller /workspace/real-scoring-public"], timeout=30)
+    run(
+        ssh
+        + [
+            "test ! -e /workspace/real-scoring-status && "
+            "test ! -e /workspace/real-scoring-input && "
+            "test ! -e /workspace/bundle"
+        ],
+        timeout=30,
+    )
+    run(
+        ssh
+        + [
+            "mkdir -p /workspace/real-scoring-controller "
+            "/workspace/real-scoring-public "
+            "/workspace/bundle/input/assets "
+            "/workspace/bundle/input/threshold-freeze"
+        ],
+        timeout=30,
+    )
     receipt["status"] = "authorized sealed real-cache upload in progress"
     receipt["deployment_started_at"] = datetime.now(timezone.utc).isoformat()
     receipt["ssh_host"] = host
@@ -100,6 +119,16 @@ def main() -> int:
         f"ssh -p {port} -o BatchMode=yes -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15",
     ]
     run(rsync_base + [str(args.sealed_input_root) + "/", f"root@{host}:/workspace/real-scoring-input/"], timeout=3600)
+    run(
+        rsync_base
+        + [str(args.scoring_assets) + "/", f"root@{host}:/workspace/bundle/input/assets/"],
+        timeout=300,
+    )
+    run(
+        rsync_base
+        + [str(args.frozen_thresholds), f"root@{host}:/workspace/bundle/input/threshold-freeze/"],
+        timeout=300,
+    )
     run(rsync_base + [str(args.metric_source) + "/", f"root@{host}:/workspace/real-scoring-public/metric-source/"], timeout=900)
     run(rsync_base + [str(args.metric_runtime) + "/", f"root@{host}:/workspace/real-scoring-public/metric-runtime/"], timeout=900)
     run(

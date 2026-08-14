@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Execute the frozen real one-shot scorer on the reused RunPod allocation."""
+"""Execute the frozen real one-shot scorer on the CPU-only RunPod allocation."""
 
 from __future__ import annotations
 
@@ -120,8 +120,8 @@ def main() -> int:
     try:
         plan = load_hashed(args.plan)
         manifest = load_hashed(args.input_manifest)
-        if plan.get("status") != "result-blind RunPod real one-shot scoring frozen before private cache egress":
-            raise RuntimeError("wrong RunPod real-scoring plan status")
+        if plan.get("status") != "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress":
+            raise RuntimeError("wrong CPU-only RunPod real-scoring plan status")
         if identity(Path(__file__).resolve()) != plan["remote_executor"]:
             raise RuntimeError("remote executor differs from frozen plan")
         if identity(args.launcher) != plan["embedded_real_launcher"]:
@@ -133,10 +133,10 @@ def main() -> int:
         materialize_scoring_layout(args.input_root, manifest)
         assets = Path("/workspace/bundle/input/assets/SOURCE_SHA256SUMS")
         threshold = Path("/workspace/bundle/input/threshold-freeze/frozen_thresholds.json")
-        if sha256_file(assets) != plan["reused_private_assets"]["asset_ledger_sha256"]:
-            raise RuntimeError("reused private asset ledger identity mismatch")
-        if sha256_file(threshold) != plan["reused_private_assets"]["frozen_thresholds_sha256"]:
-            raise RuntimeError("reused threshold identity mismatch")
+        if sha256_file(assets) != plan["scoring_assets"]["ledger_sha256"]:
+            raise RuntimeError("minimal scoring asset ledger identity mismatch")
+        if sha256_file(threshold) != plan["frozen_thresholds"]["sha256"]:
+            raise RuntimeError("frozen threshold identity mismatch")
         write_status(status_path, "INSTALLING_RUNTIME", plan_payload_sha256=plan["payload_sha256"])
         args.working_root.mkdir(parents=True, exist_ok=True)
         subprocess.run(
