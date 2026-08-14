@@ -108,8 +108,14 @@ def materialize_metric_source(archive: Path, target: Path) -> None:
                 raise RuntimeError("public metric archive contains a non-file member")
         bundle.extractall(staging)
     extracted = staging / "topological-metrics-kaggle"
-    if not extracted.is_dir() or set(staging.iterdir()) != {extracted}:
+    bundled_wheels = staging / "wheels"
+    if (
+        not extracted.is_dir()
+        or not bundled_wheels.is_dir()
+        or set(staging.iterdir()) != {extracted, bundled_wheels}
+    ):
         raise RuntimeError("public metric archive layout mismatch")
+    shutil.rmtree(bundled_wheels)
     extracted.rename(target)
     staging.rmdir()
     leaderboard = target / "src" / "topometrics" / "leaderboard.py"

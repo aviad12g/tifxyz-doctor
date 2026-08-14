@@ -335,6 +335,16 @@ unnecessary repeat.
     transfer and deducts a conservative operational allowance from the retry.
     No scientific input, output, cache payload, panel, probability, endpoint,
     metric, threshold, seed, gate, aggregation, ordering, or claim changed.
+29. The rsync-corrected replacement completed all public runtime transfers and
+    prepared the exact pinned runtime, then failed closed before the private
+    dataset pull because the exact public metric ZIP contains two top-level
+    directories: `topological-metrics-kaggle` and a bundled `wheels` directory.
+    The wrapper had required the source directory to be the sole top-level
+    entry. Billing was stopped, the ephemeral Kaggle credential was removed,
+    and the scorer never started. The correction requires exactly those two
+    hash-bound archive entries, discards the unused bundled public wheels, and
+    retains only the exact metric source; runtime wheels still come from the
+    separately frozen runtime tree. No private or scientific file was opened.
 
 ## Optional Kaggle synthetic replication
 
