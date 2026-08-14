@@ -84,11 +84,11 @@
     "sha256": "ddbe1a8f2d69c79e9f812b4a51aa29245fbfb32a65518fc5f2091063718a0cde"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19557,
+    "bytes": 19654,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "ac85eab1a2a4eb453d58d318575b9271e87c1244ea1b82bebd8c76037f72d867"
+    "sha256": "ab52bd4a3ef02d3771833c6665710a4d99e1869daa6b011550a21ad646f0a590"
   },
-  "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
+  "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -330,6 +330,47 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_runpod_cpu_projection_correction": {
+    "cause": "the scientific-projection allowlist did not classify the newly published result_blind_runpod_cpu_real_scoring record as operational metadata",
+    "correction": {
+      "cache_job_plan_or_delivery_scientific_records_changed": false,
+      "cpu_provider_record_is_operational_metadata": true,
+      "scientific_projection_comparison_retained": true,
+      "this_projection_record_is_operational_metadata": true
+    },
+    "failed_attempt": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "fixed_panel_renderer_started": false,
+      "official_metric_scorer_started": false,
+      "pod_id": "h2xei44m0ee9m5",
+      "provider": "RunPod CPU",
+      "scientific_result_created_or_opened": false,
+      "stage": "plan/delivery validation before sealed cache staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 19246,
+      "commit": "3103a4d8b4825c52439cab5f965a5304c8ea33e4",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "6b91f2e936119e61c756f118ccba136dd7da1d446b8ccf92fa7972a7d1c1e958",
+      "sha256": "734d941916d0e5d3cc66a53dbc121651736d31136d0fec04382aee9f1e8b6ccb"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 42198,
+      "commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
+      "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
+    },
+    "public_tooling_commit": "fc823b1efe1f43fbfed71f34c8ebac0bf4caeab4",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "probability_or_endpoint_opened": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind CPU-provider scientific-projection allowlist correction"
   },
   "result_blind_runpod_cpu_real_scoring": {
     "budget": {
