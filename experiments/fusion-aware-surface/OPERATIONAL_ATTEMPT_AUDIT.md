@@ -268,6 +268,14 @@ unnecessary repeat.
     the correction transports precisely those 822 public bytes into the isolated
     view and changes no smoke test, metric, cache, scorer, panel, threshold,
     gate, ordering, aggregation, or claim.
+23. The exact metric-verifier transport attempt completed the pinned CMake
+    build and then failed closed during the fixed real-panel public-context
+    validation because the real score-input index provenance did not match.
+    Billing was stopped immediately. No panel, scorer output, result JSON,
+    probability, endpoint, NPZ payload, or scientific output was opened. The
+    exact mismatch is preserved as an operational blocker; no scientific
+    parameter, identity, threshold, seed, gate, aggregation, or claim has been
+    changed in response.
 
 ## Optional Kaggle synthetic replication
 
