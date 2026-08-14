@@ -36,7 +36,7 @@
     "private_upload_authorized_by_aviad": true,
     "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
   },
-  "payload_sha256": "f552b54e102ca1187cfc839dbffb42413f2b867e899bf68eb56dbc94b37cadac",
+  "payload_sha256": "13a395839841102fd42bbf06c8a35009ae926e04ef4eb65f61b582b9710431a6",
   "pre_create_events": [
     {
       "conservative_spend_upper_bound_usd": 0.05,
@@ -59,6 +59,17 @@
       "result": "exact CPU shape exceeded the frozen $1.25/hour ceiling by $0.03/hour and was immediately terminated",
       "route": "RunPod exact CPU instance cpu3g-32-128",
       "scientific_outputs_inspected": false
+    }
+  ],
+  "pre_execution_events": [
+    {
+      "correction": "replace one dictionary union with explicit assignment; identical resulting mapping",
+      "error": "base-image Python did not support dictionary-union syntax",
+      "pod_id": "h2xei44m0ee9m5",
+      "scientific_outputs_inspected": false,
+      "scientific_runtime_started": false,
+      "stage": "executor plan/input identity verification before runtime installation",
+      "state": "ERROR"
     }
   ],
   "provider": {
@@ -96,11 +107,11 @@
     "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
     "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
   },
-  "public_runpod_commit": "b16b2b75fa9ece3d6aaf7d07587ffe93b48d7793",
+  "public_runpod_commit": "d07a3bdd9ba30d8eabe2c321bf57a3a8e0bbc6e0",
   "remote_executor": {
-    "bytes": 9445,
+    "bytes": 9542,
     "file": "runpod_execute_real_scoring.py",
-    "sha256": "d4e170177372cbaf422922f39ee7e15ce5bb57341b8ac52720f93f2a45c62bcd"
+    "sha256": "cbe3c369bddaaa43f66ae5bb9bb353f3fb6670ea4a501d21ff7693b0d625d3a8"
   },
   "runtime": {
     "fixed_panels_before_scoring": true,
