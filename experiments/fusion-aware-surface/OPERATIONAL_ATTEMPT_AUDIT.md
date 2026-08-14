@@ -345,6 +345,23 @@ unnecessary repeat.
     hash-bound archive entries, discards the unused bundled public wheels, and
     retains only the exact metric source; runtime wheels still come from the
     separately frozen runtime tree. No private or scientific file was opened.
+30. The public-metric-archive-corrected replacement prepared the exact public
+    runtime and entered the private Kaggle transport child, which returned
+    nonzero before the scorer started. Billing was stopped and the ephemeral
+    Kaggle credential was removed. The stopped provider workspace was not
+    retained, so its child status record could not be recovered after stop;
+    no NPZ, panel, probability, endpoint, result JSON, or scientific output was
+    opened. Result-blind inspection of the pinned KaggleHub 1.0.2 source then
+    established a deterministic verifier conflict: after extracting the exact
+    284-file dataset into `output_dir`, KaggleHub creates its own zero-byte
+    `.complete/datasets/aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/1/bundle.complete`
+    cache marker inside that same directory. The frozen dataset verifier
+    correctly rejects any 285th file. The correction validates that this exact
+    non-dataset marker is the only completion entry, removes only its
+    `.complete` tree, and then performs the unchanged 284-file/281-source-file
+    identity verification without parsing NPZ. It also propagates future
+    result-blind child errors into the retained pipeline status. No private
+    dataset byte or scientific contract changes.
 
 ## Optional Kaggle synthetic replication
 

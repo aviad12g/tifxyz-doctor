@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -60,6 +61,45 @@ def test_exact_frozen_counts() -> None:
     assert puller.EXPECTED_TOTAL_BYTES == 5_791_288_517
     assert puller.DATASET_ID == uploader.DATASET_ID
     assert puller.DATASET_VERSION == 1
+
+
+def test_exact_kagglehub_completion_marker_is_removed(tmp_path: Path) -> None:
+    marker = tmp_path / puller.KAGGLEHUB_COMPLETION_MARKER
+    marker.parent.mkdir(parents=True)
+    marker.touch()
+    puller.remove_kagglehub_completion_marker(tmp_path)
+    assert not (tmp_path / ".complete").exists()
+
+
+def test_unexpected_kagglehub_completion_marker_is_rejected(tmp_path: Path) -> None:
+    marker = tmp_path / puller.KAGGLEHUB_COMPLETION_MARKER
+    marker.parent.mkdir(parents=True)
+    marker.touch()
+    (marker.parent / "unexpected").touch()
+    with pytest.raises(RuntimeError, match="unexpected KaggleHub"):
+        puller.remove_kagglehub_completion_marker(tmp_path)
+
+
+def test_wrapper_propagates_result_blind_child_error(tmp_path: Path) -> None:
+    child = tmp_path / "transport-status.json"
+    child.write_text(
+        json.dumps(
+            {
+                "state": "ERROR",
+                "scientific_outputs_inspected": False,
+                "error_type": "RuntimeError",
+                "error_message": "exact transport mismatch",
+            }
+        ),
+        encoding="utf-8",
+    )
+    with (tmp_path / "child.log").open("wb") as log:
+        with pytest.raises(RuntimeError, match="exact transport mismatch"):
+            wrapper.run_logged(
+                [sys.executable, "-c", "raise SystemExit(1)"],
+                log,
+                operational_status=child,
+            )
 
 
 def test_cpu_retry_transport_is_result_blind_and_zero_gpu() -> None:

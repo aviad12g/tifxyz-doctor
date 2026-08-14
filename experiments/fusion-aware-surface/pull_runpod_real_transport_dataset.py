@@ -40,6 +40,9 @@ KAGGLEHUB_SOURCE_HASHES = {
     "datasets_helpers.py": "00b786848f516b64692557e10a7f4bbbdfbd2ade0d9fa6ea4cf64e4463c0de3b",
     "gcs_upload.py": "9873897f1825980bdf0c808162e67031d1d84aa633c9f52677553168b0aaf95f",
 }
+KAGGLEHUB_COMPLETION_MARKER = Path(
+    ".complete/datasets/aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/1/bundle.complete"
+)
 
 
 def sha256_file(path: Path) -> str:
@@ -247,6 +250,25 @@ def validate_download(root: Path, transport: dict) -> dict[str, tuple[int, str]]
     return expected
 
 
+def remove_kagglehub_completion_marker(root: Path) -> None:
+    """Remove only KaggleHub's pinned, non-dataset completion marker."""
+    completion_root = root / ".complete"
+    marker = root / KAGGLEHUB_COMPLETION_MARKER
+    observed = {
+        path.relative_to(root)
+        for path in completion_root.rglob("*")
+        if path.is_file() or path.is_symlink()
+    } if completion_root.is_dir() and not completion_root.is_symlink() else set()
+    if (
+        observed != {KAGGLEHUB_COMPLETION_MARKER}
+        or not marker.is_file()
+        or marker.is_symlink()
+        or marker.stat().st_size != 0
+    ):
+        raise RuntimeError("unexpected KaggleHub completion-marker layout")
+    shutil.rmtree(completion_root)
+
+
 def materialize_input(download: Path, target: Path, records: dict[str, tuple[int, str]]) -> None:
     if target.exists():
         raise RuntimeError("sealed real input root must start absent")
@@ -357,6 +379,7 @@ def main() -> int:
         if resolved.resolve() != args.download_root.resolve():
             raise RuntimeError("private transport download resolved to an unexpected root")
         remove_credentials(args.credentials)
+        remove_kagglehub_completion_marker(args.download_root)
         records = validate_download(args.download_root, transport)
         materialize_input(args.download_root, args.input_root, records)
         write_status(

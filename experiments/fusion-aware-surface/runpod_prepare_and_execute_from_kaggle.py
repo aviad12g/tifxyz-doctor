@@ -123,10 +123,29 @@ def materialize_metric_source(archive: Path, target: Path) -> None:
         raise RuntimeError("public metric leaderboard identity mismatch")
 
 
-def run_logged(command: list[str], log, *, cwd: Path | None = None) -> None:
+def run_logged(
+    command: list[str],
+    log,
+    *,
+    cwd: Path | None = None,
+    operational_status: Path | None = None,
+) -> None:
     completed = subprocess.run(command, cwd=cwd, stdout=log, stderr=subprocess.STDOUT, check=False)
     if completed.returncode != 0:
-        raise RuntimeError(f"operational child failed with return code {completed.returncode}: {Path(command[1]).name}")
+        detail = ""
+        if operational_status is not None and operational_status.is_file():
+            child = json.loads(operational_status.read_text(encoding="utf-8"))
+            if (
+                child.get("state") == "ERROR"
+                and child.get("scientific_outputs_inspected") is False
+                and isinstance(child.get("error_type"), str)
+                and isinstance(child.get("error_message"), str)
+            ):
+                detail = f"; {child['error_type']}: {child['error_message']}"
+        raise RuntimeError(
+            f"operational child failed with return code {completed.returncode}: "
+            f"{Path(command[1]).name}{detail}"
+        )
 
 
 def main() -> int:
@@ -215,6 +234,7 @@ def main() -> int:
                     "--status-root", str(args.transport_status_root),
                 ],
                 log,
+                operational_status=args.transport_status_root / "transport-status.json",
             )
         if not (args.transport_status_root / "PRIVATE_TRANSPORT_VERIFIED").is_file():
             raise RuntimeError("private transport verified marker is absent")
