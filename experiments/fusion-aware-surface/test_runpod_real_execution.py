@@ -58,7 +58,8 @@ def test_deployer_uses_guarded_rsync_and_absent_remote_targets() -> None:
 def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
     source = (HERE / "freeze_runpod_real_execution.py").read_text(encoding="utf-8")
     assert '"absolute_cap_usd": 3.50' in source
-    assert '"compute_cutoff_usd": 3.20' in source
+    assert '"compute_cutoff_usd": 3.15' in source
+    assert '"maximum_price_usd_per_hour": 1.28' in source
     assert '"private_npz_payloads_opened_before_transfer": False' in source
     assert '"new_private_checkpoint_or_research_input_upload": False' in source
     assert '"compute_type": "CPU"' in source
