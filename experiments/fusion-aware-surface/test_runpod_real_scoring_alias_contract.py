@@ -59,3 +59,27 @@ def test_runpod_alias_plan_preserves_scientific_contract() -> None:
         k: v for k, v in predecessor.items() if k not in ignored
     }
     assert corrected["scientific_gate"] == predecessor["scientific_gate"]
+
+
+def test_exact_source_runpod_plan_preserves_scientific_contract() -> None:
+    predecessor = json.loads(
+        (HERE / "runpod_real_scoring_alias_corrected_plan.json").read_text()
+    )
+    corrected = json.loads(
+        (HERE / "runpod_real_scoring_exact_source_plan.json").read_text()
+    )
+    assert corrected["payload_sha256"] == canonical_sha256(corrected)
+    ignored = {
+        "payload_sha256",
+        "embedded_real_launcher",
+        "public_cache_delivery",
+        "public_execution_plan",
+        "result_blind_public_real_scorer_source_correction",
+    }
+    assert {k: v for k, v in corrected.items() if k not in ignored} == {
+        k: v for k, v in predecessor.items() if k not in ignored
+    }
+    assert corrected["scientific_gate"] == predecessor["scientific_gate"]
+    assert corrected["result_blind_public_real_scorer_source_correction"][
+        "restored_scorer"
+    ]["sha256"] == "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"

@@ -1,0 +1,213 @@
+{
+  "budget": {
+    "absolute_cap_usd": 3.5,
+    "compute_cutoff_usd": 3.15,
+    "guard_seconds": 300,
+    "maximum_provider_wall_seconds_at_price_ceiling": 8859,
+    "maximum_runtime_seconds_before_guard_at_price_ceiling": 8559,
+    "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
+    "prior_terminated_attempt_upper_bound_usd": 0.1,
+    "reserve_usd": 0.25
+  },
+  "deployer": {
+    "bytes": 6039,
+    "file": "deploy_runpod_real_scoring.py",
+    "sha256": "4eda4e94f2605dcc062640a1cfc27b5e3e84a63b9670ff86a27824f9440e55f6"
+  },
+  "embedded_real_launcher": {
+    "bytes": 31522,
+    "file": "one_shot_scoring_launcher.py",
+    "sha256": "8eaee6005de6996b5ece96726c5b27bf86e80649c34e133ce7bab972b505e7d9"
+  },
+  "frozen_thresholds": {
+    "bytes": 345175,
+    "file": "frozen_thresholds.json",
+    "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+  },
+  "input_collector": {
+    "bytes": 8179,
+    "file": "collect_runpod_real_scoring_inputs.py",
+    "sha256": "b924c0a1ba073f04ea3ef16055508c430101ddc2b4022f1a81c63b04f1109e54"
+  },
+  "new_transfer": {
+    "new_private_checkpoint_or_research_input_upload": false,
+    "private": "only 266 sealed real NPZ caches plus their seven indexes and seven manifests",
+    "private_npz_payloads_opened_before_transfer": false,
+    "private_upload_authorized_by_aviad": true,
+    "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
+  },
+  "payload_sha256": "d35958c82dbcff0fc6885ad6ca3fe404e54e6d9ad5d65f969b07503678c59af4",
+  "pre_create_events": [
+    {
+      "conservative_spend_upper_bound_usd": 0.05,
+      "pod_id": "j0d4boyxwegn7q",
+      "private_transfer_started": false,
+      "result": "created allocation failed frozen provider-shape validation and was immediately terminated",
+      "route": "RunPod v1 REST CPU placement",
+      "scientific_outputs_inspected": false
+    },
+    {
+      "conservative_spend_upper_bound_usd": 0.05,
+      "observed_shape": {
+        "gpu_count": 0,
+        "memory_gb": 128,
+        "price_usd_per_hour": 1.28,
+        "vcpu_count": 32
+      },
+      "pod_id": "f9izrr4i2y25kt",
+      "private_transfer_started": false,
+      "result": "exact CPU shape exceeded the frozen $1.25/hour ceiling by $0.03/hour and was immediately terminated",
+      "route": "RunPod exact CPU instance cpu3g-32-128",
+      "scientific_outputs_inspected": false
+    }
+  ],
+  "pre_execution_events": [
+    {
+      "correction": "replace one dictionary union with explicit assignment; identical resulting mapping",
+      "error": "base-image Python did not support dictionary-union syntax",
+      "pod_id": "h2xei44m0ee9m5",
+      "scientific_outputs_inspected": false,
+      "scientific_runtime_started": false,
+      "stage": "executor plan/input identity verification before runtime installation",
+      "state": "ERROR"
+    },
+    {
+      "correction": "build exact CPython 3.12.13 from the official source archive whose SHA-256 is frozen; invoke exact uv 0.8.22 with that executable",
+      "error": "base-image Python could invoke the uv package but no CPython 3.12.13 interpreter was available to uv",
+      "pod_id": "h2xei44m0ee9m5",
+      "scientific_outputs_inspected": false,
+      "scientific_runtime_started": false,
+      "stage": "pinned Python environment creation before panel or scorer invocation",
+      "state": "ERROR"
+    }
+  ],
+  "provider": {
+    "cloud_type": "SECURE",
+    "compute_type": "CPU",
+    "container_disk_gb": 30,
+    "cpu_flavor": "cpu3g",
+    "gpu_count": 0,
+    "image": "runpod/stack",
+    "instance_id": "cpu3g-32-128",
+    "maximum_price_usd_per_hour": 1.28,
+    "minimum_memory_gb": 120,
+    "name": "vesuvius-real-scoring-cpu-32",
+    "new_temporary_pod": true,
+    "temporary_public_ssh": true,
+    "terminate_after_verified_result_copy": true,
+    "vcpu_count": 32
+  },
+  "provider_orchestrator": {
+    "bytes": 9002,
+    "file": "orchestrate_runpod_real_scoring.py",
+    "sha256": "947876efa54c7a30eaf0605cb305f85f888aee7557fb8d6fa3bb1a55a15154a0"
+  },
+  "public_cache_delivery": {
+    "bytes": 20682,
+    "commit": "26287da67a8c6796541be43ea616d42804da7a54",
+    "file": "heldout_cache_delivery_manifest.json",
+    "payload_sha256": "219e912dc3984e120f58a89640ffa854336f6b4fff22a1c402a5840e804ffc38",
+    "sha256": "34c3035277b8505e48037da7f02bb2ad2878e8306a2525315fe6cef9fa4d2975"
+  },
+  "public_execution_plan": {
+    "bytes": 48537,
+    "commit": "faf7606b82edbc06a02973a721e3e168148b4622",
+    "file": "heldout_execution_plan.json",
+    "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
+    "sha256": "73cac78d784cbf0151aa4be13c5be1558bab0b4e5511acacde5fc385e5ae2972"
+  },
+  "public_runpod_commit": "874c2019f98a51d381a3ddd53ddaa699bbcf8951",
+  "result_blind_launcher_alias_contract_correction": {
+    "embedded_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "d24e0afe14f265dd05c055d64d58fc80bc36763b4402dadc40766ec62193ae81"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 7288,
+      "file": "runpod_real_scoring_plan.json",
+      "payload_sha256": "5faacc1617fcd971a7db40a311e381a0092590f227fd8cd8d2a5fec5702dcc6a",
+      "sha256": "782579bce50df7e29482d3b18578e9db692cb136d871497f0a66da4f35c2f7bf"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "launcher_base_source_bytes_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind canonical launcher alias and public-plan rebind"
+  },
+  "result_blind_public_real_scorer_source_correction": {
+    "embedded_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "8eaee6005de6996b5ece96726c5b27bf86e80649c34e133ce7bab972b505e7d9"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 8097,
+      "file": "runpod_real_scoring_alias_corrected_plan.json",
+      "payload_sha256": "f6fea141b7c1b2204c0450d9ae66ce6c21cefe37344ace03e110c19c46dd20e8",
+      "public_commit": "1755c87da5d79aea3b514a4e9bad46a27d765879",
+      "sha256": "4e22bc51dcb07337df6d99cb5ed294e9022621937d4d5d83684efd9aa8638d3f"
+    },
+    "restored_scorer": {
+      "bytes": 8210,
+      "file": "score_real_test.py",
+      "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "exact_preregistered_scorer_restored": true,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind public-source correction for the already-frozen exact scorer"
+  },
+  "remote_executor": {
+    "bytes": 10580,
+    "file": "runpod_execute_real_scoring.py",
+    "sha256": "0d5b2306efe8ad1e5103113d266627784147d6ea0b8360ff34c6c48d1ded869f"
+  },
+  "runtime": {
+    "fixed_panels_before_scoring": true,
+    "python": "3.12.13",
+    "python_build": "result-blind local build from the exact public source archive on the frozen 32-vCPU pod",
+    "python_executable": "/workspace/python-3.12.13/bin/python3.12",
+    "python_source_archive": "/workspace/Python-3.12.13.tgz",
+    "python_source_sha256": "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b",
+    "python_source_url": "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tgz",
+    "real_parallel_workers": 32,
+    "row_order": "original frozen cache order",
+    "sealed_cache_layout_adapter": "create a relative directory symlink from each frozen run name to its verified sealed-caches directory, or accept only that exact pre-existing symlink after a result-blind pre-runtime retry; no NPZ is copied or opened",
+    "uv_bootstrap": "0.8.22"
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "all_adverse_null_or_failure_outcomes_must_be_published": true,
+    "gpu_compute_permitted": false,
+    "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": false,
+    "partial_real_result_is_scorable": false,
+    "scientific_result_opened_or_used": false,
+    "synthetic_version_4_remains_complete_and_sealed": true
+  },
+  "scoring_assets": {
+    "bytes": 109850,
+    "files": 5,
+    "ledger_records": 5,
+    "ledger_sha256": "77b8babe8c2641aa0f1ec082c8f4fcb7c5dc808df39c2262b9f43aa359d8bff9",
+    "manifest": {
+      "bytes": 779,
+      "file": "scoring_asset_subset_manifest.json",
+      "payload_sha256": "2518a021ba2f18feec7535077cc599d03ab73055567fe3545fb46b75ce805f34",
+      "sha256": "53de1531fd46b97f1730b0a8a1efa8ac863a832e6b8adab5b19b3f3c6e8794a2"
+    },
+    "model_checkpoints_excluded": true,
+    "parent_ledger_records": 278,
+    "parent_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
+  },
+  "sealed_real_inputs": {
+    "bytes": 57083,
+    "file": "runpod_real_input_manifest.json",
+    "payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563",
+    "sha256": "292f8b4de60e97d29cfa45a3879e30455405dec8f159e3928391eab439de813e"
+  },
+  "status": "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress"
+}
