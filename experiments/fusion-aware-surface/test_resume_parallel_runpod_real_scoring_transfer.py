@@ -52,6 +52,18 @@ class ParallelTransferLayoutTest(unittest.TestCase):
             with self.assertRaises(RuntimeError):
                 MODULE.regular_input_files(root)
 
+    def test_public_tree_accepts_copy_link_source(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.write_bytes(b"public")
+            link = root / "link"
+            link.symlink_to(source)
+            self.assertEqual(
+                {path.name for path in MODULE.public_tree_files(root)},
+                {"source", "link"},
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

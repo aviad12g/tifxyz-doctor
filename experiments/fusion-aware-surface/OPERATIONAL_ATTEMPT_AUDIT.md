@@ -143,6 +143,12 @@ unnecessary repeat.
    the already-frozen adjacent path. The corrected handoff changes only that
    local source path; no private file is resent semantically, and remote hashes
    remain mandatory before execution.
+7. The remaining public metric source and pinned wheel runtime contained 208
+   and 20 files respectively. Their original directory-level transfer was also
+   single-stream. Once the exact remote private file count was confirmed, the
+   handoff skipped redundant private rsync and assigned only these non-secret
+   public files across the same ten-stream gateway-safe pool. The runtime bytes,
+   versions, hashes, and subsequent verifier are unchanged.
 
 ## Optional Kaggle synthetic replication
 

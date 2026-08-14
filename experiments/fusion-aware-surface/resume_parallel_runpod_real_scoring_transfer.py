@@ -80,6 +80,18 @@ def regular_input_files(root: Path) -> tuple[Path, ...]:
     return files
 
 
+def public_tree_files(root: Path) -> tuple[Path, ...]:
+    files = tuple(
+        sorted(
+            (path for path in root.rglob("*") if path.is_file() or path.is_symlink()),
+            key=lambda path: path.as_posix(),
+        )
+    )
+    if not files:
+        raise RuntimeError(f"public tree contains no files: {root}")
+    return files
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
@@ -137,7 +149,17 @@ def main() -> int:
     ]
 
     granularity = transport.get("granularity", "job_directory")
-    if granularity == "job_directory":
+    if transport.get("private_transfer_already_complete"):
+        expected_remote = int(transport["expected_remote_sealed_files"])
+        run(
+            ssh
+            + [
+                f'test "$(find /workspace/real-scoring-input -type f | wc -l)" -eq {expected_remote}'
+            ],
+            timeout=30,
+        )
+        sources = ()
+    elif granularity == "job_directory":
         sources = jobs
 
         def transfer(source: Path) -> None:
@@ -169,10 +191,11 @@ def main() -> int:
     workers = int(transport["maximum_workers"])
     if workers < 1 or workers > 32:
         raise RuntimeError(f"invalid transfer worker count: {workers}")
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        futures = [pool.submit(transfer, source) for source in sources]
-        for future in futures:
-            future.result()
+    if sources:
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futures = [pool.submit(transfer, source) for source in sources]
+            for future in futures:
+                future.result()
 
     run(
         rsync_base + [
@@ -183,8 +206,35 @@ def main() -> int:
     )
     run(rsync_base + [str(args.scoring_assets) + "/", f"root@{host}:/workspace/bundle/input/assets/"], timeout=300)
     run(rsync_base + [str(args.frozen_thresholds), f"root@{host}:/workspace/bundle/input/threshold-freeze/"], timeout=300)
-    run(rsync_base + [str(args.metric_source) + "/", f"root@{host}:/workspace/real-scoring-public/metric-source/"], timeout=900)
-    run(rsync_base + [str(args.metric_runtime) + "/", f"root@{host}:/workspace/real-scoring-public/metric-runtime/"], timeout=900)
+    if transport.get("parallel_public_regular_files"):
+        public_specs = (
+            (args.metric_source, "/workspace/real-scoring-public/metric-source", int(transport["expected_metric_source_files"])),
+            (args.metric_runtime, "/workspace/real-scoring-public/metric-runtime", int(transport["expected_metric_runtime_files"])),
+        )
+        for public_root, remote_root, expected_files in public_specs:
+            public_files = public_tree_files(public_root)
+            if len(public_files) != expected_files:
+                raise RuntimeError(f"unexpected public file count for {public_root}: {len(public_files)}")
+            remote_parents = sorted(
+                {
+                    remote_root + "/" + source.relative_to(public_root).parent.as_posix()
+                    for source in public_files
+                }
+            )
+            run(ssh + ["mkdir -p " + " ".join(shlex.quote(path) for path in remote_parents)], timeout=30)
+
+            def transfer_public(source: Path) -> None:
+                relative = source.relative_to(public_root)
+                destination = f"root@{host}:{remote_root}/{relative.parent.as_posix()}/"
+                run(rsync_base + [str(source), destination], timeout=900)
+
+            with ThreadPoolExecutor(max_workers=workers) as pool:
+                futures = [pool.submit(transfer_public, source) for source in public_files]
+                for future in futures:
+                    future.result()
+    else:
+        run(rsync_base + [str(args.metric_source) + "/", f"root@{host}:/workspace/real-scoring-public/metric-source/"], timeout=900)
+        run(rsync_base + [str(args.metric_runtime) + "/", f"root@{host}:/workspace/real-scoring-public/metric-runtime/"], timeout=900)
     run(
         rsync_base + [
             str(args.plan), str(args.launcher), str(args.executor),
