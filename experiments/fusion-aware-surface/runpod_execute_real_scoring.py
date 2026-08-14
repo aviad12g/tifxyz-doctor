@@ -168,7 +168,14 @@ def main() -> int:
             raise RuntimeError(f"wrong frozen CPython runtime: {observed_base}")
         environment_root = args.working_root / "venv"
         subprocess.run(
-            [uv, "venv", "--python", str(frozen_python), str(environment_root)],
+            [
+                uv,
+                "venv",
+                "--seed",
+                "--python",
+                str(frozen_python),
+                str(environment_root),
+            ],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,

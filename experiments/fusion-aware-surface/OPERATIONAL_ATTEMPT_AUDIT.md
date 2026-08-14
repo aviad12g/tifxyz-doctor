@@ -227,6 +227,12 @@ unnecessary repeat.
     launcher-alias record, the exact-public-scorer record, and its own projection
     record to the existing allowlist; the comparison algorithm and all
     scientific fields remain unchanged.
+18. The projection-corrected attempt passed that gate and then failed before
+    panels or scoring because the freshly created `uv` environment contained no
+    `pip` module, while the frozen launcher installs its exact wheel set via
+    `python -m pip`. Billing was stopped immediately. The correction adds only
+    `--seed` to `uv venv`; it does not change the Python version, wheel versions,
+    scorer, panels, metrics, thresholds, gates, ordering, or claims.
 
 ## Optional Kaggle synthetic replication
 
