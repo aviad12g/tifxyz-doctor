@@ -337,13 +337,13 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "219e912dc3984e120f58a89640ffa854336f6b4fff22a1c402a5840e804ffc38",
+  "payload_sha256": "ada3295cffd573a867ce2e189988b30d4bf0e80bb9ad5b73ba66bf5e32c23a20",
   "public_execution_plan": {
-    "bytes": 48537,
-    "commit": "faf7606b82edbc06a02973a721e3e168148b4622",
+    "bytes": 49885,
+    "commit": "07a82d5f211609ac96ec266c41a5c5a3c5b1f2bd",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
-    "sha256": "73cac78d784cbf0151aa4be13c5be1558bab0b4e5511acacde5fc385e5ae2972"
+    "payload_sha256": "cbaff81b679f0d90e7d7cffa37ce5acce447b89ae88b322472e508cdd48d6479",
+    "sha256": "b3fc826aa00d4d1f9a18472fba54a93d3b89d89f5b3e0270df28c110ac746481"
   },
   "result_blind_launcher_alias_contract_correction": {
     "launcher_bytes_changed": false,
@@ -461,6 +461,13 @@
     "public_execution_plan_commit": "52d73f8fc3125e9c8ec471000795192011aee954",
     "retry_permitted": true,
     "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_publication_projection_correction": {
+    "added_operational_field_count": 3,
+    "public_execution_plan_commit": "07a82d5f211609ac96ec266c41a5c5a3c5b1f2bd",
+    "scientific_contract_changed": false,
+    "scientific_projection_comparison_retained": true,
     "scientific_result_created_or_opened": false
   },
   "result_blind_scoring_runtime_projection_correction": {
