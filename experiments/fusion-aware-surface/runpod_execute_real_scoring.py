@@ -214,6 +214,9 @@ def main() -> int:
                 "KAGGLE_INPUT_PATH": "/workspace",
                 "KAGGLE_WORKING_PATH": str(kaggle_working),
                 "KAGGLE_TEMP_PATH": str(kaggle_temp),
+                "PATH": str(environment_root / "bin")
+                + os.pathsep
+                + environment.get("PATH", ""),
                 "PYTHONUNBUFFERED": "1",
             }
         )

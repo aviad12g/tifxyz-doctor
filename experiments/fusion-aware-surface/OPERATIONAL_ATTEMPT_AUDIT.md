@@ -241,6 +241,15 @@ unnecessary repeat.
     deterministic symlink from that canonical public path to the already-pinned
     and hash-verified source tree; it changes no metric byte, cache, scorer,
     panel, threshold, gate, ordering, aggregation, or claim.
+20. The canonical-metric-layout attempt installed the complete pinned metric
+    wheel set and then failed closed before panel rendering or scoring because
+    the launcher process inherited the base-image `PATH`; consequently the
+    preparer found system CMake 3.16.3 instead of the already-installed pinned
+    CMake 3.31.6 executable inside the exact scoring environment. Billing was
+    stopped immediately. The correction prepends only that frozen environment's
+    `bin` directory to the child process `PATH`; no wheel, version, metric,
+    cache, scorer, panel, threshold, gate, ordering, aggregation, or claim is
+    changed.
 
 ## Optional Kaggle synthetic replication
 
