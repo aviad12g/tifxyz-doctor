@@ -58,6 +58,13 @@ def test_panel_context_is_bound_to_public_delivery_and_staging(tmp_path: Path) -
         for run in RUNS
     ]
     stager = {"file": "stage_heldout_for_scoring.py", "bytes": 123, "sha256": "c" * 64}
+    cache_job_plan = {
+        "commit": "e" * 40,
+        "file": "heldout_execution_plan.json",
+        "bytes": 456,
+        "sha256": "f" * 64,
+        "payload_sha256": "0" * 64,
+    }
     plan = _write_hashed(
         tmp_path / "heldout_execution_plan.json",
         {
@@ -67,6 +74,9 @@ def test_panel_context_is_bound_to_public_delivery_and_staging(tmp_path: Path) -
             "real_panel_manifest": _identity(panel_path, panels),
             "threshold_binding": {"frozen_thresholds": _identity(threshold_path, thresholds)},
             "one_shot_scoring_stager": stager,
+            "result_blind_scoring_asset_correction": {
+                "predecessor_public_execution_plan": cache_job_plan
+            },
             "real_test_jobs": real_jobs,
         },
     )
@@ -125,6 +135,8 @@ def test_panel_context_is_bound_to_public_delivery_and_staging(tmp_path: Path) -
                 "commit": DELIVERY_COMMIT,
                 "payload_sha256": delivery["payload_sha256"],
             },
+            "cache_job_execution_plan": dict(cache_job_plan)
+            | {"file": "cache_job_execution_plan.json"},
             "threshold_binding": plan["threshold_binding"],
             "job_order": [job["job_id"] for job in real_jobs],
             "jobs": staged_jobs,
@@ -152,6 +164,25 @@ def test_panel_context_is_bound_to_public_delivery_and_staging(tmp_path: Path) -
     )
     assert observed_thresholds == thresholds
     assert observed_panels == panels
+
+    tampered_cache_job = dict(score_index)
+    tampered_cache_job["cache_job_execution_plan"] = dict(
+        score_index["cache_job_execution_plan"]
+    ) | {"sha256": "1" * 64}
+    tampered_cache_job.pop("payload_sha256")
+    tampered_cache_job_path = staged_root / "tampered_cache_job_score_input_index.json"
+    _write_hashed(tampered_cache_job_path, tampered_cache_job)
+    with pytest.raises(RuntimeError, match="score-input index provenance mismatch"):
+        renderer.validate_public_context(
+            plan_path=plan_path,
+            delivery_path=delivery_path,
+            score_input_index_path=tampered_cache_job_path,
+            thresholds_path=threshold_path,
+            panel_manifest_path=panel_path,
+            cache_root=staged_root,
+            public_plan_commit=PLAN_COMMIT,
+            public_delivery_commit=DELIVERY_COMMIT,
+        )
 
     tampered = dict(score_index)
     tampered["stager"] = dict(stager) | {"sha256": "0" * 64}

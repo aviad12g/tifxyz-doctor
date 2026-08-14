@@ -39,6 +39,7 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_runpod_cpu_real_scoring",
     "result_blind_runpod_cpu_projection_correction",
     "result_blind_runpod_cpu_exact_scorer_correction",
+    "result_blind_real_panel_index_provenance_correction",
     "runpod_cpu_scoring_asset_stager",
 }
 
@@ -77,6 +78,29 @@ def require_hex(value: object, length: int, label: str) -> str:
     ):
         raise RuntimeError(f"invalid {label}")
     return value
+
+
+def scientific_projection(plan: dict) -> dict:
+    projected = {
+        key: value for key, value in plan.items() if key not in OPERATIONAL_PLAN_FIELDS
+    }
+    correction = plan.get("result_blind_real_panel_index_provenance_correction")
+    if correction is None:
+        return projected
+    if not isinstance(correction, dict):
+        raise RuntimeError("invalid real-panel provenance correction record")
+    predecessor = correction.get("predecessor_panel_renderer")
+    corrected = correction.get("corrected_panel_renderer")
+    if (
+        not isinstance(predecessor, dict)
+        or set(predecessor) != {"file", "bytes", "sha256"}
+        or not isinstance(corrected, dict)
+        or set(corrected) != {"file", "bytes", "sha256"}
+        or plan.get("real_panel_renderer") != corrected
+    ):
+        raise RuntimeError("real-panel provenance correction renderer mismatch")
+    projected["real_panel_renderer"] = predecessor
+    return projected
 
 
 def jobs_for_mode(plan: dict, mode: str) -> list[dict]:
@@ -124,14 +148,8 @@ def validate_plan_delivery(
     }:
         raise RuntimeError("cache-job execution plan differs from public correction")
     require_hex(cache_job_identity["commit"], 40, "cache-job plan commit")
-    current_scientific = {
-        key: value for key, value in plan.items() if key not in OPERATIONAL_PLAN_FIELDS
-    }
-    cache_job_scientific = {
-        key: value
-        for key, value in cache_job_plan.items()
-        if key not in OPERATIONAL_PLAN_FIELDS
-    }
+    current_scientific = scientific_projection(plan)
+    cache_job_scientific = scientific_projection(cache_job_plan)
     if current_scientific != cache_job_scientific:
         raise RuntimeError("corrected plan changes the cache-job scientific contract")
     if delivery.get("status") != (

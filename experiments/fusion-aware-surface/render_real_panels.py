@@ -136,6 +136,19 @@ def validate_public_context(
     if delivery.get("threshold_binding") != plan.get("threshold_binding"):
         raise RuntimeError("cache delivery threshold binding mismatch")
     real_jobs = plan.get("real_test_jobs", [])
+    cache_job_identity = plan.get("result_blind_scoring_asset_correction", {}).get(
+        "predecessor_public_execution_plan"
+    )
+    if not isinstance(cache_job_identity, dict) or set(cache_job_identity) != {
+        "commit",
+        "file",
+        "bytes",
+        "sha256",
+        "payload_sha256",
+    }:
+        raise RuntimeError("cache-job execution-plan provenance is absent")
+    expected_cache_job_identity = dict(cache_job_identity)
+    expected_cache_job_identity["file"] = "cache_job_execution_plan.json"
     delivered_by_job = {
         record.get("job_id"): record for record in delivery.get("jobs", [])
     }
@@ -169,6 +182,7 @@ def validate_public_context(
             "commit": public_delivery_commit,
             "payload_sha256": delivery["payload_sha256"],
         },
+        "cache_job_execution_plan": expected_cache_job_identity,
         "threshold_binding": plan["threshold_binding"],
         "job_order": [job["job_id"] for job in real_jobs],
         "jobs": staged_jobs,

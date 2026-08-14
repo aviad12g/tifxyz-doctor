@@ -273,9 +273,12 @@ unnecessary repeat.
     validation because the real score-input index provenance did not match.
     Billing was stopped immediately. No panel, scorer output, result JSON,
     probability, endpoint, NPZ payload, or scientific output was opened. The
-    exact mismatch is preserved as an operational blocker; no scientific
-    parameter, identity, threshold, seed, gate, aggregation, or claim has been
-    changed in response.
+    stager correctly included the hash-bound original cache-job execution-plan
+    identity introduced by the earlier compatibility correction, but the fixed
+    panel validator's exact expected schema omitted that operational provenance
+    field. The result-blind correction requires and validates the field against
+    the plan-bound predecessor identity. It changes no cache, model, metric,
+    threshold, seed, panel selection, endpoint, gate, aggregation, or claim.
 
 ## Optional Kaggle synthetic replication
 
