@@ -122,6 +122,38 @@ def materialize_public_metric_layout() -> None:
         raise RuntimeError("public metric source view mismatch")
 
 
+def materialize_isolated_scoring_input(
+    working_root: Path, sealed_root: Path, manifest: dict
+) -> Path:
+    view = working_root / "input-view"
+    view.mkdir()
+    indexes = view / "job-indexes"
+    indexes.mkdir()
+    for job in manifest["jobs"]:
+        job_view = indexes / job["job_id"]
+        job_view.mkdir()
+        source = sealed_root / "jobs" / job["job_id"] / job["job_index"]["file"]
+        destination = job_view / "heldout_job_index.json"
+        destination.symlink_to(source.resolve())
+        if not destination.is_file() or destination.resolve() != source.resolve():
+            raise RuntimeError(f"{job['job_id']}: isolated job-index view mismatch")
+    assets = view / "scoring-assets"
+    shutil.copytree(Path("/workspace/bundle/input/assets"), assets, symlinks=False)
+    threshold_root = view / "threshold-freeze"
+    threshold_root.mkdir()
+    threshold = Path("/workspace/bundle/input/threshold-freeze/frozen_thresholds.json")
+    (threshold_root / threshold.name).symlink_to(threshold.resolve())
+    metric_source = Path("/workspace/real-scoring-public/metric-source")
+    (view / "topological-metrics-kaggle").symlink_to(
+        metric_source.resolve(), target_is_directory=True
+    )
+    runtime_root = view / "metric-runtime"
+    runtime_root.mkdir()
+    runtime_manifest = Path("/workspace/real-scoring-public/metric-runtime/runtime_manifest.json")
+    (runtime_root / runtime_manifest.name).symlink_to(runtime_manifest.resolve())
+    return view
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
@@ -204,6 +236,9 @@ def main() -> int:
         ).stdout.strip()
         if observed != "(3, 12, 13)":
             raise RuntimeError(f"wrong scoring Python runtime: {observed}")
+        scoring_input_root = materialize_isolated_scoring_input(
+            args.working_root, args.input_root, manifest
+        )
         kaggle_working = args.working_root / "kaggle-working"
         kaggle_temp = args.working_root / "kaggle-temp"
         kaggle_working.mkdir()
@@ -211,7 +246,7 @@ def main() -> int:
         environment = os.environ.copy()
         environment.update(
             {
-                "KAGGLE_INPUT_PATH": "/workspace",
+                "KAGGLE_INPUT_PATH": str(scoring_input_root),
                 "KAGGLE_WORKING_PATH": str(kaggle_working),
                 "KAGGLE_TEMP_PATH": str(kaggle_temp),
                 "PATH": str(environment_root / "bin")

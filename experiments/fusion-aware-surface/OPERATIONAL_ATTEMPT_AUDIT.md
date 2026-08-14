@@ -250,6 +250,15 @@ unnecessary repeat.
     `bin` directory to the child process `PATH`; no wheel, version, metric,
     cache, scorer, panel, threshold, gate, ordering, aggregation, or claim is
     changed.
+21. The metric-runtime-PATH attempt then found two hash-valid copies of the
+    public metric source: the canonical source view and the preserved scratch
+    copy made by the preceding failed attempt. It therefore failed closed before
+    panels or scoring, and billing was stopped immediately. The correction gives
+    the launcher a fresh input-only view containing the same seven sealed
+    job-index identities and the same exact public assets, threshold, metric
+    source, and metric runtime. All prior failed work remains preserved but is
+    outside discovery; no cache or scientific byte is opened, changed, selected,
+    or omitted.
 
 ## Optional Kaggle synthetic replication
 

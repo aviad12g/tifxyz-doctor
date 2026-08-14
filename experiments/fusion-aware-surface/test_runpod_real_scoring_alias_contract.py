@@ -190,3 +190,28 @@ def test_metric_runtime_path_plan_preserves_scientific_contract() -> None:
     ] is False
     executor = (HERE / "runpod_execute_real_scoring.py").read_text()
     assert '"PATH": str(environment_root / "bin")' in executor
+
+
+def test_isolated_input_plan_preserves_scientific_contract() -> None:
+    predecessor = json.loads(
+        (HERE / "runpod_real_scoring_metric_runtime_path_plan.json").read_text()
+    )
+    corrected = json.loads(
+        (HERE / "runpod_real_scoring_isolated_input_plan.json").read_text()
+    )
+    assert corrected["payload_sha256"] == canonical_sha256(corrected)
+    ignored = {
+        "payload_sha256",
+        "remote_executor",
+        "result_blind_isolated_scoring_input_correction",
+    }
+    assert {k: v for k, v in corrected.items() if k not in ignored} == {
+        k: v for k, v in predecessor.items() if k not in ignored
+    }
+    assert corrected["scientific_gate"] == predecessor["scientific_gate"]
+    correction = corrected["result_blind_isolated_scoring_input_correction"]
+    assert correction["scientific_gate"]["input_bytes_changed"] is False
+    executor = (HERE / "runpod_execute_real_scoring.py").read_text()
+    assert "def materialize_isolated_scoring_input(" in executor
+    assert '"KAGGLE_INPUT_PATH": str(scoring_input_root)' in executor
+    assert 'working_root / "input-view"' in executor

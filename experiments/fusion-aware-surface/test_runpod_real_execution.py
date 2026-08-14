@@ -24,7 +24,8 @@ def test_collector_download_is_npz_only_and_result_blind() -> None:
 def test_executor_preserves_sealed_outputs_and_runs_fixed_launcher() -> None:
     source = (HERE / "runpod_execute_real_scoring.py").read_text(encoding="utf-8")
     assert '"scientific_outputs_inspected": False' in source
-    assert '"KAGGLE_INPUT_PATH": "/workspace"' in source
+    assert '"KAGGLE_INPUT_PATH": str(scoring_input_root)' in source
+    assert "materialize_isolated_scoring_input(" in source
     assert '"sealed_real_test_results.json"' in source
     assert '"REAL_SCORING_COMPLETE"' in source
     assert "materialize_scoring_layout(args.input_root, manifest)" in source
