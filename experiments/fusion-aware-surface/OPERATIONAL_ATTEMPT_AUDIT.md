@@ -149,6 +149,17 @@ unnecessary repeat.
    handoff skipped redundant private rsync and assigned only these non-secret
    public files across the same ten-stream gateway-safe pool. The runtime bytes,
    versions, hashes, and subsequent verifier are unchanged.
+8. The parallel public-source handoff made no progress because the selected
+   local metric tree consisted entirely of macOS cloud-placeholder files. No
+   scientific or private file was opened. The result-blind correction uses the
+   preregistered public Kaggle archive `sohier/vesuvius-metric-resources`, whose
+   downloaded ZIP exactly matches the frozen SHA-256
+   `64d24044b7381dbb660a0e9f602ad0f8fd37d1935c09a8ee3b78088433910e68`.
+   Its `src/topometrics/leaderboard.py` also exactly matches the frozen SHA-256
+   `f0db94436eea4464a30f252ebc7c35553e539da5e4832e4efaf523ed664cd811`.
+   Only the public-source transport changes; the metric implementation,
+   runtime, sealed caches, scientific plan, scorer, gates, and claims remain
+   unchanged.
 
 ## Optional Kaggle synthetic replication
 
