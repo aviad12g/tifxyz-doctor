@@ -1,0 +1,45 @@
+{
+  "budget": {
+    "absolute_campaign_cap_usd": 13.5,
+    "guard_seconds": 300,
+    "prior_attempt_compute_upper_bound_usd": 3.391445323,
+    "replacement_compute_cutoff_usd": 9.758554677,
+    "reserve_usd": 0.25
+  },
+  "correction": {
+    "event": "the provider SSH gateway rejected the initial 28-connection burst before transfer on affected streams",
+    "gateway_rejections_opened_scientific_payloads": false,
+    "partial_files_preserved": true,
+    "scientific_outputs_inspected": false
+  },
+  "exact_scientific_route": {
+    "launcher_sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179",
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "score_real_test_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+  },
+  "parallel_transport": {
+    "expected_regular_files": 280,
+    "granularity": "regular_file",
+    "maximum_workers": 10,
+    "remote_executor_verifies_every_manifest_and_cache_identity_before_scoring": true,
+    "rsync_flags_unchanged": [
+      "--archive",
+      "--copy-links",
+      "--partial",
+      "--protect-args"
+    ],
+    "same_partial_destination": true,
+    "same_sealed_input_manifest_payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563"
+  },
+  "payload_sha256": "a9fba00c742714843d70b44b1172ef122672028212ead4cf6aea5cc13caf5567",
+  "predecessor_file_parallel_plan_payload_sha256": "8cdb596736ff78d2842c885b6167d85e0eb3ca46c3aaf40b3c7eda3acc5a3785",
+  "predecessor_replacement_plan_payload_sha256": "d53a614da0f6906aa84f364dad46843c86a302cbbd562924b9adad3d8e9df799",
+  "schema_version": "1.0",
+  "status": "result-blind gateway-safe regular-file transport frozen before retry",
+  "tool": {
+    "bytes": 9794,
+    "file": "resume_parallel_runpod_real_scoring_transfer.py",
+    "sha256": "e310e8dad877f30a9863e45ceaf1f306da0999a7dd60f51e6805c7f86c4843f6"
+  },
+  "user_authorization": "work end to end i exped this to be fully done once im back!"
+}

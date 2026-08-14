@@ -132,6 +132,11 @@ unnecessary repeat.
    unique regular input files across at most 28 streams. No file is transferred
    by more than one stream, and the executor retains the sole authority to
    accept the complete sealed identity set before scientific execution.
+5. The provider SSH gateway rejected an initial burst of 28 connections before
+   data transfer on the affected streams. Orphaned operational rsync server
+   processes were stopped without touching partial files. The retry caps the
+   identical per-file transport at ten simultaneous connections, below the
+   observed gateway threshold; all identity and budget gates remain unchanged.
 
 ## Optional Kaggle synthetic replication
 
