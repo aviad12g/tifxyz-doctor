@@ -15,9 +15,9 @@
     "sha256": "4eda4e94f2605dcc062640a1cfc27b5e3e84a63b9670ff86a27824f9440e55f6"
   },
   "embedded_real_launcher": {
-    "bytes": 31797,
-    "file": "one_shot_scoring_launcher.py",
-    "sha256": "bedd64f1232dfe12e54a09c433e5c39dcff0a8396d01b93afcf26d44bf20b049"
+    "bytes": 31522,
+    "file": "one_shot_scoring_launcher_cpu_exact.py",
+    "sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179"
   },
   "frozen_thresholds": {
     "bytes": 345175,
@@ -36,7 +36,7 @@
     "private_upload_authorized_by_aviad": true,
     "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
   },
-  "payload_sha256": "3497e8b7c8c87aea438c81884365f28f1b3092a26faa37fe5a84b686cab86174",
+  "payload_sha256": "5faacc1617fcd971a7db40a311e381a0092590f227fd8cd8d2a5fec5702dcc6a",
   "pre_create_events": [
     {
       "conservative_spend_upper_bound_usd": 0.05,
@@ -103,18 +103,18 @@
     "sha256": "947876efa54c7a30eaf0605cb305f85f888aee7557fb8d6fa3bb1a55a15154a0"
   },
   "public_cache_delivery": {
-    "bytes": 19598,
-    "commit": "4b5baaf5e23af0b8efbe74b90cd17157c695f10c",
+    "bytes": 19951,
+    "commit": "9a142a0155e230bbb38a214d9372b009b35022a8",
     "file": "heldout_cache_delivery_manifest.json",
-    "payload_sha256": "2c23316d23d087b1dcf9d95815bcb6c1097a8b228984465592c090a21f7810b0",
-    "sha256": "eebf95021f4d5d305298ea52e0b3059e1c5dc877d1dafaa8de99edc5574bab29"
+    "payload_sha256": "cfdd73bf70bd7c0fee822a8e064612507c0a153c85d78c35ab223537389c6cbb",
+    "sha256": "3ed9b085e23b479e1482c94dee864a27f404f8d8729203d5fffb12da6e82a29c"
   },
   "public_execution_plan": {
-    "bytes": 44210,
-    "commit": "99643d5ed891611ac333fc222c1040c37f8c2a3b",
+    "bytes": 46171,
+    "commit": "49cf95f68fe254528f22e96b57b1e4ddea0d383d",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
-    "sha256": "f1f4544a4b94cf5ba388d80d5dca441d1704db1d00821dbd6da899d140ab3f1f"
+    "payload_sha256": "3b63247a2ff6037c5e66784cc2672e06595fd91bacc679b6b36306fb6bad76a1",
+    "sha256": "c233109c92fb5d775d78a9d48875bf4015f3da8bba37985fac3945180035306d"
   },
   "public_runpod_commit": "874c2019f98a51d381a3ddd53ddaa699bbcf8951",
   "remote_executor": {
