@@ -104,8 +104,10 @@ def _write_public_inputs(tmp_path: Path) -> tuple[Path, Path, dict, dict]:
             "one_shot_scorers": {
                 "real": {
                     "script": {
-                        "file": "score_real_test.py",
-                        "sha256": generator.sha256_file(root / "score_real_test.py"),
+                        "file": "score_real_test_parallel.py",
+                        "sha256": generator.sha256_file(
+                            root / "score_real_test_parallel.py"
+                        ),
                     }
                 },
                 "synthetic": {
@@ -113,6 +115,30 @@ def _write_public_inputs(tmp_path: Path) -> tuple[Path, Path, dict, dict]:
                         "file": "score_synthetic_test_v2.py",
                         "sha256": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05",
                     }
+                },
+            },
+            "result_blind_verified_parallel_real_scoring": {
+                "schema_version": "1.0",
+                "status": "result-blind verified parallel real scoring frozen before retry",
+                "parallel_workers": 32,
+                "equivalence_report": {
+                    "commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+                    "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+                    "bytes": 1838,
+                    "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960",
+                    "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+                },
+                "exact_predecessor_scorer": {
+                    "file": "score_real_test.py",
+                    "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+                },
+                "scientific_contract": {
+                    "per_cache_metric_subprocess_changed": False,
+                    "cache_threshold_or_input_changed": False,
+                    "aggregation_bootstrap_or_serialization_changed": False,
+                    "frozen_cache_order_preserved": True,
+                    "test_time_tuning_permitted": False,
+                    "only_independent_subprocess_scheduling_changed": True,
                 },
             },
         }
@@ -233,6 +259,14 @@ def test_scoring_packages_are_single_file_and_fetch_hash_bound_helpers(
             "score_synthetic_test_v2.py": (
                 Path(__file__).resolve().with_name("score_synthetic_test_v2.py")
             ).read_bytes(),
+            "PARALLEL_REAL_SCORER_EQUIVALENCE.json": (
+                Path(__file__).resolve().with_name(
+                    "PARALLEL_REAL_SCORER_EQUIVALENCE.json"
+                )
+            ).read_bytes(),
+            "score_real_test_parallel.py": (
+                Path(__file__).resolve().with_name("score_real_test_parallel.py")
+            ).read_bytes(),
         }
         monkeypatch.setattr(
             module,
@@ -253,11 +287,13 @@ def test_scoring_packages_are_single_file_and_fetch_hash_bound_helpers(
         module.verify_public_contract(
             plan, delivery, record["mode"], stager, metric, panel_renderer
         )
-        if record["mode"] == "synthetic":
-            scorer = module.materialize_public_scorer("synthetic", "a" * 40, scratch)
-            assert module.sha256_file(scorer) == module.PROJECT_HASHES[
-                "score_synthetic_test_v2.py"
-            ]
+        scorer = module.materialize_public_scorer(record["mode"], "a" * 40, scratch)
+        expected_scorer = (
+            "score_real_test_parallel.py"
+            if record["mode"] == "real"
+            else "score_synthetic_test_v2.py"
+        )
+        assert module.sha256_file(scorer) == module.PROJECT_HASHES[expected_scorer]
 
 
 def test_pair_controller_accepts_both_before_result_collection(tmp_path: Path, monkeypatch) -> None:

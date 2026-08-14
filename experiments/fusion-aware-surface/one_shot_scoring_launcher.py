@@ -47,6 +47,14 @@ RUN_ORDER = (
     "gap8_seed23",
     "gap8_seed47",
 )
+REAL_PARALLEL_WORKERS = 32
+PARALLEL_EQUIVALENCE = {
+    "commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+    "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+    "bytes": 1838,
+    "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960",
+    "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+}
 PROJECT_HASHES = {
     "cache_real_predictions.py": "8f89910c6667a135bcc832a3348cbd264b883f04013eb779d704f3cb3fa99035",
     "cache_synthetic_rays.py": "a2d4baac41720d0b83d21a5f30ad3947ba7ca9162791995630eb178561e507bc",
@@ -59,13 +67,14 @@ PROJECT_HASHES = {
     "official_metric.py": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb",
     "real_split_manifest.json": REAL_SPLIT_MANIFEST_SHA256,
     "score_real_test.py": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+    "score_real_test_parallel.py": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c",
     "score_synthetic_test.py": "d64049b1048dee8274f8416b979384b3342f671811db356ba79052726401063f",
     "score_synthetic_test_v2.py": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05",
     "train_fusion_aware.py": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07",
     "verify_official_metric.py": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00",
 }
 PUBLIC_ONLY_PROJECT_FILES = frozenset(
-    {"score_real_test.py", "score_synthetic_test_v2.py"}
+    {"score_real_test.py", "score_real_test_parallel.py", "score_synthetic_test_v2.py"}
 )
 SCORING_ASSET_PROJECT_FILES = frozenset(
     {
@@ -288,13 +297,46 @@ def verify_public_contract(
         raise RuntimeError("public plan lacks the frozen protocol clarification")
     scorer = plan.get("one_shot_scorers", {}).get(mode, {})
     expected_name = (
-        "score_real_test.py" if mode == "real" else "score_synthetic_test_v2.py"
+        "score_real_test_parallel.py"
+        if mode == "real"
+        else "score_synthetic_test_v2.py"
     )
     if scorer.get("script") != {
         "file": expected_name,
         "sha256": PROJECT_HASHES[expected_name],
     }:
         raise RuntimeError("public plan scorer identity mismatch")
+    if mode == "real":
+        correction = plan.get("result_blind_verified_parallel_real_scoring")
+        if correction != {
+            "schema_version": "1.0",
+            "status": "result-blind verified parallel real scoring frozen before retry",
+            "parallel_workers": REAL_PARALLEL_WORKERS,
+            "equivalence_report": PARALLEL_EQUIVALENCE,
+            "exact_predecessor_scorer": {
+                "file": "score_real_test.py",
+                "sha256": PROJECT_HASHES["score_real_test.py"],
+            },
+            "scientific_contract": {
+                "per_cache_metric_subprocess_changed": False,
+                "cache_threshold_or_input_changed": False,
+                "aggregation_bootstrap_or_serialization_changed": False,
+                "frozen_cache_order_preserved": True,
+                "test_time_tuning_permitted": False,
+                "only_independent_subprocess_scheduling_changed": True,
+            },
+        }:
+            raise RuntimeError("verified parallel real-scoring contract mismatch")
+        raw = fetch_public(
+            PARALLEL_EQUIVALENCE["commit"],
+            PARALLEL_EQUIVALENCE["file"],
+            PARALLEL_EQUIVALENCE["sha256"],
+        )
+        if len(raw) != PARALLEL_EQUIVALENCE["bytes"]:
+            raise RuntimeError("parallel equivalence report byte-size mismatch")
+        report = json.loads(raw)
+        if canonical_payload_sha256(report) != PARALLEL_EQUIVALENCE["payload_sha256"]:
+            raise RuntimeError("parallel equivalence report payload mismatch")
     if delivery.get("threshold_binding") != plan.get("threshold_binding"):
         raise RuntimeError("delivery threshold binding mismatch")
     if (
@@ -362,7 +404,11 @@ def find_asset_root(input_root: Path) -> Path:
 
 
 def materialize_public_scorer(mode: str, commit: str, scratch: Path) -> Path:
-    name = "score_real_test.py" if mode == "real" else "score_synthetic_test_v2.py"
+    name = (
+        "score_real_test_parallel.py"
+        if mode == "real"
+        else "score_synthetic_test_v2.py"
+    )
     raw = fetch_public(commit, name, PROJECT_HASHES[name])
     destination = scratch / name
     destination.write_bytes(raw)
@@ -551,7 +597,9 @@ def execute_scorer(
     environment: dict[str, str],
 ) -> tuple[Path, dict]:
     script_name = (
-        "score_real_test.py" if mode == "real" else "score_synthetic_test_v2.py"
+        "score_real_test_parallel.py"
+        if mode == "real"
+        else "score_synthetic_test_v2.py"
     )
     result_name = (
         "sealed_real_test_results.json"
@@ -577,6 +625,8 @@ def execute_scorer(
         "--out",
         str(result_path),
     ]
+    if mode == "real":
+        command.extend(["--parallel-workers", str(REAL_PARALLEL_WORKERS)])
     completed = subprocess.run(
         command,
         cwd=project,
@@ -596,6 +646,7 @@ def execute_scorer(
         "stderr_bytes": len(completed.stderr),
         "stderr_sha256": sha256_bytes(completed.stderr),
         "result": local_identity(result_path),
+        "parallel_workers": REAL_PARALLEL_WORKERS if mode == "real" else None,
     }
 
 
