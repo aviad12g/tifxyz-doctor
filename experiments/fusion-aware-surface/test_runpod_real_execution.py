@@ -29,6 +29,9 @@ def test_executor_preserves_sealed_outputs_and_runs_fixed_launcher() -> None:
     assert '"REAL_SCORING_COMPLETE"' in source
     assert "materialize_scoring_layout(args.input_root, manifest)" in source
     assert "view.symlink_to(sealed.name, target_is_directory=True)" in source
+    assert 'observed_uv != "uv 0.8.22"' in source
+    assert 'Path(plan["runtime"]["python_executable"])' in source
+    assert 'plan["runtime"]["python_source_sha256"]' in source
 
 
 def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
@@ -67,3 +70,5 @@ def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
     assert '"sealed_cache_layout_adapter"' in source
     assert '"new_temporary_pod": True' in source
     assert '"terminate_after_verified_result_copy": True' in source
+    assert '"python": "3.12.13"' in source
+    assert '"python_source_sha256": "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b"' in source

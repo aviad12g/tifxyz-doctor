@@ -168,6 +168,11 @@ def main() -> int:
         },
         "runtime": {
             "python": "3.12.13",
+            "python_executable": "/workspace/python-3.12.13/bin/python3.12",
+            "python_source_archive": "/workspace/Python-3.12.13.tgz",
+            "python_source_sha256": "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b",
+            "python_source_url": "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tgz",
+            "python_build": "result-blind local build from the exact public source archive on the frozen 32-vCPU pod",
             "uv_bootstrap": "0.8.22",
             "real_parallel_workers": 32,
             "fixed_panels_before_scoring": True,
@@ -216,6 +221,18 @@ def main() -> int:
                 "stage": "executor plan/input identity verification before runtime installation",
                 "error": "base-image Python did not support dictionary-union syntax",
                 "correction": "replace one dictionary union with explicit assignment; identical resulting mapping",
+                "scientific_runtime_started": False,
+                "scientific_outputs_inspected": False,
+            },
+            {
+                "pod_id": "h2xei44m0ee9m5",
+                "state": "ERROR",
+                "stage": "pinned Python environment creation before panel or scorer invocation",
+                "error": "base-image Python could invoke the uv package but no CPython 3.12.13 interpreter was available to uv",
+                "correction": (
+                    "build exact CPython 3.12.13 from the official source archive whose SHA-256 is frozen; "
+                    "invoke exact uv 0.8.22 with that executable"
+                ),
                 "scientific_runtime_started": False,
                 "scientific_outputs_inspected": False,
             }

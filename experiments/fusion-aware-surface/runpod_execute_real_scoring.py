@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import shutil
 import subprocess
 import sys
 from datetime import datetime, timezone
@@ -141,15 +142,31 @@ def main() -> int:
             raise RuntimeError("frozen threshold identity mismatch")
         write_status(status_path, "INSTALLING_RUNTIME", plan_payload_sha256=plan["payload_sha256"])
         args.working_root.mkdir(parents=True, exist_ok=True)
-        subprocess.run(
-            [sys.executable, "-m", "pip", "install", "--quiet", "uv==0.8.22"],
+        uv = shutil.which("uv")
+        if not uv:
+            raise RuntimeError("frozen uv bootstrap executable is absent")
+        observed_uv = subprocess.run(
+            [uv, "--version"], check=True, capture_output=True, text=True
+        ).stdout.strip()
+        if observed_uv != "uv 0.8.22":
+            raise RuntimeError(f"wrong uv bootstrap runtime: {observed_uv}")
+        frozen_python = Path(plan["runtime"]["python_executable"])
+        if not frozen_python.is_file():
+            raise RuntimeError("frozen CPython executable is absent")
+        observed_source = sha256_file(Path(plan["runtime"]["python_source_archive"]))
+        if observed_source != plan["runtime"]["python_source_sha256"]:
+            raise RuntimeError("frozen CPython source archive identity mismatch")
+        observed_base = subprocess.run(
+            [str(frozen_python), "-c", "import sys; print(sys.version_info[:3])"],
             check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-        )
+            capture_output=True,
+            text=True,
+        ).stdout.strip()
+        if observed_base != "(3, 12, 13)":
+            raise RuntimeError(f"wrong frozen CPython runtime: {observed_base}")
         environment_root = args.working_root / "venv"
         subprocess.run(
-            [sys.executable, "-m", "uv", "venv", "--python", "3.12.13", str(environment_root)],
+            [uv, "venv", "--python", str(frozen_python), str(environment_root)],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
