@@ -84,11 +84,11 @@
     "sha256": "3574d717a650ef2a8ea1e3aa1056a0d4784b8d2ce0dd6cb0f0fb462595ebc1fc"
   },
   "one_shot_scoring_stager": {
-    "bytes": 20790,
+    "bytes": 20954,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "791b62de3305ee77de9e94654c13b56e94df14febb24832f06ae29319cb9cc02"
+    "sha256": "5a94052d908557e1d8f3b0ab5e145569632c5ce1164d3bcbbd5b3ecdc2ec58e0"
   },
-  "payload_sha256": "147a766f8a7a9690dc055960c12eb7d0b111c25b55ec45c87165b0691937a274",
+  "payload_sha256": "e039587d21b9b7265cb36ea3101e648904df1f8728c6c86e84190b518800429f",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -947,6 +947,22 @@
       "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
     },
     "status": "result-blind Python 3.12 scorer runtime transport correction"
+  },
+  "result_blind_verified_parallel_projection_correction": {
+    "corrected_scoring_stager": {
+      "bytes": 20954,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "5a94052d908557e1d8f3b0ab5e145569632c5ce1164d3bcbbd5b3ecdc2ec58e0"
+    },
+    "held_out_result_opened_or_used": false,
+    "operational_fields_added": [
+      "result_blind_verified_parallel_real_scoring",
+      "result_blind_public_commit_binding_correction",
+      "result_blind_verified_parallel_projection_correction"
+    ],
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "status": "result-blind verified parallel records classified as operational metadata"
   },
   "result_blind_verified_parallel_real_scoring": {
     "equivalence_report": {
