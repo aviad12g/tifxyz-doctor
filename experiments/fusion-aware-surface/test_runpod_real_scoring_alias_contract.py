@@ -83,3 +83,18 @@ def test_exact_source_runpod_plan_preserves_scientific_contract() -> None:
     assert corrected["result_blind_public_real_scorer_source_correction"][
         "restored_scorer"
     ]["sha256"] == "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+
+
+def test_publication_records_are_projection_metadata() -> None:
+    source = (HERE / "stage_heldout_for_scoring.py").read_text()
+    assert '"result_blind_launcher_alias_contract_correction"' in source
+    assert '"result_blind_public_real_scorer_source_correction"' in source
+    assert '"result_blind_scoring_publication_projection_correction"' in source
+    plan = json.loads((HERE / "heldout_execution_plan.json").read_text())
+    assert plan["one_shot_scoring_stager"] == {
+        "file": "stage_heldout_for_scoring.py",
+        "bytes": (HERE / "stage_heldout_for_scoring.py").stat().st_size,
+        "sha256": hashlib.sha256(
+            (HERE / "stage_heldout_for_scoring.py").read_bytes()
+        ).hexdigest(),
+    }

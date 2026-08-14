@@ -220,6 +220,13 @@ unnecessary repeat.
     byte-for-byte from preregistration commit
     `5ca0444fb31863c8e02466316bf9e560cf567876`; this publishes the source the plan
     already required and changes no scientific parameter or decision.
+17. With the exact public scorer available, the stager then failed closed before
+    opening caches because its scientific-projection allowlist did not yet
+    classify the two new result-blind publication records as operational
+    metadata. Billing was stopped immediately. The correction adds exactly the
+    launcher-alias record, the exact-public-scorer record, and its own projection
+    record to the existing allowlist; the comparison algorithm and all
+    scientific fields remain unchanged.
 
 ## Optional Kaggle synthetic replication
 

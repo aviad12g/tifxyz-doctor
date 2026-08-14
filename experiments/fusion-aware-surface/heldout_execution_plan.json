@@ -84,11 +84,11 @@
     "sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19748,
+    "bytes": 19922,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "ce5674507aae6d563586c5c88d4e80d142b77dbe72c3554c1b2c0b49c3b71300"
+    "sha256": "1fa4aec460bdd7425b70c35f5d432fc41ac5b66a36908e1604dc3f080223950d"
   },
-  "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
+  "payload_sha256": "cbaff81b679f0d90e7d7cffa37ce5acce447b89ae88b322472e508cdd48d6479",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -749,6 +749,33 @@
       "threshold_seed_panel_gate_or_claim_changed": false
     },
     "status": "result-blind cache-job-plan compatibility correction after pre-scoring rejection"
+  },
+  "result_blind_scoring_publication_projection_correction": {
+    "cause": "the scientific-projection allowlist did not yet classify the launcher-alias and exact-public-scorer records as operational metadata",
+    "correction": {
+      "added_operational_fields": [
+        "result_blind_launcher_alias_contract_correction",
+        "result_blind_public_real_scorer_source_correction",
+        "result_blind_scoring_publication_projection_correction"
+      ],
+      "comparison_algorithm_changed": false,
+      "stager_bytes": 19922,
+      "stager_sha256": "1fa4aec460bdd7425b70c35f5d432fc41ac5b66a36908e1604dc3f080223950d"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 48537,
+      "commit": "faf7606b82edbc06a02973a721e3e168148b4622",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
+      "sha256": "73cac78d784cbf0151aa4be13c5be1558bab0b4e5511acacde5fc385e5ae2972"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_projection_comparison_retained": true,
+      "scientific_runtime_started_in_failed_attempt": false
+    },
+    "status": "result-blind public-record scientific-projection allowlist correction"
   },
   "result_blind_scoring_runtime_projection_correction": {
     "cause": "the scientific projection allowlist predated the published runtime transport record and therefore compared that operational record to the original cache plan",
