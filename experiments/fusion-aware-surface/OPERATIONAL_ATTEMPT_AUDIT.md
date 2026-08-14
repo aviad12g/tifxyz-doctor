@@ -196,6 +196,15 @@ unnecessary repeat.
     `0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b`.
     The correction prepares only public runtime prerequisites and deducts both
     replacement intervals from the unchanged campaign cap.
+14. The stopped second replacement resumed as the same 32-vCPU, 128-GB,
+    zero-GPU allocation and prepared those exact public runtime prerequisites.
+    Its sealed inputs were verified again, after which the launcher failed
+    closed before scoring because the predecessor plan recorded the packaging
+    alias `one_shot_scoring_launcher_cpu_exact.py` while the identical launcher
+    bytes self-identify by the canonical alias `one_shot_scoring_launcher.py`.
+    Billing was stopped immediately. A result-blind correction changes only
+    that file alias; its 30,608 source bytes and SHA-256 remain exact. No NPZ,
+    panel, probability, endpoint, or scientific result was opened.
 
 ## Optional Kaggle synthetic replication
 

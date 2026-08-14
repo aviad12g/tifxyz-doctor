@@ -80,7 +80,7 @@
   },
   "one_shot_scoring_launcher": {
     "bytes": 30608,
-    "file": "one_shot_scoring_launcher_cpu_exact.py",
+    "file": "one_shot_scoring_launcher.py",
     "sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
   },
   "one_shot_scoring_stager": {
@@ -88,7 +88,7 @@
     "file": "stage_heldout_for_scoring.py",
     "sha256": "ce5674507aae6d563586c5c88d4e80d142b77dbe72c3554c1b2c0b49c3b71300"
   },
-  "payload_sha256": "3b63247a2ff6037c5e66784cc2672e06595fd91bacc679b6b36306fb6bad76a1",
+  "payload_sha256": "26dbb62369f7b2ef79060b80a350d2330bdfe3158e85b6df17cbe143ab4e797c",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -236,6 +236,30 @@
       "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
     }
   ],
+  "result_blind_launcher_alias_contract_correction": {
+    "cause": "the exact CPU launcher base source reports the canonical one_shot_scoring_launcher.py alias while the predecessor plan recorded its CPU packaging alias",
+    "correction": {
+      "bytes_changed": false,
+      "new_file_alias": "one_shot_scoring_launcher.py",
+      "old_file_alias": "one_shot_scoring_launcher_cpu_exact.py",
+      "source_bytes": 30608,
+      "source_sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 46171,
+      "commit": "49cf95f68fe254528f22e96b57b1e4ddea0d383d",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3b63247a2ff6037c5e66784cc2672e06595fd91bacc679b6b36306fb6bad76a1",
+      "sha256": "c233109c92fb5d775d78a9d48875bf4015f3da8bba37985fac3945180035306d"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scorer_source_bytes_changed": false,
+      "scientific_runtime_started_in_failed_attempt": false
+    },
+    "status": "result-blind launcher file-alias contract correction"
+  },
   "result_blind_parallel_real_asset_transport": {
     "correction": {
       "immutable_training_asset_ledger_changed": false,
