@@ -362,6 +362,19 @@ unnecessary repeat.
     identity verification without parsing NPZ. It also propagates future
     result-blind child errors into the retained pipeline status. No private
     dataset byte or scientific contract changes.
+31. The completion-marker-corrected replacement prepared the public runtime
+    and then received HTTP 403 from Kaggle before any private file was exposed
+    to the scorer. The retained result-blind child status identified the exact
+    authorization failure; billing was stopped, the credential was removed,
+    and no scientific output was opened. The transferred credential was the
+    account's legacy username/key JSON, while the successful private dataset
+    publication and readiness verification had authenticated with the current
+    37-byte Kaggle access-token file that KaggleHub 1.0.2 checks before legacy
+    credentials. The correction transports that current token ephemerally,
+    points `KAGGLE_API_TOKEN` to its mode-0600 file, and removes it immediately
+    after the download attempt. No credential value is logged or frozen, and
+    no dataset, scorer, metric, threshold, seed, panel, gate, aggregation,
+    ordering, or claim changes.
 
 ## Optional Kaggle synthetic replication
 
