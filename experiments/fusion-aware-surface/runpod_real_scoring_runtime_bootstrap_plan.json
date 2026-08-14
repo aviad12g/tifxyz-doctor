@@ -1,0 +1,57 @@
+{
+  "budget": {
+    "absolute_campaign_cap_usd": 13.5,
+    "absolute_remaining_usd": 4.649276904555556,
+    "guard_seconds": 300,
+    "maximum_runtime_seconds_before_guard_at_price_ceiling": 11191,
+    "remaining_compute_cutoff_usd": 4.085943571222222,
+    "total_campaign_compute_cutoff_usd": 13.15
+  },
+  "exact_scientific_route": {
+    "launcher_file": "one_shot_scoring_launcher_cpu_exact.py",
+    "launcher_sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179",
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "score_real_test_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+    "scientific_outputs_inspected": false
+  },
+  "payload_sha256": "231bd456efb6aff1ef3e676ed6f70d8b0a706b51d10f3ed45fa41e26d8cf33c2",
+  "predecessor": {
+    "second_replacement_pod_id": "z0vqb3dt43vkga",
+    "second_replacement_state": "EXITED",
+    "sealed_input_verification_completed_before_error": true,
+    "state": "ERROR",
+    "stop_reason": "frozen uv bootstrap executable is absent"
+  },
+  "predecessor_plan_payload_sha256": "5faacc1617fcd971a7db40a311e381a0092590f227fd8cd8d2a5fec5702dcc6a",
+  "provider_route": {
+    "compute_type": "CPU",
+    "gpu_count": 0,
+    "maximum_price_usd_per_hour": 1.28,
+    "preferred": "resume the stopped second replacement so its verified sealed volume is reused",
+    "same_cloud_provider": "RunPod",
+    "same_shape": "32 vCPU and 128 GB RAM",
+    "scientific_or_private_scope_changed": false
+  },
+  "public_runtime": {
+    "python_archive": {
+      "bytes": 27262093,
+      "file": "Python-3.12.13.tgz",
+      "sha256": "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b",
+      "url": "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tgz"
+    },
+    "preparer": {
+      "bytes": 6134,
+      "file": "prepare_runpod_real_scoring_runtime.py",
+      "sha256": "8dd422e20fdbb8ca867226c11fb0135c18a5250a761bdcfac85d26732c600a13"
+    },
+    "uv_archive": {
+      "bytes": 21291955,
+      "file": "uv-x86_64-unknown-linux-gnu.tar.gz",
+      "sha256": "741ff1f5742c5a4a25d2f829e8395355e43f7a5ae2ebc6368e9ae2df0efb69cf",
+      "url": "https://github.com/astral-sh/uv/releases/download/0.8.22/uv-x86_64-unknown-linux-gnu.tar.gz"
+    }
+  },
+  "schema_version": "1.0",
+  "status": "result-blind public runtime bootstrap frozen before provider resume",
+  "user_authorization": "go go im afk i approve all; work end to end i exped this to be fully done once im back"
+}

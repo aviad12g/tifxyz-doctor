@@ -183,6 +183,19 @@ unnecessary repeat.
     transferred in the same bounded pool. The helper still uses the four frozen
     rsync flags, and the executor remains the sole authority that can accept all
     sealed identities before scientific execution.
+12. The second replacement transferred all 281 sealed input files, all public
+    assets, and the complete pinned wheel set. The executor verified the sealed
+    inputs and then failed closed at `INSTALLING_RUNTIME` because the base image
+    did not include the separately plan-pinned `uv 0.8.22` bootstrap executable.
+    CPU billing was stopped immediately. No scorer invocation, result, panel,
+    probability, endpoint, or scientific output was opened.
+13. Before any retry, a public-only bootstrap was frozen for the already-pinned
+    `uv 0.8.22` and CPython 3.12.13 runtime. The uv release archive is bound by
+    SHA-256 `741ff1f5742c5a4a25d2f829e8395355e43f7a5ae2ebc6368e9ae2df0efb69cf`;
+    the CPython source archive exactly matches the plan-frozen SHA-256
+    `0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b`.
+    The correction prepares only public runtime prerequisites and deducts both
+    replacement intervals from the unchanged campaign cap.
 
 ## Optional Kaggle synthetic replication
 
