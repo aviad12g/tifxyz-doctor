@@ -375,6 +375,20 @@ unnecessary repeat.
     after the download attempt. No credential value is logged or frozen, and
     no dataset, scorer, metric, threshold, seed, panel, gate, aggregation,
     ordering, or claim changes.
+32. The current-access-token replacement authenticated successfully and
+    downloaded the private dataset, then failed closed before the scorer during
+    the 1,078-byte staging-manifest identity check. Billing was stopped and the
+    access token was removed. An independent metadata-only download proved that
+    Kaggle's manifest is byte-for-byte identical to the frozen local file:
+    SHA-256 `c8da09eb8477f4f00577cca054737c73b6c9d6d0fb5758ec683b2e1f7c14ec7c`.
+    The verifier had compared its three-field file identity (`file`, `bytes`,
+    `sha256`) to a frozen record that additionally contains
+    `payload_sha256`; dictionary equality therefore could never succeed even
+    though the payload hash is validated on the following line. The correction
+    compares only the three file-identity fields and retains the separate
+    payload-hash check. No NPZ was parsed and no cache, scorer, metric,
+    threshold, seed, panel, endpoint, gate, aggregation, ordering, or claim
+    changes.
 
 ## Optional Kaggle synthetic replication
 

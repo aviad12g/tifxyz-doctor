@@ -72,6 +72,10 @@ def identity(path: Path) -> dict:
     return {"file": path.name, "bytes": path.stat().st_size, "sha256": sha256_file(path)}
 
 
+def file_identity(record: dict) -> dict:
+    return {field: record[field] for field in ("file", "bytes", "sha256")}
+
+
 def safe_relative(value: str) -> Path:
     pure = PurePosixPath(value)
     if (
@@ -197,7 +201,7 @@ def validate_download(root: Path, transport: dict) -> dict[str, tuple[int, str]]
     manifest_path = root / "real_transport_dataset_manifest.json"
     ledger_path = root / "REAL_TRANSPORT_SHA256SUMS"
     metadata_path = root / "dataset-metadata.json"
-    if identity(manifest_path) != transport["staging_manifest"]:
+    if identity(manifest_path) != file_identity(transport["staging_manifest"]):
         raise RuntimeError("private transport staging-manifest identity mismatch")
     manifest = load_hashed(manifest_path)
     if manifest["payload_sha256"] != transport["staging_manifest"]["payload_sha256"]:

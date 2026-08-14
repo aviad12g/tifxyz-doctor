@@ -64,6 +64,20 @@ def test_exact_frozen_counts() -> None:
     assert puller.DATASET_VERSION == 1
 
 
+def test_staging_manifest_file_identity_excludes_separately_checked_payload() -> None:
+    record = {
+        "file": "real_transport_dataset_manifest.json",
+        "bytes": 1078,
+        "sha256": "a" * 64,
+        "payload_sha256": "b" * 64,
+    }
+    assert puller.file_identity(record) == {
+        "file": record["file"],
+        "bytes": record["bytes"],
+        "sha256": record["sha256"],
+    }
+
+
 def test_exact_kagglehub_completion_marker_is_removed(tmp_path: Path) -> None:
     marker = tmp_path / puller.KAGGLEHUB_COMPLETION_MARKER
     marker.parent.mkdir(parents=True)
