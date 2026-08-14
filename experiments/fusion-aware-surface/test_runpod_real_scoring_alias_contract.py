@@ -23,12 +23,17 @@ def canonical_sha256(payload: dict) -> str:
     ).hexdigest()
 
 
-def test_exact_cpu_launcher_alias_matches_public_execution_plan() -> None:
+def test_exact_cpu_launcher_alias_remains_bound_to_historical_correction() -> None:
     plan = json.loads((HERE / "heldout_execution_plan.json").read_text())
     launcher = load("cpu_exact_alias", HERE / "one_shot_scoring_launcher_cpu_exact.py")
     assert plan["payload_sha256"] == canonical_sha256(plan)
-    assert launcher.launcher_source_identity() == plan["one_shot_scoring_launcher"]
     correction = plan["result_blind_launcher_alias_contract_correction"]
+    assert launcher.launcher_source_identity() == {
+        "file": correction["correction"]["new_file_alias"],
+        "bytes": correction["correction"]["source_bytes"],
+        "sha256": correction["correction"]["source_sha256"],
+    }
+    assert launcher.launcher_source_identity() != plan["one_shot_scoring_launcher"]
     assert correction["correction"]["bytes_changed"] is False
     assert correction["scientific_gate"] == {
         "cache_or_result_opened": False,
@@ -38,8 +43,8 @@ def test_exact_cpu_launcher_alias_matches_public_execution_plan() -> None:
     }
     scorer = HERE / "score_real_test.py"
     assert hashlib.sha256(scorer.read_bytes()).hexdigest() == plan[
-        "one_shot_scorers"
-    ]["real"]["script"]["sha256"]
+        "result_blind_verified_parallel_real_scoring"
+    ]["exact_predecessor_scorer"]["sha256"]
 
 
 def test_runpod_alias_plan_preserves_scientific_contract() -> None:
