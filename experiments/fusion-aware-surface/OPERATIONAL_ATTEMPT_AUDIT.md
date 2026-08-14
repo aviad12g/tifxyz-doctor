@@ -205,6 +205,13 @@ unnecessary repeat.
     Billing was stopped immediately. A result-blind correction changes only
     that file alias; its 30,608 source bytes and SHA-256 remain exact. No NPZ,
     panel, probability, endpoint, or scientific result was opened.
+15. The provider-neutral delivery was then rebound to that public alias-only
+    plan and the embedded real launcher was regenerated mechanically. Its
+    embedded configuration points to the new public plan and delivery commits;
+    after removing that configuration line, the launcher is byte-for-byte the
+    same 30,608-byte exact-CPU source. The RunPod execution plan changes only
+    those public identities and retains the same sealed inputs, exact original
+    scorer, runtime, panels, metrics, gates, ordering, and budget ceiling.
 
 ## Optional Kaggle synthetic replication
 
