@@ -209,6 +209,17 @@ def main() -> int:
                 "conservative_spend_upper_bound_usd": 0.05,
             }
         ],
+        "pre_execution_events": [
+            {
+                "pod_id": "h2xei44m0ee9m5",
+                "state": "ERROR",
+                "stage": "executor plan/input identity verification before runtime installation",
+                "error": "base-image Python did not support dictionary-union syntax",
+                "correction": "replace one dictionary union with explicit assignment; identical resulting mapping",
+                "scientific_runtime_started": False,
+                "scientific_outputs_inspected": False,
+            }
+        ],
     }
     payload["payload_sha256"] = canonical_sha256(payload)
     args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

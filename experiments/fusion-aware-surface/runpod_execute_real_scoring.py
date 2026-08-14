@@ -126,7 +126,9 @@ def main() -> int:
             raise RuntimeError("remote executor differs from frozen plan")
         if identity(args.launcher) != plan["embedded_real_launcher"]:
             raise RuntimeError("embedded real launcher differs from frozen plan")
-        if identity(args.input_manifest) | {"payload_sha256": manifest["payload_sha256"]} != plan["sealed_real_inputs"]:
+        observed_manifest_identity = identity(args.input_manifest)
+        observed_manifest_identity["payload_sha256"] = manifest["payload_sha256"]
+        if observed_manifest_identity != plan["sealed_real_inputs"]:
             raise RuntimeError("sealed real-input manifest differs from frozen plan")
         write_status(status_path, "VERIFYING_SEALED_INPUTS", plan_payload_sha256=plan["payload_sha256"])
         verify_sealed_inputs(args.input_root, manifest)
