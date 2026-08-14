@@ -279,6 +279,25 @@ unnecessary repeat.
     field. The result-blind correction requires and validates the field against
     the plan-bound predecessor identity. It changes no cache, model, metric,
     threshold, seed, panel selection, endpoint, gate, aggregation, or claim.
+24. After that correction was published, the replacement CPU pod resumed with
+    an empty workspace: the provider had not preserved either the previously
+    verified sealed input or the public runtime. Restoring the same 5.4-GB
+    sealed bundle by direct SSH transfer could not fit the reconciled campaign
+    allowance at the measured throughput, so billing was stopped before the
+    executor or scorer started. No cache payload or scientific output was
+    opened.
+25. Aviad then authorized one private Kaggle dataset solely as transport for
+    the exact same sealed real bundle. Version 1 of
+    `aviadcohen1/vesuvius-fusion-real-heldout-transport-v1` is private and
+    READY. Its provider inventory exactly matches the local frozen staging
+    inventory by path and size: 284 files and 5,791,288,517 bytes, with no
+    missing, extra, or size-mismatched record. The next CPU attempt must pull
+    exactly version 1, remove its ephemeral Kaggle credential immediately
+    after download, validate all 281 source-file hashes without parsing any
+    NPZ, and only then expose the unchanged sealed input to the executor. The
+    dataset changes transport only; no scientific input, model, metric,
+    threshold, seed, panel, endpoint, gate, aggregation, ordering, or claim is
+    changed.
 
 ## Optional Kaggle synthetic replication
 
