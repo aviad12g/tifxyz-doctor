@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Freeze the exact RunPod real-scoring transport and execution plan."""
+"""Freeze the exact CPU-only RunPod real-scoring execution plan."""
 
 from __future__ import annotations
 
@@ -50,6 +50,8 @@ def main() -> int:
     parser.add_argument("--delivery", type=Path, required=True)
     parser.add_argument("--public-runpod-commit", required=True)
     parser.add_argument("--sealed-input-manifest", type=Path, required=True)
+    parser.add_argument("--scoring-asset-root", type=Path, required=True)
+    parser.add_argument("--frozen-thresholds", type=Path, required=True)
     parser.add_argument("--embedded-real-launcher", type=Path, required=True)
     parser.add_argument("--collector", type=Path, required=True)
     parser.add_argument("--executor", type=Path, required=True)
@@ -58,10 +60,12 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True)
     args = parser.parse_args()
     if args.out.exists():
-        raise RuntimeError("RunPod real execution plan output must start absent")
+        raise RuntimeError("CPU-only RunPod real-scoring plan output must start absent")
     plan = load_hashed(args.plan)
     delivery = load_hashed(args.delivery)
     sealed = load_hashed(args.sealed_input_manifest)
+    asset_manifest_path = args.scoring_asset_root / "scoring_asset_subset_manifest.json"
+    asset_manifest = load_hashed(asset_manifest_path)
     public_plan_commit = require_commit(args.public_plan_commit, "public plan commit")
     public_delivery_commit = require_commit(args.public_delivery_commit, "public delivery commit")
     public_runpod_commit = require_commit(args.public_runpod_commit, "public RunPod tooling commit")
@@ -69,7 +73,9 @@ def main() -> int:
         "commit": public_plan_commit,
         "payload_sha256": plan["payload_sha256"],
     }:
-        raise RuntimeError("public delivery does not bind the RunPod retry plan")
+        raise RuntimeError("public delivery does not bind the CPU-only execution plan")
+    if plan.get("result_blind_runpod_cpu_real_scoring", {}).get("provider", {}).get("gpu_count") != 0:
+        raise RuntimeError("public execution plan is not CPU-only")
     if sealed.get("counts") != {
         "jobs": 7,
         "manifests": 7,
@@ -77,9 +83,26 @@ def main() -> int:
         "sealed_npz_bytes": 5_791_045_122,
     }:
         raise RuntimeError("sealed real-input aggregate mismatch")
+    if asset_manifest.get("files") != 5 or asset_manifest.get("bytes") != 109_850:
+        raise RuntimeError("minimal scoring-asset aggregate mismatch")
+    if asset_manifest.get("scoring_ledger") != {
+        "file": "SOURCE_SHA256SUMS",
+        "records": 5,
+        "sha256": "77b8babe8c2641aa0f1ec082c8f4fcb7c5dc808df39c2262b9f43aa359d8bff9",
+    }:
+        raise RuntimeError("minimal scoring-asset ledger mismatch")
+    if asset_manifest.get("parent_ledger") != {
+        "file": "PARENT_SOURCE_SHA256SUMS",
+        "records": 278,
+        "sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
+    }:
+        raise RuntimeError("parent scoring-asset ledger mismatch")
+    threshold_identity = identity(args.frozen_thresholds)
+    if threshold_identity["sha256"] != plan["threshold_binding"]["frozen_thresholds"]["sha256"]:
+        raise RuntimeError("frozen-threshold identity mismatch")
     payload = {
         "schema_version": "1.0",
-        "status": "result-blind RunPod real one-shot scoring frozen before private cache egress",
+        "status": "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress",
         "public_execution_plan": identity(args.plan) | {
             "commit": public_plan_commit,
             "payload_sha256": plan["payload_sha256"],
@@ -92,86 +115,54 @@ def main() -> int:
         "sealed_real_inputs": identity(args.sealed_input_manifest) | {
             "payload_sha256": sealed["payload_sha256"]
         },
+        "scoring_assets": {
+            "manifest": identity(asset_manifest_path) | {
+                "payload_sha256": asset_manifest["payload_sha256"]
+            },
+            "ledger_sha256": asset_manifest["scoring_ledger"]["sha256"],
+            "ledger_records": 5,
+            "parent_ledger_sha256": asset_manifest["parent_ledger"]["sha256"],
+            "parent_ledger_records": 278,
+            "files": 5,
+            "bytes": 109_850,
+            "model_checkpoints_excluded": True,
+        },
+        "frozen_thresholds": threshold_identity,
         "embedded_real_launcher": identity(args.embedded_real_launcher),
         "input_collector": identity(args.collector),
         "remote_executor": identity(args.executor),
         "provider_orchestrator": identity(args.orchestrator),
         "deployer": identity(args.deployer),
         "provider": {
-            "id": "9r1cm9r82aonih",
-            "machine_id": "zgxuf36p5h0i",
-            "gpu_count": 7,
-            "vcpu_count": 224,
-            "memory_gb": 411,
-            "price_usd_per_hour": 2.38,
-            "desired_pre_resume_status": "EXITED",
-            "reuse_existing_stopped_volume": True,
-            "result_blind_capacity_fallbacks": [
-                {
-                    "gpu_count": 6,
-                    "minimum_vcpu_count": 192,
-                    "minimum_memory_gb": 300,
-                    "maximum_price_usd_per_hour": 2.04,
-                },
-                {
-                    "gpu_count": 5,
-                    "minimum_vcpu_count": 160,
-                    "minimum_memory_gb": 240,
-                    "maximum_price_usd_per_hour": 1.70,
-                },
-                {
-                    "gpu_count": 4,
-                    "minimum_vcpu_count": 128,
-                    "minimum_memory_gb": 190,
-                    "maximum_price_usd_per_hour": 1.36,
-                },
-                {
-                    "gpu_count": 3,
-                    "minimum_vcpu_count": 96,
-                    "minimum_memory_gb": 140,
-                    "maximum_price_usd_per_hour": 1.02,
-                },
-                {
-                    "gpu_count": 2,
-                    "minimum_vcpu_count": 64,
-                    "minimum_memory_gb": 90,
-                    "maximum_price_usd_per_hour": 0.68,
-                },
-                {
-                    "gpu_count": 1,
-                    "minimum_vcpu_count": 32,
-                    "minimum_memory_gb": 45,
-                    "maximum_price_usd_per_hour": 0.34,
-                },
-            ],
-            "capacity_fallback_contract": {
-                "allowed_only_after_larger_layout_capacity_rejection": True,
-                "same_pod_and_machine_required": True,
-                "order": [7, 6, 5, 4, 3, 2, 1],
-            },
+            "name": "vesuvius-real-scoring-cpu-32",
+            "image": "runpod/stack",
+            "compute_type": "CPU",
+            "cloud_type": "SECURE",
+            "cpu_flavor": "cpu3g",
+            "gpu_count": 0,
+            "vcpu_count": 32,
+            "minimum_memory_gb": 120,
+            "maximum_price_usd_per_hour": 1.25,
+            "container_disk_gb": 20,
+            "persistent_volume_gb": 20,
+            "temporary_public_ssh": True,
+            "terminate_after_verified_result_copy": True,
         },
         "budget": {
             "absolute_cap_usd": 3.50,
             "compute_cutoff_usd": 3.25,
             "reserve_usd": 0.25,
             "guard_seconds": 300,
-            "maximum_guarded_wall_seconds": 4915,
-            "maximum_un_guarded_wall_seconds": 4615,
-            "on_cutoff": "stop the allocation, preserve sealed artifacts, and never score a partial result",
-        },
-        "reused_private_assets": {
-            "pod_id": "9r1cm9r82aonih",
-            "asset_ledger": "/workspace/bundle/input/assets/SOURCE_SHA256SUMS",
-            "asset_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
-            "frozen_thresholds": "/workspace/bundle/input/threshold-freeze/frozen_thresholds.json",
-            "frozen_thresholds_sha256": plan["threshold_binding"]["frozen_thresholds"]["sha256"],
-            "new_private_checkpoint_or_research_input_upload": False,
+            "maximum_provider_wall_seconds_at_price_ceiling": 9360,
+            "maximum_runtime_seconds_before_guard_at_price_ceiling": 9060,
+            "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
         },
         "new_transfer": {
             "private": "only 266 sealed real NPZ caches plus their seven indexes and seven manifests",
-            "public": "pinned metric source, CPython 3.12 metric wheelhouse, launcher, and controllers",
+            "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers",
             "private_upload_authorized_by_aviad": True,
             "private_npz_payloads_opened_before_transfer": False,
+            "new_private_checkpoint_or_research_input_upload": False,
         },
         "runtime": {
             "python": "3.12.13",
@@ -180,8 +171,8 @@ def main() -> int:
             "fixed_panels_before_scoring": True,
             "row_order": "original frozen cache order",
             "sealed_cache_layout_adapter": (
-                "relative directory symlink from each frozen run name to its "
-                "verified sealed-caches directory; no NPZ is copied or opened"
+                "relative directory symlink from each frozen run name to its verified "
+                "sealed-caches directory; no NPZ is copied or opened"
             ),
         },
         "scientific_gate": {
@@ -190,42 +181,13 @@ def main() -> int:
             "synthetic_version_4_remains_complete_and_sealed": True,
             "partial_real_result_is_scorable": False,
             "all_adverse_null_or_failure_outcomes_must_be_published": True,
+            "gpu_compute_permitted": False,
         },
-        "pre_resume_capacity_events": [
-            {
-                "attempted_gpu_count": 7,
-                "provider_result": "rejected because the original host lacked seven free GPUs",
-                "billing_started": False,
-                "private_transfer_started": False,
-                "scientific_outputs_inspected": False,
-            },
-            {
-                "attempted_gpu_count": 6,
-                "provider_result": "rejected because the original host lacked six free GPUs",
-                "billing_started": False,
-                "private_transfer_started": False,
-                "scientific_outputs_inspected": False,
-            },
-            {
-                "attempted_gpu_count": 5,
-                "provider_result": "rejected because the original host lacked five free GPUs",
-                "billing_started": False,
-                "private_transfer_started": False,
-                "scientific_outputs_inspected": False,
-            },
-            {
-                "attempted_gpu_count": 4,
-                "provider_result": "rejected because the original host lacked four free GPUs",
-                "billing_started": False,
-                "private_transfer_started": False,
-                "scientific_outputs_inspected": False,
-            },
-        ],
     }
     payload["payload_sha256"] = canonical_sha256(payload)
     args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     load_hashed(args.out)
-    print("RUNPOD_REAL_EXECUTION_PLAN_FROZEN")
+    print("RUNPOD_CPU_REAL_EXECUTION_PLAN_FROZEN")
     return 0
 
 

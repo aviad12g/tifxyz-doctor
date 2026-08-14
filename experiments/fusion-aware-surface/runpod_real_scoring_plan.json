@@ -3,20 +3,25 @@
     "absolute_cap_usd": 3.5,
     "compute_cutoff_usd": 3.25,
     "guard_seconds": 300,
-    "maximum_guarded_wall_seconds": 4915,
-    "maximum_un_guarded_wall_seconds": 4615,
-    "on_cutoff": "stop the allocation, preserve sealed artifacts, and never score a partial result",
+    "maximum_provider_wall_seconds_at_price_ceiling": 9360,
+    "maximum_runtime_seconds_before_guard_at_price_ceiling": 9060,
+    "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
     "reserve_usd": 0.25
   },
   "deployer": {
-    "bytes": 5302,
+    "bytes": 6039,
     "file": "deploy_runpod_real_scoring.py",
-    "sha256": "e5b47524118f13223f63e02e729cb71f5b2491bfa37e31ccf457e65653ceb35d"
+    "sha256": "4eda4e94f2605dcc062640a1cfc27b5e3e84a63b9670ff86a27824f9440e55f6"
   },
   "embedded_real_launcher": {
-    "bytes": 30727,
+    "bytes": 31797,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "f98c6a95a6d9cf843505759a5259f50ef75a9c5e5b2c78e7aadc06ea2395880f"
+    "sha256": "b92c1a0a21ef10c4221ba729ec7e9a74bb22b2d4632543fa168424acbd582d0a"
+  },
+  "frozen_thresholds": {
+    "bytes": 345175,
+    "file": "frozen_thresholds.json",
+    "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
   },
   "input_collector": {
     "bytes": 8179,
@@ -24,135 +29,52 @@
     "sha256": "b924c0a1ba073f04ea3ef16055508c430101ddc2b4022f1a81c63b04f1109e54"
   },
   "new_transfer": {
+    "new_private_checkpoint_or_research_input_upload": false,
     "private": "only 266 sealed real NPZ caches plus their seven indexes and seven manifests",
     "private_npz_payloads_opened_before_transfer": false,
     "private_upload_authorized_by_aviad": true,
-    "public": "pinned metric source, CPython 3.12 metric wheelhouse, launcher, and controllers"
+    "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
   },
-  "payload_sha256": "e67793fb64aa98f2b0187d9220f47898ad24bc9e702d23ce7fca701f40f954f2",
-  "pre_resume_capacity_events": [
-    {
-      "attempted_gpu_count": 7,
-      "billing_started": false,
-      "private_transfer_started": false,
-      "provider_result": "rejected because the original host lacked seven free GPUs",
-      "scientific_outputs_inspected": false
-    },
-    {
-      "attempted_gpu_count": 6,
-      "billing_started": false,
-      "private_transfer_started": false,
-      "provider_result": "rejected because the original host lacked six free GPUs",
-      "scientific_outputs_inspected": false
-    },
-    {
-      "attempted_gpu_count": 5,
-      "billing_started": false,
-      "private_transfer_started": false,
-      "provider_result": "rejected because the original host lacked five free GPUs",
-      "scientific_outputs_inspected": false
-    },
-    {
-      "attempted_gpu_count": 4,
-      "billing_started": false,
-      "private_transfer_started": false,
-      "provider_result": "rejected because the original host lacked four free GPUs",
-      "scientific_outputs_inspected": false
-    }
-  ],
+  "payload_sha256": "f331e24b432250fb0b6f145eb335727df7735a939b206c069bb1b63e4772387b",
   "provider": {
-    "capacity_fallback_contract": {
-      "allowed_only_after_larger_layout_capacity_rejection": true,
-      "order": [
-        7,
-        6,
-        5,
-        4,
-        3,
-        2,
-        1
-      ],
-      "same_pod_and_machine_required": true
-    },
-    "desired_pre_resume_status": "EXITED",
-    "gpu_count": 7,
-    "id": "9r1cm9r82aonih",
-    "machine_id": "zgxuf36p5h0i",
-    "memory_gb": 411,
-    "price_usd_per_hour": 2.38,
-    "result_blind_capacity_fallbacks": [
-      {
-        "gpu_count": 6,
-        "maximum_price_usd_per_hour": 2.04,
-        "minimum_memory_gb": 300,
-        "minimum_vcpu_count": 192
-      },
-      {
-        "gpu_count": 5,
-        "maximum_price_usd_per_hour": 1.7,
-        "minimum_memory_gb": 240,
-        "minimum_vcpu_count": 160
-      },
-      {
-        "gpu_count": 4,
-        "maximum_price_usd_per_hour": 1.36,
-        "minimum_memory_gb": 190,
-        "minimum_vcpu_count": 128
-      },
-      {
-        "gpu_count": 3,
-        "maximum_price_usd_per_hour": 1.02,
-        "minimum_memory_gb": 140,
-        "minimum_vcpu_count": 96
-      },
-      {
-        "gpu_count": 2,
-        "maximum_price_usd_per_hour": 0.68,
-        "minimum_memory_gb": 90,
-        "minimum_vcpu_count": 64
-      },
-      {
-        "gpu_count": 1,
-        "maximum_price_usd_per_hour": 0.34,
-        "minimum_memory_gb": 45,
-        "minimum_vcpu_count": 32
-      }
-    ],
-    "reuse_existing_stopped_volume": true,
-    "vcpu_count": 224
+    "cloud_type": "SECURE",
+    "compute_type": "CPU",
+    "container_disk_gb": 20,
+    "cpu_flavor": "cpu3g",
+    "gpu_count": 0,
+    "image": "runpod/stack",
+    "maximum_price_usd_per_hour": 1.25,
+    "minimum_memory_gb": 120,
+    "name": "vesuvius-real-scoring-cpu-32",
+    "persistent_volume_gb": 20,
+    "temporary_public_ssh": true,
+    "terminate_after_verified_result_copy": true,
+    "vcpu_count": 32
   },
   "provider_orchestrator": {
-    "bytes": 9162,
+    "bytes": 9116,
     "file": "orchestrate_runpod_real_scoring.py",
-    "sha256": "dac29714a00021b256d18ff8dc41468498a980a4c356a1069d0eccd788b0460d"
+    "sha256": "6230b3c625b2e2ea740fb871f97d462face1e8929a43ab6daa344883e6d00445"
   },
   "public_cache_delivery": {
-    "bytes": 18917,
-    "commit": "82a2ba87927f5324435fca96ad66d2e9c375cb2d",
+    "bytes": 19246,
+    "commit": "3103a4d8b4825c52439cab5f965a5304c8ea33e4",
     "file": "heldout_cache_delivery_manifest.json",
-    "payload_sha256": "a22027c2068d40a6be83b63d925016600974c79264db3d60d844bed8bccbf70d",
-    "sha256": "fc594e97f5d3a816cac4faac11fab545684ccc061b68a9c85f5a8bfe940303d6"
+    "payload_sha256": "6b91f2e936119e61c756f118ccba136dd7da1d446b8ccf92fa7972a7d1c1e958",
+    "sha256": "734d941916d0e5d3cc66a53dbc121651736d31136d0fec04382aee9f1e8b6ccb"
   },
   "public_execution_plan": {
-    "bytes": 39063,
-    "commit": "7ce0e780380525dd445e5ef2fc58631a3c9d2886",
+    "bytes": 42198,
+    "commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
-    "sha256": "1d67f9f87c17ca93cea612b2586ebfba4687a3e8ecbe9ed6f300a54d3b847494"
+    "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
+    "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
   },
-  "public_runpod_commit": "bc18018d1174879e93ee87b1b6b32a80c0a8b8bb",
+  "public_runpod_commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
   "remote_executor": {
-    "bytes": 9459,
+    "bytes": 9445,
     "file": "runpod_execute_real_scoring.py",
-    "sha256": "0564939e990a89d779cd2bcc972d2af0a616a5e4fc0ba7b099cdb5edaa36cfbb"
-  },
-  "reused_private_assets": {
-    "asset_ledger": "/workspace/bundle/input/assets/SOURCE_SHA256SUMS",
-    "asset_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
-    "frozen_thresholds": "/workspace/bundle/input/threshold-freeze/frozen_thresholds.json",
-    "frozen_thresholds_sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b",
-    "new_private_checkpoint_or_research_input_upload": false,
-    "pod_id": "9r1cm9r82aonih"
+    "sha256": "d4e170177372cbaf422922f39ee7e15ce5bb57341b8ac52720f93f2a45c62bcd"
   },
   "runtime": {
     "fixed_panels_before_scoring": true,
@@ -165,10 +87,26 @@
   "schema_version": "1.0",
   "scientific_gate": {
     "all_adverse_null_or_failure_outcomes_must_be_published": true,
+    "gpu_compute_permitted": false,
     "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": false,
     "partial_real_result_is_scorable": false,
     "scientific_result_opened_or_used": false,
     "synthetic_version_4_remains_complete_and_sealed": true
+  },
+  "scoring_assets": {
+    "bytes": 109850,
+    "files": 5,
+    "ledger_records": 5,
+    "ledger_sha256": "77b8babe8c2641aa0f1ec082c8f4fcb7c5dc808df39c2262b9f43aa359d8bff9",
+    "manifest": {
+      "bytes": 779,
+      "file": "scoring_asset_subset_manifest.json",
+      "payload_sha256": "2518a021ba2f18feec7535077cc599d03ab73055567fe3545fb46b75ce805f34",
+      "sha256": "53de1531fd46b97f1730b0a8a1efa8ac863a832e6b8adab5b19b3f3c6e8794a2"
+    },
+    "model_checkpoints_excluded": true,
+    "parent_ledger_records": 278,
+    "parent_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
   },
   "sealed_real_inputs": {
     "bytes": 57083,
@@ -176,5 +114,5 @@
     "payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563",
     "sha256": "292f8b4de60e97d29cfa45a3879e30455405dec8f159e3928391eab439de813e"
   },
-  "status": "result-blind RunPod real one-shot scoring frozen before private cache egress"
+  "status": "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress"
 }
