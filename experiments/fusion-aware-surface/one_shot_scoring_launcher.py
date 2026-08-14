@@ -47,7 +47,6 @@ RUN_ORDER = (
     "gap8_seed23",
     "gap8_seed47",
 )
-REAL_PARALLEL_WORKERS = 32
 PROJECT_HASHES = {
     "cache_real_predictions.py": "8f89910c6667a135bcc832a3348cbd264b883f04013eb779d704f3cb3fa99035",
     "cache_synthetic_rays.py": "a2d4baac41720d0b83d21a5f30ad3947ba7ca9162791995630eb178561e507bc",
@@ -59,7 +58,7 @@ PROJECT_HASHES = {
     "normalization.py": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261",
     "official_metric.py": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb",
     "real_split_manifest.json": REAL_SPLIT_MANIFEST_SHA256,
-    "score_real_test.py": "06119047c636185f70455feac6ed780510dcd4b7f636404abfdbad819cae1b16",
+    "score_real_test.py": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
     "score_synthetic_test.py": "d64049b1048dee8274f8416b979384b3342f671811db356ba79052726401063f",
     "score_synthetic_test_v2.py": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05",
     "train_fusion_aware.py": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07",
@@ -578,15 +577,6 @@ def execute_scorer(
         "--out",
         str(result_path),
     ]
-    if mode == "real":
-        command.extend(
-            [
-                "--worker",
-                str(project / "official_metric.py"),
-                "--parallel-workers",
-                str(REAL_PARALLEL_WORKERS),
-            ]
-        )
     completed = subprocess.run(
         command,
         cwd=project,

@@ -36,6 +36,10 @@ def test_exact_cpu_launcher_alias_matches_public_execution_plan() -> None:
         "scorer_source_bytes_changed": False,
         "scientific_runtime_started_in_failed_attempt": False,
     }
+    scorer = HERE / "score_real_test.py"
+    assert hashlib.sha256(scorer.read_bytes()).hexdigest() == plan[
+        "one_shot_scorers"
+    ]["real"]["script"]["sha256"]
 
 
 def test_runpod_alias_plan_preserves_scientific_contract() -> None:

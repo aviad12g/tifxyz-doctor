@@ -88,7 +88,7 @@
     "file": "stage_heldout_for_scoring.py",
     "sha256": "ce5674507aae6d563586c5c88d4e80d142b77dbe72c3554c1b2c0b49c3b71300"
   },
-  "payload_sha256": "26dbb62369f7b2ef79060b80a350d2330bdfe3158e85b6df17cbe143ab4e797c",
+  "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -354,6 +354,29 @@
       "synthetic_v4_result_opened_downloaded_or_used": false
     },
     "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_public_real_scorer_source_correction": {
+    "cause": "the exact-scorer plan recorded the original scorer hash but its public plan commit still contained the later parallel source file",
+    "predecessor_execution_plan": {
+      "bytes": 47369,
+      "commit": "76b31337156e74319f5abe4967cff7f8cd9eab9a",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "26dbb62369f7b2ef79060b80a350d2330bdfe3158e85b6df17cbe143ab4e797c",
+      "sha256": "ce7bca665b82ad3cf5894724dbd32441401a18d65f02cdad97343e5cece38d0a"
+    },
+    "restored_source": {
+      "bytes": 8210,
+      "file": "score_real_test.py",
+      "preregistration_commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+      "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "exact_preregistered_scorer_restored": true,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_runtime_started_in_failed_attempt": false
+    },
+    "status": "result-blind publication of the already-required exact original real scorer"
   },
   "result_blind_runpod_cpu_exact_scorer_correction": {
     "decision": {

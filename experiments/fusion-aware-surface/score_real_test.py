@@ -4,8 +4,6 @@
 from __future__ import annotations
 
 import argparse
-from concurrent.futures import ThreadPoolExecutor
-from functools import partial
 import hashlib
 import json
 from pathlib import Path
@@ -20,8 +18,6 @@ METRICS = ("blend", "toposcore", "surface_dice", "voi_score")
 SENSITIVITY_THRESHOLDS = (0.4, 0.5, 0.6)
 BOOTSTRAP_SEED = 20260808
 BOOTSTRAP_REPLICATES = 10_000
-DEFAULT_PARALLEL_WORKERS = 1
-MAX_PARALLEL_WORKERS = 4
 
 
 def canonical_sha256(payload: dict) -> str:
@@ -103,29 +99,6 @@ def validate_run_cache(
     return paths
 
 
-def score_cache_set(
-    worker: Path,
-    caches: list[Path],
-    threshold: float,
-    parallel_workers: int,
-) -> dict[str, dict[str, float]]:
-    """Score independent caches concurrently while preserving frozen file order."""
-    if not 1 <= parallel_workers <= MAX_PARALLEL_WORKERS:
-        raise ValueError(
-            f"parallel workers must be in [1, {MAX_PARALLEL_WORKERS}]"
-        )
-    scorer = partial(score, worker, threshold=threshold)
-    if parallel_workers == 1:
-        records = [scorer(cache) for cache in caches]
-    else:
-        with ThreadPoolExecutor(max_workers=parallel_workers) as executor:
-            records = list(executor.map(scorer, caches))
-    return {
-        cache.name: record
-        for cache, record in zip(caches, records, strict=True)
-    }
-
-
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--test-root", type=Path, required=True)
@@ -134,16 +107,6 @@ def main() -> int:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument(
         "--worker", type=Path, default=Path(__file__).with_name("official_metric.py")
-    )
-    parser.add_argument(
-        "--parallel-workers",
-        type=int,
-        default=DEFAULT_PARALLEL_WORKERS,
-        choices=range(1, MAX_PARALLEL_WORKERS + 1),
-        help=(
-            "Run independent official-metric subprocesses concurrently; results are "
-            "reassembled in the original frozen cache order."
-        ),
     )
     args = parser.parse_args()
 
@@ -166,9 +129,9 @@ def main() -> int:
         tested = sorted(set(SENSITIVITY_THRESHOLDS + (selected,)))
         threshold_records = {}
         for threshold in tested:
-            rows = score_cache_set(
-                args.worker, caches, threshold, args.parallel_workers
-            )
+            rows = {
+                cache.name: score(args.worker, cache, threshold) for cache in caches
+            }
             threshold_records[str(threshold)] = {
                 "means": {
                     metric: float(np.mean([row[metric] for row in rows.values()]))

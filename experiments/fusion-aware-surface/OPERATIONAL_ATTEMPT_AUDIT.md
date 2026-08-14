@@ -212,6 +212,14 @@ unnecessary repeat.
     same 30,608-byte exact-CPU source. The RunPod execution plan changes only
     those public identities and retains the same sealed inputs, exact original
     scorer, runtime, panels, metrics, gates, ordering, and budget ceiling.
+16. That corrected launcher passed its alias contract and then failed closed
+    while fetching the public real scorer: the plan already required the exact
+    preregistered SHA-256, but the referenced branch commit still contained the
+    later parallel source file. Billing was stopped immediately, before panel
+    or scorer invocation. The exact 8,210-byte `score_real_test.py` was restored
+    byte-for-byte from preregistration commit
+    `5ca0444fb31863c8e02466316bf9e560cf567876`; this publishes the source the plan
+    already required and changes no scientific parameter or decision.
 
 ## Optional Kaggle synthetic replication
 
