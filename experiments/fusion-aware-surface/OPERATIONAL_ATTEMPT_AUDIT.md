@@ -314,6 +314,18 @@ unnecessary repeat.
     result was opened. The only proposed execution change is scheduling
     independent, otherwise unchanged official-metric subprocesses concurrently
     and restoring their rows in the frozen cache order.
+27. Before the fresh paid retry, the scoring stager's scientific projection was
+    extended to classify the verified-parallel record, its exact Git-binding
+    correction, and this projection correction as operational metadata. This
+    prevents publication-only records from being mistaken for changes to the
+    original cache-job scientific plan. The fresh CPU retry is bound to 32
+    vCPUs, at least 120 GB memory, zero GPUs, a maximum USD 1.28 hourly price,
+    private Kaggle transport dataset version 1, and 32 independent metric
+    subprocesses. Aviad authorized up to USD 21 of additional RunPod spend; the
+    frozen compute cutoff is USD 20 with a USD 1 reserve and a 300-second guard.
+    The complete local deployer dry-run passed before provider creation. No
+    held-out cache, panel, probability, endpoint, NPZ payload, or scientific
+    result was opened or used.
 
 ## Optional Kaggle synthetic replication
 
