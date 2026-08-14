@@ -84,11 +84,11 @@
     "sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
   },
   "one_shot_scoring_stager": {
-    "bytes": 19922,
+    "bytes": 20790,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "1fa4aec460bdd7425b70c35f5d432fc41ac5b66a36908e1604dc3f080223950d"
+    "sha256": "791b62de3305ee77de9e94654c13b56e94df14febb24832f06ae29319cb9cc02"
   },
-  "payload_sha256": "cbaff81b679f0d90e7d7cffa37ce5acce447b89ae88b322472e508cdd48d6479",
+  "payload_sha256": "0154df3bcf8568b5c52ad36e9d9eb68594062d57f78c5426bf7c9015129be096",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -113,9 +113,9 @@
     "sha256": "e1799845c7b8bd428e6bd374f745d6b42399673a5b8c2c11d9282324b3e72779"
   },
   "real_panel_renderer": {
-    "bytes": 18206,
+    "bytes": 18796,
     "file": "render_real_panels.py",
-    "sha256": "e05b746c17f0a2b2b33a60b41b72408c799204bbca533667b8169ca415343d15"
+    "sha256": "de0d3f5e27d0baf337efdf14f271350f21c6a182f287e4a6f0b704cf1b658d04"
   },
   "real_test_jobs": [
     {
@@ -255,8 +255,8 @@
     "scientific_gate": {
       "cache_or_result_opened": false,
       "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
-      "scorer_source_bytes_changed": false,
-      "scientific_runtime_started_in_failed_attempt": false
+      "scientific_runtime_started_in_failed_attempt": false,
+      "scorer_source_bytes_changed": false
     },
     "status": "result-blind launcher file-alias contract correction"
   },
@@ -377,6 +377,68 @@
       "scientific_runtime_started_in_failed_attempt": false
     },
     "status": "result-blind publication of the already-required exact original real scorer"
+  },
+  "result_blind_real_panel_index_provenance_correction": {
+    "cause": "the stager correctly recorded the hash-bound original cache-job execution-plan identity, while the fixed panel validator's exact expected schema omitted that operational provenance field",
+    "corrected_panel_renderer": {
+      "bytes": 18796,
+      "file": "render_real_panels.py",
+      "sha256": "de0d3f5e27d0baf337efdf14f271350f21c6a182f287e4a6f0b704cf1b658d04"
+    },
+    "correction": {
+      "expected_identity_derived_from": {
+        "bytes": 20443,
+        "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+        "file": "heldout_execution_plan.json",
+        "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+        "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+      },
+      "field_must_match_exactly": true,
+      "materialized_file_alias": "cache_job_execution_plan.json",
+      "required_score_input_field": "cache_job_execution_plan",
+      "stager_scientific_projection_allowlist_extended_for_this_record": true,
+      "unknown_or_tampered_fields_rejected": true
+    },
+    "failed_attempt": {
+      "cache_npz_probability_endpoint_or_panel_opened": false,
+      "failure_message": "real score-input index provenance mismatch",
+      "pod_id": "z0vqb3dt43vkga",
+      "provider": "RunPod CPU",
+      "receipt": {
+        "file": "provider_receipt.json",
+        "payload_sha256": "755d5bcfb6306125cca82acc8a06969a14abc4bab6c5c0df97a7c269d271f133"
+      },
+      "scientific_result_created_or_opened": false,
+      "stage": "fixed real-panel public-context validation after pinned metric build and before panel or scorer output"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 21015,
+      "commit": "5ba626c37b7ca7899f65c43fa24359c9b6851306",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "ada3295cffd573a867ce2e189988b30d4bf0e80bb9ad5b73ba66bf5e32c23a20",
+      "sha256": "cb008acbca91405e60df8e1813eb4c11b6d5fce6cfae632ec8cac13b49cc6170"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 49885,
+      "commit": "07a82d5f211609ac96ec266c41a5c5a3c5b1f2bd",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "cbaff81b679f0d90e7d7cffa37ce5acce447b89ae88b322472e508cdd48d6479",
+      "sha256": "b3fc826aa00d4d1f9a18472fba54a93d3b89d89f5b3e0270df28c110ac746481"
+    },
+    "predecessor_panel_renderer": {
+      "bytes": 18206,
+      "file": "render_real_panels.py",
+      "sha256": "e05b746c17f0a2b2b33a60b41b72408c799204bbca533667b8169ca415343d15"
+    },
+    "public_tooling_commit": "116544f7cdd4562596bd0a964ceea12fd1427374",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_or_manifest_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_outputs_inspected": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "result-blind real-panel score-index provenance correction"
   },
   "result_blind_runpod_cpu_exact_scorer_correction": {
     "decision": {
