@@ -119,6 +119,7 @@ def main() -> int:
     parser.add_argument("--runtime-preparer", type=Path, required=True)
     parser.add_argument("--runtime-bootstrap-plan", type=Path, required=True)
     parser.add_argument("--runtime-predecessor-plan", type=Path, required=True)
+    parser.add_argument("--dry-run", action="store_true")
     args = parser.parse_args()
     if args.receipt.exists() or args.receipt.parent.exists():
         raise RuntimeError("retry receipt target must start absent")
@@ -154,6 +155,20 @@ def main() -> int:
     ):
         if tree_identity(root) != record:
             raise RuntimeError(f"local public tree differs from frozen plan: {root.name}")
+    if args.dry_run:
+        print(
+            json.dumps(
+                {
+                    "status": "PRIVATE_KAGGLE_CPU_RETRY_PREFLIGHT_PASSED",
+                    "plan_payload_sha256": plan["payload_sha256"],
+                    "pod_id": POD_ID,
+                    "gpu_count": 0,
+                    "compute_cutoff_usd": plan["budget"]["compute_cutoff_usd"],
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     receipt = {
         "schema_version": "1.0",
         "status": "CPU-only private-Kaggle retry intent recorded before provider mutation",
