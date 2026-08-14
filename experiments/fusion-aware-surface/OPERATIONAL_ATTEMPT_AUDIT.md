@@ -137,6 +137,12 @@ unnecessary repeat.
    processes were stopped without touching partial files. The retry caps the
    identical per-file transport at ten simultaneous connections, below the
    observed gateway threshold; all identity and budget gates remain unchanged.
+6. After all 281 sealed input files had transferred, the handoff stopped before
+   verification because the local command used a stale parent directory for
+   the public metric source. The exact public metric directory was present at
+   the already-frozen adjacent path. The corrected handoff changes only that
+   local source path; no private file is resent semantically, and remote hashes
+   remain mandatory before execution.
 
 ## Optional Kaggle synthetic replication
 
