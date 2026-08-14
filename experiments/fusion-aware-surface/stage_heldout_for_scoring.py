@@ -35,6 +35,8 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_runpod_real_scoring_retry",
     "result_blind_runpod_cpu_real_scoring",
     "result_blind_runpod_cpu_projection_correction",
+    "result_blind_runpod_cpu_exact_scorer_correction",
+    "runpod_cpu_scoring_asset_stager",
 }
 
 
