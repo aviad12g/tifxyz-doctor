@@ -139,22 +139,24 @@ def main() -> int:
             "compute_type": "CPU",
             "cloud_type": "SECURE",
             "cpu_flavor": "cpu3g",
+            "instance_id": "cpu3g-32-128",
             "gpu_count": 0,
             "vcpu_count": 32,
             "minimum_memory_gb": 120,
             "maximum_price_usd_per_hour": 1.25,
-            "container_disk_gb": 20,
-            "persistent_volume_gb": 20,
+            "container_disk_gb": 30,
+            "new_temporary_pod": True,
             "temporary_public_ssh": True,
             "terminate_after_verified_result_copy": True,
         },
         "budget": {
             "absolute_cap_usd": 3.50,
-            "compute_cutoff_usd": 3.25,
+            "compute_cutoff_usd": 3.20,
             "reserve_usd": 0.25,
+            "prior_terminated_attempt_upper_bound_usd": 0.05,
             "guard_seconds": 300,
-            "maximum_provider_wall_seconds_at_price_ceiling": 9360,
-            "maximum_runtime_seconds_before_guard_at_price_ceiling": 9060,
+            "maximum_provider_wall_seconds_at_price_ceiling": 9216,
+            "maximum_runtime_seconds_before_guard_at_price_ceiling": 8916,
             "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
         },
         "new_transfer": {
@@ -183,6 +185,16 @@ def main() -> int:
             "all_adverse_null_or_failure_outcomes_must_be_published": True,
             "gpu_compute_permitted": False,
         },
+        "pre_create_events": [
+            {
+                "pod_id": "j0d4boyxwegn7q",
+                "route": "RunPod v1 REST CPU placement",
+                "result": "created allocation failed frozen provider-shape validation and was immediately terminated",
+                "private_transfer_started": False,
+                "scientific_outputs_inspected": False,
+                "conservative_spend_upper_bound_usd": 0.05,
+            }
+        ],
     }
     payload["payload_sha256"] = canonical_sha256(payload)
     args.out.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")

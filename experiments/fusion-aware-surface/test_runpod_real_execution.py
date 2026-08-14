@@ -38,7 +38,7 @@ def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
     assert 'guarded >= receipt["compute_cutoff_usd"]' in source
     assert "runpod.stop_pod" in source
     assert "validate_running_pod" in source
-    assert '"computeType": "CPU"' in source
+    assert 'instance_id=provider["instance_id"]' in source
     assert '"gpu_count": 0' in source
     assert 'parser.add_argument("--public-key", type=Path)' in source
     assert callable(module.spend)
@@ -56,9 +56,9 @@ def test_deployer_uses_guarded_rsync_and_absent_remote_targets() -> None:
 
 
 def test_execution_freezer_binds_exact_budget_and_private_scope() -> None:
-    source = (HERE / "freeze_runpod_cpu_real_scoring.py").read_text(encoding="utf-8")
+    source = (HERE / "freeze_runpod_real_execution.py").read_text(encoding="utf-8")
     assert '"absolute_cap_usd": 3.50' in source
-    assert '"compute_cutoff_usd": 3.25' in source
+    assert '"compute_cutoff_usd": 3.20' in source
     assert '"private_npz_payloads_opened_before_transfer": False' in source
     assert '"new_private_checkpoint_or_research_input_upload": False' in source
     assert '"compute_type": "CPU"' in source

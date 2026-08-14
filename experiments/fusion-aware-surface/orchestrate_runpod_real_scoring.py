@@ -97,47 +97,32 @@ def create(args: argparse.Namespace) -> None:
         "scientific_outputs_inspected": False,
     }
     write_hashed(args.receipt, intent)
-    import requests
-    from runpod_flash.core.credentials import get_api_key
-
-    api_key = get_api_key()
-    if not api_key:
-        raise RuntimeError("RunPod API key is unavailable")
+    runpod = load_runpod()
     provider = plan["provider"]
-    body = {
-        "name": provider["name"],
-        "imageName": provider["image"],
-        "computeType": "CPU",
-        "cloudType": provider["cloud_type"],
-        "cpuFlavorIds": [provider["cpu_flavor"]],
-        "cpuFlavorPriority": "custom",
-        "vcpuCount": provider["vcpu_count"],
-        "containerDiskInGb": provider["container_disk_gb"],
-        "volumeInGb": provider["persistent_volume_gb"],
-        "volumeMountPath": "/workspace",
-        "ports": ["22/tcp"],
-        "supportPublicIp": True,
-        "env": {"PUBLIC_KEY": public_key},
-    }
-    response = requests.post(
-        "https://rest.runpod.io/v1/pods",
-        headers={"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"},
-        json=body,
-        timeout=60,
-    )
-    if response.status_code >= 400:
+    try:
+        created = runpod.create_pod(
+            provider["name"],
+            provider["image"],
+            cloud_type=provider["cloud_type"],
+            support_public_ip=True,
+            start_ssh=True,
+            container_disk_in_gb=provider["container_disk_gb"],
+            ports="22/tcp",
+            volume_mount_path="/workspace",
+            env={"PUBLIC_KEY": public_key},
+            instance_id=provider["instance_id"],
+        )
+    except Exception as error:
         intent["status"] = "provider rejected CPU-only create before billing or private transfer"
-        intent["provider_http_status"] = response.status_code
-        intent["provider_error_message"] = response.text[:500]
+        intent["provider_error_type"] = type(error).__name__
+        intent["provider_error_message"] = str(error)[:500]
         rewrite_hashed(args.receipt, intent)
-        response.raise_for_status()
-    created = response.json()
+        raise
     pod_id = created.get("id")
     if not isinstance(pod_id, str) or not pod_id:
         raise RuntimeError("provider did not return a CPU Pod id")
     intent["pod_id"] = pod_id
     rewrite_hashed(args.receipt, intent)
-    runpod = load_runpod()
     try:
         pod = None
         for _ in range(90):
@@ -147,6 +132,15 @@ def create(args: argparse.Namespace) -> None:
             time.sleep(2)
         if not pod:
             raise RuntimeError("provider did not return the created CPU Pod")
+        intent["observed_before_validation"] = {
+            "desired_status": pod.get("desiredStatus"),
+            "gpu_count": int(pod.get("gpuCount") or 0),
+            "vcpu_count": int(pod.get("vcpuCount") or 0),
+            "memory_gb": int(pod.get("memoryInGb") or 0),
+            "price_usd_per_hour": float(pod.get("costPerHr") or 0.0),
+            "machine_id": pod.get("machineId"),
+        }
+        rewrite_hashed(args.receipt, intent)
         validate_running_pod(pod, plan)
         if pod.get("desiredStatus") != "RUNNING":
             raise RuntimeError("provider did not return the CPU Pod as RUNNING")
