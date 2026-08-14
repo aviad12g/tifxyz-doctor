@@ -160,6 +160,15 @@ unnecessary repeat.
    Only the public-source transport changes; the metric implementation,
    runtime, sealed caches, scientific plan, scorer, gates, and claims remain
    unchanged.
+9. The first replacement-pod executor start failed closed during launcher
+   identity validation, before sealed-input verification or scientific
+   execution. The uploaded launcher bytes exactly matched the frozen SHA-256,
+   but a transport alias changed its basename from the plan-declared
+   `one_shot_scoring_launcher_cpu_exact.py` to
+   `one_shot_scoring_launcher.py`. CPU billing was stopped immediately. The
+   retry preserves the exact bytes and passes the original plan-declared
+   filename; no cache, result, panel, probability, endpoint, or scientific
+   output was opened.
 
 ## Optional Kaggle synthetic replication
 
