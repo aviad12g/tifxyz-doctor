@@ -216,11 +216,11 @@ def main() -> int:
             [
                 "scp", "-P", str(port), "-o", "BatchMode=yes",
                 "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=15",
-                str(args.credentials), f"root@{host}:/workspace/kaggle-credential-v1/access_token",
+                str(args.credentials), f"root@{host}:/workspace/kaggle-credential-v1/kaggle.json",
             ],
             timeout=120,
         )
-        run(ssh + ["chmod 600 /workspace/kaggle-credential-v1/access_token"], timeout=30)
+        run(ssh + ["chmod 600 /workspace/kaggle-credential-v1/kaggle.json"], timeout=30)
         remote = (
             f"nohup python3 {roots['controller']}/{args.wrapper.name} "
             f"--plan {roots['controller']}/{args.plan.name} "
@@ -233,7 +233,7 @@ def main() -> int:
             f"--metric-verifier {roots['controller']}/{args.metric_verifier.name} "
             f"--metric-archive {roots['controller']}/{args.metric_archive.name} "
             "--wheelhouse /workspace/kagglehub-wheelhouse-v1 "
-            "--credentials /workspace/kaggle-credential-v1/access_token "
+            "--credentials /workspace/kaggle-credential-v1/kaggle.json "
             f"--pipeline-status-root {roots['pipeline']} "
             f"--transport-status-root {roots['transport']} "
             f"--download-root {roots['download']} "

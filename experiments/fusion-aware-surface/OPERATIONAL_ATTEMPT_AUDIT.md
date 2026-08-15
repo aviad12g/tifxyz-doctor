@@ -451,6 +451,16 @@ unnecessary repeat.
     to seal all scorer stdout. No NPZ, panel, probability, endpoint, result,
     scientific output, model, metric, threshold, seed, gate, aggregation,
     ordering, or claim was opened or changed.
+38. The bounded-scorer-exception replacement reached the private Kaggle
+    transport step, then received HTTP 403 before downloading any held-out
+    cache because a legacy username/key JSON credential had been transported
+    under the current single-token filename/environment contract. Billing was
+    stopped immediately and the ephemeral credential was removed. The
+    correction restores KaggleHub 1.0.2's exact legacy contract: a mode-0600
+    `kaggle.json` beneath `KAGGLE_CONFIG_DIR`, with `KAGGLE_API_TOKEN` absent.
+    No NPZ, panel, probability, endpoint, result, scientific output, model,
+    metric, threshold, seed, gate, aggregation, ordering, or claim was opened
+    or changed.
 
 ## Optional Kaggle synthetic replication
 

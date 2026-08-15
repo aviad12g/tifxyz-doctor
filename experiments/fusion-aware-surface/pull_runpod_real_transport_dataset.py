@@ -369,7 +369,7 @@ def main() -> int:
             dataset_handle=DATASET_HANDLE,
         )
         os.environ["KAGGLE_CONFIG_DIR"] = str(args.credentials.parent)
-        os.environ["KAGGLE_API_TOKEN"] = str(args.credentials)
+        os.environ.pop("KAGGLE_API_TOKEN", None)
         os.environ["KAGGLEHUB_VERBOSITY"] = "error"
         sys.path.insert(0, str(args.runtime_root))
         import kagglehub  # noqa: PLC0415

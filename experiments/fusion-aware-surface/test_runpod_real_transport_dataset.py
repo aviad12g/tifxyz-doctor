@@ -49,7 +49,8 @@ def test_transport_is_private_nested_and_result_blind() -> None:
     assert "versions/{DATASET_VERSION}" in pull_source
     assert "dataset_download(" in pull_source
     assert "remove_credentials(args.credentials)" in pull_source
-    assert 'os.environ["KAGGLE_API_TOKEN"] = str(args.credentials)' in pull_source
+    assert 'os.environ["KAGGLE_CONFIG_DIR"] = str(args.credentials.parent)' in pull_source
+    assert 'os.environ.pop("KAGGLE_API_TOKEN", None)' in pull_source
 
 
 def test_exact_frozen_counts() -> None:
