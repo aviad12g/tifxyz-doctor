@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 34491,
+    "bytes": 35039,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "7f1f91dfc6ff1c5846e70684829785789f3b0f00fcc7525833eecd9a52145081"
+    "sha256": "fc13f00a906dc7bea31c81cc65171c967226f2927e7b14d0c601a4bed755ceab"
   },
   "one_shot_scoring_stager": {
-    "bytes": 22627,
+    "bytes": 22686,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "4bb39c63e15107fed9899a56d620da361a5b90544ae8164945bca1111e9fc58d"
+    "sha256": "f98929748c6041d3d9b0e9d47802c97429bca6d69718100d09ef5c483bf51bc3"
   },
-  "payload_sha256": "34c91a427f7543624d28bad6707a922be4214391906016a5e3cfe512a2596302",
+  "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -747,6 +747,42 @@
       "npz_panel_probability_endpoint_or_result_opened": false
     },
     "status": "exact public scorer import dependencies frozen before retry"
+  },
+  "result_blind_scorer_public_metric_worker_correction": {
+    "corrected_launcher": {
+      "bytes": 35039,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "fc13f00a906dc7bea31c81cc65171c967226f2927e7b14d0c601a4bed755ceab"
+    },
+    "corrected_stager": {
+      "bytes": 22686,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "f98929748c6041d3d9b0e9d47802c97429bca6d69718100d09ef5c483bf51bc3"
+    },
+    "failed_attempt": {
+      "failure_message": "official_metric.py sibling worker absent",
+      "failure_type": "FileNotFoundError",
+      "file": "provider_receipt.json",
+      "payload_sha256": "9f1a1a4371e4145b0bb5e09560aa880ac153b18c27ce63219d5e7513afa6b028",
+      "pod_id": "g6napb4zi036b1",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false,
+      "stage": "first independent official-metric subprocess after verified private transport"
+    },
+    "public_metric_worker": {
+      "bytes": 3918,
+      "file": "official_metric.py",
+      "sha256": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb"
+    },
+    "public_tooling_commit": "65c53e8e17473d546823b2654928f15a34e6226a",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "metric_worker_source_bytes_changed": false,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "scorer_default_worker_path_changed": false
+    },
+    "status": "exact public official-metric sibling frozen before retry"
   },
   "result_blind_scoring_asset_correction": {
     "cause": {
