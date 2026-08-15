@@ -1,0 +1,9 @@
+GapBalance training is blocked.
+
+No available real labeled dataset is currently certified as independent of:
+- the Dataset059/source-checkpoint training corpus;
+- Scrolls 1, 4, and 5 used by the immutable Gap8 experiment; and
+- every prior diagnostic, model-selection, or result-review path.
+
+Do not train Control, Gap2, or Gap4 until a real confirmation holdout satisfies
+the full Stage-0 provenance requirements in STAGE0_HOLDOUT_AUDIT.md.
