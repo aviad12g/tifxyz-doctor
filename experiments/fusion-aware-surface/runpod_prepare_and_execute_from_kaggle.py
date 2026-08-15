@@ -160,7 +160,9 @@ def main() -> int:
     parser.add_argument("--metric-verifier", type=Path, required=True)
     parser.add_argument("--metric-archive", type=Path, required=True)
     parser.add_argument("--wheelhouse", type=Path, required=True)
-    parser.add_argument("--credentials", type=Path, required=True)
+    authentication = parser.add_mutually_exclusive_group(required=True)
+    authentication.add_argument("--credentials", type=Path)
+    authentication.add_argument("--signed-url", type=Path)
     parser.add_argument("--pipeline-status-root", type=Path, required=True)
     parser.add_argument("--transport-status-root", type=Path, required=True)
     parser.add_argument("--download-root", type=Path, required=True)
@@ -228,7 +230,11 @@ def main() -> int:
                     "--python", str(frozen_python),
                     "--wheelhouse", str(args.wheelhouse),
                     "--runtime-root", "/workspace/kagglehub-runtime-v1",
-                    "--credentials", str(args.credentials),
+                    *(
+                        ["--signed-url", str(args.signed_url)]
+                        if args.signed_url is not None
+                        else ["--credentials", str(args.credentials)]
+                    ),
                     "--download-root", str(args.download_root),
                     "--input-root", str(args.input_root),
                     "--status-root", str(args.transport_status_root),
@@ -263,22 +269,32 @@ def main() -> int:
             plan_payload_sha256=plan["payload_sha256"],
             returncode=0,
             transport_verified=True,
-            credentials_removed=not args.credentials.exists(),
+            credentials_removed=(
+                args.signed_url is not None and not args.signed_url.exists()
+            ) or (
+                args.credentials is not None and not args.credentials.exists()
+            ),
         )
         (args.pipeline_status_root / "REAL_SCORING_COMPLETE").write_text(
             plan["payload_sha256"] + "\n", encoding="utf-8"
         )
         return 0
     except Exception as error:
-        if args.credentials.exists():
+        if args.credentials is not None and args.credentials.exists():
             args.credentials.unlink()
+        if args.signed_url is not None and args.signed_url.exists():
+            args.signed_url.unlink()
         write_status(
             status_path,
             "ERROR",
             error_type=type(error).__name__,
             error_message=str(error),
             operational_log=log_path.name,
-            credentials_removed=not args.credentials.exists(),
+            credentials_removed=(
+                args.signed_url is not None and not args.signed_url.exists()
+            ) or (
+                args.credentials is not None and not args.credentials.exists()
+            ),
         )
         return 1
 

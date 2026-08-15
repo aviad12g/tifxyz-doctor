@@ -6,10 +6,16 @@ from __future__ import annotations
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import json
+import os
+import shlex
 import stat
+import sys
+import tempfile
 import time
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import parse_qs, urlparse
 
 from deploy_runpod_real_scoring_from_kaggle import (
     identity,
@@ -64,6 +70,58 @@ def validate_local_inputs(args: argparse.Namespace, plan: dict) -> None:
     ):
         if tree_identity(root) != record:
             raise RuntimeError(f"local public tree differs from frozen plan: {root.name}")
+
+
+def generate_signed_bundle_url(credentials: Path, wheelhouse: Path) -> str:
+    credential_record = json.loads(credentials.read_text(encoding="utf-8"))
+    if (
+        not isinstance(credential_record, dict)
+        or set(credential_record) != {"username", "key"}
+        or not all(isinstance(credential_record[key], str) and credential_record[key] for key in ("username", "key"))
+    ):
+        raise RuntimeError("local Kaggle credential JSON has the wrong schema")
+    kagglehub_wheel = next(wheelhouse.glob("kagglehub-1.0.2-*.whl"))
+    kagglesdk_wheel = next(wheelhouse.glob("kagglesdk-0.1.37-*.whl"))
+    with tempfile.TemporaryDirectory(prefix="runpod-kaggle-url-") as temporary:
+        for wheel in (kagglehub_wheel, kagglesdk_wheel):
+            with zipfile.ZipFile(wheel) as archive:
+                archive.extractall(temporary)
+        sys.path.insert(0, temporary)
+        try:
+            for name in ("KAGGLE_API_TOKEN", "KAGGLE_USERNAME", "KAGGLE_KEY"):
+                os.environ.pop(name, None)
+            from kagglehub.auth import set_kaggle_credentials  # noqa: PLC0415
+            from kagglehub.clients import build_kaggle_client  # noqa: PLC0415
+            from kagglehub.handle import parse_dataset_handle  # noqa: PLC0415
+            from kagglehub.http_resolver import _build_dataset_download_request  # noqa: PLC0415
+
+            set_kaggle_credentials(credential_record["username"], credential_record["key"])
+            credential_record.clear()
+            handle = parse_dataset_handle(
+                "aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/versions/1"
+            )
+            with build_kaggle_client() as client:
+                response = client.datasets.dataset_api_client.download_dataset(
+                    _build_dataset_download_request(handle, None)
+                )
+                signed_url = response.url
+                parsed = urlparse(signed_url)
+                query = parse_qs(parsed.query)
+                valid = (
+                    response.status_code == 200
+                    and len(response.history) >= 1
+                    and parsed.scheme == "https"
+                    and parsed.hostname not in {None, "kaggle.com", "www.kaggle.com"}
+                    and bool(parsed.query)
+                    and query.get("X-Goog-Expires") == ["259200"]
+                    and int(response.headers.get("Content-Length", "-1")) == 5_791_073_068
+                )
+                response.close()
+                if not valid:
+                    raise RuntimeError("Kaggle did not issue the exact signed bundle response")
+                return signed_url
+        finally:
+            sys.path.remove(temporary)
 
 
 def transfer_metric_runtime_parallel(
@@ -175,7 +233,7 @@ def main() -> int:
             *roots.values(),
             "/workspace/kagglehub-runtime-v1",
             "/workspace/kagglehub-wheelhouse-v1",
-            "/workspace/kaggle-credential-v1",
+            "/workspace/kaggle-signed-url-v1",
             "/workspace/real-scoring-public",
             "/workspace/bundle",
         ]
@@ -183,11 +241,37 @@ def main() -> int:
         run(
             ssh + [
                 f"mkdir -p {roots['controller']} /workspace/kagglehub-wheelhouse-v1 "
-                "/workspace/kaggle-credential-v1 /workspace/real-scoring-public/metric-runtime "
+                "/workspace/kaggle-signed-url-v1 /workspace/real-scoring-public/metric-runtime "
                 "/workspace/bundle/input/assets /workspace/bundle/input/threshold-freeze"
             ],
             timeout=30,
         )
+        signed_url = generate_signed_bundle_url(args.credentials, args.wheelhouse)
+        with tempfile.NamedTemporaryFile(mode="w", encoding="utf-8", delete=True) as handle:
+            os.chmod(handle.name, 0o600)
+            handle.write(signed_url + "\n")
+            handle.flush()
+            run(
+                [
+                    "scp", "-P", str(port), "-o", "BatchMode=yes",
+                    "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=15",
+                    handle.name, f"root@{host}:/workspace/kaggle-signed-url-v1/bundle-url",
+                ],
+                timeout=120,
+            )
+        signed_url = ""
+        run(ssh + ["chmod 600 /workspace/kaggle-signed-url-v1/bundle-url"], timeout=30)
+        probe = (
+            "import pathlib,urllib.request;"
+            "u=pathlib.Path('/workspace/kaggle-signed-url-v1/bundle-url').read_text().strip();"
+            "r=urllib.request.urlopen(urllib.request.Request(u,headers={'Range':'bytes=0-0'}),timeout=30);"
+            "ok=(r.status==206 and r.headers.get('Content-Range','').endswith('/5791073068')) or "
+            "(r.status==200 and r.headers.get('Content-Length')=='5791073068');"
+            "assert ok;assert len(r.read(1))==1;r.close()"
+        )
+        run(ssh + ["python3 -c " + shlex.quote(probe)], timeout=60)
+        receipt["signed_url_preflight_at"] = datetime.now(timezone.utc).isoformat()
+        write_hashed(args.receipt, receipt)
         transport = (
             f"ssh -p {port} -o BatchMode=yes -o StrictHostKeyChecking=accept-new "
             "-o ConnectTimeout=15"
@@ -212,15 +296,6 @@ def main() -> int:
         ]
         run(rsync + [*map(str, controller_files), f"root@{host}:{roots['controller']}/"], timeout=900)
         run(rsync + [str(args.frozen_thresholds), f"root@{host}:/workspace/bundle/input/threshold-freeze/"], timeout=300)
-        run(
-            [
-                "scp", "-P", str(port), "-o", "BatchMode=yes",
-                "-o", "StrictHostKeyChecking=accept-new", "-o", "ConnectTimeout=15",
-                str(args.credentials), f"root@{host}:/workspace/kaggle-credential-v1/kaggle.json",
-            ],
-            timeout=120,
-        )
-        run(ssh + ["chmod 600 /workspace/kaggle-credential-v1/kaggle.json"], timeout=30)
         remote = (
             f"nohup python3 {roots['controller']}/{args.wrapper.name} "
             f"--plan {roots['controller']}/{args.plan.name} "
@@ -233,7 +308,7 @@ def main() -> int:
             f"--metric-verifier {roots['controller']}/{args.metric_verifier.name} "
             f"--metric-archive {roots['controller']}/{args.metric_archive.name} "
             "--wheelhouse /workspace/kagglehub-wheelhouse-v1 "
-            "--credentials /workspace/kaggle-credential-v1/kaggle.json "
+            "--signed-url /workspace/kaggle-signed-url-v1/bundle-url "
             f"--pipeline-status-root {roots['pipeline']} "
             f"--transport-status-root {roots['transport']} "
             f"--download-root {roots['download']} "

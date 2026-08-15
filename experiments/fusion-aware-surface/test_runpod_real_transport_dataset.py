@@ -55,6 +55,10 @@ def test_transport_is_private_nested_and_result_blind() -> None:
     assert "set_kaggle_credentials(" in pull_source
     assert 'credential_record.clear()' in pull_source
     assert 'kagglehub.whoami(verbose=False)' in pull_source
+    assert 'EXPECTED_SIGNED_BUNDLE_BYTES = 5_791_073_068' in pull_source
+    assert 'remove_credentials(url_path)' in pull_source
+    assert 'allow_redirects=False' in pull_source
+    assert 'zipfile.ZipFile(archive_path)' in pull_source
 
 
 def test_exact_frozen_counts() -> None:

@@ -12,6 +12,7 @@ import shutil
 import stat
 import subprocess
 import sys
+import zipfile
 from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 
@@ -22,6 +23,7 @@ DATASET_HANDLE = f"{DATASET_ID}/versions/{DATASET_VERSION}"
 EXPECTED_SOURCE_FILES = 281
 EXPECTED_TOTAL_FILES = 284
 EXPECTED_TOTAL_BYTES = 5_791_288_517
+EXPECTED_SIGNED_BUNDLE_BYTES = 5_791_073_068
 EXPECTED_PACKAGES = {
     "certifi": "2026.7.22",
     "charset-normalizer": "3.5.0",
@@ -316,13 +318,84 @@ def remove_credentials(path: Path) -> None:
         pass
 
 
+def download_signed_bundle(url_path: Path, download_root: Path) -> None:
+    if (
+        not url_path.is_file()
+        or url_path.is_symlink()
+        or stat.S_IMODE(url_path.stat().st_mode) & 0o077
+    ):
+        raise RuntimeError("ephemeral signed URL is absent or too permissive")
+    signed_url = url_path.read_text(encoding="utf-8").strip()
+    remove_credentials(url_path)
+    from urllib.parse import urlparse
+
+    parsed = urlparse(signed_url)
+    if (
+        parsed.scheme != "https"
+        or not parsed.hostname
+        or parsed.hostname in {"kaggle.com", "www.kaggle.com"}
+        or not parsed.query
+    ):
+        raise RuntimeError("ephemeral signed URL has the wrong shape")
+    import requests  # noqa: PLC0415
+
+    archive_path = download_root.with_suffix(".zip")
+    if download_root.exists() or archive_path.exists():
+        raise RuntimeError("signed transport targets must start absent")
+    with requests.get(
+        signed_url,
+        stream=True,
+        allow_redirects=False,
+        timeout=(15, 120),
+    ) as response:
+        response.raise_for_status()
+        if (
+            response.status_code != 200
+            or int(response.headers.get("Content-Length", "-1"))
+            != EXPECTED_SIGNED_BUNDLE_BYTES
+        ):
+            raise RuntimeError("signed transport response identity mismatch")
+        with archive_path.open("xb") as handle:
+            for chunk in response.iter_content(8 << 20):
+                if chunk:
+                    handle.write(chunk)
+    if archive_path.stat().st_size != EXPECTED_SIGNED_BUNDLE_BYTES:
+        raise RuntimeError("signed transport archive byte count mismatch")
+    download_root.mkdir(parents=True)
+    with zipfile.ZipFile(archive_path) as archive:
+        infos = archive.infolist()
+        files = [info for info in infos if not info.is_dir()]
+        if (
+            len(files) != EXPECTED_TOTAL_FILES
+            or sum(info.file_size for info in files) != EXPECTED_TOTAL_BYTES
+        ):
+            raise RuntimeError("signed transport archive inventory mismatch")
+        observed: set[str] = set()
+        for info in infos:
+            raw = info.filename.rstrip("/") if info.is_dir() else info.filename
+            relative = safe_relative(raw).as_posix()
+            if relative in observed or stat.S_IFMT(info.external_attr >> 16) == stat.S_IFLNK:
+                raise RuntimeError("unsafe signed transport archive member")
+            observed.add(relative)
+            target = download_root / safe_relative(relative)
+            if info.is_dir():
+                target.mkdir(parents=True, exist_ok=True)
+                continue
+            target.parent.mkdir(parents=True, exist_ok=True)
+            with archive.open(info) as source, target.open("xb") as destination:
+                shutil.copyfileobj(source, destination, length=8 << 20)
+    archive_path.unlink()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--python", type=Path, required=True)
     parser.add_argument("--wheelhouse", type=Path, required=True)
     parser.add_argument("--runtime-root", type=Path, required=True)
-    parser.add_argument("--credentials", type=Path, required=True)
+    authentication = parser.add_mutually_exclusive_group(required=True)
+    authentication.add_argument("--credentials", type=Path)
+    authentication.add_argument("--signed-url", type=Path)
     parser.add_argument("--download-root", type=Path, required=True)
     parser.add_argument("--input-root", type=Path, required=True)
     parser.add_argument("--status-root", type=Path, required=True)
@@ -356,52 +429,45 @@ def main() -> int:
             raise RuntimeError("KaggleHub wheelhouse identity mismatch")
         install_runtime(args.python, args.wheelhouse, args.runtime_root)
         validate_runtime(args.runtime_root)
-        if (
-            not args.credentials.is_file()
-            or args.credentials.is_symlink()
-            or stat.S_IMODE(args.credentials.stat().st_mode) & 0o077
-        ):
-            raise RuntimeError("ephemeral Kaggle credentials are absent or too permissive")
         write_status(
             status_path,
             "DOWNLOADING_PRIVATE_TRANSPORT",
             plan_payload_sha256=plan["payload_sha256"],
             dataset_handle=DATASET_HANDLE,
         )
-        credential_record = json.loads(args.credentials.read_text(encoding="utf-8"))
-        if (
-            not isinstance(credential_record, dict)
-            or set(credential_record) != {"username", "key"}
-            or not isinstance(credential_record["username"], str)
-            or not credential_record["username"]
-            or not isinstance(credential_record["key"], str)
-            or not credential_record["key"]
-        ):
-            raise RuntimeError("ephemeral Kaggle credential JSON has the wrong schema")
-        os.environ.pop("KAGGLE_API_TOKEN", None)
-        os.environ.pop("KAGGLE_USERNAME", None)
-        os.environ.pop("KAGGLE_KEY", None)
         os.environ["KAGGLEHUB_VERBOSITY"] = "error"
         sys.path.insert(0, str(args.runtime_root))
-        import kagglehub  # noqa: PLC0415
-        from kagglehub.auth import set_kaggle_credentials  # noqa: PLC0415
+        if args.signed_url is not None:
+            download_signed_bundle(args.signed_url, args.download_root)
+        else:
+            credential_record = json.loads(args.credentials.read_text(encoding="utf-8"))
+            if (
+                not isinstance(credential_record, dict)
+                or set(credential_record) != {"username", "key"}
+                or not all(isinstance(credential_record[key], str) and credential_record[key] for key in ("username", "key"))
+            ):
+                raise RuntimeError("ephemeral Kaggle credential JSON has the wrong schema")
+            os.environ.pop("KAGGLE_API_TOKEN", None)
+            os.environ.pop("KAGGLE_USERNAME", None)
+            os.environ.pop("KAGGLE_KEY", None)
+            import kagglehub  # noqa: PLC0415
+            from kagglehub.auth import set_kaggle_credentials  # noqa: PLC0415
 
-        set_kaggle_credentials(credential_record["username"], credential_record["key"])
-        credential_record.clear()
-        remove_credentials(args.credentials)
-        if kagglehub.whoami(verbose=False).get("username") != DATASET_ID.partition("/")[0]:
-            raise RuntimeError("ephemeral Kaggle credential owner mismatch")
-
-        resolved = Path(
-            kagglehub.dataset_download(
-                DATASET_HANDLE,
-                force_download=True,
-                output_dir=str(args.download_root),
+            set_kaggle_credentials(credential_record["username"], credential_record["key"])
+            credential_record.clear()
+            remove_credentials(args.credentials)
+            if kagglehub.whoami(verbose=False).get("username") != DATASET_ID.partition("/")[0]:
+                raise RuntimeError("ephemeral Kaggle credential owner mismatch")
+            resolved = Path(
+                kagglehub.dataset_download(
+                    DATASET_HANDLE,
+                    force_download=True,
+                    output_dir=str(args.download_root),
+                )
             )
-        )
-        if resolved.resolve() != args.download_root.resolve():
-            raise RuntimeError("private transport download resolved to an unexpected root")
-        remove_kagglehub_completion_marker(args.download_root)
+            if resolved.resolve() != args.download_root.resolve():
+                raise RuntimeError("private transport download resolved to an unexpected root")
+            remove_kagglehub_completion_marker(args.download_root)
         records = validate_download(args.download_root, transport)
         materialize_input(args.download_root, args.input_root, records)
         write_status(
@@ -419,7 +485,10 @@ def main() -> int:
         )
         return 0
     except Exception as error:
-        remove_credentials(args.credentials)
+        if args.credentials is not None:
+            remove_credentials(args.credentials)
+        if args.signed_url is not None:
+            remove_credentials(args.signed_url)
         write_status(
             status_path,
             "ERROR",

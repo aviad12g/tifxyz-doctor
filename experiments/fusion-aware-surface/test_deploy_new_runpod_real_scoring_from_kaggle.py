@@ -15,8 +15,10 @@ def test_new_deployer_is_cpu_only_fresh_and_credential_ephemeral() -> None:
     assert "validate_pod(pod)" in source
     assert 'retry.get("parallel_workers") != 32' in source
     assert 'additional_authorized_cap_usd") != 21.0' in source
-    assert "kaggle-credential-v1/kaggle.json" in source
-    assert "kaggle-credential-v1/access_token" not in source
+    assert "kaggle-signed-url-v1/bundle-url" in source
+    assert "kaggle-credential-v1" not in source
+    assert 'headers={\'Range\':\'bytes=0-0\'}' in source
+    assert 'signed_url_preflight_at' in source
     assert "real-scoring-work-v12" in source
     assert "runpod.stop_pod(pod_id)" in source
     assert "DEBIAN_FRONTEND=noninteractive apt-get install -y rsync" in source

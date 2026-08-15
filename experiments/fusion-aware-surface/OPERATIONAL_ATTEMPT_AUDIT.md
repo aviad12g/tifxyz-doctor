@@ -473,6 +473,19 @@ unnecessary repeat.
     logged or frozen. No NPZ, panel, probability, endpoint, result, scientific
     output, model, metric, threshold, seed, gate, aggregation, ordering, or
     claim was opened or changed.
+40. The in-memory-credential replacement again failed before private download,
+    this time with an explicit unauthenticated status from the remote process.
+    Billing was stopped immediately and the credential file had already been
+    removed. A local pinned request then verified that Kaggle returns an exact
+    5,791,073,068-byte private bundle through a three-day signed cloud-storage
+    URL. The correction keeps the long-lived Kaggle credential local, transfers
+    only that unlogged/unfrozen ephemeral URL, performs a one-byte remote range
+    preflight before the large public runtime transfer, deletes the URL before
+    bundle download, safely extracts the opaque bundle, and still requires the
+    exact frozen 284-file/281-source identity verification without parsing NPZ.
+    No NPZ, panel, probability, endpoint, result, scientific output, model,
+    metric, threshold, seed, gate, aggregation, ordering, or claim was opened
+    or changed.
 
 ## Optional Kaggle synthetic replication
 
