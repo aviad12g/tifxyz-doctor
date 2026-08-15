@@ -461,6 +461,18 @@ unnecessary repeat.
     No NPZ, panel, probability, endpoint, result, scientific output, model,
     metric, threshold, seed, gate, aggregation, ordering, or claim was opened
     or changed.
+39. The legacy-filename replacement authenticated successfully in an exact
+    pinned local metadata-only test, but the fresh RunPod process still
+    received HTTP 403 before downloading any held-out cache. Billing was
+    stopped immediately and the credential removed. The correction now loads
+    the already-authorized legacy username/key JSON directly into
+    KaggleHub 1.0.2's in-memory credential setter, clears potentially
+    overriding Kaggle environment variables, deletes the credential file
+    before the network request, and verifies only that the authenticated owner
+    matches the frozen dataset owner. Credential values and hashes are never
+    logged or frozen. No NPZ, panel, probability, endpoint, result, scientific
+    output, model, metric, threshold, seed, gate, aggregation, ordering, or
+    claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 

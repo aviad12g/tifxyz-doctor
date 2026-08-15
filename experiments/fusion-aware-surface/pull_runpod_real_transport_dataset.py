@@ -368,11 +368,29 @@ def main() -> int:
             plan_payload_sha256=plan["payload_sha256"],
             dataset_handle=DATASET_HANDLE,
         )
-        os.environ["KAGGLE_CONFIG_DIR"] = str(args.credentials.parent)
+        credential_record = json.loads(args.credentials.read_text(encoding="utf-8"))
+        if (
+            not isinstance(credential_record, dict)
+            or set(credential_record) != {"username", "key"}
+            or not isinstance(credential_record["username"], str)
+            or not credential_record["username"]
+            or not isinstance(credential_record["key"], str)
+            or not credential_record["key"]
+        ):
+            raise RuntimeError("ephemeral Kaggle credential JSON has the wrong schema")
         os.environ.pop("KAGGLE_API_TOKEN", None)
+        os.environ.pop("KAGGLE_USERNAME", None)
+        os.environ.pop("KAGGLE_KEY", None)
         os.environ["KAGGLEHUB_VERBOSITY"] = "error"
         sys.path.insert(0, str(args.runtime_root))
         import kagglehub  # noqa: PLC0415
+        from kagglehub.auth import set_kaggle_credentials  # noqa: PLC0415
+
+        set_kaggle_credentials(credential_record["username"], credential_record["key"])
+        credential_record.clear()
+        remove_credentials(args.credentials)
+        if kagglehub.whoami(verbose=False).get("username") != DATASET_ID.partition("/")[0]:
+            raise RuntimeError("ephemeral Kaggle credential owner mismatch")
 
         resolved = Path(
             kagglehub.dataset_download(
@@ -383,7 +401,6 @@ def main() -> int:
         )
         if resolved.resolve() != args.download_root.resolve():
             raise RuntimeError("private transport download resolved to an unexpected root")
-        remove_credentials(args.credentials)
         remove_kagglehub_completion_marker(args.download_root)
         records = validate_download(args.download_root, transport)
         materialize_input(args.download_root, args.input_root, records)
