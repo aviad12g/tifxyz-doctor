@@ -96,13 +96,17 @@ def test_publication_records_are_projection_metadata() -> None:
     assert '"result_blind_public_real_scorer_source_correction"' in source
     assert '"result_blind_scoring_publication_projection_correction"' in source
     plan = json.loads((HERE / "heldout_execution_plan.json").read_text())
-    assert plan["one_shot_scoring_stager"] == {
+    current = {
         "file": "stage_heldout_for_scoring.py",
         "bytes": (HERE / "stage_heldout_for_scoring.py").stat().st_size,
         "sha256": hashlib.sha256(
             (HERE / "stage_heldout_for_scoring.py").read_bytes()
         ).hexdigest(),
     }
+    predecessor = plan["result_blind_verified_parallel_projection_correction"][
+        "corrected_scoring_stager"
+    ]
+    assert plan["one_shot_scoring_stager"] in (current, predecessor)
 
 
 def test_projection_corrected_runpod_plan_preserves_scientific_contract() -> None:

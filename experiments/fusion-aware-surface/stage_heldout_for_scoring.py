@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 import hashlib
 import json
 import os
@@ -43,6 +44,7 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_verified_parallel_real_scoring",
     "result_blind_public_commit_binding_correction",
     "result_blind_verified_parallel_projection_correction",
+    "result_blind_verified_parallel_scorer_projection_correction",
     "runpod_cpu_scoring_asset_stager",
 }
 
@@ -89,20 +91,51 @@ def scientific_projection(plan: dict) -> dict:
     }
     correction = plan.get("result_blind_real_panel_index_provenance_correction")
     if correction is None:
-        return projected
-    if not isinstance(correction, dict):
-        raise RuntimeError("invalid real-panel provenance correction record")
-    predecessor = correction.get("predecessor_panel_renderer")
-    corrected = correction.get("corrected_panel_renderer")
-    if (
-        not isinstance(predecessor, dict)
-        or set(predecessor) != {"file", "bytes", "sha256"}
-        or not isinstance(corrected, dict)
-        or set(corrected) != {"file", "bytes", "sha256"}
-        or plan.get("real_panel_renderer") != corrected
-    ):
-        raise RuntimeError("real-panel provenance correction renderer mismatch")
-    projected["real_panel_renderer"] = predecessor
+        pass
+    else:
+        if not isinstance(correction, dict):
+            raise RuntimeError("invalid real-panel provenance correction record")
+        predecessor = correction.get("predecessor_panel_renderer")
+        corrected = correction.get("corrected_panel_renderer")
+        if (
+            not isinstance(predecessor, dict)
+            or set(predecessor) != {"file", "bytes", "sha256"}
+            or not isinstance(corrected, dict)
+            or set(corrected) != {"file", "bytes", "sha256"}
+            or plan.get("real_panel_renderer") != corrected
+        ):
+            raise RuntimeError("real-panel provenance correction renderer mismatch")
+        projected["real_panel_renderer"] = predecessor
+    scorer_projection = plan.get(
+        "result_blind_verified_parallel_scorer_projection_correction"
+    )
+    if scorer_projection is not None:
+        if not isinstance(scorer_projection, dict):
+            raise RuntimeError("invalid verified-parallel scorer projection record")
+        parallel = plan.get("result_blind_verified_parallel_real_scoring")
+        if not isinstance(parallel, dict):
+            raise RuntimeError("invalid verified-parallel scorer record")
+        predecessor_scorer = parallel.get("exact_predecessor_scorer")
+        scorers = plan.get("one_shot_scorers")
+        corrected_scorer = (
+            scorers.get("real", {}).get("script") if isinstance(scorers, dict) else None
+        )
+        if (
+            predecessor_scorer
+            != {
+                "file": "score_real_test.py",
+                "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+            }
+            or corrected_scorer
+            != {
+                "file": "score_real_test_parallel.py",
+                "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c",
+            }
+        ):
+            raise RuntimeError("verified-parallel scorer projection mismatch")
+        projected_scorers = deepcopy(scorers)
+        projected_scorers["real"]["script"] = predecessor_scorer
+        projected["one_shot_scorers"] = projected_scorers
     return projected
 
 

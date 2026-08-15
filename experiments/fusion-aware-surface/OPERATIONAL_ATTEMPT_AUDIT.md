@@ -428,6 +428,19 @@ unnecessary repeat.
     No credential, private cache, NPZ, panel, probability, endpoint, result,
     scientific output, model, metric version, threshold, seed, gate,
     aggregation, ordering, or claim was opened or changed.
+36. The parallel-public-transfer replacement completed the exact public
+    runtime transfer, verified and downloaded the full private transport,
+    removed the ephemeral access token, and then failed closed during staging
+    with `corrected plan changes the cache-job scientific contract`. The new
+    bounded launcher diagnostic retained the exact pre-scientific exception.
+    Result-blind projection comparison proved the sole difference was the
+    already-published verified-equivalent real scorer filename/hash inside the
+    `one_shot_scorers` operational launch record. The correction validates the
+    exact sequential and verified-parallel scorer identities, then restores
+    only the predecessor scorer identity for the cache-job scientific
+    comparison. No NPZ, panel, probability, endpoint, result, scientific
+    output, model, metric, threshold, seed, gate, aggregation, ordering, or
+    claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 

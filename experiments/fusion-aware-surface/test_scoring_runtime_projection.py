@@ -10,6 +10,8 @@ def test_runtime_corrections_are_explicitly_operational_plan_fields() -> None:
     assert '"result_blind_scoring_runtime_projection_correction"' in source
     assert '"result_blind_parallel_real_scoring_retry"' in source
     assert '"result_blind_parallel_real_asset_transport"' in source
+    assert '"result_blind_verified_parallel_scorer_projection_correction"' in source
+    assert 'projected_scorers["real"]["script"] = predecessor_scorer' in source
 
 
 def test_staging_failure_emits_only_captured_operational_stderr() -> None:
