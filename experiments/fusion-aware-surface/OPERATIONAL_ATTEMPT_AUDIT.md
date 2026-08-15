@@ -417,6 +417,17 @@ unnecessary repeat.
     NPZ, panel, probability, endpoint, result JSON, scientific output, model,
     metric, threshold, seed, gate, aggregation, ordering, or claim was opened
     or changed.
+35. The launcher-diagnostic replacement passed its exact CPU shape and price
+    gates, then timed out while transferring the unchanged 134-MB public
+    metric-runtime wheel tree over a single SSH stream. Only about 100 MB had
+    arrived after the frozen 900-second transfer timeout. The private dataset
+    pull and scorer never started, and billing was stopped automatically. The
+    correction transfers the same 20 hash-bound public runtime files over at
+    most eight independent SSH streams; the wrapper still recomputes and
+    requires the exact frozen tree ledger before private transport or scoring.
+    No credential, private cache, NPZ, panel, probability, endpoint, result,
+    scientific output, model, metric version, threshold, seed, gate,
+    aggregation, ordering, or claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 

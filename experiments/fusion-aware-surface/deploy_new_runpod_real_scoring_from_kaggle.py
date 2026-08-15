@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor
 import json
 import stat
 import time
@@ -33,6 +34,8 @@ def ssh_endpoint(runpod, pod_id: str) -> tuple[str, int]:
 
 
 def validate_local_inputs(args: argparse.Namespace, plan: dict) -> None:
+    if identity(Path(__file__).resolve()) != plan.get("fresh_pod_deployer"):
+        raise RuntimeError("fresh CPU deployer differs from frozen plan")
     if (
         not args.credentials.is_file()
         or args.credentials.is_symlink()
@@ -61,6 +64,26 @@ def validate_local_inputs(args: argparse.Namespace, plan: dict) -> None:
     ):
         if tree_identity(root) != record:
             raise RuntimeError(f"local public tree differs from frozen plan: {root.name}")
+
+
+def transfer_metric_runtime_parallel(
+    *, rsync: list[str], root: Path, host: str, remote_root: str
+) -> None:
+    files = [path for path in sorted(root.rglob("*")) if path.is_file()]
+    if len(files) != 20 or any(path.is_symlink() for path in files):
+        raise RuntimeError("metric runtime transfer file set mismatch")
+
+    def transfer(path: Path) -> None:
+        relative = path.relative_to(root).as_posix()
+        run(
+            rsync + [str(path), f"root@{host}:{remote_root}/{relative}"],
+            timeout=900,
+        )
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = [pool.submit(transfer, path) for path in files]
+        for future in futures:
+            future.result()
 
 
 def main() -> int:
@@ -172,7 +195,16 @@ def main() -> int:
         rsync = ["rsync", "--archive", "--copy-links", "--partial", "--protect-args", "-e", transport]
         run(rsync + [str(args.wheelhouse) + "/", f"root@{host}:/workspace/kagglehub-wheelhouse-v1/"], timeout=300)
         run(rsync + [str(args.scoring_assets) + "/", f"root@{host}:/workspace/bundle/input/assets/"], timeout=300)
-        run(rsync + [str(args.metric_runtime) + "/", f"root@{host}:/workspace/real-scoring-public/metric-runtime/"], timeout=900)
+        run(
+            ssh + ["mkdir -p /workspace/real-scoring-public/metric-runtime/wheels"],
+            timeout=30,
+        )
+        transfer_metric_runtime_parallel(
+            rsync=rsync,
+            root=args.metric_runtime,
+            host=host,
+            remote_root="/workspace/real-scoring-public/metric-runtime",
+        )
         controller_files = [
             args.plan, args.launcher, args.executor, args.metric_verifier, args.puller,
             args.wrapper, args.runtime_preparer, args.runtime_bootstrap_plan,

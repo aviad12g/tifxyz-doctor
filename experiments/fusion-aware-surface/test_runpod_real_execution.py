@@ -76,6 +76,16 @@ def test_executor_projects_only_bounded_operational_exception_lines(tmp_path: Pa
     ]
 
 
+def test_new_pod_deployer_parallelizes_only_public_metric_runtime() -> None:
+    source = (HERE / "deploy_new_runpod_real_scoring_from_kaggle.py").read_text(
+        encoding="utf-8"
+    )
+    assert "ThreadPoolExecutor(max_workers=8)" in source
+    assert "transfer_metric_runtime_parallel(" in source
+    assert 'len(files) != 20' in source
+    assert 'plan.get("fresh_pod_deployer")' in source
+
+
 def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
     module = load("runpod_real_orchestrator", "orchestrate_runpod_real_scoring.py")
     source = (HERE / "orchestrate_runpod_real_scoring.py").read_text(encoding="utf-8")
