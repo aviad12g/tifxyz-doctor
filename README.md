@@ -15,6 +15,17 @@ for thresholded geometry review cues.
 The tool is read-only and CPU-only: it does not repair, rewrite, or silently
 normalize source data.
 
+## August 2026 upstream remediation
+
+The public UUID census led to a backward-compatible upstream fix in
+[ScrollPrize/villa PR #1299](https://github.com/ScrollPrize/villa/pull/1299),
+merged on 2026-08-06. The official `vc_obj2tifxyz` and
+`vc_obj2tifxyz_legacy` converters now accept an explicit `--uuid=<id>` while
+retaining their historical basename-derived default when the option is
+omitted. The exact August contribution, its tests, provenance, limitations,
+and the boundary separating it from previously submitted July work are in the
+[August reliability evidence package](docs/reliability-toolkit-final-evidence/FINAL_EVIDENCE.md).
+
 The distinction between its two result classes is intentional:
 
 | Result class | Meaning | Suitable for automation? |
