@@ -111,10 +111,16 @@ def test_publication_records_are_projection_metadata() -> None:
         "bytes": 22505,
         "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54",
     }
+    public_import_predecessor = {
+        "file": "stage_heldout_for_scoring.py",
+        "bytes": 22564,
+        "sha256": "78947c24200a3eca4cd4b2f38d78105737000ca824b99b1ff03adb91d42d9cf0",
+    }
     assert plan["one_shot_scoring_stager"] in (
         current,
         predecessor,
         scorer_exception_predecessor,
+        public_import_predecessor,
     )
 
 

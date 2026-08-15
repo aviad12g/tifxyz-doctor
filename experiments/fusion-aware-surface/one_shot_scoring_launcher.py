@@ -77,6 +77,15 @@ PROJECT_HASHES = {
 PUBLIC_ONLY_PROJECT_FILES = frozenset(
     {"score_real_test.py", "score_real_test_parallel.py", "score_synthetic_test_v2.py"}
 )
+PUBLIC_SCORER_IMPORT_FILES = frozenset(
+    {
+        "fusion_loss.py",
+        "gap_supervision.py",
+        "inference.py",
+        "normalization.py",
+        "train_fusion_aware.py",
+    }
+)
 SCORING_ASSET_PROJECT_FILES = frozenset(
     {
         "cache_real_predictions.py",
@@ -428,6 +437,18 @@ def materialize_public_scorer(mode: str, commit: str, scratch: Path) -> Path:
     return destination
 
 
+def materialize_public_scorer_imports(commit: str, scratch: Path) -> list[dict]:
+    records = []
+    for name in sorted(PUBLIC_SCORER_IMPORT_FILES):
+        raw = fetch_public(commit, name, PROJECT_HASHES[name])
+        destination = scratch / name
+        if destination.exists():
+            raise RuntimeError(f"public scorer import target already exists: {name}")
+        destination.write_bytes(raw)
+        records.append(local_identity(destination))
+    return records
+
+
 def verify_split(project: Path) -> dict:
     path = project / "real_split_manifest.json"
     if sha256_file(path) != REAL_SPLIT_MANIFEST_SHA256:
@@ -767,6 +788,9 @@ def main() -> int:
     public_scorer_path = materialize_public_scorer(
         mode, config["public_plan_commit"], scratch
     )
+    scorer_imports = materialize_public_scorer_imports(
+        config["public_plan_commit"], scratch
+    )
     split = verify_split(project)
     threshold_path, thresholds = find_threshold(input_root, plan)
     staged, staging = stage_inputs(
@@ -855,6 +879,7 @@ def main() -> int:
         "import_runtime": import_runtime,
         "metric_runtime": metric,
         "scorer_invocation": invocation,
+        "scorer_public_imports": scorer_imports,
         "panel_invocation": panel_invocation,
         "scientific_gate": {
             "all_14_cache_jobs_publicly_frozen_before_scoring": True,

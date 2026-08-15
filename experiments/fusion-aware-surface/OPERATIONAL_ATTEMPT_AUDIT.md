@@ -486,6 +486,18 @@ unnecessary repeat.
     No NPZ, panel, probability, endpoint, result, scientific output, model,
     metric, threshold, seed, gate, aggregation, ordering, or claim was opened
     or changed.
+41. The signed-bundle replacement passed its actual-host range preflight,
+    downloaded the complete private bundle, safely extracted it, rehashed all
+    284 dataset files and all 281 source identities, and entered the real
+    scorer. The scorer then failed before scientific output with the bounded
+    operational exception `ModuleNotFoundError: No module named 'inference'`.
+    Billing was stopped immediately. The correction fetches the five exact
+    hash-bound public import dependencies already named in the launcher
+    (`inference.py`, `normalization.py`, `train_fusion_aware.py`,
+    `fusion_loss.py`, and `gap_supervision.py`) beside the exact scorer before
+    invocation. No source byte, NPZ, panel, probability, endpoint, result,
+    scientific output, model, metric, threshold, seed, gate, aggregation,
+    ordering, or claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 
