@@ -511,6 +511,33 @@ unnecessary repeat.
     output, model, metric, threshold, seed, gate, aggregation, ordering, or
     claim was opened or changed.
 
+43. The exact public metric-worker retry completed the private signed-bundle
+    transport, reverified all 284 dataset files and 281 source identities,
+    removed the ephemeral signed URL, rendered the four fixed real panels, and
+    completed the unchanged real one-shot scorer on CPU-only RunPod pod
+    `69oblmaa3df8b1`. Pipeline and scorer status both recorded `COMPLETE`,
+    return code 0, plan payload
+    `de932744ea97afebe38de4e5dac13030353b2a3c49d27a69e77ae3336003894a`,
+    and `scientific_outputs_inspected: false`. The exact 15-file sealed output
+    and operational set was copied locally and reverified against checksum
+    ledger SHA-256
+    `4cb8a33e389e89ded4062eab7bb644feba60fe6e7a8e6099c36905a00d68aa1e`
+    before provider billing was terminated. No result JSON, scoring manifest,
+    panel, probability, endpoint, NPZ payload, or scientific value was opened.
+44. Joint collection of this sealed RunPod real result and retained Kaggle
+    synthetic scorer version 4 was frozen locally before either result was
+    accessed. The result-blind collector SHA-256 is
+    `a5f2b7979a751d69386b1e295f08b920e8e59b39ea89fed24bdc62105333554d`;
+    frozen plan file SHA-256 is
+    `fe0b816940e538e9e57357a865210e000a4ceb5b90b2d45edb0bfe2ea719c3ef`
+    with payload
+    `d852c0755650867d75327c972097f4c348604952a62f7331b347f594dc841e71`.
+    The collector verifies both sources before creating output, copies only the
+    seven sealed real artifacts, downloads only the sealed synthetic result and
+    scoring manifest with logs suppressed, and requires independent validation
+    next. Its dry-run preflight passed, and the complete focused suite reported
+    208 passed. No scientific artifact was parsed or inspected.
+
 ## Optional Kaggle synthetic replication
 
 RunPod remains the sole authoritative synthetic primary. The optional Kaggle

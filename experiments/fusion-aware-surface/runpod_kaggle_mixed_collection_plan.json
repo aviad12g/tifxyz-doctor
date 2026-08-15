@@ -1,0 +1,78 @@
+{
+  "collection_contract": {
+    "both_sources_verified_before_output_creation": true,
+    "independent_validation_required_after_collection": true,
+    "real_source_is_copied_without_parsing": true,
+    "result_json_scoring_manifest_or_panel_parsed_before_joint_collection": false,
+    "scientific_outputs_opened_or_inspected": false,
+    "synthetic_download_is_selected_and_log_suppressed": true
+  },
+  "collector": {
+    "bytes": 15881,
+    "file": "collect_runpod_real_kaggle_synthetic_results.py",
+    "sha256": "a5f2b7979a751d69386b1e295f08b920e8e59b39ea89fed24bdc62105333554d"
+  },
+  "kaggle_synthetic_v4": {
+    "acceptance_receipt": {
+      "bytes": 2940,
+      "file": "fusion-aware-scoring-pair-v4.json",
+      "payload_sha256": "bf581c3e9971098254070037a13a34b274b9fa42f122de78abc66edf66ef72c1",
+      "sha256": "a432b8a49f9a43af3f0b06a5b849bd8123d8aca311775aa100f5d50bb8283e6e"
+    },
+    "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+    "kernel_version": 4,
+    "launcher": {
+      "bytes": 30613,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "99637fcd462b0934c283af4e4f10b6e776605bcf7650bebd78a57c0822b42b62"
+    },
+    "package_index": {
+      "bytes": 4502,
+      "file": "generated_scoring_packages_index.json",
+      "payload_sha256": "5f335db484103c85aefb1e6ce74e61c1857d715f1282213609ee3bc9f32ff193",
+      "sha256": "ca38b660f898b7c21c14afca39e0800431e1c29615401b659a37e1b99a2e4c1b"
+    },
+    "source_kind": "completed sealed Kaggle synthetic scorer version 4"
+  },
+  "payload_sha256": "d852c0755650867d75327c972097f4c348604952a62f7331b347f594dc841e71",
+  "public_predecessor_commit": "9af766d5710be140508a7f7bf235395ab0d3647b",
+  "runpod_real": {
+    "artifact_checksum_ledger": {
+      "bytes": 1781,
+      "file": "SHA256SUMS",
+      "sha256": "4cb8a33e389e89ded4062eab7bb644feba60fe6e7a8e6099c36905a00d68aa1e"
+    },
+    "artifact_sha256s": {
+      "fusion-one-shot-real/real-panels/real_panel_01.png": "c97e0ea49da2396344dd18375138162151ac94285a83031e53cb8b3b1b8a9c58",
+      "fusion-one-shot-real/real-panels/real_panel_02.png": "94a34fe587ebfb0e4955cde32593fb29accc00eca851dca3be987b0d79fe3769",
+      "fusion-one-shot-real/real-panels/real_panel_03.png": "def8bda21c78b777bdaed2cb748bfc00c5b0bf79a66f5b1f2d359add800663de",
+      "fusion-one-shot-real/real-panels/real_panel_04.png": "38338db01e8562efd52aba6684b794331e02f113dad227b89c04faaf859b7b70",
+      "fusion-one-shot-real/real-panels/real_panel_render_manifest.json": "10a43962245973832b297ccd7deefa9b787d484d03f6ed81c8ccdbc0ad75150a",
+      "fusion-one-shot-real/scoring_run_manifest.json": "4d8168d2ca03e6bb77e59a7ce2685a53b1f3b6d26d6057b9d523ddec3c14da14",
+      "fusion-one-shot-real/sealed_real_test_results.json": "e07ce95e6420fbfd3e01602cb0f74cb33752739529262d245e3aa87561fd9976",
+      "real-scoring-pipeline-status-v12/REAL_SCORING_COMPLETE": "7d05b9de62ff4629f30f7e09f74cda4164d66eb90802bedadfecb5f637665ff8",
+      "real-scoring-pipeline-status-v12/pipeline-operational.log": "f0a83345835e622a3a125677ee7689865e65a68afc33960d8d0d745fcffc49fe",
+      "real-scoring-pipeline-status-v12/status.json": "e23816b3a32db10124c9281e8e9ba48cfcbc850aab2242202331e66451b64a08",
+      "real-scoring-status-v12/REAL_SCORING_COMPLETE": "7d05b9de62ff4629f30f7e09f74cda4164d66eb90802bedadfecb5f637665ff8",
+      "real-scoring-status-v12/real-scoring-operational.log": "c05c41a59d0f2b7c4b73446434da1c74a60216ff6aeb4619c90daab0fc734dfc",
+      "real-scoring-status-v12/status.json": "c96608390e2d40fd55ea2445b7f73d87c12d4fe5a8454bdd27b3d5927852dd99",
+      "real-transport-status-v12/PRIVATE_TRANSPORT_VERIFIED": "7d05b9de62ff4629f30f7e09f74cda4164d66eb90802bedadfecb5f637665ff8",
+      "real-transport-status-v12/transport-status.json": "d0251c2e481890765f7dc0d31d871a50478aad81f0203dfc5aa715c50ff9909d"
+    },
+    "execution_plan": {
+      "bytes": 43684,
+      "file": "runpod_real_scoring_private_kaggle_metric_worker_plan.json",
+      "payload_sha256": "de932744ea97afebe38de4e5dac13030353b2a3c49d27a69e77ae3336003894a",
+      "sha256": "49cd221325e14d41c439efd54151260487113efef993869c6ad54f4daaa8f747"
+    },
+    "provider_receipt": {
+      "bytes": 1835,
+      "file": "provider_receipt.json",
+      "payload_sha256": "90472471953adfa123f4446bb26e211b291204b325fe9c0f5549c6a7fe77b5b7",
+      "sha256": "fbab68862a99dbed3f72f6ccc5506c04d938f66640deef5b412251ef35c88fcf"
+    },
+    "source_kind": "sealed local copy from completed RunPod real scorer"
+  },
+  "schema_version": "1.0",
+  "status": "RunPod real and Kaggle synthetic v4 mixed collection frozen before result access"
+}
