@@ -337,13 +337,13 @@
       "run": "gap8_seed47"
     }
   ],
-  "payload_sha256": "f07325081390f8c88cfd9531bbbeb28fc053b6e27b954af21d9fb1d2e3117210",
+  "payload_sha256": "7034898c7b5c612904db495f9e64c5acd82efa055f8a6e15f4197acfa4b41561",
   "public_execution_plan": {
-    "bytes": 52907,
-    "commit": "414aa55ebba2c273e45b685a989663ab387be4cb",
+    "bytes": 56633,
+    "commit": "03353db5431c685d038b43ad3bef44e53ed883aa",
     "file": "heldout_execution_plan.json",
-    "payload_sha256": "0154df3bcf8568b5c52ad36e9d9eb68594062d57f78c5426bf7c9015129be096",
-    "sha256": "bed684b2fb1d4d505bffc8bc4350036d7745dd90acb4031f18018f753f4cc560"
+    "payload_sha256": "1231137bbd068be19a83c209b3a2d269b7bbcb96cbc08496b642d181e4ea309d",
+    "sha256": "3d9eafa2fc56dc899557d6a732cb2c83d33e22e9c3d9a99a3cc723686e0451dc"
   },
   "result_blind_launcher_alias_contract_correction": {
     "launcher_bytes_changed": false,
@@ -375,6 +375,14 @@
       "status": "COMPLETE"
     },
     "synthetic_v4_retained": true
+  },
+  "result_blind_public_commit_binding_correction": {
+    "actual_equivalence_commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+    "erroneous_unpublished_equivalence_commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "scientific_outputs_opened_or_used": false,
+    "status": "result-blind local Git commit binding corrected before provider retry"
   },
   "result_blind_public_real_scorer_source_correction": {
     "exact_original_real_scorer_published": true,
@@ -502,6 +510,32 @@
     "retry_permitted_after_exact_wheel_resolution": true,
     "scientific_contract_changed": false,
     "scientific_result_created_or_opened": false
+  },
+  "result_blind_verified_parallel_projection_correction": {
+    "held_out_result_opened_or_used": false,
+    "public_execution_plan_commit": "6f0a49bb99592098f980ce57fdbc6d62578af352",
+    "scientific_contract_changed": false
+  },
+  "result_blind_verified_parallel_real_scoring": {
+    "equivalence_report": {
+      "bytes": 1838,
+      "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+      "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+      "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+      "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960"
+    },
+    "held_out_result_opened_or_used": false,
+    "parallel_workers": 32,
+    "public_execution_plan_commit": "c88213541046a665bd7b0122f52a0271f86de4c0",
+    "real_retry_permitted": true,
+    "scientific_contract_changed": false
+  },
+  "result_blind_verified_parallel_scorer_projection_correction": {
+    "held_out_result_opened_or_used": false,
+    "public_execution_plan_commit": "03353db5431c685d038b43ad3bef44e53ed883aa",
+    "public_tooling_commit": "03cdc54b21a3558289dd18d5201c6fff85bd784c",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false
   },
   "schema_version": "1.0",
   "scientific_gate": {
