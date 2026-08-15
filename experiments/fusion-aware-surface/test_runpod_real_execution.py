@@ -58,6 +58,24 @@ def test_wrapper_propagates_executor_result_blind_status() -> None:
     assert 'operational_status=args.scoring_status_root / "status.json"' in source
 
 
+def test_executor_projects_only_bounded_operational_exception_lines(tmp_path: Path) -> None:
+    executor = load("runpod_real_executor_diagnostic", "runpod_execute_real_scoring.py")
+    log = tmp_path / "real-scoring-operational.log"
+    log.write_text(
+        "scientific stdout must not be projected\n"
+        "Traceback (most recent call last):\n"
+        "ValueError: exact public identity mismatch\n"
+        + "X" * 2_000
+        + "Error: oversized line\n"
+        "RuntimeError: launcher failed closed\n",
+        encoding="utf-8",
+    )
+    assert executor.launcher_operational_exceptions(log) == [
+        "ValueError: exact public identity mismatch",
+        "RuntimeError: launcher failed closed",
+    ]
+
+
 def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:
     module = load("runpod_real_orchestrator", "orchestrate_runpod_real_scoring.py")
     source = (HERE / "orchestrate_runpod_real_scoring.py").read_text(encoding="utf-8")

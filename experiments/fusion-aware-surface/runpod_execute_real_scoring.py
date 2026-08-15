@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -52,6 +53,28 @@ def write_status(path: Path, state: str, **extra: object) -> None:
     temporary = path.with_suffix(".tmp")
     temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     temporary.replace(path)
+
+
+def launcher_operational_exceptions(path: Path) -> list[str]:
+    """Return only exception lines from the sealed launcher's operational log.
+
+    The launcher never echoes scientific scorer stdout.  On failure it writes
+    operational tracebacks to this log.  Restricting the projection to bounded
+    exception lines keeps results sealed while retaining an actionable error.
+    """
+    if not path.is_file():
+        return []
+    raw = path.read_bytes()
+    if len(raw) > 8 << 20:
+        raw = raw[-(8 << 20) :]
+    matches: list[str] = []
+    pattern = re.compile(r"^(?:[A-Za-z_][\w.]*)(?:Error|Exception):\s+.+$")
+    for line in raw.decode("utf-8", errors="replace").splitlines():
+        candidate = line.strip()
+        if len(candidate) <= 1_024 and pattern.fullmatch(candidate):
+            if not matches or matches[-1] != candidate:
+                matches.append(candidate)
+    return matches[-3:]
 
 
 def validate_execution_contract(plan: dict) -> None:
@@ -321,7 +344,11 @@ def main() -> int:
                 check=False,
             )
         if completed.returncode != 0:
-            raise RuntimeError(f"real one-shot scorer failed with return code {completed.returncode}")
+            details = launcher_operational_exceptions(log_path)
+            suffix = f"; launcher operational exceptions: {' | '.join(details)}" if details else ""
+            raise RuntimeError(
+                f"real one-shot scorer failed with return code {completed.returncode}{suffix}"
+            )
         output = kaggle_working / "fusion-one-shot-real"
         expected = {
             "sealed_real_test_results.json",

@@ -405,6 +405,18 @@ unnecessary repeat.
     and sealed-cache identity checks remain. The wrapper also retains future
     executor child errors. No NPZ, panel, probability, endpoint, result JSON,
     or scientific output was opened or changed.
+34. The corrected-executor replacement completed and verified the full private
+    transport, removed the ephemeral access token, and reached the exact frozen
+    launcher. The launcher returned nonzero before a complete artifact set was
+    accepted. Billing was terminated immediately. The retained parent status
+    reported only the launcher's generic fail-closed return code, while the
+    terminated provider workspace made the child operational traceback
+    unavailable. The result-blind correction projects only bounded exception
+    type/message lines from the launcher's operational log into the executor
+    status; scientific scorer stdout remains unexamined and unprojected. No
+    NPZ, panel, probability, endpoint, result JSON, scientific output, model,
+    metric, threshold, seed, gate, aggregation, ordering, or claim was opened
+    or changed.
 
 ## Optional Kaggle synthetic replication
 
