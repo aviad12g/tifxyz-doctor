@@ -537,6 +537,29 @@ unnecessary repeat.
     scoring manifest with logs suppressed, and requires independent validation
     next. Its dry-run preflight passed, and the complete focused suite reported
     208 passed. No scientific artifact was parsed or inspected.
+45. After the collector contract became public, the exact frozen collection
+    completed. The RunPod real source was copied from the already terminated,
+    checksum-verified local output; the unchanged Kaggle synthetic version 4
+    source was independently confirmed complete and downloaded with logs
+    suppressed. The mixed source receipt has file SHA-256
+    `9bcb36ddf219cabc631cd8ef286e33eae94c1b7796d20ded78271c4b4a2dd357`
+    and payload
+    `45d824725cf0cf4b0062cec8ae9760d7382aeb394ba296f14e1070ee9b436fec`.
+    The collector parsed neither result, scoring manifest, nor panel and
+    declared independent validation as the next required step.
+46. A dedicated mixed-provenance validator and evidence renderer were frozen
+    before any scientific value or panel was opened. They replace only the old
+    assumption that both scorers ran on Kaggle: the real source is bound to the
+    completed CPU-only RunPod provenance and the synthetic source to accepted
+    Kaggle version 4. The original scientific recomputation functions,
+    thresholds, split, seven gates, four fixed panels, twelve matched visual
+    comparisons, and result-neutral reporting rules are unchanged. The
+    validator SHA-256 is
+    `f977b9e105f378ed55390d87e6079d30910ef4cedd640b0bb0cd659c08b91bfe`;
+    the renderer SHA-256 is
+    `9bebdf214b4d84d8c1b3bc8425694c4d6792572fcc83b87c7f727b65f92d4bed`.
+    The complete focused suite again reported 208 passed. No scientific result
+    value or panel was opened during this freeze.
 
 ## Optional Kaggle synthetic replication
 
