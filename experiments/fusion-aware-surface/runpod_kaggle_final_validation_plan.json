@@ -17,11 +17,9 @@
         "payload_sha256": "85cf0c992bdff646d376f3c8cf8d114d374c537263a9443fe6c2e320cbea63af"
       },
       "public_execution_plan": {
-        "bytes": 61799,
         "commit": "95ea19d20aff1984976fcaf6cecaca30387882c6",
-        "file": "heldout_execution_plan.json",
-        "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e",
-        "sha256": "cd02eec3812b5b04dd3902681aad875d78dc43a3c567f28f3b5ce05e184ff4a6"
+        "file_sha256": "cd02eec3812b5b04dd3902681aad875d78dc43a3c567f28f3b5ce05e184ff4a6",
+        "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e"
       },
       "public_imports": [
         {
@@ -102,11 +100,11 @@
     }
   },
   "freezer": {
-    "bytes": 7085,
+    "bytes": 7363,
     "file": "freeze_runpod_kaggle_final_validation.py",
-    "sha256": "32da5dbf08ba86289befba5b33a1d0975338b815ee3dd59067fb99cbfe042ded"
+    "sha256": "0844d657e7db0ead7536ddd8a992c43fcd4bb9d7f27990bdb7b8a301135fdbcc"
   },
-  "payload_sha256": "beb19357d729984f65872b26027cb778b0479ea389615f3f79e7bfbbf9badd95",
+  "payload_sha256": "c7d90777ce204afa1fd113ffb545bc36c2ff0f16a34737516ce24f980628f6ce",
   "renderer": {
     "bytes": 5540,
     "file": "render_runpod_kaggle_final_evidence.py",
@@ -137,9 +135,9 @@
       "sha256": "6d4b730087dd61897db40741761e97fa329b2c19f7e520495bf964341b0935bc"
     },
     "operational_audit": {
-      "bytes": 41158,
+      "bytes": 41721,
       "file": "OPERATIONAL_ATTEMPT_AUDIT.md",
-      "sha256": "65ec11fc85f04fd65f5ed58932202ca1769ee6f9ed6f4e579d713a502ed53a11"
+      "sha256": "67688ebd460a0e86119c8d58d66e1000303e327afc27033df282ac3b44518bb0"
     },
     "package_index": {
       "bytes": 4502,

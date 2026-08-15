@@ -560,6 +560,14 @@ unnecessary repeat.
     `9bebdf214b4d84d8c1b3bc8425694c4d6792572fcc83b87c7f727b65f92d4bed`.
     The complete focused suite again reported 208 passed. No scientific result
     value or panel was opened during this freeze.
+47. The first public mixed-validator invocation failed closed before loading
+    either scientific result. The real scorer manifest stores its public plan
+    identity as commit, file SHA-256, and payload SHA-256, while the validation
+    freezer had retained the source plan's additional filename and byte-size
+    transport fields. The correction projects the already-frozen identity into
+    the scorer-manifest schema before comparison. No result value, scientific
+    endpoint, probability, NPZ payload, or panel-dependent selection was read
+    or changed.
 
 ## Optional Kaggle synthetic replication
 

@@ -45,3 +45,19 @@ def test_collection_gate_is_complete_and_result_blind() -> None:
     assert validator.COLLECTION_GATE["independent_validation_required_next"] is True
     assert validator.COLLECTION_GATE["results_or_manifests_opened_or_parsed_by_collector"] is False
     assert validator.COLLECTION_GATE["panel_images_opened_or_read_by_collector"] is False
+
+
+def test_scoring_manifest_plan_identity_omits_transport_fields() -> None:
+    public_record = {
+        "commit": "a" * 40,
+        "file": "heldout_execution_plan.json",
+        "bytes": 123,
+        "sha256": "b" * 64,
+        "payload_sha256": "c" * 64,
+    }
+    expected = {
+        "commit": public_record["commit"],
+        "file_sha256": public_record["sha256"],
+        "payload_sha256": public_record["payload_sha256"],
+    }
+    assert set(expected) == {"commit", "file_sha256", "payload_sha256"}

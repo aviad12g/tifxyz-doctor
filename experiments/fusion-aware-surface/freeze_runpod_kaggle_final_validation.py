@@ -113,7 +113,13 @@ def main() -> int:
         },
         "expected_run_provenance": {
             "real": {
-                "public_execution_plan": delivery["public_execution_plan"],
+                "public_execution_plan": {
+                    "commit": delivery["public_execution_plan"]["commit"],
+                    "file_sha256": delivery["public_execution_plan"]["sha256"],
+                    "payload_sha256": delivery["public_execution_plan"][
+                        "payload_sha256"
+                    ],
+                },
                 "public_cache_delivery": {
                     "commit": runpod["public_runpod_commit"],
                     "file_sha256": sha256_file(args.delivery),
