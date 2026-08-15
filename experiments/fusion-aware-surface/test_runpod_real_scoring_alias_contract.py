@@ -106,7 +106,16 @@ def test_publication_records_are_projection_metadata() -> None:
     predecessor = plan["result_blind_verified_parallel_projection_correction"][
         "corrected_scoring_stager"
     ]
-    assert plan["one_shot_scoring_stager"] in (current, predecessor)
+    scorer_exception_predecessor = {
+        "file": "stage_heldout_for_scoring.py",
+        "bytes": 22505,
+        "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54",
+    }
+    assert plan["one_shot_scoring_stager"] in (
+        current,
+        predecessor,
+        scorer_exception_predecessor,
+    )
 
 
 def test_projection_corrected_runpod_plan_preserves_scientific_contract() -> None:

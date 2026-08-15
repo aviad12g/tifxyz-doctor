@@ -69,12 +69,13 @@ def require_commit(value: str, label: str) -> str:
     return value
 
 
-def correction(launcher: Path, tooling_commit: str) -> dict:
+def correction(launcher: Path, stager: Path, tooling_commit: str) -> dict:
     return {
         "schema_version": "1.0",
         "status": "bounded scorer stderr exception projection frozen before retry",
         "public_tooling_commit": require_commit(tooling_commit, "public tooling commit"),
         "corrected_launcher": identity(launcher),
+        "corrected_stager": identity(stager),
         "failed_attempt": FAILED_RECEIPT | {
             "stage": "exact real scorer subprocess after complete staging",
             "failure_message": "one-shot scorer failed; scientific stdout remains sealed",
@@ -101,8 +102,9 @@ def freeze_plan(args: argparse.Namespace) -> None:
     if plan["payload_sha256"] != PLAN_PREDECESSOR["payload_sha256"]:
         raise RuntimeError("predecessor plan payload mismatch")
     plan["one_shot_scoring_launcher"] = identity(args.launcher)
+    plan["one_shot_scoring_stager"] = identity(args.stager)
     plan["result_blind_scorer_exception_projection_correction"] = correction(
-        args.launcher, args.public_tooling_commit
+        args.launcher, args.stager, args.public_tooling_commit
     )
     write_hashed(args.plan, plan)
     print("SCORER_EXCEPTION_PROJECTION_PLAN_FROZEN")
@@ -141,6 +143,7 @@ def main() -> int:
     plan = commands.add_parser("plan")
     plan.add_argument("--plan", type=Path, required=True)
     plan.add_argument("--launcher", type=Path, required=True)
+    plan.add_argument("--stager", type=Path, required=True)
     plan.add_argument("--public-tooling-commit", required=True)
     plan.set_defaults(function=freeze_plan)
     delivery = commands.add_parser("delivery")
