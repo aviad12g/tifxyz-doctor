@@ -2,7 +2,52 @@
 
 August 2026 core-pipeline experiment for Vesuvius surface detection.
 
-**Status: frozen design; no control or intervention training has run.**
+**Status: completed preregistered experiment; sealed held-out evidence is public.**
+
+The final experiment passed 5 of 7 preregistered gates. Gap8 reduced pooled
+synthetic conditional fusion by 10.667 percentage points and improved pooled
+held-out real blend by 0.003359 and TopoScore by 0.004928, but it failed both
+safety guardrails: detection fell by 7.805 points and false splitting rose by
+13.351 points. Because every primary gate was required to pass, Gap8 did not
+meet the overall preregistered success criterion and is not a drop-in
+production replacement. See the
+[complete evidence report](../../docs/fusion-aware-final-evidence/FINAL_EVIDENCE.md)
+for every gate, fixed panel, adverse result, hash, and limitation.
+
+## One-command mechanism demo
+
+Run a pinned, checkpoint-free toy demonstration of the exact supervision
+primitive:
+
+```bash
+./experiments/fusion-aware-surface/run_gap8_demo.sh
+```
+
+The command creates an isolated virtual environment and writes three files to
+`experiments/fusion-aware-surface/gap8-demo-output/`:
+
+- `gap8_demo.png`: exact sheet instances, their shared air-gap mask, and the
+  resulting weight map;
+- `demo_summary.json`: fixed geometry counts and the normalized gap-gradient
+  multiplier; and
+- `demo_manifest.json`: SHA-256 and byte size for both artifacts.
+
+With the pinned demo environment, the expected invariants are 423 exact gap
+voxels and a 6.054693274 normalized gap-gradient multiplier. The expected
+artifact identities are:
+
+| file | bytes | SHA-256 |
+|---|---:|---|
+| `gap8_demo.png` | 3545 | `f1ff3c088f2e6e255beb325a3a2477dfb0a2d19c7d51de051f8bd5066033fc2b` |
+| `demo_summary.json` | 442 | `85720feb8e371720f3e1f6711f3204c8e83b3992ecf88c7b0cea8f8a53bbbd13` |
+
+The demo uses public toy geometry only. It demonstrates how Gap8 identifies
+the compressed-layer gap and changes supervision; it does not download a
+checkpoint, rerun training, or claim the published held-out result. To place
+the primitive in another training loop, derive the mask with
+`inter_sheet_gap_mask(...)`, broadcast it over ZYX if needed, and pass it to
+`fusion_aware_surface_loss(..., gap_weight=8)`. Use `gap_weight=1` for the
+matched control.
 
 The released binary surface model often turns two tightly packed sheets into
 one broad probability peak. Ordinary binary fine-tuning can improve voxel AUC

@@ -7,4 +7,5 @@ checkpoints/
 outputs/
 archives/
 extracted/
-
+.venv-gap8-demo/
+gap8-demo-output/
