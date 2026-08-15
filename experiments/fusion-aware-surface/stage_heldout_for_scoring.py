@@ -47,6 +47,7 @@ OPERATIONAL_PLAN_FIELDS = {
     "result_blind_verified_parallel_scorer_projection_correction",
     "result_blind_scorer_exception_projection_correction",
     "result_blind_scorer_public_import_dependency_correction",
+    "result_blind_scorer_public_metric_worker_correction",
     "runpod_cpu_scoring_asset_stager",
 }
 

@@ -449,6 +449,16 @@ def materialize_public_scorer_imports(commit: str, scratch: Path) -> list[dict]:
     return records
 
 
+def materialize_public_metric_worker(commit: str, scratch: Path) -> dict:
+    name = "official_metric.py"
+    raw = fetch_public(commit, name, PROJECT_HASHES[name])
+    destination = scratch / name
+    if destination.exists():
+        raise RuntimeError("public metric worker target already exists")
+    destination.write_bytes(raw)
+    return local_identity(destination)
+
+
 def verify_split(project: Path) -> dict:
     path = project / "real_split_manifest.json"
     if sha256_file(path) != REAL_SPLIT_MANIFEST_SHA256:
@@ -791,6 +801,9 @@ def main() -> int:
     scorer_imports = materialize_public_scorer_imports(
         config["public_plan_commit"], scratch
     )
+    scorer_metric_worker = materialize_public_metric_worker(
+        config["public_plan_commit"], scratch
+    )
     split = verify_split(project)
     threshold_path, thresholds = find_threshold(input_root, plan)
     staged, staging = stage_inputs(
@@ -880,6 +893,7 @@ def main() -> int:
         "metric_runtime": metric,
         "scorer_invocation": invocation,
         "scorer_public_imports": scorer_imports,
+        "scorer_public_metric_worker": scorer_metric_worker,
         "panel_invocation": panel_invocation,
         "scientific_gate": {
             "all_14_cache_jobs_publicly_frozen_before_scoring": True,

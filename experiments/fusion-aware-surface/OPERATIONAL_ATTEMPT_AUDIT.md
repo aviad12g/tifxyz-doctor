@@ -498,6 +498,18 @@ unnecessary repeat.
     invocation. No source byte, NPZ, panel, probability, endpoint, result,
     scientific output, model, metric, threshold, seed, gate, aggregation,
     ordering, or claim was opened or changed.
+42. The exact public-import retry again verified the complete signed private
+    transport and entered the unchanged real scorer. Its first independent
+    official-metric subprocess failed before producing scientific output
+    because the scorer's default sibling worker path
+    `fusion-one-shot-scoring/official_metric.py` was absent. The bounded
+    exception was `can't open file .../official_metric.py: [Errno 2] No such
+    file or directory`. Billing was stopped immediately. The correction
+    fetches the already hash-bound public `official_metric.py` beside the exact
+    scorer before invocation, matching the scorer's unchanged default worker
+    path. No source byte, NPZ, panel, probability, endpoint, result, scientific
+    output, model, metric, threshold, seed, gate, aggregation, ordering, or
+    claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 
