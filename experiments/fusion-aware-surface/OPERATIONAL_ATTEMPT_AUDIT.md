@@ -441,6 +441,16 @@ unnecessary repeat.
     comparison. No NPZ, panel, probability, endpoint, result, scientific
     output, model, metric, threshold, seed, gate, aggregation, ordering, or
     claim was opened or changed.
+37. The corrected-stager-projection replacement passed public setup, private
+    transport, credential removal, complete staging, and entered the exact
+    scorer subprocess. That subprocess returned nonzero before an accepted
+    result was produced. The launcher deliberately retained scientific stdout
+    but exposed only its generic fail-closed message, so billing was stopped
+    without opening the scorer stream. The correction projects at most three
+    bounded exception type/message lines from scorer stderr while continuing
+    to seal all scorer stdout. No NPZ, panel, probability, endpoint, result,
+    scientific output, model, metric, threshold, seed, gate, aggregation,
+    ordering, or claim was opened or changed.
 
 ## Optional Kaggle synthetic replication
 

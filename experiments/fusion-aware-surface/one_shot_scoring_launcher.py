@@ -14,6 +14,7 @@ import importlib.metadata
 import inspect
 import json
 import os
+import re
 import subprocess
 import sys
 import urllib.request
@@ -107,6 +108,18 @@ def sha256_file(path: Path) -> str:
         for chunk in iter(lambda: handle.read(8 << 20), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def operational_exception_lines(stderr: bytes) -> list[str]:
+    """Project bounded exception lines without exposing scorer stdout."""
+    matches: list[str] = []
+    pattern = re.compile(r"^(?:[A-Za-z_][\w.]*)(?:Error|Exception):\s+.+$")
+    for line in stderr[-(8 << 20) :].decode("utf-8", errors="replace").splitlines():
+        candidate = line.strip()
+        if len(candidate) <= 1_024 and pattern.fullmatch(candidate):
+            if not matches or matches[-1] != candidate:
+                matches.append(candidate)
+    return matches[-3:]
 
 
 def canonical_payload_sha256(payload: dict) -> str:
@@ -636,7 +649,11 @@ def execute_scorer(
         timeout=42_000,
     )
     if completed.returncode != 0:
-        raise RuntimeError("one-shot scorer failed; scientific stdout remains sealed")
+        details = operational_exception_lines(completed.stderr)
+        suffix = f"; operational exceptions: {' | '.join(details)}" if details else ""
+        raise RuntimeError(
+            "one-shot scorer failed; scientific stdout remains sealed" + suffix
+        )
     return result_path, {
         "script": {"file": script_name, "sha256": PROJECT_HASHES[script_name]},
         "command": command,
