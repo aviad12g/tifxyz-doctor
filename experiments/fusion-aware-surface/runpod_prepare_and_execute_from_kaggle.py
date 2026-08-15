@@ -252,6 +252,7 @@ def main() -> int:
                     "--working-root", str(args.working_root),
                 ],
                 log,
+                operational_status=args.scoring_status_root / "status.json",
             )
         scoring = json.loads((args.scoring_status_root / "status.json").read_text(encoding="utf-8"))
         if scoring.get("state") != "COMPLETE" or scoring.get("returncode") != 0:

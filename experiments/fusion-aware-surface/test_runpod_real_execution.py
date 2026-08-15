@@ -1,4 +1,5 @@
 import importlib.util
+import json
 from pathlib import Path
 
 
@@ -35,6 +36,26 @@ def test_executor_preserves_sealed_outputs_and_runs_fixed_launcher() -> None:
     assert 'observed_uv != "uv 0.8.22"' in source
     assert 'Path(plan["runtime"]["python_executable"])' in source
     assert 'plan["runtime"]["python_source_sha256"]' in source
+
+
+def test_executor_accepts_current_frozen_retry_by_contract_not_status_text() -> None:
+    executor = load("runpod_real_executor", "runpod_execute_real_scoring.py")
+    plan = json.loads(
+        (HERE / "runpod_real_scoring_private_kaggle_parallel_manifest_identity_plan.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    assert plan["status"] != (
+        "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress"
+    )
+    executor.validate_execution_contract(plan)
+
+
+def test_wrapper_propagates_executor_result_blind_status() -> None:
+    source = (HERE / "runpod_prepare_and_execute_from_kaggle.py").read_text(
+        encoding="utf-8"
+    )
+    assert 'operational_status=args.scoring_status_root / "status.json"' in source
 
 
 def test_orchestrator_has_manual_wall_clock_budget_enforcement() -> None:

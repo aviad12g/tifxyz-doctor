@@ -389,6 +389,22 @@ unnecessary repeat.
     payload-hash check. No NPZ was parsed and no cache, scorer, metric,
     threshold, seed, panel, endpoint, gate, aggregation, ordering, or claim
     changes.
+33. The manifest-identity-corrected replacement completed private download and
+    verification, removed the credential, and then returned nonzero from the
+    executor before the wrapper could retain its child error. Billing was
+    stopped. The provider did not preserve the stopped workspace, so the child
+    status was unavailable after a brief result-blind diagnostic resume.
+    Deterministic local execution-path inspection established that the
+    executor was guaranteed to reject every corrected retry plan: it required
+    the original plan's literal top-level status string, while each frozen
+    operational correction necessarily replaces that string. The correction
+    removes only that brittle text comparison and instead requires the exact
+    zero-GPU/32-vCPU/120-GB-minimum/USD-1.28 provider fields, the unchanged
+    result-blind scientific gate, and the complete 32-worker equivalence
+    contract. All existing file, launcher, manifest, runtime, asset, threshold,
+    and sealed-cache identity checks remain. The wrapper also retains future
+    executor child errors. No NPZ, panel, probability, endpoint, result JSON,
+    or scientific output was opened or changed.
 
 ## Optional Kaggle synthetic replication
 

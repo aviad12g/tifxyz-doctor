@@ -54,6 +54,54 @@ def write_status(path: Path, state: str, **extra: object) -> None:
     temporary.replace(path)
 
 
+def validate_execution_contract(plan: dict) -> None:
+    provider = plan.get("provider", {})
+    if {
+        "compute_type": provider.get("compute_type"),
+        "gpu_count": provider.get("gpu_count"),
+        "vcpu_count": provider.get("vcpu_count"),
+        "minimum_memory_gb": provider.get("minimum_memory_gb"),
+        "maximum_price_usd_per_hour": provider.get("maximum_price_usd_per_hour"),
+    } != {
+        "compute_type": "CPU",
+        "gpu_count": 0,
+        "vcpu_count": 32,
+        "minimum_memory_gb": 120,
+        "maximum_price_usd_per_hour": 1.28,
+    }:
+        raise RuntimeError("wrong CPU-only RunPod provider contract")
+    gate = plan.get("scientific_gate", {})
+    if {
+        "gpu_compute_permitted": gate.get("gpu_compute_permitted"),
+        "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": gate.get(
+            "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed"
+        ),
+        "scientific_result_opened_or_used": gate.get("scientific_result_opened_or_used"),
+        "synthetic_version_4_remains_complete_and_sealed": gate.get(
+            "synthetic_version_4_remains_complete_and_sealed"
+        ),
+    } != {
+        "gpu_compute_permitted": False,
+        "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": False,
+        "scientific_result_opened_or_used": False,
+        "synthetic_version_4_remains_complete_and_sealed": True,
+    }:
+        raise RuntimeError("wrong result-blind scientific contract")
+    parallel = plan.get("result_blind_verified_parallel_cpu_retry", {})
+    scientific = parallel.get("scientific_contract", {})
+    if (
+        parallel.get("parallel_workers") != 32
+        or scientific.get("frozen_cache_order_preserved") is not True
+        or scientific.get("held_out_result_opened_or_used") is not False
+        or scientific.get("model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed")
+        is not False
+        or scientific.get("only_independent_subprocess_scheduling_changed") is not True
+        or scientific.get("per_cache_metric_subprocess_changed") is not False
+        or scientific.get("test_time_tuning_permitted") is not False
+    ):
+        raise RuntimeError("wrong verified-parallel scientific contract")
+
+
 def verify_sealed_inputs(root: Path, manifest: dict) -> None:
     jobs = manifest.get("jobs")
     if not isinstance(jobs, list) or len(jobs) != 7:
@@ -172,8 +220,7 @@ def main() -> int:
     try:
         plan = load_hashed(args.plan)
         manifest = load_hashed(args.input_manifest)
-        if plan.get("status") != "result-blind CPU-only RunPod real one-shot scoring frozen before private cache egress":
-            raise RuntimeError("wrong CPU-only RunPod real-scoring plan status")
+        validate_execution_contract(plan)
         if identity(Path(__file__).resolve()) != plan["remote_executor"]:
             raise RuntimeError("remote executor differs from frozen plan")
         if identity(args.launcher) != plan["embedded_real_launcher"]:
