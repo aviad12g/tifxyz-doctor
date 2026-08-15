@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 32918,
+    "bytes": 33660,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "3574d717a650ef2a8ea1e3aa1056a0d4784b8d2ce0dd6cb0f0fb462595ebc1fc"
+    "sha256": "bfa271e2fadcf586b4af081fcdb5cdf34018fd6400a56ae5e98017f8951e0e35"
   },
   "one_shot_scoring_stager": {
-    "bytes": 22505,
+    "bytes": 22564,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54"
+    "sha256": "78947c24200a3eca4cd4b2f38d78105737000ca824b99b1ff03adb91d42d9cf0"
   },
-  "payload_sha256": "1231137bbd068be19a83c209b3a2d269b7bbcb96cbc08496b642d181e4ea309d",
+  "payload_sha256": "f5689728be502080b678dc91f677fe8d3465154f6245fe5c04cd7d6e8a5643d9",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -656,6 +656,40 @@
       "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
     },
     "status": "result-blind RunPod real-scoring retry frozen before private cache egress"
+  },
+  "result_blind_scorer_exception_projection_correction": {
+    "corrected_launcher": {
+      "bytes": 33660,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "bfa271e2fadcf586b4af081fcdb5cdf34018fd6400a56ae5e98017f8951e0e35"
+    },
+    "corrected_stager": {
+      "bytes": 22564,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "78947c24200a3eca4cd4b2f38d78105737000ca824b99b1ff03adb91d42d9cf0"
+    },
+    "failed_attempt": {
+      "failure_message": "one-shot scorer failed; scientific stdout remains sealed",
+      "file": "provider_receipt.json",
+      "payload_sha256": "ff6d5dfc169e14b8159a0bf47ba9aed1c44d47c3aa5d9a16a6d7386236eef7a0",
+      "pod_id": "k0fxlidhmzyi23",
+      "scientific_outputs_inspected": false,
+      "stage": "exact real scorer subprocess after complete staging"
+    },
+    "projection": {
+      "maximum_exception_lines": 3,
+      "maximum_line_bytes": 1024,
+      "scientific_stdout_projected": false,
+      "stream": "stderr"
+    },
+    "public_tooling_commit": "0c4a5df6a66030678866360679e8aa54fc91e8c7",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "held_out_result_opened_or_used": false,
+      "scorer_source_changed": false
+    },
+    "status": "bounded scorer stderr exception projection frozen before retry"
   },
   "result_blind_scoring_asset_correction": {
     "cause": {
