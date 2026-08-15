@@ -84,11 +84,11 @@
     "sha256": "3574d717a650ef2a8ea1e3aa1056a0d4784b8d2ce0dd6cb0f0fb462595ebc1fc"
   },
   "one_shot_scoring_stager": {
-    "bytes": 20954,
+    "bytes": 22505,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "5a94052d908557e1d8f3b0ab5e145569632c5ce1164d3bcbbd5b3ecdc2ec58e0"
+    "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54"
   },
-  "payload_sha256": "e039587d21b9b7265cb36ea3101e648904df1f8728c6c86e84190b518800429f",
+  "payload_sha256": "1231137bbd068be19a83c209b3a2d269b7bbcb96cbc08496b642d181e4ea309d",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -987,6 +987,41 @@
       "test_time_tuning_permitted": false
     },
     "status": "result-blind verified parallel real scoring frozen before retry"
+  },
+  "result_blind_verified_parallel_scorer_projection_correction": {
+    "corrected_scoring_stager": {
+      "bytes": 22505,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54"
+    },
+    "failed_attempt": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "file": "provider_receipt.json",
+      "payload_sha256": "190ee66c4c9e7172fdf608ce058e138028ba07813ae36def747e699e59303365",
+      "pod_id": "1f8axs6hidbwrm",
+      "scientific_outputs_inspected": false,
+      "stage": "held-out staging before panels or scoring"
+    },
+    "projection": {
+      "current_verified_parallel_scorer": {
+        "file": "score_real_test_parallel.py",
+        "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c"
+      },
+      "exact_predecessor_scorer": {
+        "file": "score_real_test.py",
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+      },
+      "projection_scope": "one_shot_scorers.real.script"
+    },
+    "public_tooling_commit": "03cdc54b21a3558289dd18d5201c6fff85bd784c",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "aggregation_bootstrap_serialization_or_cache_order_changed": false,
+      "held_out_result_opened_or_used": false,
+      "only_independent_subprocess_scheduling_changed": true,
+      "per_cache_metric_subprocess_changed": false
+    },
+    "status": "verified-parallel scorer identity projected to exact predecessor for cache-job comparison"
   },
   "run_order": [
     "baseline",
