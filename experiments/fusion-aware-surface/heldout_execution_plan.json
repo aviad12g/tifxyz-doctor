@@ -79,16 +79,16 @@
     }
   },
   "one_shot_scoring_launcher": {
-    "bytes": 33660,
+    "bytes": 34491,
     "file": "one_shot_scoring_launcher.py",
-    "sha256": "bfa271e2fadcf586b4af081fcdb5cdf34018fd6400a56ae5e98017f8951e0e35"
+    "sha256": "7f1f91dfc6ff1c5846e70684829785789f3b0f00fcc7525833eecd9a52145081"
   },
   "one_shot_scoring_stager": {
-    "bytes": 22564,
+    "bytes": 22627,
     "file": "stage_heldout_for_scoring.py",
-    "sha256": "78947c24200a3eca4cd4b2f38d78105737000ca824b99b1ff03adb91d42d9cf0"
+    "sha256": "4bb39c63e15107fed9899a56d620da361a5b90544ae8164945bca1111e9fc58d"
   },
-  "payload_sha256": "f5689728be502080b678dc91f677fe8d3465154f6245fe5c04cd7d6e8a5643d9",
+  "payload_sha256": "34c91a427f7543624d28bad6707a922be4214391906016a5e3cfe512a2596302",
   "plan_generator": {
     "bytes": 31705,
     "file": "build_heldout_execution_plan.py",
@@ -690,6 +690,63 @@
       "scorer_source_changed": false
     },
     "status": "bounded scorer stderr exception projection frozen before retry"
+  },
+  "result_blind_scorer_public_import_dependency_correction": {
+    "corrected_launcher": {
+      "bytes": 34491,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "7f1f91dfc6ff1c5846e70684829785789f3b0f00fcc7525833eecd9a52145081"
+    },
+    "corrected_stager": {
+      "bytes": 22627,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "4bb39c63e15107fed9899a56d620da361a5b90544ae8164945bca1111e9fc58d"
+    },
+    "failed_attempt": {
+      "failure_message": "No module named 'inference'",
+      "failure_type": "ModuleNotFoundError",
+      "file": "provider_receipt.json",
+      "payload_sha256": "9c347768feeef2123b49f33f5db6e86920b5fbcfc2435d18465b6ca262c8e2b6",
+      "pod_id": "djai7jtnk3helh",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false,
+      "stage": "exact real scorer after verified private signed-bundle transport"
+    },
+    "public_import_dependencies": [
+      {
+        "bytes": 2176,
+        "file": "fusion_loss.py",
+        "sha256": "a5611df0b1535f033bfc9a7a68600e8303ff5948623f5c983eb95f0bd3977ef4"
+      },
+      {
+        "bytes": 2596,
+        "file": "gap_supervision.py",
+        "sha256": "f7bdd74af92b1de7b507515aa879baa4c2622b3051f6a5b1c053e5329778e08c"
+      },
+      {
+        "bytes": 3602,
+        "file": "inference.py",
+        "sha256": "1ba249a04809de64ecfbb4856e0f81737e7f278a7dad3e8f17ba2c1b5490dce1"
+      },
+      {
+        "bytes": 2178,
+        "file": "normalization.py",
+        "sha256": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261"
+      },
+      {
+        "bytes": 11823,
+        "file": "train_fusion_aware.py",
+        "sha256": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07"
+      }
+    ],
+    "public_tooling_commit": "845aadd6b49322f5c09c4ae1af7faa8bc63630ec",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "dependency_source_bytes_changed": false,
+      "npz_panel_probability_endpoint_or_result_opened": false
+    },
+    "status": "exact public scorer import dependencies frozen before retry"
   },
   "result_blind_scoring_asset_correction": {
     "cause": {
