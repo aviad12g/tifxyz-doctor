@@ -1,0 +1,15 @@
+{
+  "command": "python -m pytest -q toolkit/tests",
+  "duration_seconds": 4.97,
+  "environment": {
+    "platform": "macOS arm64",
+    "python": "3.12.12"
+  },
+  "failed": 0,
+  "passed": 129,
+  "release": "fail-closed-surface-to-ink-v1",
+  "result": "passed",
+  "run_date": "2026-08-12",
+  "scope": "compact self-contained release test suite",
+  "skipped": 0
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "review_scope": "top eight 0.5-percent components in each depth order against native raw frames 40, 46, and 53",
+  "contact_sheet_sha256": "967353672f0c915e8972cf14c613460a4350639a423c0493f2aa91a0dea44bf6",
+  "machine_audit_sha256": "f6ffb7377ec660c415daffe752532820b104eae856f6b4a509afb2ce4f62765a",
+  "review_complete": true,
+  "defensible_text_candidates": 0,
+  "borderline_text_candidates": 0,
+  "meets_ten_legible_letters_in_one_4_cm2_region": false,
+  "finding": "All reviewed peaks are compact or diffuse responses aligned with papyrus fibers, fiber crossings, cracks or void margins, and mask-hole boundaries. No stable baseline, repeated glyph scale, legible stroke bodies, or order-stable text neighborhood is present.",
+  "decision": "reject_origin0_pair_and_skip_shifted_origin"
+}

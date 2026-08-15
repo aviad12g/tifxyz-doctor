@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this validation framework, please cite this release."
+title: "Fail-Closed Surface-to-Ink: A reproducible validation and stopping framework for Vesuvius Challenge"
+type: software
+version: 1.1.0
+date-released: 2026-08-15
+license: MIT
+authors:
+  - family-names: "Cohen"
+    given-names: "Aviad"
+repository-code: "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/experiments/fail-closed-surface-to-ink"
+url: "https://scrollprize.org/prizes#progress-prizes"
+abstract: >-
+  Modular TIFFXYZ geometry, public-m7 support, normal-offset rendering,
+  raw-depth false-positive control, model-consensus, exact saturation, and
+  provenance tooling demonstrated across all 13 scroll volumes eligible for
+  the 2027 Vesuvius Challenge Grand Prize.

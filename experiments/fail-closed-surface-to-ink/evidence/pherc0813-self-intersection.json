@@ -1,0 +1,43 @@
+{
+  "broad_phase_pair_count": 20812,
+  "certified_full_res_nonadjacent_clearance_lower_bound_um": 102.82452369554277,
+  "certified_full_res_nonadjacent_clearance_lower_bound_voxels": 10.98317920268562,
+  "distance_candidate_pair_count": 42808,
+  "distance_exact_evaluation_count": 18479,
+  "fine_resampling_step_stored_pixels": 0.05,
+  "full_res_nonadjacent_clearance_bound_pass": true,
+  "limitations": [
+    "Pairs sharing a source-grid vertex are local adjacency and excluded from the non-adjacent claim.",
+    "The full-resolution claim is a conservative displacement/clearance bound, not an all-pairs fine-mesh intersection enumeration.",
+    "Local full-raster folds, degeneracies, and manifold topology must be validated independently."
+  ],
+  "maximum_bilinear_vs_stored_triangle_deviation_voxels": 1.0076713241346373,
+  "minimum_distance_triangle_pair": [
+    16,
+    19
+  ],
+  "minimum_nonadjacent_triangle_distance_um": 121.73933066332245,
+  "minimum_nonadjacent_triangle_distance_voxels": 13.003560207575566,
+  "nonadjacent_aabb_overlap_pair_count": 120,
+  "nonadjacent_intersection_count": 0,
+  "nonadjacent_intersection_pairs": [],
+  "pass_to_raw_diagnostic": true,
+  "per_surface_full_res_deviation_bound_voxels": 1.0101905024449738,
+  "schema_version": 1,
+  "shared_source_vertex_pairs_excluded": 15602,
+  "status": "complete",
+  "stored_nonadjacent_self_intersection_pass": true,
+  "surface": {
+    "input_sha256": {
+      "mask.tif": "1eba93fe3a284e17d17f554307b0047f92b05463fca4920cd0a809b7fa30272f",
+      "meta.json": "6a6733cb68f103152bd043ff3ec1141e1ef5d295c1dda1486718f2c538ccb263",
+      "x.tif": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+      "y.tif": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+      "z.tif": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110"
+    },
+    "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz"
+  },
+  "triangle_count": 2888,
+  "triangle_split": "anti-diagonal: (00,01,10) and (11,10,01)",
+  "voxel_um": 9.362
+}

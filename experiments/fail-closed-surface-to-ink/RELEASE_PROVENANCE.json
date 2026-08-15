@@ -1,0 +1,644 @@
+{
+  "dependency_module_count": 33,
+  "evidence": [
+    {
+      "bytes": 6731,
+      "machine_paths_sanitized": true,
+      "path": "evidence/breadth-status.json",
+      "sha256": "3c2591d2b3d4e7e3ac4111ee1ba7439e15dd38404925c30eebb98fa370260344",
+      "source": "outputs/first-letters-geometry/FIRST_LETTERS_BREADTH_STATUS_2026-08-12.json",
+      "source_sha256": "3c2591d2b3d4e7e3ac4111ee1ba7439e15dd38404925c30eebb98fa370260344"
+    },
+    {
+      "bytes": 6534,
+      "machine_paths_sanitized": true,
+      "path": "evidence/campaign-status.md",
+      "sha256": "db520340d5ea842ebd6ce95cd2964cf26c9caa0bd1b4004db39cbe7ef61f115f",
+      "source": "outputs/first-letters-geometry/FIRST_LETTERS_CAMPAIGN_STATUS.md",
+      "source_sha256": "db520340d5ea842ebd6ce95cd2964cf26c9caa0bd1b4004db39cbe7ef61f115f"
+    },
+    {
+      "bytes": 8821,
+      "machine_paths_sanitized": true,
+      "path": "evidence/coarse-ml-three-way-summary.json",
+      "sha256": "8aa08ad887f22ebde6f4af208ec38cd485930e8b57a4b185290e17d40a04cb85",
+      "source": "outputs/first-letters-geometry/coarse-ink-domain-v1/same-scroll-0139-three-way-v1/three-way-summary.json",
+      "source_sha256": "8aa08ad887f22ebde6f4af208ec38cd485930e8b57a4b185290e17d40a04cb85"
+    },
+    {
+      "bytes": 15232,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-full-resolution-preflight.json",
+      "sha256": "b9b7e2bc5d4d038e0f2502af0903ccc2b7b99d0cca9f977b574802fc4f8752e7",
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-preflight.json",
+      "source_sha256": "787de7b2d9a310d87ca62e2c90e3574e8e15d7baa8380dd815a26e79773700aa"
+    },
+    {
+      "bytes": 2425,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-generation60-to-80-increment.json",
+      "sha256": "06469da6a944d12940b782dbd22a6ec3724f8c52f151866904fddaee074a2daa",
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18-resume80/exact-increment-vs-g60.json",
+      "source_sha256": "e8c760e889857c68a62755941692f9fd6bca9de556c5c54666c80e7489132312"
+    },
+    {
+      "bytes": 43242,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-generation80-validation.json",
+      "sha256": "8a7a6378fd82551810b2ee58ae4253288ef5a84c43c6d74ef982c49771749a44",
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18-resume80/calibrated-mask-salvage-v1/validation.json",
+      "source_sha256": "a775204abc1b82ffae7d1a136dbb02933fb4e0afd2cb32f3fa6b21f351761537"
+    },
+    {
+      "bytes": 36335,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-independent-audit.json",
+      "sha256": "8533076589ea6a03a671eeb1039ce042f5340f5396a752fd4f9456669470a53a",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/audit-report.json",
+      "source_sha256": "cb86d84f5b9bf311eefe104d242ab729c45622c87ddf75b578cecf1251c69e77"
+    },
+    {
+      "bytes": 3136,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-manual-review.json",
+      "sha256": "feefc6d4cc96ea7024a6e74174d3a6c8fb2d5d12207987aaef07d5fd75a51ff5",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/manual-review.json",
+      "source_sha256": "feefc6d4cc96ea7024a6e74174d3a6c8fb2d5d12207987aaef07d5fd75a51ff5"
+    },
+    {
+      "bytes": 3440594,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-ranked-raw-candidates.png",
+      "sha256": "9719e6b2a7350318dd5684a6e1a2c5e951efcc09da8a15a81c676a73a593b9fc",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/ranked_rows_contact_sheet.png",
+      "source_sha256": "9719e6b2a7350318dd5684a6e1a2c5e951efcc09da8a15a81c676a73a593b9fc"
+    },
+    {
+      "bytes": 367926,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-raw-stack-manifest.json",
+      "sha256": "35627e800dc2c5656aaa57db0f0844bc2b69e5616c57f84e564e246ddd9582bf",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-raw-stack-93/raw-stack-manifest.json",
+      "source_sha256": "ba6237958e31972eac34283dc8222279f0d05b654a49069f7a02b312c53eb863"
+    },
+    {
+      "bytes": 2111,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-self-intersection.json",
+      "sha256": "8ded5b4d0fa231b94ca04277291889bb7ba4f724132269b57401c8d297156976",
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stored-self-intersection-audit.json",
+      "source_sha256": "5d53665231f4e7e2f3533c50bc71149e39daa0fb4a31da80cf9bccd50b26b3bb"
+    },
+    {
+      "bytes": 272620,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-seven-offset-contact-sheet.png",
+      "sha256": "34e88dc16c3c240f23673fab3b6d7951827e8849973398d82b66d33f786a4bbd",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-raw-stack-93/diagnostics/selected-offset-contact-sheet.png",
+      "source_sha256": "34e88dc16c3c240f23673fab3b6d7951827e8849973398d82b66d33f786a4bbd"
+    },
+    {
+      "bytes": 42582,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-stored-validation.json",
+      "sha256": "3f62fd18d3aab2c1d1d1d5f04ed6ed1cdae6d75f858c911236c96b769d08e971",
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/validation.json",
+      "source_sha256": "f09b9469a8b17a48c64ae8c21fefdd271a14f99deb4f9bb92fc54093d88b0e96"
+    },
+    {
+      "bytes": 1028999,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc0813-top-candidate-depth-controls.png",
+      "sha256": "2598f9d51fc146fbc231d5d2382252aef62d0e60415675804e68ba1d2beab84d",
+      "source": "outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_01_depth_controls.png",
+      "source_sha256": "2598f9d51fc146fbc231d5d2382252aef62d0e60415675804e68ba1d2beab84d"
+    },
+    {
+      "bytes": 1535426,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc1203-canonical-r152-contact-sheet.png",
+      "sha256": "967353672f0c915e8972cf14c613460a4350639a423c0493f2aa91a0dea44bf6",
+      "source": "outputs/first-letters-geometry/pherc1203-canonical-r152-origin0-pilot-v1/manual-audit/top-components-contact-sheet.png",
+      "source_sha256": "967353672f0c915e8972cf14c613460a4350639a423c0493f2aa91a0dea44bf6"
+    },
+    {
+      "bytes": 820,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc1203-canonical-r152-manual-review.json",
+      "sha256": "f6e323d102dd94055fd37ddd166dc8cf0164046ab6c5d56f0effff238a609f70",
+      "source": "outputs/first-letters-geometry/pherc1203-canonical-r152-origin0-pilot-v1/manual-audit/manual-review.json",
+      "source_sha256": "f6e323d102dd94055fd37ddd166dc8cf0164046ab6c5d56f0effff238a609f70"
+    },
+    {
+      "bytes": 2676,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc1203-canonical-r152-order-stability.json",
+      "sha256": "e6f30cdda00d56e32bb5cfe77c74ba518ce3e62c29b2b0934f726e04b08808f7",
+      "source": "outputs/first-letters-geometry/pherc1203-canonical-r152-origin0-pilot-v1/extracted/results/origin0-pair-audit.json",
+      "source_sha256": "e6f30cdda00d56e32bb5cfe77c74ba518ce3e62c29b2b0934f726e04b08808f7"
+    },
+    {
+      "bytes": 2747,
+      "machine_paths_sanitized": true,
+      "path": "evidence/pherc1203-canonical-r152-summary.md",
+      "sha256": "a94c94f908dd5df3177f7be42f5c94d4b8cee84c4ea04dd7d3d2c167abb91845",
+      "source": "outputs/first-letters-geometry/pherc1203-canonical-r152-origin0-pilot-v1/SUMMARY.md",
+      "source_sha256": "a94c94f908dd5df3177f7be42f5c94d4b8cee84c4ea04dd7d3d2c167abb91845"
+    }
+  ],
+  "evidence_file_count": 18,
+  "excluded": [
+    "raw CT volumes",
+    "rendered 93-layer TIFF stacks",
+    "model weights",
+    "credentials",
+    "private endpoints",
+    "RunPod artifacts"
+  ],
+  "fixture_bound_tests_not_shipped": [
+    "test_m7_calibrated_directional_grower.py",
+    "test_m7_calibrated_ragged_grower.py",
+    "test_render_pherc1203_auto_grown_raw_stack.py",
+    "test_same_scroll_spatial_holdout.py",
+    "test_three_way_same_scroll_falsification.py"
+  ],
+  "generated_date": "2026-08-12",
+  "modules": [
+    {
+      "bytes": 81312,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/audit_pherc0800_published_segments.py",
+      "sha256": "7bd2939f23b481ff94145a02264603623d6730a4e5210d5b9463029787e0865d",
+      "source": "work/first-letters/audit_pherc0800_published_segments.py",
+      "source_sha256": "7bd2939f23b481ff94145a02264603623d6730a4e5210d5b9463029787e0865d"
+    },
+    {
+      "bytes": 4916,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/audit_tifxyz_exact_increment.py",
+      "sha256": "1b74d49947cec6e2542258df779cabb3944a883b41c65090ac6b8cebda63444b",
+      "source": "work/first-letters/audit_tifxyz_exact_increment.py",
+      "source_sha256": "1b74d49947cec6e2542258df779cabb3944a883b41c65090ac6b8cebda63444b"
+    },
+    {
+      "bytes": 13589,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/audit_tifxyz_self_intersection.py",
+      "sha256": "0ba267b07ce5fff4d037104e331a3d5c7434425bff3b8579c396eb68a9437666",
+      "source": "work/first-letters/audit_tifxyz_self_intersection.py",
+      "source_sha256": "0ba267b07ce5fff4d037104e331a3d5c7434425bff3b8579c396eb68a9437666"
+    },
+    {
+      "bytes": 10100,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/build_depth_consensus.py",
+      "sha256": "0afc2eb4972633e34131a247158a57461b72f5f4097c231bd874899bb0b567f1",
+      "source": "work/first-letters/build_depth_consensus.py",
+      "source_sha256": "0afc2eb4972633e34131a247158a57461b72f5f4097c231bd874899bb0b567f1"
+    },
+    {
+      "bytes": 10618,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/build_progress_prize_release.py",
+      "sha256": "36946f23fa44d98b51e9f7dc6fde801a6048c1f4fffeda353b6778a95cef1114",
+      "source": "work/first-letters/build_progress_prize_release.py",
+      "source_sha256": "36946f23fa44d98b51e9f7dc6fde801a6048c1f4fffeda353b6778a95cef1114"
+    },
+    {
+      "bytes": 3153,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/finalize_progress_prize_release.py",
+      "sha256": "be89d060f1b41e79b4d2d29aeeb2f5fe7b3a0fe17b181a79f4458d74beef07aa",
+      "source": "work/first-letters/finalize_progress_prize_release.py",
+      "source_sha256": "be89d060f1b41e79b4d2d29aeeb2f5fe7b3a0fe17b181a79f4458d74beef07aa"
+    },
+    {
+      "bytes": 11941,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/full_resolution_tifxyz_preflight.py",
+      "sha256": "07801778e8eda3703167abd6664003aff4c18a53168a7a58a7bc50dfb9f53b25",
+      "source": "work/first-letters/full_resolution_tifxyz_preflight.py",
+      "source_sha256": "07801778e8eda3703167abd6664003aff4c18a53168a7a58a7bc50dfb9f53b25"
+    },
+    {
+      "bytes": 53887,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/independent_raw_ink_audit.py",
+      "sha256": "44a2c0ec27698f6517969b8402aa8764c22e08c2400f8db5397f2df5ab6ec16d",
+      "source": "work/first-letters/independent_raw_ink_audit.py",
+      "source_sha256": "44a2c0ec27698f6517969b8402aa8764c22e08c2400f8db5397f2df5ab6ec16d"
+    },
+    {
+      "bytes": 58009,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/inventory_pherc_assets.py",
+      "sha256": "ce41f4227ac1a2f51fdd9ef72196b679148777874501895cf0c5b8bf08efd219",
+      "source": "work/first-letters/inventory_pherc_assets.py",
+      "source_sha256": "ce41f4227ac1a2f51fdd9ef72196b679148777874501895cf0c5b8bf08efd219"
+    },
+    {
+      "bytes": 40505,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_calibrated_directional_grower.py",
+      "sha256": "e4960c937d8d781ab12042fa1545d21903ac6a24b3ea852a0bfdd0ccdaaf478a",
+      "source": "work/first-letters/m7_calibrated_directional_grower.py",
+      "source_sha256": "e4960c937d8d781ab12042fa1545d21903ac6a24b3ea852a0bfdd0ccdaaf478a"
+    },
+    {
+      "bytes": 29219,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_calibrated_ragged_grower.py",
+      "sha256": "225201889d32be466e110d63406f7552221043890ad7eff4c668d3a73f358b01",
+      "source": "work/first-letters/m7_calibrated_ragged_grower.py",
+      "source_sha256": "225201889d32be466e110d63406f7552221043890ad7eff4c668d3a73f358b01"
+    },
+    {
+      "bytes": 14643,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_calibrated_surface_grower.py",
+      "sha256": "e02fdb40d6eea6732797f5de73bf12225e8eee1c7af3470451ddc90509277f68",
+      "source": "work/first-letters/m7_calibrated_surface_grower.py",
+      "source_sha256": "e02fdb40d6eea6732797f5de73bf12225e8eee1c7af3470451ddc90509277f68"
+    },
+    {
+      "bytes": 35883,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_locked_directional_grower.py",
+      "sha256": "de3adc142e3fec3e47a55002b35c1a9f2307074e82a110495de0f3a736ad1e22",
+      "source": "work/first-letters/m7_locked_directional_grower.py",
+      "source_sha256": "de3adc142e3fec3e47a55002b35c1a9f2307074e82a110495de0f3a736ad1e22"
+    },
+    {
+      "bytes": 46475,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_locked_ragged_grower.py",
+      "sha256": "b3590c43db2b093de65fc479c1cb0841b1f558e8c66be2d49baa92d2ed0c6d4d",
+      "source": "work/first-letters/m7_locked_ragged_grower.py",
+      "source_sha256": "b3590c43db2b093de65fc479c1cb0841b1f558e8c66be2d49baa92d2ed0c6d4d"
+    },
+    {
+      "bytes": 46911,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/m7_locked_surface_grower.py",
+      "sha256": "1dd768546358da2b53bafc89379abd8c95e509b93c831423219ad5297e48d8cc",
+      "source": "work/first-letters/m7_locked_surface_grower.py",
+      "source_sha256": "1dd768546358da2b53bafc89379abd8c95e509b93c831423219ad5297e48d8cc"
+    },
+    {
+      "bytes": 35615,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/native_surface_sampler.py",
+      "sha256": "dd03be496a46909b6d940139068611dabb6147ff3dab13f90ea0220893c516d8",
+      "source": "work/first-letters/native_surface_sampler.py",
+      "source_sha256": "dd03be496a46909b6d940139068611dabb6147ff3dab13f90ea0220893c516d8"
+    },
+    {
+      "bytes": 44388,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/preflight_debug_m7.py",
+      "sha256": "4926ebfaf8094ffdd2bc319e1d74d3c44c3b9bf82b9c7db533895c84c13e5c77",
+      "source": "work/first-letters/preflight_debug_m7.py",
+      "source_sha256": "4926ebfaf8094ffdd2bc319e1d74d3c44c3b9bf82b9c7db533895c84c13e5c77"
+    },
+    {
+      "bytes": 11585,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/render_gated_tifxyz_raw_stack.py",
+      "sha256": "52690b263ef0141b3503831ea49ccd692eadad67da61ebfb040c1aee20fb3a04",
+      "source": "work/first-letters/render_gated_tifxyz_raw_stack.py",
+      "source_sha256": "52690b263ef0141b3503831ea49ccd692eadad67da61ebfb040c1aee20fb3a04"
+    },
+    {
+      "bytes": 50511,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/render_pherc0800_rank2_raw_stack.py",
+      "sha256": "95ec9b5acf582360321fd2098ea0be207d1011d0398a052bffe68cfdb6dd9d6b",
+      "source": "work/first-letters/render_pherc0800_rank2_raw_stack.py",
+      "source_sha256": "95ec9b5acf582360321fd2098ea0be207d1011d0398a052bffe68cfdb6dd9d6b"
+    },
+    {
+      "bytes": 46689,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/render_pherc1203_auto_grown_raw_stack.py",
+      "sha256": "9fc77e123733d965f991a22f176ac2256095624a3693d69a02fbc7b33da9bdf6",
+      "source": "work/first-letters/render_pherc1203_auto_grown_raw_stack.py",
+      "source_sha256": "9fc77e123733d965f991a22f176ac2256095624a3693d69a02fbc7b33da9bdf6"
+    },
+    {
+      "bytes": 13089,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/render_tifxyz_volume.py",
+      "sha256": "1b42e70b837c924acfe6fe5915f54051448eda26de8c4914526e5dd861117fd3",
+      "source": "work/first-letters/render_tifxyz_volume.py",
+      "source_sha256": "1b42e70b837c924acfe6fe5915f54051448eda26de8c4914526e5dd861117fd3"
+    },
+    {
+      "bytes": 14853,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/salvage_calibrated_m7_component.py",
+      "sha256": "fe09cdf209fb7c0cba943fba82ba9e3c7bd9ec0127839fdf868a916337c34dfa",
+      "source": "work/first-letters/salvage_calibrated_m7_component.py",
+      "source_sha256": "fe09cdf209fb7c0cba943fba82ba9e3c7bd9ec0127839fdf868a916337c34dfa"
+    },
+    {
+      "bytes": 12304,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/same_scroll_spatial_holdout.py",
+      "sha256": "28136de6b828364fbb4029128757d42c4affbdf81a580932dc6ddf58f0ff2aa7",
+      "source": "work/first-letters/same_scroll_spatial_holdout.py",
+      "source_sha256": "28136de6b828364fbb4029128757d42c4affbdf81a580932dc6ddf58f0ff2aa7"
+    },
+    {
+      "bytes": 5618,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/sample_m7_seed_chunk.py",
+      "sha256": "92e48ff7832a479ba5d730b08e360e3c160a6fa5e20c98b51ff9998b5f696ac8",
+      "source": "work/first-letters/sample_m7_seed_chunk.py",
+      "source_sha256": "92e48ff7832a479ba5d730b08e360e3c160a6fa5e20c98b51ff9998b5f696ac8"
+    },
+    {
+      "bytes": 30637,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/sample_raw_ct_seed_cube.py",
+      "sha256": "69b79abbaf9e1e079e73ffe262e22db1df8558ff36aeb03361ac09a6f2ffbb5e",
+      "source": "work/first-letters/sample_raw_ct_seed_cube.py",
+      "source_sha256": "69b79abbaf9e1e079e73ffe262e22db1df8558ff36aeb03361ac09a6f2ffbb5e"
+    },
+    {
+      "bytes": 23937,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/select_m7_seed_chunk.py",
+      "sha256": "6714f59b7b5ab21d0dee39214b5a7da6c38345f5ba72af76d7da557d36afaa24",
+      "source": "work/first-letters/select_m7_seed_chunk.py",
+      "source_sha256": "6714f59b7b5ab21d0dee39214b5a7da6c38345f5ba72af76d7da557d36afaa24"
+    },
+    {
+      "bytes": 31488,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/sweep_public_m7_uniform_offsets.py",
+      "sha256": "840789ece747118f37e5330526027fe77ddd69ec0e8dcda63c0509ab0d1d8d5a",
+      "source": "work/first-letters/sweep_public_m7_uniform_offsets.py",
+      "source_sha256": "840789ece747118f37e5330526027fe77ddd69ec0e8dcda63c0509ab0d1d8d5a"
+    },
+    {
+      "bytes": 21373,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/three_way_same_scroll_falsification.py",
+      "sha256": "784375f0128a408b43c4ee9327007c423a63448fbe7ecafb1f7c175bd82e3cfa",
+      "source": "work/first-letters/three_way_same_scroll_falsification.py",
+      "source_sha256": "784375f0128a408b43c4ee9327007c423a63448fbe7ecafb1f7c175bd82e3cfa"
+    },
+    {
+      "bytes": 58236,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tifxyz_render_pipeline.py",
+      "sha256": "717dc69dda89f2e0c96685b21aa8ad01769d3d4fe4c714b0d3963c81e31c9cbc",
+      "source": "work/first-letters/tifxyz_render_pipeline.py",
+      "source_sha256": "717dc69dda89f2e0c96685b21aa8ad01769d3d4fe4c714b0d3963c81e31c9cbc"
+    },
+    {
+      "bytes": 25630,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/train_coarse_ink_detector.py",
+      "sha256": "3a4665bb9c1e8b6c0e41a117d8c57dba61c3f01e47d15f31e5839994ff175713",
+      "source": "work/first-letters/train_coarse_ink_detector.py",
+      "source_sha256": "3a4665bb9c1e8b6c0e41a117d8c57dba61c3f01e47d15f31e5839994ff175713"
+    },
+    {
+      "bytes": 44373,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/validate_pherc0800_masked_candidate.py",
+      "sha256": "7d56794babfd36d1c13a1dd6b73822a2acc40f9cceb42d5c9455bace58f07da5",
+      "source": "work/first-letters/validate_pherc0800_masked_candidate.py",
+      "source_sha256": "7d56794babfd36d1c13a1dd6b73822a2acc40f9cceb42d5c9455bace58f07da5"
+    },
+    {
+      "bytes": 45328,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/validate_pherc1203_auto_grown_candidate.py",
+      "sha256": "fb14a4814d25646936c79c8a04ab7640ff50cb2588081b00a3879359406edf25",
+      "source": "work/first-letters/validate_pherc1203_auto_grown_candidate.py",
+      "source_sha256": "fb14a4814d25646936c79c8a04ab7640ff50cb2588081b00a3879359406edf25"
+    },
+    {
+      "bytes": 37667,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/validate_public_m7_patch.py",
+      "sha256": "385568a90c416e945199fc0433c388f1307d1ada90b4ebe41f06cfebabe98ede",
+      "source": "work/first-letters/validate_public_m7_patch.py",
+      "source_sha256": "385568a90c416e945199fc0433c388f1307d1ada90b4ebe41f06cfebabe98ede"
+    }
+  ],
+  "release": "fail-closed-surface-to-ink-v1",
+  "root_modules": [
+    "finalize_progress_prize_release",
+    "inventory_pherc_assets",
+    "native_surface_sampler",
+    "tifxyz_render_pipeline",
+    "render_tifxyz_volume",
+    "preflight_debug_m7",
+    "m7_calibrated_surface_grower",
+    "m7_calibrated_directional_grower",
+    "m7_calibrated_ragged_grower",
+    "salvage_calibrated_m7_component",
+    "full_resolution_tifxyz_preflight",
+    "render_gated_tifxyz_raw_stack",
+    "independent_raw_ink_audit",
+    "audit_tifxyz_self_intersection",
+    "audit_tifxyz_exact_increment",
+    "build_depth_consensus",
+    "same_scroll_spatial_holdout",
+    "three_way_same_scroll_falsification"
+  ],
+  "schema_version": 1,
+  "scope": "compact code, tests, documentation, and derived evidence only",
+  "support_files": [
+    {
+      "bytes": 4881,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/coarse_ink_sources.json",
+      "sha256": "f436cd98618c5c7ad84b5960dababfada559c35d8b5aba95f97ec994de7ffd06",
+      "source": "work/first-letters/coarse_ink_sources.json",
+      "source_sha256": "f436cd98618c5c7ad84b5960dababfada559c35d8b5aba95f97ec994de7ffd06"
+    },
+    {
+      "bytes": 2073,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/same_scroll_three_way_protocol.json",
+      "sha256": "d493fe69c04316b3bb8eeb040562132470843e1b921485798d141b72c79c5dfa",
+      "source": "work/first-letters/same_scroll_three_way_protocol.json",
+      "source_sha256": "d493fe69c04316b3bb8eeb040562132470843e1b921485798d141b72c79c5dfa"
+    }
+  ],
+  "test_file_count": 21,
+  "tests": [
+    {
+      "bytes": 7448,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_audit_pherc0800_published_segments.py",
+      "sha256": "401dc714fdd75969fce575fd4bc96db1f3c0b8347f68d686ae14ade826c082da",
+      "source": "work/first-letters/tests/test_audit_pherc0800_published_segments.py",
+      "source_sha256": "401dc714fdd75969fce575fd4bc96db1f3c0b8347f68d686ae14ade826c082da"
+    },
+    {
+      "bytes": 2034,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_audit_tifxyz_exact_increment.py",
+      "sha256": "20cbf7c6f131229b23eb1cc05437bd79ab47c9faf8775e11fecbb3a83afc5711",
+      "source": "work/first-letters/tests/test_audit_tifxyz_exact_increment.py",
+      "source_sha256": "20cbf7c6f131229b23eb1cc05437bd79ab47c9faf8775e11fecbb3a83afc5711"
+    },
+    {
+      "bytes": 1049,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_audit_tifxyz_self_intersection.py",
+      "sha256": "2a42474c78950a72993b817917e57ae1d7d089621cdb2406ac64a376ece6a7a3",
+      "source": "work/first-letters/tests/test_audit_tifxyz_self_intersection.py",
+      "source_sha256": "2a42474c78950a72993b817917e57ae1d7d089621cdb2406ac64a376ece6a7a3"
+    },
+    {
+      "bytes": 3898,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_build_depth_consensus.py",
+      "sha256": "338372a4019936c965e95b74a483ba76788cada02f0a2f62b2f1cd4ce021b74e",
+      "source": "work/first-letters/tests/test_build_depth_consensus.py",
+      "source_sha256": "338372a4019936c965e95b74a483ba76788cada02f0a2f62b2f1cd4ce021b74e"
+    },
+    {
+      "bytes": 8662,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_independent_raw_ink_audit.py",
+      "sha256": "3af2bb1fcbc137b65090840c9179d9dbb377fd459450bee5a1b4b023063a4d8f",
+      "source": "work/first-letters/tests/test_independent_raw_ink_audit.py",
+      "source_sha256": "3af2bb1fcbc137b65090840c9179d9dbb377fd459450bee5a1b4b023063a4d8f"
+    },
+    {
+      "bytes": 20519,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_inventory_pherc_assets.py",
+      "sha256": "3ed19ae6a4353d0d790bec472e44e839cbc372a204ff03a1759be439fcf46b2a",
+      "source": "work/first-letters/tests/test_inventory_pherc_assets.py",
+      "source_sha256": "3ed19ae6a4353d0d790bec472e44e839cbc372a204ff03a1759be439fcf46b2a"
+    },
+    {
+      "bytes": 3723,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_m7_calibrated_surface_grower.py",
+      "sha256": "866d67bcc2e9c6a09328449503bd6b79aeab89532856f5843be0440f31a65b46",
+      "source": "work/first-letters/tests/test_m7_calibrated_surface_grower.py",
+      "source_sha256": "866d67bcc2e9c6a09328449503bd6b79aeab89532856f5843be0440f31a65b46"
+    },
+    {
+      "bytes": 7822,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_m7_locked_directional_grower.py",
+      "sha256": "79dd0e03dff550ad300efddbe677ae124b1865c9b89c84104a49d3ad4ccee4a5",
+      "source": "work/first-letters/tests/test_m7_locked_directional_grower.py",
+      "source_sha256": "79dd0e03dff550ad300efddbe677ae124b1865c9b89c84104a49d3ad4ccee4a5"
+    },
+    {
+      "bytes": 7651,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_m7_locked_surface_grower.py",
+      "sha256": "f01aee683e065b40d64ed6f176ad227c1986c62692d624c1ddf2ef0ec83e8e57",
+      "source": "work/first-letters/tests/test_m7_locked_surface_grower.py",
+      "source_sha256": "f01aee683e065b40d64ed6f176ad227c1986c62692d624c1ddf2ef0ec83e8e57"
+    },
+    {
+      "bytes": 11352,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_native_surface_sampler.py",
+      "sha256": "05528d861459f16e29fd40ab8463b92a4a9e2e2ff91837318a6cfaa7c301a5fb",
+      "source": "work/first-letters/tests/test_native_surface_sampler.py",
+      "source_sha256": "05528d861459f16e29fd40ab8463b92a4a9e2e2ff91837318a6cfaa7c301a5fb"
+    },
+    {
+      "bytes": 8292,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_preflight_debug_m7.py",
+      "sha256": "0161fa47f66c5807f24ebc9710d76ac5c61d596d663674b8d689bf9b5992b68d",
+      "source": "work/first-letters/tests/test_preflight_debug_m7.py",
+      "source_sha256": "0161fa47f66c5807f24ebc9710d76ac5c61d596d663674b8d689bf9b5992b68d"
+    },
+    {
+      "bytes": 3788,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_render_pherc0800_rank2_raw_stack.py",
+      "sha256": "3b4f6bdc5f8d02749ed698de5f70f5ead960d98a352f6bb8505f07cde53fb7f5",
+      "source": "work/first-letters/tests/test_render_pherc0800_rank2_raw_stack.py",
+      "source_sha256": "3b4f6bdc5f8d02749ed698de5f70f5ead960d98a352f6bb8505f07cde53fb7f5"
+    },
+    {
+      "bytes": 1579,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_salvage_calibrated_m7_component.py",
+      "sha256": "9640e55bd5ee9b2a718f6b49209f629405d403da4b446434dd6aa4788e23936b",
+      "source": "work/first-letters/tests/test_salvage_calibrated_m7_component.py",
+      "source_sha256": "9640e55bd5ee9b2a718f6b49209f629405d403da4b446434dd6aa4788e23936b"
+    },
+    {
+      "bytes": 3723,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_sample_raw_ct_seed_cube.py",
+      "sha256": "1f8cdcb2728af9ae52bb613502ca4f4f9a9139ca96a8733d1c6f7873c4c777eb",
+      "source": "work/first-letters/tests/test_sample_raw_ct_seed_cube.py",
+      "source_sha256": "1f8cdcb2728af9ae52bb613502ca4f4f9a9139ca96a8733d1c6f7873c4c777eb"
+    },
+    {
+      "bytes": 3372,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_select_m7_seed_chunk.py",
+      "sha256": "63eb5923192bb6d4464e4b315e0f3bd7ea06261f8ed03cd15b82357222116026",
+      "source": "work/first-letters/tests/test_select_m7_seed_chunk.py",
+      "source_sha256": "63eb5923192bb6d4464e4b315e0f3bd7ea06261f8ed03cd15b82357222116026"
+    },
+    {
+      "bytes": 4988,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_sweep_public_m7_uniform_offsets.py",
+      "sha256": "c36af6433a426670d5eb033d9883dd192e212415265dc4e5205f779d18a8bde1",
+      "source": "work/first-letters/tests/test_sweep_public_m7_uniform_offsets.py",
+      "source_sha256": "c36af6433a426670d5eb033d9883dd192e212415265dc4e5205f779d18a8bde1"
+    },
+    {
+      "bytes": 16269,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_tifxyz_render_pipeline.py",
+      "sha256": "5056fdb31709c456d52e05b5b7521a5201038f1dca77cd9837ac3174267cb57c",
+      "source": "work/first-letters/tests/test_tifxyz_render_pipeline.py",
+      "source_sha256": "5056fdb31709c456d52e05b5b7521a5201038f1dca77cd9837ac3174267cb57c"
+    },
+    {
+      "bytes": 2767,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_train_coarse_ink_detector.py",
+      "sha256": "dabb5e8fbda5d69ff3227859af05d7bfa7ee61cab4a87c070505b33ee20372de",
+      "source": "work/first-letters/tests/test_train_coarse_ink_detector.py",
+      "source_sha256": "dabb5e8fbda5d69ff3227859af05d7bfa7ee61cab4a87c070505b33ee20372de"
+    },
+    {
+      "bytes": 4615,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_validate_pherc0800_masked_candidate.py",
+      "sha256": "55af69226d7519106a2632af2c726bc69e950fbc694b116b89a2c0c90e396e31",
+      "source": "work/first-letters/tests/test_validate_pherc0800_masked_candidate.py",
+      "source_sha256": "55af69226d7519106a2632af2c726bc69e950fbc694b116b89a2c0c90e396e31"
+    },
+    {
+      "bytes": 2534,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_validate_pherc1203_auto_grown_candidate.py",
+      "sha256": "6bf9f2fb1cd3134e3c3b91530ea271d9487a9a2baeb0d962eb8b42607db1f55c",
+      "source": "work/first-letters/tests/test_validate_pherc1203_auto_grown_candidate.py",
+      "source_sha256": "6bf9f2fb1cd3134e3c3b91530ea271d9487a9a2baeb0d962eb8b42607db1f55c"
+    },
+    {
+      "bytes": 5567,
+      "machine_paths_sanitized": false,
+      "path": "toolkit/tests/test_validate_public_m7_patch.py",
+      "sha256": "7a1a8f95898c3a21175f3908dbc6ea3aa2c2a2b2f0204a75331989d2ea0f9ff8",
+      "source": "work/first-letters/tests/test_validate_public_m7_patch.py",
+      "source_sha256": "7a1a8f95898c3a21175f3908dbc6ea3aa2c2a2b2f0204a75331989d2ea0f9ff8"
+    }
+  ]
+}

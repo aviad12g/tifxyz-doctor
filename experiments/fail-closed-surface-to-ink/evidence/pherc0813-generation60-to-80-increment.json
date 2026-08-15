@@ -1,0 +1,55 @@
+{
+  "algorithm_version": "tifxyz-byte-exact-quad-increment-v1",
+  "comparison_semantics": "a shared quad requires byte-identical float32 XYZ at all four vertices; raster location and vertex order do not matter; no distance tolerance",
+  "inputs": {
+    "new": {
+      "active_quad_count": 1520,
+      "area_cm2": 0.5362687874020954,
+      "directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18-resume80/calibrated-mask-salvage-v1/stage-02-tifxyz",
+      "input_sha256": {
+        "mask.tif": "aca2575f82b636e751b715832e589fdfcd080ccbc5da4d486331c8c89e6c8ceb",
+        "meta.json": "5ec5046cfb272b5ed437fed300a3e47f253c65b492ae2243692814953b932629",
+        "x.tif": "68deea23a6fcb0a1bb5e099198e3c30758f1e9a7e0511949528316c0b556730f",
+        "y.tif": "96a6717fa042b9231ae1ccd5ffec03fed0ec7e81aae72cd0a551e86cb0fc2e2b",
+        "z.tif": "279d04dd24dcf1352146d9e6d6131e6e889f6dae54e35b8c0d11417a83c65abe"
+      },
+      "stored_shape": [
+        162,
+        162
+      ],
+      "valid_vertex_count": 1811
+    },
+    "old": {
+      "active_quad_count": 1520,
+      "area_cm2": 0.5362687874020954,
+      "directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18-resume60/calibrated-mask-salvage-v1/stage-02-tifxyz",
+      "input_sha256": {
+        "mask.tif": "6a9239f98bc27998b649ad6056eb0881a77e9876f9d53587c91c58278471d654",
+        "meta.json": "b330afb3f88e877628b2818595581b6baa8164d8ebd962c202eb282cc1817c8c",
+        "x.tif": "569abd2bdfb3f0028b5143e3791977b6c81d84feb3ac5f1338ab7a1fadafccbd",
+        "y.tif": "b69f0b68ae57782916d517dcce956b2f685c2a9cd575106ca7ac2ca0ad240ec2",
+        "z.tif": "1f491b58e59621e053dfbc26d049f71fd403a6e4a8c47652f2ddad3db893b58b"
+      },
+      "stored_shape": [
+        122,
+        122
+      ],
+      "valid_vertex_count": 1811
+    }
+  },
+  "limitations": [
+    "Non-identical quads may still sample overlapping physical surface; this audit never labels them shared.",
+    "This is an exact provenance/novelty audit, not a closest-surface or normal-slab overlap proof."
+  ],
+  "result": {
+    "new_area_fraction_byte_exactly_shared": 1.0,
+    "new_only_area_cm2": 0.0,
+    "new_only_exact_quad_count": 0,
+    "old_only_area_cm2": 0.0,
+    "old_only_exact_quad_count": 0,
+    "shared_area_cm2_measured_on_new": 0.5362687874020954,
+    "shared_exact_quad_count": 1520
+  },
+  "schema_version": 1,
+  "voxel_size_um": 9.362
+}

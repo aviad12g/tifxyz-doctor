@@ -1,0 +1,24 @@
+# Failure-mode catalog
+
+The contribution’s practical value is concentrated in failures that looked plausible until measured against an independent physical or provenance control.
+
+| Failure mode | Why it is dangerous | Detection / mitigation | Observed consequence |
+|---|---|---|---|
+| GrowPatch seed drift | A smooth patch can leave the seeded sheet while retaining plausible geometry. | Re-sample public m7 along fresh native normals; require centered selected-run support at the seed core and retained surface. | Multiple PHerc1447 pilots failed immediately or after clean-looking growth. |
+| Whole-area inflation | Optimizer output area can grow while the defensible component does not. | Strict subtractive calibration plus exact quad-level increment audit. | PHerc0813 proposal grew 2.1333→10.1028 cm², accepted surface only 0.509167→0.536269 cm². |
+| Duplicate continuation | Later generations may be physically identical to earlier accepted geometry. | Exact float-coordinate/quad identity, not bbox or tolerance overlap. | PHerc0813 generations 60 and 80 shared all 1,520 accepted quads; zero new quads. |
+| Exact-one-run veto | Clean papyrus can intersect multiple predicted sheets within a wide normal transect. | Calibrate competitor clearance against a published clean control; use selected-run centering/continuity as authority. | Published control had 399/400 multi-run transects, falsifying the naïve veto. |
+| Fold / normal flip | A surface may stay in bounds yet locally invert or self-overlap. | Native quad folds, abrupt adjacent-normal flips, distortion, topology, and exact self-intersection audits. | Rejected several GrowPatch candidates before raw rendering. |
+| Coordinate/axis confusion | TIFFXYZ is XYZ; volume arrays are commonly ZYX. A silent swap produces valid-looking noise. | Explicit axis adapters, synthetic trilinear tests, and published-stack calibration. | Renderer replay reached median Pearson ≈0.9972 and mask IoU 1.0. |
+| Normal sign / depth-order confusion | Symmetric stacks can make sign and frame reversal equivalent; arbitrary vetoes discard valid hypotheses. | Report both logical orientations, bind exact physical frame mappings, and never use reverse overlap as an automatic veto. | 24 logical hypotheses reduced to 8 physical sequences ×2 models without losing evidence. |
+| Depth-only texture persistence | Fibers, cracks, folds, voids, and hole margins can look like strokes in one layer. | Seven-depth controls, adjacent persistence, distant specificity, fiber likelihood, and native raw review. | PHerc0813: six nominated regions, 0 defensible and 0 borderline. |
+| Tiling seams | Sliding-window model outputs can be dominated by stride-grid boundaries. | Coverage maps, grid-boundary gradient controls, alternate origins, and raw review. | PHerc0800 latest maps showed 15.6×–25.4× boundary gradients; TimeSformer maps 2.22×–2.36×. |
+| Orientation instability | Putative text relocates when depth order reverses. | Same-depth forward/reverse correlation, overlap, linked-region review, and co-equal consensus. | PHerc0800 candidates were unstable; PHerc1203 canonical ResNet-152 maps had Pearson 0.032425, top-1% Jaccard 0.003361, and zero top-0.5% overlap. |
+| Physical-resolution mismatch | Resampling can match a checkpoint’s nominal field of view while creating the appearance of compatibility with a coarser scan. | Record native/model voxel scales, endpoint-span error, and the fact that interpolation adds no information; require independent order and raw controls. | The 2 µm canonical checkpoint on 9.362 µm PHerc1203 passed integrity and coverage but failed order stability and raw review. |
+| Training-set leakage | A replay labeled “held out” may contain a segment used for fine-tuning. | Check model cards/revisions and describe such runs as integration/orientation checks only. | Large TimeSformer listed the replay segment as finetuning data. |
+| Local memorization | A coarse model may fit labels without learning transferable ink. | Three spatial partitions, three seeds, precommitted train/local gates, distant region sealed until pass. | Train AUROC 0.99595; local AUROC 0.51207 only 1.228 mm away; 0/3 gates passed. |
+| Missing spend / terminal ledger | “Ready” can be mistaken for authorized or unscreened work can be repeated. | Hash-bound state, explicit terminal statuses, spend provenance, stopped-pod state, and fail-closed planning. | Prevented repeat inference and corrected misleading zero-spend/ready claims. |
+
+## Design principle
+
+A gate is useful only if it was defined before the candidate result, measures an independently meaningful property, and cannot be relaxed merely because a visually attractive candidate failed it. Diagnostic metrics may rank candidates, but they do not silently become acceptance criteria after inspection.

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "status": "complete",
+  "candidate_id": "PHerc0813-r18-growpatch-calibrated-mask-full",
+  "review_scope": "all six automatically ranked row hypotheses at native offset0 plus shared-window raw depths -31,-15,-7,0,+7,+15,+31 and fiber/persistence controls",
+  "reviewer": "Codex visual review",
+  "reviewed_hypothesis_count": 6,
+  "defensible_text_candidate_count": 0,
+  "borderline_candidate_count": 0,
+  "visible_legible_letters_established": false,
+  "ten_letter_criterion_established": false,
+  "verdict": "reject_current_surface_for_text",
+  "reason": "Every nomination follows dense papyrus fibers, cracks, void or mask-hole margins and changes substantially across depth. None has a stable baseline, repeated glyph scale, closed or branching character bodies, or a sequence approaching ten legible letters.",
+  "source_evidence": {
+    "audit_report": {
+      "path": "audit-report.json",
+      "sha256": "cb86d84f5b9bf311eefe104d242ab729c45622c87ddf75b578cecf1251c69e77"
+    },
+    "raw_stack_manifest": {
+      "path": "../pherc0813-r18-growpatch-raw-stack-93/raw-stack-manifest.json",
+      "sha256": "ba6237958e31972eac34283dc8222279f0d05b654a49069f7a02b312c53eb863"
+    }
+  },
+  "hypotheses": [
+    {
+      "rank": 1,
+      "depth_controls": "row_01_depth_controls.png",
+      "sha256": "2598f9d51fc146fbc231d5d2382252aef62d0e60415675804e68ba1d2beab84d",
+      "classification": "cross-hatched fiber field with holes and depth-changing delamination",
+      "defensible_text": false
+    },
+    {
+      "rank": 2,
+      "depth_controls": "row_02_depth_controls.png",
+      "sha256": "93a25d97c6aeb12075c524fc4a90d23a883af7515dba9cf2f27de9e9aa44d305",
+      "classification": "vertical fold, void margins and fiber bundles; no consistent glyph row",
+      "defensible_text": false
+    },
+    {
+      "rank": 3,
+      "depth_controls": "row_03_depth_controls.png",
+      "sha256": "99794bc986c8fd59443cc86946fbb497858f35fd2c5a32db3318f921a72d568d",
+      "classification": "woven fibers and discontinuous hole-edge texture migrating with depth",
+      "defensible_text": false
+    },
+    {
+      "rank": 4,
+      "depth_controls": "row_04_depth_controls.png",
+      "sha256": "ecf934fae270ad5be5a448df22176976be6983eb556b8340c20adc75eaad2c35",
+      "classification": "large void/fold boundary plus lamination and mask holes",
+      "defensible_text": false
+    },
+    {
+      "rank": 5,
+      "depth_controls": "row_05_depth_controls.png",
+      "sha256": "071ae279769b9388cad5ca68be5cee2fe7ebca272294527cacbe46d288176e4a",
+      "classification": "upper sheet-edge and horizontal fiber band; only seven morphology proxies",
+      "defensible_text": false
+    },
+    {
+      "rank": 6,
+      "depth_controls": "row_06_depth_controls.png",
+      "sha256": "3a8758effd6cfb049e51c18e1b2f2f6d897acd311bfb8629b87efb8db31bbde0",
+      "classification": "fold/void margin and crossing fibers; only five morphology proxies",
+      "defensible_text": false
+    }
+  ],
+  "next_action": "Do not spend GPU inference on this surface. Continue only with a geometrically independent surface or acquisition regime."
+}
