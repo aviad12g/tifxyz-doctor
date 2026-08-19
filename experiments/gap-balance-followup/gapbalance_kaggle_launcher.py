@@ -89,13 +89,13 @@ def resolve_verify_only(requested: bool) -> bool:
 
 def find_asset_root(search_root: Path) -> Path:
     matches = []
-    for metadata in search_root.glob("**/dataset-metadata.json"):
+    for ledger in search_root.glob("**/SOURCE_SHA256SUMS"):
         try:
-            payload = json.loads(metadata.read_text(encoding="utf-8"))
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+            if sha256_file(ledger) != SOURCE_LEDGER_SHA256:
+                continue
+        except OSError:
             continue
-        if payload.get("id") == ASSET_DATASET_ID:
-            matches.append(metadata.parent.resolve())
+        matches.append(ledger.parent.resolve())
     require(len(matches) == 1, f"expected one mounted {ASSET_DATASET_ID}; found {matches}")
     return matches[0]
 

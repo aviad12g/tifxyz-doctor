@@ -120,3 +120,18 @@ def test_generic_launcher_accepts_only_gap2_gap4_matched_seeds():
         LAUNCHER.resolve_job("gap8", 11)
     assert LAUNCHER.resolve_verify_only(True) is True
     assert LAUNCHER.resolve_verify_only(False) is False
+
+
+def test_asset_root_is_bound_by_unique_frozen_ledger(tmp_path, monkeypatch):
+    expected = tmp_path / "mounted" / "bundle"
+    expected.mkdir(parents=True)
+    ledger = expected / "SOURCE_SHA256SUMS"
+    ledger.write_text("frozen ledger\n")
+    monkeypatch.setattr(LAUNCHER, "SOURCE_LEDGER_SHA256", LAUNCHER.sha256_file(ledger))
+    assert LAUNCHER.find_asset_root(tmp_path) == expected.resolve()
+
+    duplicate = tmp_path / "other"
+    duplicate.mkdir()
+    (duplicate / "SOURCE_SHA256SUMS").write_text("frozen ledger\n")
+    with pytest.raises(LAUNCHER.LaunchError, match="expected one mounted"):
+        LAUNCHER.find_asset_root(tmp_path)
