@@ -2,9 +2,10 @@
 """Fail-closed Kaggle launcher for one frozen fusion-aware training arm/seed.
 
 This script verifies the private input bundle, installs the preregistered
-runtime, extracts the public Dataset059 archives, launches exactly one of the
-six training jobs, and emits a content-addressed run manifest. It performs no
-validation or test inference.
+runtime, extracts the public Dataset059 archives, launches exactly one frozen
+arm/seed training job, and emits a content-addressed run manifest. It performs
+no validation or test inference. The public execution plan, not this generic
+launcher, limits GapBalance to its six new Gap2/Gap4 jobs.
 """
 
 from __future__ import annotations
@@ -23,6 +24,12 @@ from pathlib import Path
 
 DATASET_ID = "aviadcohen1/vesuvius-fusion-aware-training-assets"
 CHECKPOINT_SHA256 = "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f"
+GAP_WEIGHTS = {
+    "control": 1.0,
+    "gap2": 2.0,
+    "gap4": 4.0,
+    "gap8": 8.0,
+}
 ASSETS = {
     "archives/images_s1.tar": (
         1_478_256_640,
@@ -224,7 +231,7 @@ def package_version(name: str) -> str:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arm", choices=("control", "gap8"), required=True)
+    parser.add_argument("--arm", choices=tuple(GAP_WEIGHTS), required=True)
     parser.add_argument("--seed", choices=(11, 23, 47), type=int, required=True)
     parser.add_argument("--asset-root", type=Path)
     parser.add_argument("--work", type=Path, default=Path("/kaggle/working/fusion-aware"))
@@ -294,7 +301,7 @@ def main() -> int:
         "arm": args.arm,
         "seed": args.seed,
         "steps": 1500,
-        "gap_weight": 1.0 if args.arm == "control" else 8.0,
+        "gap_weight": GAP_WEIGHTS[args.arm],
         "real_train_count": 138,
         "real_validation_count": 24,
         "synthetic_count": 16,
