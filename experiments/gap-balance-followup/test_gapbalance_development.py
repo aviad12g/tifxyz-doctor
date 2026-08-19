@@ -209,6 +209,7 @@ def test_public_development_plan_is_complete_and_result_blind():
     assert provider_ids["gapbalance-development-real"] == (
         "aviadcohen1/vesuvius-gapbalance-development-real-all-runs"
     )
+    assert all(len(value.split("/", 1)[1]) <= 50 for value in provider_ids.values())
     for job in jobs:
         for key in (
             "config_payload_sha256",
@@ -227,3 +228,31 @@ def test_public_development_plan_is_complete_and_result_blind():
     assert payload["scoring_freeze"]["scorer_file_sha256"] == hashlib.sha256(
         (ROOT / "score_gapbalance_development.py").read_bytes()
     ).hexdigest()
+
+
+def test_synthetic_operational_fix_changes_only_provider_metadata():
+    plan_path = ROOT / "GAPBALANCE_KAGGLE_DEVELOPMENT_PLAN.json"
+    plan = json.loads(plan_path.read_text(encoding="utf-8"))
+    fix_path = ROOT / "GAPBALANCE_DEVELOPMENT_OPERATIONAL_FIX.json"
+    fix = json.loads(fix_path.read_text(encoding="utf-8"))
+    observed = fix.pop("payload_sha256")
+    canonical = json.dumps(fix, sort_keys=True, separators=(",", ":")).encode()
+    assert observed == hashlib.sha256(canonical).hexdigest()
+    assert plan["synthetic_operational_fix"] == {
+        "file": "experiments/gap-balance-followup/GAPBALANCE_DEVELOPMENT_OPERATIONAL_FIX.json",
+        "file_sha256": hashlib.sha256(fix_path.read_bytes()).hexdigest(),
+        "payload_sha256": observed,
+    }
+    assert fix["failure"]["scientific_endpoints_computed"] is False
+    assert fix["confirmation_outputs_inspected"] is False
+    original = {job["job_id"]: job for job in plan["jobs"]}
+    corrected = fix["synthetic_jobs"]
+    assert len(corrected) == 12
+    assert len({job["job_id"] for job in corrected}) == 12
+    assert len({job["kernel_id"] for job in corrected}) == 12
+    for job in corrected:
+        before = original[job["job_id"]]
+        assert job["config_payload_sha256"] == before["config_payload_sha256"]
+        assert job["launcher_sha256"] == before["launcher_sha256"]
+        assert job["kernel_id"] == plan["provider_resolved_kernel_ids"][job["job_id"]]
+        assert len(job["kernel_id"].split("/", 1)[1]) <= 50

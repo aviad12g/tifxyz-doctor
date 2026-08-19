@@ -122,6 +122,7 @@ def job_specs(records: dict[str, Any]) -> list[dict[str, Any]]:
     specs = [
         {
             "job_id": "gapbalance-development-real",
+            "kernel_slug": "vesuvius-gapbalance-development-real-all-runs",
             "mode": "real",
             "runs": {run: records[run] for run in RUNS},
             "title": "Vesuvius GapBalance Development Real All Runs",
@@ -133,11 +134,12 @@ def job_specs(records: dict[str, Any]) -> list[dict[str, Any]]:
             specs.append(
                 {
                     "job_id": f"gapbalance-development-synthetic-seed{seed}-shard{shard:02d}",
+                    "kernel_slug": f"gapbalance-dev-syn-s{seed}-q{shard}",
                     "mode": "synthetic",
                     "runs": {run: records[run] for run in seed_runs},
                     "seed": seed,
                     "shard_index": shard,
-                    "title": f"Vesuvius GapBalance Development Synthetic Seed {seed} Shard {shard}",
+                    "title": f"GapBalance Dev Syn S{seed} Q{shard}",
                 }
             )
     return specs
@@ -181,7 +183,7 @@ def write_package(
         for record in spec["runs"].values()
     ]
     metadata = {
-        "id": f"aviadcohen1/vesuvius-{spec['job_id']}",
+        "id": f"aviadcohen1/{spec['kernel_slug']}",
         "title": spec["title"],
         "code_file": code.name,
         "language": "python",
