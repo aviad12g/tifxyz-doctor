@@ -1,0 +1,117 @@
+{
+  "asset_bundle": {
+    "dataset_id": "aviadcohen1/vesuvius-fusion-aware-training-assets",
+    "expected_provider_version": 1,
+    "source_file_count": 278,
+    "source_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
+  },
+  "control_reuse": {
+    "11": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+    "23": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+    "47": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44"
+  },
+  "data_boundaries": {
+    "confirmation": {
+      "real": "PHerc1218 version 2 remains unopened until candidate and thresholds are frozen",
+      "synthetic_seeds": [
+        500,
+        501,
+        502,
+        503,
+        504
+      ]
+    },
+    "development": {
+      "real": "exact original 24-patch Scroll-1 validation manifest",
+      "synthetic_seeds": [
+        400,
+        401,
+        402,
+        403
+      ]
+    },
+    "training": "exact original Scroll-1 training manifest plus synthetic seeds 100-115"
+  },
+  "execution": {
+    "free_kaggle_execution_authorized": true,
+    "form_submission_authorized": false,
+    "paid_compute_authorized": false,
+    "provider_cost_usd": 0,
+    "verify_only_required_before_gpu": true
+  },
+  "jobs": [
+    {
+      "arm": "gap2",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-11",
+      "seed": 11,
+      "title": "Vesuvius GapBalance Gap2 Seed 11"
+    },
+    {
+      "arm": "gap2",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-23",
+      "seed": 23,
+      "title": "Vesuvius GapBalance Gap2 Seed 23"
+    },
+    {
+      "arm": "gap2",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-47",
+      "seed": 47,
+      "title": "Vesuvius GapBalance Gap2 Seed 47"
+    },
+    {
+      "arm": "gap4",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-11",
+      "seed": 11,
+      "title": "Vesuvius GapBalance Gap4 Seed 11"
+    },
+    {
+      "arm": "gap4",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-23",
+      "seed": 23,
+      "title": "Vesuvius GapBalance Gap4 Seed 23"
+    },
+    {
+      "arm": "gap4",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-47",
+      "seed": 47,
+      "title": "Vesuvius GapBalance Gap4 Seed 47"
+    }
+  ],
+  "observed_runtime_baseline": {
+    "concurrent_jobs": 3,
+    "expected_gpu_hours": 6.98,
+    "expected_training_wall_hours": 2.4,
+    "original_job_seconds_range": [
+      4164,
+      4209
+    ],
+    "reference_gpu": "Kaggle Tesla P100"
+  },
+  "preflight": {
+    "arm": "gap2",
+    "enable_gpu": false,
+    "kernel_id": "aviadcohen1/vesuvius-gapbalance-verify-only",
+    "seed": 11,
+    "title": "Vesuvius GapBalance Frozen Asset Preflight",
+    "verify_only": true
+  },
+  "public_projection": {
+    "launcher_file": "experiments/gap-balance-followup/gapbalance_kaggle_launcher.py",
+    "launcher_sha256": "7ad542c14dca632e503769af66cf9f6fa89ac7ca2df7077f8ea218470ee87f0b",
+    "replacements": {
+      "project/kaggle_train_runner.py": "6aa86b362aac0575f8cb4e7896a49e865576e7599317a07070cd6aab14621d12",
+      "project/train_fusion_aware.py": "d427dfcfb5f4946d366ba86a6c9725d8e1caf7264691549a29db65225b186a97"
+    },
+    "source_commit": "0bdca375c56fc6b32dfc3cccbdd1226206bac0b2"
+  },
+  "protocol": {
+    "contract_file_sha256": "aed5c8c375dbf080ed52cebb732771a01196e4c01956db5687793f4db382dd17",
+    "contract_path": "experiments/gap-balance-followup/GAPBALANCE_STAGE0_CONTRACT.json",
+    "holdout_selection_file_sha256": "3ff0e00a6c3b0b831dcfd00c335b1a4c6c37ea0acea3f99ca7a361082da39d8a",
+    "holdout_selection_path": "experiments/gap-balance-followup/PHERC1218_V2_SELECTION.json",
+    "protocol_file_sha256": "126a94c76caada467cfcb44b6a06b8b75918b4a92837350ab2647734af633946",
+    "protocol_path": "experiments/gap-balance-followup/GAPBALANCE_PROTOCOL.md"
+  },
+  "schema_version": "1.0",
+  "status": "PUBLIC_FROZEN_READY_FOR_FREE_KAGGLE_VERIFY_ONLY"
+}

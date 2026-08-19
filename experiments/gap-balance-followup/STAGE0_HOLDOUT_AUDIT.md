@@ -84,9 +84,10 @@ opened.
 - the frozen primary rule retains 171 contacts
   (12 / 39 / 42 / 32 / 46 by band), including 51 below four voxels, and 48
   controls;
-- no reply to the public discrepancy comment was present at audit time, but
-  the provider version notes directly confirm that the six version-1 excess
-  files were pilot leftovers and that version 2 is authoritative.
+- the dataset author publicly confirmed that the six version-1 excess files
+  were pilot leftovers, that version 2 is authoritative, and that all v1
+  derived numbers are void:
+  <https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339946340>.
 
 The exact contract is `GAPBALANCE_STAGE0_CONTRACT.json`; the validator output
 `PHERC1218_V2_SELECTION.json` freezes all 219 eligible file identities and the
@@ -121,10 +122,13 @@ and the fixed-panel payload SHA-256 is
 The public extractor creates `OUT/crops` with `exist_ok=True` but does not
 require it to be absent or empty. Later label and emptiness passes glob every
 NPZ in that directory. The exact six-file excess is three additional 0–2 crops
-and three additional 10+ crops. This is sufficient to fail closed; it is not
-proof of which six files are stale. The author was asked publicly to confirm
-the authoritative membership and issue a corrected immutable version:
+and three additional 10+ crops. This was sufficient to fail closed before
+author confirmation. The author was asked publicly to confirm the authoritative
+membership and issue a corrected immutable version:
 <https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339174393>.
+The author then named the six orphans in the public correction record and
+confirmed the authoritative version-2 membership:
+<https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339946340>.
 
 #### Frozen eligibility rule
 

@@ -19,7 +19,13 @@
   },
   "correction": {
     "issue_comment": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339174393",
-    "response_present_when_audited": false,
+    "response": {
+      "author": "Jinhojeong",
+      "created_at": "2026-08-19T09:05:22Z",
+      "issue_comment_id": 5339946340,
+      "url": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339946340"
+    },
+    "response_present_when_audited": true,
     "version_notes": "v2: corrected membership. Six crops left over from a pilot extraction were present in v1 (0-2 band 17 not 14, 10+ band 63 not 60). The authoritative set is the 254 the frozen selection rule yields in one clean pass, plus 60 controls. Manifest and all derived counts recomputed: 209 of 254 contact crops carry both split instances."
   },
   "dataset": {
