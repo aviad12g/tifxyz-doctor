@@ -1,6 +1,6 @@
 # GapBalance Stage-0 holdout feasibility audit
 
-Status: **BLOCKED — do not train**
+Status: **PROVISIONALLY UNBLOCKED BY PROVENANCE; BLOCKED ON PACKAGE IDENTITY**
 
 This audit concerns a follow-up to the immutable preregistered Gap8 result. It
 does not reopen, overwrite, reinterpret, or tune against the previously opened
@@ -8,9 +8,17 @@ Scroll-4/5 or synthetic-test results.
 
 ## Decision
 
-Fresh synthetic confirmation is feasible. A genuinely untouched, provenance-
-complete real confirmation set is not currently available. The experiment must
-therefore stop before training.
+Fresh synthetic confirmation is feasible. The PHerc1218 tight-contact release
+is physically outside the Dataset059 source-checkpoint lineage and did not
+exist when Gap2/Gap4 were proposed, so it can support an external real-CT
+confirmation proxy with a deliberately narrow claim. It is not hand-annotated
+truth: its repaired-v2 labels are automatic labels, and the experiment may
+claim only agreement with that independently produced proxy.
+
+Training is still blocked because Kaggle dataset version 1 does not reconcile
+with its frozen extraction record. A corrected immutable dataset version is
+required before any holdout identity, eligible subset, or fixed panel can be
+frozen.
 
 The blocking requirement is not merely a new filename or a previously unused
 crop. The real confirmation data must be demonstrably outside:
@@ -33,6 +41,70 @@ crop. The real confirmation data must be demonstrably outside:
   validation, and all 38 Scroll-4/5 patches for final confirmation.
 - The pinned source checkpoint is itself the Dataset059 model. Unused
   Dataset059 filenames therefore cannot become an independent real holdout.
+
+### PHerc1218 tight-contact validation release — provenance passes, package blocked
+
+- Dataset reference: `jhjeong0815/pherc1218-tight-contact-val`, version 1.
+- Physical source: PHerc1218, which the official scroll metadata identifies as
+  a different physical scroll from Scroll 1 (PHercParis4), Scroll 4
+  (PHerc1667), and Scroll 5 (PHerc0172).
+- Checkpoint lineage: the frozen source checkpoint is
+  `surface_recto_059_redo`, trained from Dataset059 S1/S4/S5. No PHerc1218
+  material is named in that lineage.
+- Temporal independence: Gap2 and Gap4, matched seeds, development-only
+  selection, synthetic confirmation seeds, and all primary safety targets were
+  specified publicly before this dataset was released.
+- Selection independence: the upstream crop rule was frozen before extraction
+  and does not use any GapBalance model or prediction.
+- Label limitation: repaired-v2 automatic instance labels are an external
+  evaluation proxy, not hand annotation or ground truth. Every real-data result
+  must be described as agreement with that proxy.
+
+Only provider metadata and `MANIFEST.jsonl` were inspected. No NPZ, CT crop,
+surface label, instance label, probability, endpoint, or model prediction was
+opened.
+
+#### Version-1 package audit
+
+- provider dataset id: 11704096;
+- provider version: 1;
+- provider bytes: 615,710,185;
+- metadata SHA-256:
+  `f41ba2257616411df54647b10228b7f98c81382fa8b35681e57004a740815f5a`;
+- `MANIFEST.jsonl` SHA-256:
+  `407951ebfd1cadb378c093b156ff68f320ebcb7995a4b69198029ac644d170b3`;
+- manifest inventory: 320 unique files and 320 unique file hashes, comprising
+  260 contact and 60 control crops;
+- manifest contact bands: 17 / 60 / 60 / 60 / 63 for
+  0–2 / 2–4 / 4–6 / 6–10 / 10+ voxels;
+- frozen `crops_summary.json`: 254 accepted contact crops with bands
+  14 / 60 / 60 / 60 / 60;
+- `labels_summary.json` and `emptiness_summary.json`: both report 260 contact
+  crops, consistent with downstream enumeration of the directory and
+  inconsistent with the current extraction run's accepted count.
+
+The public extractor creates `OUT/crops` with `exist_ok=True` but does not
+require it to be absent or empty. Later label and emptiness passes glob every
+NPZ in that directory. The exact six-file excess is three additional 0–2 crops
+and three additional 10+ crops. This is sufficient to fail closed; it is not
+proof of which six files are stale. The author was asked publicly to confirm
+the authoritative membership and issue a corrected immutable version:
+<https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339174393>.
+
+#### Prospective eligibility rule
+
+After a corrected version exists, the real primary subset will be selected
+from manifest metadata only:
+
+- contact crop;
+- both split instance ids present;
+- `ct_empty_frac <= 0.10`;
+- exact file and SHA-256 identity present in the corrected manifest.
+
+The single-sheet control subset requires `ct_empty_frac <= 0.10`. Version 1
+would yield 174 eligible contacts (13/39/42/32/48 by band) and 48 eligible
+controls, but those counts are audit diagnostics only and cannot be frozen or
+used for inference because version 1 membership is disputed.
 
 ### 2025 Kaggle Surface Detection public training set — not certifiable
 
@@ -89,15 +161,21 @@ labels and endpoints remain sealed until a single candidate is selected.
 
 Training may begin only after a real-data manifest passes all of these checks:
 
-- at least 48 fully labelled 3-D cubes from a whole physical scroll absent from
-  Dataset059, or from at least two independently annotated new regions;
-- at least 24 cubes meeting a GT-only compressed/multi-sheet eligibility rule;
+- corrected immutable provider version with reconciled extraction and package
+  inventories;
+- at least 48 eligible labelled 3-D contact crops and 24 eligible crops below
+  a four-voxel measured gap;
+- at least 48 eligible single-sheet controls;
 - authoritative physical-scroll and annotation provenance;
-- proof of no source-checkpoint, Gap8, diagnostic, or model-selection exposure;
-- no pseudo-labels, model-selected crops, or prediction-derived annotations;
-- coordinates and fixed qualitative panels selected from labels/geometry only;
-- exact image, label, source-manifest, and selection-manifest SHA-256 values;
-- compatible official-metric labels with ignore regions defined in advance.
+- proof of no source-checkpoint, Gap8, model-selection, or GapBalance-prediction
+  exposure;
+- no model-selected crops or GapBalance-prediction-derived annotations;
+- automatic-label status recorded in every real-result claim;
+- fixed qualitative panels selected mechanically from corrected-manifest
+  metadata before predictions;
+- exact provider version, source-manifest, selected-file, and panel-list
+  SHA-256 values;
+- compatible metric labels and any ignore rule defined in advance.
 
 If any item cannot be proved, the confirmation experiment remains blocked.
 
