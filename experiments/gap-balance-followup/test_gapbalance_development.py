@@ -174,3 +174,50 @@ def test_launcher_base_identity_and_path_guard():
         LAUNCHER.safe_relative(ROOT, "../escape")
     with pytest.raises(RuntimeError):
         LAUNCHER.load_job_config()
+
+
+def test_public_development_plan_is_complete_and_result_blind():
+    path = ROOT / "GAPBALANCE_KAGGLE_DEVELOPMENT_PLAN.json"
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    observed = payload.pop("payload_sha256")
+    canonical = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()
+    assert observed == hashlib.sha256(canonical).hexdigest()
+    assert payload["scientific_endpoints_scored"] is False
+    assert payload["confirmation_outputs_inspected"] is False
+    assert payload["execution"] == {
+        "concurrent_gpu_jobs_maximum": 2,
+        "form_submission_authorized": False,
+        "paid_compute_authorized": False,
+        "provider": "free Kaggle GPU",
+        "provider_cost_usd": 0,
+        "real_cache_jobs": 1,
+        "scientific_endpoint_scoring_jobs": 1,
+        "synthetic_cache_jobs": 12,
+    }
+    jobs = payload["jobs"]
+    assert len(jobs) == 13
+    assert sum(job["mode"] == "real" for job in jobs) == 1
+    synthetic = [job for job in jobs if job["mode"] == "synthetic"]
+    assert {(job["seed"], job["shard_index"]) for job in synthetic} == {
+        (seed, shard) for seed in MODULE.SEEDS for shard in range(4)
+    }
+    assert len({job["job_id"] for job in jobs}) == 13
+    assert len({job["kernel_id"] for job in jobs}) == 13
+    for job in jobs:
+        for key in (
+            "config_payload_sha256",
+            "launcher_sha256",
+            "metadata_sha256",
+            "package_sums_sha256",
+        ):
+            assert len(job[key]) == 64
+    training = ROOT / "GAPBALANCE_TRAINING_FREEZE.json"
+    assert payload["training_freeze"]["file_sha256"] == hashlib.sha256(
+        training.read_bytes()
+    ).hexdigest()
+    assert payload["scoring_freeze"]["pure_rule_file_sha256"] == hashlib.sha256(
+        (ROOT / "gapbalance_development.py").read_bytes()
+    ).hexdigest()
+    assert payload["scoring_freeze"]["scorer_file_sha256"] == hashlib.sha256(
+        (ROOT / "score_gapbalance_development.py").read_bytes()
+    ).hexdigest()
