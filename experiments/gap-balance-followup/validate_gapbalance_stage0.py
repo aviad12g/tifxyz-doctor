@@ -108,6 +108,28 @@ def validate_contract(contract: dict[str, Any]) -> dict[str, Any]:
         "expected contact-band counts must be integers",
     )
     require(isinstance(inventory.get("control"), int), "expected control count is missing")
+    for field in (
+        "both_instances_present",
+        "eligible_contact",
+        "eligible_contact_under_4_voxels",
+        "eligible_control",
+    ):
+        require(isinstance(inventory.get(field), int), f"expected {field} count is missing")
+
+    provider_inventory = real.get("provider_inventory")
+    require(isinstance(provider_inventory, dict), "provider inventory is not frozen")
+    expected_npz = sum(inventory["contact_bands"].values()) + inventory["control"]
+    require(provider_inventory.get("npz_files") == expected_npz, "provider NPZ count changed")
+    require(provider_inventory.get("all_files") == expected_npz + 10, "provider file count changed")
+    require(
+        isinstance(provider_inventory.get("total_bytes"), int)
+        and provider_inventory["total_bytes"] > 0,
+        "provider byte count is not frozen",
+    )
+    require(
+        isinstance(real.get("manifest_bytes"), int) and real["manifest_bytes"] > 0,
+        "manifest byte count is not frozen",
+    )
 
     gates = contract.get("gates", {})
     require(gates.get("fusion_delta_pp_max_pooled") == -5.0, "fusion gate changed")
@@ -147,11 +169,13 @@ def validate_manifest(
     expected_sha = real["manifest_sha256"]
     actual_sha = sha256_file(manifest_path)
     require(actual_sha == expected_sha, "manifest SHA-256 mismatch")
+    require(manifest_path.stat().st_size == real["manifest_bytes"], "manifest byte count mismatch")
 
     rows = load_manifest(manifest_path)
     files: set[str] = set()
     hashes: set[str] = set()
     contact_counts: Counter[str] = Counter()
+    both_instances_present = 0
     eligible_contacts: list[dict[str, Any]] = []
     eligible_controls: list[dict[str, Any]] = []
 
@@ -174,6 +198,7 @@ def validate_manifest(
             band = row.get("band")
             require(band in BANDS, f"line {index}: invalid contact band")
             require(isinstance(row.get("both_instances_present"), bool), f"line {index}: missing instance flag")
+            both_instances_present += int(row["both_instances_present"])
             contact_counts[band] += 1
             if row["both_instances_present"] and empty_fraction <= 0.10:
                 eligible_contacts.append(row)
@@ -184,15 +209,50 @@ def validate_manifest(
     require(dict(contact_counts) == expected["contact_bands"], "contact-band inventory mismatch")
     control_count = sum(row["arm"] == "control" for row in rows)
     require(control_count == expected["control"], "control inventory mismatch")
+    require(
+        both_instances_present == expected["both_instances_present"],
+        "both-instance inventory mismatch",
+    )
 
     eligibility = real["eligibility"]
     under_four = sum(row["band"] in {"0-2", "2-4"} for row in eligible_contacts)
     require(len(eligible_contacts) >= eligibility["minimum_contact"], "too few eligible contacts")
     require(under_four >= eligibility["minimum_contact_under_4_voxels"], "too few eligible contacts below four voxels")
     require(len(eligible_controls) >= eligibility["minimum_control"], "too few eligible controls")
+    require(len(eligible_contacts) == expected["eligible_contact"], "eligible-contact inventory mismatch")
+    require(
+        under_four == expected["eligible_contact_under_4_voxels"],
+        "eligible under-four inventory mismatch",
+    )
+    require(len(eligible_controls) == expected["eligible_control"], "eligible-control inventory mismatch")
 
     selected_files = sorted(row["file"] for row in eligible_contacts + eligible_controls)
     selected_sha = hashlib.sha256(("\n".join(selected_files) + "\n").encode("utf-8")).hexdigest()
+    eligible_file_identities = {
+        "contact": sorted(
+            (
+                {
+                    "band": row["band"],
+                    "ct_empty_frac": float(row["ct_empty_frac"]),
+                    "file": row["file"],
+                    "sha256": row["sha256"],
+                }
+                for row in eligible_contacts
+            ),
+            key=lambda row: row["file"],
+        ),
+        "control": sorted(
+            (
+                {
+                    "ct_empty_frac": float(row["ct_empty_frac"]),
+                    "file": row["file"],
+                    "sha256": row["sha256"],
+                }
+                for row in eligible_controls
+            ),
+            key=lambda row: row["file"],
+        ),
+    }
     panels = {}
     for band in PANEL_BANDS:
         candidates = [row for row in eligible_contacts if row["band"] == band]
@@ -223,6 +283,8 @@ def validate_manifest(
             "eligible_control": len(eligible_controls),
         },
         "selected_files_sha256": selected_sha,
+        "eligible_file_identities": eligible_file_identities,
+        "eligible_file_identities_payload_sha256": canonical_sha256(eligible_file_identities),
         "fixed_panels": panels,
         "fixed_panels_payload_sha256": canonical_sha256(panels),
         "npz_opened_or_parsed": False,

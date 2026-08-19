@@ -1,0 +1,12 @@
+GapBalance Stage 0 passed result-blind on PHerc1218 dataset version 2.
+
+The provider marks version 2 Ready and explicitly identifies the six
+version-1 excess crops as pilot-extraction leftovers. The exact v2 manifest,
+provider NPZ paths, band counts, eligibility counts, 219 selected identities,
+and four fixed panel files reconcile under the public fail-closed validator.
+No NPZ, CT crop, label, model prediction, probability, panel, or scientific
+endpoint was opened during certification.
+
+Free training remains conditional on public visibility of this contract, an
+exact six-job Control-reuse/Gap2/Gap4 execution plan, and a passing verify-only
+launcher preflight. Paid compute remains unauthorized.

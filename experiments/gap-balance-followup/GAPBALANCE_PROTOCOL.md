@@ -1,11 +1,20 @@
-# GapBalance protocol draft
+# GapBalance protocol
 
-Status: **scientifically specified; execution blocked on corrected PHerc1218 package**
+Status: **public-frozen and result-blind; execution requires external free-compute authority**
 
-This draft becomes executable only after the package-identity condition in
-`STAGE0_HOLDOUT_AUDIT.md` is satisfied, the corrected provider version and
-metadata-only selections are inserted, a fail-closed validator passes, and the
-complete protocol is public. No result may be used to weaken these rules.
+The package-identity condition in `STAGE0_HOLDOUT_AUDIT.md` is satisfied by
+Kaggle dataset version 2. `GAPBALANCE_STAGE0_CONTRACT.json` and
+`PHERC1218_V2_SELECTION.json` freeze the exact provider identity,
+metadata-only eligible set, and four panel files. The fail-closed validator
+must pass against the exact version-2 manifest before any execution. No result
+may be used to weaken these rules.
+
+The frozen selection payload SHA-256 is
+`3a099b4aa55d6de16c289c8aafc59dc618c4c6a3ab78c800b229b1e9bdc444d8`;
+its 219 eligible identities hash to
+`5eb0690759c0c743f661de1390eb9357d39794419d4620791290a67aebd79882`,
+and the four panel paths hash to
+`ce9f57adad7e5044dc44b7f9fc415b51734fcba7a5b50f53df000142ef5d5cd0`.
 
 ## Question
 
@@ -57,11 +66,12 @@ synthetic inter-sheet-gap background weight.
 
 ### Sealed confirmation
 
-- real: a corrected immutable version of
-  `jhjeong0815/pherc1218-tight-contact-val`, pinned by provider dataset id,
-  version, manifest SHA-256, exact selected-file list, and exact fixed-panel
-  list. Version 1 is explicitly forbidden because its package membership does
-  not reconcile with its extraction summary;
+- real: `jhjeong0815/pherc1218-tight-contact-val` version 2, provider dataset
+  id 11704096, pinned by `MANIFEST.jsonl` SHA-256
+  `b62e5a8f3e8ff4e2de7a5b3626f85fcee91df338c9e250867b2342b903ea9dfe`,
+  exact selected-file identities, and exact fixed-panel list. Version 1 is
+  explicitly forbidden because its package membership does not reconcile with
+  its extraction summary;
 - synthetic: seeds 500–504 over the same frozen 4-by-4 physical
   pitch-by-papyrus factorial plus the 700-um no-kollesis single-sheet control;
 - fixed real panels selected mechanically from manifest metadata and

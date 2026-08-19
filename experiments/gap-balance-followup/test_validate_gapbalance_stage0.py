@@ -20,15 +20,29 @@ def load_draft():
     return json.loads((ROOT / "GAPBALANCE_STAGE0_CONTRACT_DRAFT.json").read_text())
 
 
-def frozen_contract(manifest_sha256):
+def load_public_frozen():
+    return json.loads((ROOT / "GAPBALANCE_STAGE0_CONTRACT.json").read_text())
+
+
+def frozen_contract(manifest_path):
     contract = load_draft()
     contract["status"] = "PUBLIC_FROZEN_READY_FOR_EXPLICIT_TRAINING_APPROVAL"
     real = contract["confirmation"]["real"]
     real["version"] = 2
-    real["manifest_sha256"] = manifest_sha256
+    real["manifest_sha256"] = MODULE.sha256_file(manifest_path)
+    real["manifest_bytes"] = manifest_path.stat().st_size
     real["expected_inventory"] = {
         "contact_bands": {"0-2": 14, "2-4": 60, "4-6": 60, "6-10": 60, "10+": 60},
         "control": 60,
+        "both_instances_present": 254,
+        "eligible_contact": 254,
+        "eligible_contact_under_4_voxels": 74,
+        "eligible_control": 60,
+    }
+    real["provider_inventory"] = {
+        "all_files": 324,
+        "npz_files": 314,
+        "total_bytes": 1,
     }
     return contract
 
@@ -68,23 +82,29 @@ def test_public_draft_fails_closed_on_pending_identity():
         MODULE.validate_contract(load_draft())
 
 
+def test_public_frozen_contract_validates():
+    MODULE.validate_contract(load_public_frozen())
+
+
 def test_metadata_only_manifest_validation_and_panel_selection(tmp_path):
     manifest = tmp_path / "MANIFEST.jsonl"
     write_manifest(manifest)
-    contract = frozen_contract(MODULE.sha256_file(manifest))
+    contract = frozen_contract(manifest)
     result = MODULE.validate_manifest(contract, manifest)
     assert result["status"] == "STAGE0_MANIFEST_VALIDATED_RESULT_BLIND"
     assert result["inventory"]["eligible_contact"] == 254
     assert result["inventory"]["eligible_contact_under_4_voxels"] == 74
     assert result["inventory"]["eligible_control"] == 60
     assert set(result["fixed_panels"]) == set(MODULE.PANEL_BANDS)
+    assert len(result["eligible_file_identities"]["contact"]) == 254
+    assert len(result["eligible_file_identities"]["control"]) == 60
     assert result["npz_opened_or_parsed"] is False
 
 
 def test_inventory_mismatch_fails_closed(tmp_path):
     manifest = tmp_path / "MANIFEST.jsonl"
     rows = write_manifest(manifest)
-    contract = frozen_contract(MODULE.sha256_file(manifest))
+    contract = frozen_contract(manifest)
     rows.append(
         {
             "arm": "crops",
@@ -97,6 +117,7 @@ def test_inventory_mismatch_fails_closed(tmp_path):
     )
     manifest.write_text("".join(json.dumps(row) + "\n" for row in rows))
     contract["confirmation"]["real"]["manifest_sha256"] = MODULE.sha256_file(manifest)
+    contract["confirmation"]["real"]["manifest_bytes"] = manifest.stat().st_size
     with pytest.raises(MODULE.ContractError, match="inventory mismatch"):
         MODULE.validate_manifest(contract, manifest)
 
@@ -106,7 +127,7 @@ def test_duplicate_file_fails_closed(tmp_path):
     rows = write_manifest(manifest)
     rows[1]["file"] = rows[0]["file"]
     manifest.write_text("".join(json.dumps(row) + "\n" for row in rows))
-    contract = frozen_contract(MODULE.sha256_file(manifest))
+    contract = frozen_contract(manifest)
     with pytest.raises(MODULE.ContractError, match="duplicate file path"):
         MODULE.validate_manifest(contract, manifest)
 
@@ -114,7 +135,7 @@ def test_duplicate_file_fails_closed(tmp_path):
 def test_changed_gate_or_control_identity_fails_closed(tmp_path):
     manifest = tmp_path / "MANIFEST.jsonl"
     write_manifest(manifest)
-    contract = frozen_contract(MODULE.sha256_file(manifest))
+    contract = frozen_contract(manifest)
     altered = copy.deepcopy(contract)
     altered["gates"]["detection_delta_pp_min_pooled"] = -3.0
     with pytest.raises(MODULE.ContractError, match="detection gate changed"):

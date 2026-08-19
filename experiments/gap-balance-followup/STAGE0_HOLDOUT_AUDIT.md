@@ -1,6 +1,6 @@
 # GapBalance Stage-0 holdout feasibility audit
 
-Status: **PROVISIONALLY UNBLOCKED BY PROVENANCE; BLOCKED ON PACKAGE IDENTITY**
+Status: **REAL HOLDOUT CERTIFIED; RESULT-BLIND PROTOCOL FROZEN**
 
 This audit concerns a follow-up to the immutable preregistered Gap8 result. It
 does not reopen, overwrite, reinterpret, or tune against the previously opened
@@ -15,10 +15,11 @@ confirmation proxy with a deliberately narrow claim. It is not hand-annotated
 truth: its repaired-v2 labels are automatic labels, and the experiment may
 claim only agreement with that independently produced proxy.
 
-Training is still blocked because Kaggle dataset version 1 does not reconcile
-with its frozen extraction record. A corrected immutable dataset version is
-required before any holdout identity, eligible subset, or fixed panel can be
-frozen.
+Kaggle dataset version 2 resolves the version-1 membership discrepancy. The
+provider explicitly identifies six pilot-extraction leftovers in version 1,
+publishes the authoritative 254-contact/60-control set, and reports 209
+contacts carrying both split instances. Exact provider-path reconciliation and
+the metadata-only Stage-0 validator pass. Version 1 remains forbidden.
 
 The blocking requirement is not merely a new filename or a previously unused
 crop. The real confirmation data must be demonstrably outside:
@@ -42,9 +43,9 @@ crop. The real confirmation data must be demonstrably outside:
 - The pinned source checkpoint is itself the Dataset059 model. Unused
   Dataset059 filenames therefore cannot become an independent real holdout.
 
-### PHerc1218 tight-contact validation release — provenance passes, package blocked
+### PHerc1218 tight-contact validation release — certified external proxy
 
-- Dataset reference: `jhjeong0815/pherc1218-tight-contact-val`, version 1.
+- Dataset reference: `jhjeong0815/pherc1218-tight-contact-val`, version 2.
 - Physical source: PHerc1218, which the official scroll metadata identifies as
   a different physical scroll from Scroll 1 (PHercParis4), Scroll 4
   (PHerc1667), and Scroll 5 (PHerc0172).
@@ -60,9 +61,43 @@ crop. The real confirmation data must be demonstrably outside:
   evaluation proxy, not hand annotation or ground truth. Every real-data result
   must be described as agreement with that proxy.
 
-Only provider metadata and `MANIFEST.jsonl` were inspected. No NPZ, CT crop,
+Only provider metadata, GitHub Issue #191 comments, and `MANIFEST.jsonl` were inspected. No NPZ, CT crop,
 surface label, instance label, probability, endpoint, or model prediction was
 opened.
+
+#### Version-2 corrected package audit
+
+- provider dataset id: 11704096;
+- provider version/status: 2 / `Ready`, created
+  `2026-08-19T08:43:33.110000`;
+- provider inventory: 324 files and 605,568,763 bytes, comprising 314 NPZs and
+  10 public metadata/summary files;
+- `MANIFEST.jsonl`: 90,251 bytes, SHA-256
+  `b62e5a8f3e8ff4e2de7a5b3626f85fcee91df338c9e250867b2342b903ea9dfe`;
+- manifest inventory: 314 unique paths and 314 unique file hashes, comprising
+  254 contact and 60 control crops;
+- contact bands: 14 / 60 / 60 / 60 / 60 for
+  0–2 / 2–4 / 4–6 / 6–10 / 10+ voxels;
+- 209 contacts contain both declared split instances and 45 do not;
+- the manifest's 314 NPZ paths exactly equal the provider's 314 NPZ paths,
+  with no missing or extra path;
+- the frozen primary rule retains 171 contacts
+  (12 / 39 / 42 / 32 / 46 by band), including 51 below four voxels, and 48
+  controls;
+- no reply to the public discrepancy comment was present at audit time, but
+  the provider version notes directly confirm that the six version-1 excess
+  files were pilot leftovers and that version 2 is authoritative.
+
+The exact contract is `GAPBALANCE_STAGE0_CONTRACT.json`; the validator output
+`PHERC1218_V2_SELECTION.json` freezes all 219 eligible file identities and the
+four fixed panel files from manifest metadata only. Its payload SHA-256 is
+`3a099b4aa55d6de16c289c8aafc59dc618c4c6a3ab78c800b229b1e9bdc444d8`;
+the eligible-identity payload SHA-256 is
+`5eb0690759c0c743f661de1390eb9357d39794419d4620791290a67aebd79882`;
+the selected-path ledger SHA-256 is
+`57aaa943adfc66959da99a660913e0a1e00ae525a01f18829d6b8f2de6306f41`;
+and the fixed-panel payload SHA-256 is
+`ce9f57adad7e5044dc44b7f9fc415b51734fcba7a5b50f53df000142ef5d5cd0`.
 
 #### Version-1 package audit
 
@@ -91,20 +126,17 @@ proof of which six files are stale. The author was asked publicly to confirm
 the authoritative membership and issue a corrected immutable version:
 <https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339174393>.
 
-#### Prospective eligibility rule
+#### Frozen eligibility rule
 
-After a corrected version exists, the real primary subset will be selected
-from manifest metadata only:
+The real primary subset is selected from version-2 manifest metadata only:
 
 - contact crop;
 - both split instance ids present;
 - `ct_empty_frac <= 0.10`;
 - exact file and SHA-256 identity present in the corrected manifest.
 
-The single-sheet control subset requires `ct_empty_frac <= 0.10`. Version 1
-would yield 174 eligible contacts (13/39/42/32/48 by band) and 48 eligible
-controls, but those counts are audit diagnostics only and cannot be frozen or
-used for inference because version 1 membership is disputed.
+The single-sheet control subset requires `ct_empty_frac <= 0.10`. Version 2
+yields the frozen 171 eligible contacts and 48 eligible controls above.
 
 ### 2025 Kaggle Surface Detection public training set — not certifiable
 
@@ -157,9 +189,9 @@ sealed confirmation. The generator revision, configuration, cell identities,
 and file hashes must be frozen before any candidate training. Confirmation
 labels and endpoints remain sealed until a single candidate is selected.
 
-## Exact unblock condition
+## Exact certification condition
 
-Training may begin only after a real-data manifest passes all of these checks:
+The version-2 real-data manifest passes all of these Stage-0 checks:
 
 - corrected immutable provider version with reconciled extraction and package
   inventories;
@@ -177,11 +209,12 @@ Training may begin only after a real-data manifest passes all of these checks:
   SHA-256 values;
 - compatible metric labels and any ignore rule defined in advance.
 
-If any item cannot be proved, the confirmation experiment remains blocked.
+If any identity or count changes, the confirmation experiment fails closed.
 
 ## Spend decision
 
-Stage 0 authorizes no training and no RunPod spend. Current spend: **USD 0**.
-If the holdout is unblocked, Kaggle GPU is the preferred first route. A timed
-smoke test and a written job-count/runtime/cost estimate must precede any paid
-RunPod request.
+This protocol authorizes no paid compute or RunPod spend. Current spend:
+**USD 0**. Free Kaggle GPU is the preferred route. The complete public
+protocol, exact six-job plan, original-control reuse proof, and a verify-only
+launcher check must pass before free training. Any paid fallback still
+requires a written provider/runtime/cost cap and fresh explicit approval.
