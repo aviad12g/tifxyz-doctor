@@ -325,6 +325,14 @@ def build_projection(
         projected_ledger.append((digest, relative))
     for relative in FIXED_ASSET_PATHS:
         source = asset_root / relative
+        if not source.is_file() and relative.startswith("archives/") and relative.endswith(".tar"):
+            expanded_source = asset_root / relative.removesuffix(".tar")
+            require(expanded_source.is_dir(), f"missing fixed asset: {relative}")
+            expanded_target = projection / relative.removesuffix(".tar")
+            if not expanded_target.exists():
+                expanded_target.parent.mkdir(parents=True, exist_ok=True)
+                expanded_target.symlink_to(expanded_source.resolve())
+            continue
         require(source.is_file(), f"missing fixed asset: {relative}")
         target = projection / relative
         if not target.exists():

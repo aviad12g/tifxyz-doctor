@@ -100,7 +100,10 @@ def test_result_blind_public_projection_replaces_only_two_files(tmp_path, monkey
     ledger = asset_root / "SOURCE_SHA256SUMS"
     ledger.write_text("".join(f"{digest}  {relative}\n" for digest, relative in records))
     monkeypatch.setattr(LAUNCHER, "SOURCE_LEDGER_SHA256", LAUNCHER.sha256_file(ledger))
-    monkeypatch.setattr(LAUNCHER, "FIXED_ASSET_PATHS", ())
+    expanded = asset_root / "archives" / "images_s1"
+    expanded.mkdir(parents=True)
+    (expanded / "fixture.tif").write_bytes(b"fixture")
+    monkeypatch.setattr(LAUNCHER, "FIXED_ASSET_PATHS", ("archives/images_s1.tar",))
 
     projection = tmp_path / "projection"
     identities = LAUNCHER.build_projection(asset_root, projection, public_root)
@@ -110,6 +113,7 @@ def test_result_blind_public_projection_replaces_only_two_files(tmp_path, monkey
         assert projected.is_file() and not projected.is_symlink()
         assert LAUNCHER.sha256_file(projected) == digest
     assert (projection / "dummy/file_000.txt").is_symlink()
+    assert (projection / "archives" / "images_s1").is_symlink()
     assert not any(path.suffix == ".npz" for path in projection.rglob("*"))
 
 

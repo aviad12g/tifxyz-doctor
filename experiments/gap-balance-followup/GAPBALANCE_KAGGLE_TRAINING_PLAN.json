@@ -102,7 +102,7 @@
   },
   "public_projection": {
     "launcher_file": "experiments/gap-balance-followup/gapbalance_kaggle_launcher.py",
-    "launcher_sha256": "433b52397245a212a483faf19adaf9c61c82774579d298a1bfa6951fc01364c5",
+    "launcher_sha256": "2aa8f6f9d9842c9223d441578a5533ac70faa4449fcc9d0cbf0e0dc924921b09",
     "replacements": {
       "project/kaggle_train_runner.py": "6aa86b362aac0575f8cb4e7896a49e865576e7599317a07070cd6aab14621d12",
       "project/train_fusion_aware.py": "d427dfcfb5f4946d366ba86a6c9725d8e1caf7264691549a29db65225b186a97"
