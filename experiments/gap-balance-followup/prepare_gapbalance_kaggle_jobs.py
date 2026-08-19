@@ -71,7 +71,7 @@ def load_and_validate_plan(plan_path: Path, repo_root: Path) -> dict[str, Any]:
             "enable_gpu": False,
             "kernel_id": PREFLIGHT_KERNEL_ID,
             "seed": 11,
-            "title": "Vesuvius GapBalance Frozen Asset Preflight",
+            "title": "Vesuvius GapBalance Verify Only",
             "verify_only": True,
         },
         "CPU verify-only preflight changed",

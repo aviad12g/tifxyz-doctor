@@ -92,7 +92,7 @@
     "enable_gpu": false,
     "kernel_id": "aviadcohen1/vesuvius-gapbalance-verify-only",
     "seed": 11,
-    "title": "Vesuvius GapBalance Frozen Asset Preflight",
+    "title": "Vesuvius GapBalance Verify Only",
     "verify_only": true
   },
   "public_projection": {
