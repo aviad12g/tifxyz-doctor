@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import importlib.util
 import json
 import os
 import subprocess
@@ -33,6 +34,10 @@ FIXED_ASSET_PATHS = (
     "diagnostic/loader059.py",
     "diagnostic/fusion_readout.py",
 )
+ARCHIVE_NAMES = ("images_s1", "images_s4_s5", "labels")
+EXPANDED_ARCHIVE_COUNT = 400
+EXPANDED_ARCHIVE_BYTES = 2_005_739_905
+EXPANDED_ARCHIVE_SHA256 = "981448a526d2e04cb59b0b1f40331fa901ece5c0514161733814c5b7ea823021"
 SOURCE_LEDGER_SHA256 = "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
 ALLOWED_JOBS = {
     ("gap2", 11),
@@ -139,6 +144,162 @@ def read_source_ledger(asset_root: Path) -> list[tuple[str, str]]:
     return records
 
 
+def expanded_archive_identity(root: Path) -> tuple[int, int, str]:
+    rows = []
+    total_bytes = 0
+    for archive_name in ARCHIVE_NAMES:
+        archive_root = root / "archives" / archive_name
+        require(archive_root.is_dir(), f"expanded archive directory missing: {archive_root}")
+        for path in sorted(archive_root.rglob("*")):
+            if not path.is_file():
+                continue
+            size = path.stat().st_size
+            relative = path.relative_to(archive_root).as_posix()
+            rows.append(f"{sha256_file(path)} {size} {archive_name}/{relative}\n")
+            total_bytes += size
+    payload = "".join(sorted(rows)).encode("utf-8")
+    return len(rows), total_bytes, sha256_bytes(payload)
+
+
+def verify_fixed_assets_compat(frozen, root: Path, original_verify) -> dict[str, str]:
+    tar_paths = [root / "archives" / f"{name}.tar" for name in ARCHIVE_NAMES]
+    if all(path.is_file() for path in tar_paths):
+        return original_verify(root)
+    verified = {}
+    for relative, (expected_size, expected_hash) in frozen.ASSETS.items():
+        if relative.startswith("archives/"):
+            continue
+        path = root / relative
+        require(path.is_file(), f"fixed asset missing: {relative}")
+        require(expected_size is None or path.stat().st_size == expected_size, f"fixed asset wrong-sized: {relative}")
+        actual_hash = sha256_file(path)
+        require(actual_hash == expected_hash, f"fixed asset hash mismatch: {relative}")
+        verified[relative] = actual_hash
+    identity = expanded_archive_identity(root)
+    expected = (EXPANDED_ARCHIVE_COUNT, EXPANDED_ARCHIVE_BYTES, EXPANDED_ARCHIVE_SHA256)
+    require(identity == expected, f"expanded archive identity mismatch: {identity} != {expected}")
+    verified["archives/expanded-content"] = identity[2]
+    return verified
+
+
+def extract_training_data_compat(root: Path, destination: Path, original_extract) -> None:
+    tar_paths = [root / "archives" / f"{name}.tar" for name in ARCHIVE_NAMES]
+    if all(path.is_file() for path in tar_paths):
+        original_extract(root, destination)
+        return
+    for archive_name in ("images_s1", "labels"):
+        archive_root = root / "archives" / archive_name
+        for source in sorted(archive_root.rglob("*")):
+            if not source.is_file():
+                continue
+            target = destination / source.relative_to(archive_root)
+            target.parent.mkdir(parents=True, exist_ok=True)
+            require(not target.exists(), f"duplicate expanded training asset: {target}")
+            target.symlink_to(source)
+    image_count = len(list((destination / "imagesTr").glob("s1_*_0000.tif")))
+    label_count = len(list((destination / "labelsTr").glob("s1_*.tif")))
+    require((image_count, label_count) == (162, 162), f"unexpected Scroll-1 expansion: images={image_count} labels={label_count}")
+
+
+def configure_torch_compiler_compat(torch) -> None:
+    import inspect
+
+    if "reason" not in inspect.signature(torch.compiler.disable).parameters:
+        original_disable = torch.compiler.disable
+
+        def disable_compat(fn=None, recursive=True, *, reason=None):
+            return original_disable(fn=fn, recursive=recursive)
+
+        torch.compiler.disable = disable_compat
+    compat_root = Path("/kaggle/working/fusion-runtime-compat")
+    compat_root.mkdir(parents=True, exist_ok=True)
+    (compat_root / "sitecustomize.py").write_text(
+        "import inspect\n"
+        "import torch\n"
+        "if 'reason' not in inspect.signature(torch.compiler.disable).parameters:\n"
+        "    _original_disable = torch.compiler.disable\n"
+        "    def _disable_compat(fn=None, recursive=True, *, reason=None):\n"
+        "        return _original_disable(fn=fn, recursive=recursive)\n"
+        "    torch.compiler.disable = _disable_compat\n",
+        encoding="utf-8",
+    )
+    os.environ["PYTHONPATH"] = str(compat_root) + os.pathsep + os.environ.get("PYTHONPATH", "")
+
+
+def run_model_loader_preflight(source_root: Path) -> None:
+    network_src = source_root / "network-source" / "vesuvius" / "src"
+    diagnostic_src = source_root / "diagnostic"
+    sys.path.insert(0, str(network_src))
+    sys.path.insert(0, str(diagnostic_src))
+    import torch
+    import loader059
+
+    configure_torch_compiler_compat(torch)
+    loader059.CKPT = str(source_root / "model" / "Model_epoch499.pth")
+    model, _, _ = loader059.load_059()
+    require(next(model.parameters()).is_cuda and not model.training, "full model-loader preflight failed")
+    del model
+    torch.cuda.empty_cache()
+    print("MODEL_LOADER_PREFLIGHT_OK timm=1.0.27", flush=True)
+
+
+def install_runtime_compat(frozen, source_root: Path) -> None:
+    packages = tuple(package for package in frozen.PIP_PACKAGES if not package.startswith("timm==")) + (
+        "timm==1.0.27",
+    )
+    subprocess.run(
+        [sys.executable, "-m", "pip", "install", "--quiet", "--no-cache-dir", *packages],
+        check=True,
+    )
+    subprocess.run(
+        [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--quiet",
+            "--no-cache-dir",
+            "torch==2.5.1",
+            "torchvision==0.20.1",
+            "--index-url",
+            "https://download.pytorch.org/whl/cu121",
+        ],
+        check=True,
+    )
+    run_model_loader_preflight(source_root)
+
+
+def execute_projected_runner(runner: Path, source_root: Path, arm: str, seed: int, work: Path, verify_only: bool) -> int:
+    spec = importlib.util.spec_from_file_location("gapbalance_projected_runner", runner)
+    require(spec is not None and spec.loader is not None, f"cannot load projected runner: {runner}")
+    frozen = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(frozen)
+    original_verify = frozen.verify_fixed_assets
+    original_extract = frozen.extract_training_data
+    frozen.verify_fixed_assets = lambda root: verify_fixed_assets_compat(frozen, root, original_verify)
+    frozen.extract_training_data = lambda root, destination: extract_training_data_compat(root, destination, original_extract)
+    frozen.install_runtime = lambda: install_runtime_compat(frozen, source_root)
+
+    original_argv = sys.argv
+    sys.argv = [
+        str(runner),
+        "--arm",
+        arm,
+        "--seed",
+        str(seed),
+        "--asset-root",
+        str(source_root),
+        "--work",
+        str(work),
+    ]
+    if verify_only:
+        sys.argv.append("--verify-only")
+    try:
+        return int(frozen.main())
+    finally:
+        sys.argv = original_argv
+
+
 def build_projection(
     asset_root: Path,
     projection: Path,
@@ -211,22 +372,14 @@ def main(argv: list[str] | None = None) -> int:
     }, sort_keys=True), flush=True)
 
     runner = args.projection.resolve() / "project" / "kaggle_train_runner.py"
-    command = [
-        sys.executable,
-        str(runner),
-        "--arm",
+    return execute_projected_runner(
+        runner,
+        args.projection.resolve(),
         arm,
-        "--seed",
-        str(seed),
-        "--asset-root",
-        str(args.projection.resolve()),
-        "--work",
-        str(args.work.resolve()),
-    ]
-    if verify_only:
-        command.append("--verify-only")
-    subprocess.run(command, check=True)
-    return 0
+        seed,
+        args.work.resolve(),
+        verify_only,
+    )
 
 
 if __name__ == "__main__":

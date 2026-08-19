@@ -63,6 +63,15 @@ def load_and_validate_plan(plan_path: Path, repo_root: Path) -> dict[str, Any]:
     require(execution.get("form_submission_authorized") is False, "form submission must remain unauthorized")
     require(execution.get("provider_cost_usd") == 0, "provider cost must be zero")
     require(plan.get("control_reuse") == EXPECTED_CONTROLS, "control checkpoint identities changed")
+    require(
+        plan.get("asset_bundle", {}).get("expanded_archive_identity")
+        == {
+            "bytes": 2_005_739_905,
+            "files": 400,
+            "sha256": "981448a526d2e04cb59b0b1f40331fa901ece5c0514161733814c5b7ea823021",
+        },
+        "expanded Kaggle archive identity changed",
+    )
 
     preflight = plan.get("preflight")
     require(

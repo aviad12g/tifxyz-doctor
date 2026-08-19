@@ -1,6 +1,11 @@
 {
   "asset_bundle": {
     "dataset_id": "aviadcohen1/vesuvius-fusion-aware-training-assets",
+    "expanded_archive_identity": {
+      "bytes": 2005739905,
+      "files": 400,
+      "sha256": "981448a526d2e04cb59b0b1f40331fa901ece5c0514161733814c5b7ea823021"
+    },
     "expected_provider_version": 1,
     "source_file_count": 278,
     "source_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
@@ -97,7 +102,7 @@
   },
   "public_projection": {
     "launcher_file": "experiments/gap-balance-followup/gapbalance_kaggle_launcher.py",
-    "launcher_sha256": "1416a70bfff57219e128dc35eb5c040ecbfbf1c655acf4183c134f2f80fdd6df",
+    "launcher_sha256": "433b52397245a212a483faf19adaf9c61c82774579d298a1bfa6951fc01364c5",
     "replacements": {
       "project/kaggle_train_runner.py": "6aa86b362aac0575f8cb4e7896a49e865576e7599317a07070cd6aab14621d12",
       "project/train_fusion_aware.py": "d427dfcfb5f4946d366ba86a6c9725d8e1caf7264691549a29db65225b186a97"

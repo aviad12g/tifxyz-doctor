@@ -135,3 +135,25 @@ def test_asset_root_is_bound_by_unique_frozen_ledger(tmp_path, monkeypatch):
     (duplicate / "SOURCE_SHA256SUMS").write_text("frozen ledger\n")
     with pytest.raises(LAUNCHER.LaunchError, match="expected one mounted"):
         LAUNCHER.find_asset_root(tmp_path)
+
+
+def test_expanded_archive_identity_and_training_projection(tmp_path, monkeypatch):
+    asset_root = tmp_path / "assets"
+    rows = {"images_s4_s5/imagesTr/s4_a_0000.tif": b"image-c"}
+    for index in range(162):
+        rows[f"images_s1/imagesTr/s1_{index:03d}_0000.tif"] = f"image-{index}".encode()
+        rows[f"labels/labelsTr/s1_{index:03d}.tif"] = f"label-{index}".encode()
+    for relative, raw in rows.items():
+        path = asset_root / "archives" / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(raw)
+    identity = LAUNCHER.expanded_archive_identity(asset_root)
+    monkeypatch.setattr(LAUNCHER, "EXPANDED_ARCHIVE_COUNT", identity[0])
+    monkeypatch.setattr(LAUNCHER, "EXPANDED_ARCHIVE_BYTES", identity[1])
+    monkeypatch.setattr(LAUNCHER, "EXPANDED_ARCHIVE_SHA256", identity[2])
+    assert identity[0] == 325
+
+    destination = tmp_path / "training"
+    LAUNCHER.extract_training_data_compat(asset_root, destination, lambda *_: None)
+    assert (destination / "imagesTr" / "s1_000_0000.tif").is_symlink()
+    assert (destination / "labelsTr" / "s1_161.tif").is_symlink()
