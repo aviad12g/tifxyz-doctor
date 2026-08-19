@@ -203,6 +203,12 @@ def test_public_development_plan_is_complete_and_result_blind():
     }
     assert len({job["job_id"] for job in jobs}) == 13
     assert len({job["kernel_id"] for job in jobs}) == 13
+    provider_ids = payload["provider_resolved_kernel_ids"]
+    assert set(provider_ids) == {job["job_id"] for job in jobs}
+    assert len(set(provider_ids.values())) == 13
+    assert provider_ids["gapbalance-development-real"] == (
+        "aviadcohen1/vesuvius-gapbalance-development-real-all-runs"
+    )
     for job in jobs:
         for key in (
             "config_payload_sha256",

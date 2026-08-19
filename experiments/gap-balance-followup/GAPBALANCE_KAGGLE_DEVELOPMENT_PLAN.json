@@ -38,7 +38,23 @@
     {"config_payload_sha256":"32943bb7f5d9c61a582b5b1962fb0ed715b43f98fb09d82d544a1d4a37ea9efd","job_id":"gapbalance-development-synthetic-seed47-shard03","kernel_id":"aviadcohen1/vesuvius-gapbalance-development-synthetic-seed47-shard03","launcher_sha256":"817ce015f2c8d7a607db3571ff81884634414151d178d95e5e14a44ca7356b8a","metadata_sha256":"2320af714191e599bdbea42a938b196eef472f986b154b42eb7f5b348311c717","mode":"synthetic","package_sums_sha256":"19187d95cf69b49269142f0192111701d2d16b871c3480c486329eed382d2777","seed":47,"shard_index":3}
   ],
   "package_manifest_payload_sha256": "04b7114973f2538e0edaee77de4ee2ba8b52faa6f3d7e3496fb9a1b78dfe8711",
-  "payload_sha256": "666413d7ad5cd32b57852a78d0855b0f071810cda4eb99495810e72fc9b2b021",
+  "provider_ref_binding": "For newly created kernels, Kaggle resolves the provider ref from the title even when kernel-metadata.json requests another unused id; the exact frozen package hashes are unchanged.",
+  "provider_resolved_kernel_ids": {
+    "gapbalance-development-real": "aviadcohen1/vesuvius-gapbalance-development-real-all-runs",
+    "gapbalance-development-synthetic-seed11-shard00": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-11-shard-0",
+    "gapbalance-development-synthetic-seed11-shard01": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-11-shard-1",
+    "gapbalance-development-synthetic-seed11-shard02": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-11-shard-2",
+    "gapbalance-development-synthetic-seed11-shard03": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-11-shard-3",
+    "gapbalance-development-synthetic-seed23-shard00": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-23-shard-0",
+    "gapbalance-development-synthetic-seed23-shard01": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-23-shard-1",
+    "gapbalance-development-synthetic-seed23-shard02": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-23-shard-2",
+    "gapbalance-development-synthetic-seed23-shard03": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-23-shard-3",
+    "gapbalance-development-synthetic-seed47-shard00": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-47-shard-0",
+    "gapbalance-development-synthetic-seed47-shard01": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-47-shard-1",
+    "gapbalance-development-synthetic-seed47-shard02": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-47-shard-2",
+    "gapbalance-development-synthetic-seed47-shard03": "aviadcohen1/vesuvius-gapbalance-development-synthetic-seed-47-shard-3"
+  },
+  "payload_sha256": "7fe33fe7d8c975d013da0c660c8395a0c78854c0824fb1d3073d166716413dcd",
   "public_source_commit": "e4fd7d507c21dae9e9d50af1bd35bf3402e67c3b",
   "schema_version": "1.0",
   "scoring_freeze": {
