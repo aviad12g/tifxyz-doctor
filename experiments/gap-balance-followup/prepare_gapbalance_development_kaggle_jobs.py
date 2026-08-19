@@ -26,6 +26,9 @@ PUBLIC_SOURCE_FILES = (
     "experiments/fusion-aware-surface/inference.py",
     "experiments/fusion-aware-surface/normalization.py",
     "experiments/fusion-aware-surface/fusion_ray_readout.py",
+    "experiments/fusion-aware-surface/train_fusion_aware.py",
+    "experiments/fusion-aware-surface/fusion_loss.py",
+    "experiments/fusion-aware-surface/gap_supervision.py",
 )
 CONTROL_MANIFESTS = {
     "control_seed11": (2481, "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"),

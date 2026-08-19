@@ -54,7 +54,12 @@
     "gapbalance-development-synthetic-seed47-shard02": "aviadcohen1/gapbalance-dev-syn-s47-q2",
     "gapbalance-development-synthetic-seed47-shard03": "aviadcohen1/gapbalance-dev-syn-s47-q3"
   },
-  "payload_sha256": "695c7b70765abcc421061437ab5668c3a3165ceb4e50625e30cace58e6e93a27",
+  "import_closure_fix": {
+    "file": "experiments/gap-balance-followup/GAPBALANCE_DEVELOPMENT_IMPORT_FIX.json",
+    "file_sha256": "52523f62224c62192e30650593e892732ba742c892bbd36d9686203cff9fea8a",
+    "payload_sha256": "b06e3e634e6723239fcfb13fb9fa5e353cb21511fd12f4eca259970fbef662ac"
+  },
+  "payload_sha256": "a4d579d63a2cce2ae2feb1688ffaa49338e16d61a8f5abdcb8bc10b6797db161",
   "public_source_commit": "e4fd7d507c21dae9e9d50af1bd35bf3402e67c3b",
   "schema_version": "1.0",
   "scoring_freeze": {

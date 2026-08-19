@@ -256,3 +256,40 @@ def test_synthetic_operational_fix_changes_only_provider_metadata():
         assert job["launcher_sha256"] == before["launcher_sha256"]
         assert job["kernel_id"] == plan["provider_resolved_kernel_ids"][job["job_id"]]
         assert len(job["kernel_id"].split("/", 1)[1]) <= 50
+
+
+def test_import_closure_fix_is_complete_and_result_blind():
+    plan = json.loads(
+        (ROOT / "GAPBALANCE_KAGGLE_DEVELOPMENT_PLAN.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    fix_path = ROOT / "GAPBALANCE_DEVELOPMENT_IMPORT_FIX.json"
+    fix = json.loads(fix_path.read_text(encoding="utf-8"))
+    observed = fix.pop("payload_sha256")
+    canonical = json.dumps(fix, sort_keys=True, separators=(",", ":")).encode()
+    assert observed == hashlib.sha256(canonical).hexdigest()
+    assert plan["import_closure_fix"] == {
+        "file": "experiments/gap-balance-followup/GAPBALANCE_DEVELOPMENT_IMPORT_FIX.json",
+        "file_sha256": hashlib.sha256(fix_path.read_bytes()).hexdigest(),
+        "payload_sha256": observed,
+    }
+    assert fix["scientific_code_changed"] is False
+    assert fix["scientific_endpoints_computed"] is False
+    assert fix["confirmation_outputs_inspected"] is False
+    assert {failure["job_id"] for failure in fix["failures"]} == {
+        "gapbalance-development-real",
+        "gapbalance-development-synthetic-seed11-shard00",
+    }
+    assert {
+        "experiments/fusion-aware-surface/train_fusion_aware.py",
+        "experiments/fusion-aware-surface/fusion_loss.py",
+        "experiments/fusion-aware-surface/gap_supervision.py",
+    } <= set(fix["frozen_public_source_files"])
+    jobs = fix["jobs"]
+    assert len(jobs) == 13
+    assert {job["job_id"] for job in jobs} == {
+        job["job_id"] for job in plan["jobs"]
+    }
+    assert len({job["config_payload_sha256"] for job in jobs}) == 13
+    assert len({job["launcher_sha256"] for job in jobs}) == 13
