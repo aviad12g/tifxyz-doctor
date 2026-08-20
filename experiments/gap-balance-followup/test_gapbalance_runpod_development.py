@@ -217,3 +217,18 @@ def test_substitute_reservation_receipt_is_stopped_uniform_and_not_egress_approv
     assert not receipt["pherc1218_v2_opened"]
     assert not receipt["scientific_endpoints_inspected"]
     assert not receipt["confirmation_outputs_inspected"]
+
+
+def test_exact_substitute_egress_approval_is_bound_capped_and_excludes_holdout():
+    approval = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SUBSTITUTE_EGRESS_RESUME.json")
+    receipt = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SUBSTITUTE_RESERVATION_RECEIPT.json")
+    assert approval["substitute_reservation_receipt_payload_sha256"] == receipt["payload_sha256"]
+    assert [pod["id"] for pod in approval["pods"]] == ["68e48azozqvnhb", "b9outlq8lhhsnk"]
+    assert approval["billing"]["aggregate_hourly_rate_usd"] == pytest.approx(1.54)
+    assert approval["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.083282)
+    assert approval["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.916718)
+    assert approval["egress"]["pherc1218_included"] is False
+    assert approval["egress"]["confirmation_seeds_500_504_included"] is False
+    assert approval["egress"]["scientific_outputs_included"] is False
+    assert not approval["sealed_gates"]["pherc1218_v2_opened"]
+    assert not approval["sealed_gates"]["scientific_endpoints_scored"]

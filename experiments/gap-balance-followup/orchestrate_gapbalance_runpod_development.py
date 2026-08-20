@@ -466,6 +466,89 @@ def resume_multi(args, plan: dict) -> None:
     }, indent=2, sort_keys=True))
 
 
+def resume_substitute(args, plan: dict) -> None:
+    receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
+    approval = load_plan(args.substitute_egress_resume)
+    if (
+        receipt.get("status") != "STOPPED_REPLACEMENTS_AWAITING_EXACT_EGRESS_APPROVAL"
+        or receipt.get("plan_payload_sha256") != plan["payload_sha256"]
+        or approval.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+        or approval.get("hardware_substitution_payload_sha256")
+        != receipt.get("replacement_reservation_payload_sha256")
+        or approval.get("billing", {}).get("prior_conservative_development_spend_usd")
+        != receipt.get("conservative_development_spend_usd")
+        or approval.get("billing", {}).get("development_cutoff_usd")
+        != plan["budget"]["development_billing_cutoff_usd"]
+        or approval.get("egress", {}).get("pherc1218_included") is not False
+        or approval.get("egress", {}).get("confirmation_seeds_500_504_included") is not False
+    ):
+        raise RuntimeError("substitute egress approval is not bound to the stopped capped allocation")
+    approved = approval["pods"]
+    frozen = receipt["pods"]
+    if approved != [
+        {
+            "id": pod["id"],
+            "gpu_count": pod["gpu_count"],
+            "gpu_name": pod["gpu_name"],
+            "aggregate_hourly_rate_usd": pod["aggregate_hourly_rate_usd"],
+            "jobs": pod["jobs"],
+        }
+        for pod in frozen
+    ]:
+        raise RuntimeError("substitute egress approval pod set mismatch")
+    runpod = load_runpod()
+    resumed_ids = []
+    try:
+        for pod_record in frozen:
+            pod = runpod.get_pod(pod_record["id"])
+            if pod is None or pod.get("desiredStatus") != "EXITED":
+                raise RuntimeError(f"approved substitute pod is not stopped: {pod_record['id']}")
+            runpod.resume_pod(pod_record["id"], gpu_count=pod_record["gpu_count"])
+            resumed_ids.append(pod_record["id"])
+        for pod_record in frozen:
+            for _ in range(120):
+                pod = runpod.get_pod(pod_record["id"])
+                if pod and pod.get("desiredStatus") == "RUNNING" and pod.get("runtime"):
+                    break
+                time.sleep(5)
+            else:
+                raise RuntimeError(f"approved substitute pod did not resume: {pod_record['id']}")
+            validate_pod(
+                pod,
+                plan,
+                require_exact_reused_pod=False,
+                expected_gpu_count=pod_record["gpu_count"],
+                expected_gpu_display=pod_record["gpu_name"],
+                maximum_rate_usd=pod_record["aggregate_hourly_rate_usd"],
+            )
+            if float(pod["costPerHr"]) != float(pod_record["aggregate_hourly_rate_usd"]):
+                raise RuntimeError(f"substitute pod rate changed: {pod_record['id']}")
+    except Exception:
+        for pod_id in resumed_ids:
+            try:
+                runpod.stop_pod(pod_id)
+            except Exception:
+                pass
+        raise
+    receipt.update(
+        status="PODS_ALLOCATED_AWAITING_DEPLOYMENT",
+        substitute_egress_resume_payload_sha256=approval["payload_sha256"],
+        active_billing_started_at=now().isoformat(),
+        prior_conservative_development_spend_usd=receipt["conservative_development_spend_usd"],
+        private_bundle_egress_permitted=True,
+    )
+    atomic_json(args.receipt, receipt)
+    print(json.dumps({
+        "status": receipt["status"],
+        "pod_ids": resumed_ids,
+        "aggregate_hourly_rate_usd": receipt["total_hourly_rate_usd"],
+        "prior_conservative_development_spend_usd": receipt[
+            "prior_conservative_development_spend_usd"
+        ],
+        "active_billing_started_at": receipt["active_billing_started_at"],
+    }, indent=2, sort_keys=True))
+
+
 def resume(args, plan: dict) -> None:
     if args.receipt.exists():
         raise RuntimeError("provider receipt already exists; refusing duplicate resume")
@@ -580,7 +663,7 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "reserve-multi", "reserve-substitute", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "resume-multi", "resume-substitute", "allocate", "allocate-multi", "reserve-multi", "reserve-substitute", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
@@ -589,6 +672,7 @@ def main() -> int:
     parser.add_argument("--egress-resume", type=Path)
     parser.add_argument("--replacement-reservation", type=Path)
     parser.add_argument("--hardware-substitution", type=Path)
+    parser.add_argument("--substitute-egress-resume", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -600,6 +684,10 @@ def main() -> int:
         if args.egress_resume is None:
             raise RuntimeError("resume-multi requires the public egress/resume approval")
         resume_multi(args, plan)
+    elif args.command == "resume-substitute":
+        if args.substitute_egress_resume is None:
+            raise RuntimeError("resume-substitute requires the public substitute egress approval")
+        resume_substitute(args, plan)
     elif args.command == "allocate":
         if args.allocation_retry is None:
             raise RuntimeError("allocate requires the public allocation retry")

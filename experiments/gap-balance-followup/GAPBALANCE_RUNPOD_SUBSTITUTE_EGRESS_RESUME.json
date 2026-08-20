@@ -1,0 +1,69 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_rate_usd": 1.54,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.083282,
+    "remaining_development_cutoff_usd": 11.916718
+  },
+  "bundle": {
+    "logical_bytes": 4507901245,
+    "manifest_payload_sha256": "7f46849aeed60db87ebca747a3e9b80885f2e257785951a73c70e8587d0e447c"
+  },
+  "egress": {
+    "confirmation_seeds_500_504_included": false,
+    "includes": [
+      "private trained model weights",
+      "source and frozen assets",
+      "private generated launchers"
+    ],
+    "pherc1218_included": false,
+    "scientific_outputs_included": false
+  },
+  "hardware_substitution_payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "multi_pod_retry_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "payload_sha256": "7c7ac5cfa675f95eb10858f8d224d3fcae0c9c940ef8ff98ad530ab91bab691f",
+  "pods": [
+    {
+      "aggregate_hourly_rate_usd": 0.88,
+      "gpu_count": 4,
+      "gpu_name": "RTX 3090",
+      "id": "68e48azozqvnhb",
+      "jobs": [
+        "gapbalance-development-synthetic-seed11-shard00",
+        "gapbalance-development-synthetic-seed11-shard01",
+        "gapbalance-development-synthetic-seed11-shard02",
+        "gapbalance-development-synthetic-seed11-shard03",
+        "gapbalance-development-synthetic-seed23-shard00",
+        "gapbalance-development-synthetic-seed23-shard01",
+        "gapbalance-development-synthetic-seed23-shard02"
+      ]
+    },
+    {
+      "aggregate_hourly_rate_usd": 0.66,
+      "gpu_count": 3,
+      "gpu_name": "RTX 3090",
+      "id": "b9outlq8lhhsnk",
+      "jobs": [
+        "gapbalance-development-synthetic-seed23-shard03",
+        "gapbalance-development-synthetic-seed47-shard00",
+        "gapbalance-development-synthetic-seed47-shard01",
+        "gapbalance-development-synthetic-seed47-shard02",
+        "gapbalance-development-synthetic-seed47-shard03"
+      ]
+    }
+  ],
+  "public_parent_commit": "21effe3039b8ebb8bb45dc3ad31f19f085839651",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "EXACT_SUBSTITUTE_POD_EGRESS_AND_RESUME_APPROVED_BEFORE_ACTION",
+  "substitute_reservation_receipt_payload_sha256": "b0fa8db01672dea342c4ad602e1187ed3157d04b9a8f78d5d9bfe90e24e36ebe",
+  "user_authorization": "I approve uploading the 4.51 GB sealed GapBalance development bundle—including private model weights, source/assets, and generated launchers—to RunPod community-cloud pods 68e48azozqvnhb and b9outlq8lhhsnk. PHerc1218 and confirmation data remain excluded. Resume at the $1.54/hour aggregate rate under the $12 development cutoff and $25 campaign cap."
+}
