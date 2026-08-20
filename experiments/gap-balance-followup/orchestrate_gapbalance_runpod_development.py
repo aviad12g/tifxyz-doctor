@@ -100,6 +100,36 @@ def public_key_fingerprint(public_key: str) -> str:
     return f"SHA256:{digest}"
 
 
+def registered_account_public_keys() -> list[str]:
+    try:
+        from runpod.api.graphql import run_graphql_query
+    except ImportError as error:
+        raise RuntimeError("controller requires runpod==1.9.0") from error
+    response = run_graphql_query("query { myself { pubKey } }")
+    registered = (
+        response.get("data", {}).get("myself", {}).get("pubKey") or ""
+    )
+    return [line.strip() for line in registered.splitlines() if line.strip()]
+
+
+def public_key_material(public_key: str) -> tuple[str, str]:
+    parts = public_key.strip().split()
+    if len(parts) < 2:
+        raise RuntimeError("invalid SSH public key")
+    return parts[0], parts[1]
+
+
+def account_has_public_key(public_keys: list[str], expected: str) -> bool:
+    expected_material = public_key_material(expected)
+    for public_key in public_keys:
+        try:
+            if public_key_material(public_key) == expected_material:
+                return True
+        except RuntimeError:
+            continue
+    return False
+
+
 def create_equivalent_pod(
     runpod,
     *,
@@ -174,6 +204,7 @@ def allocate_multi(
     reservation = None
     dynamic_egress = None
     ssh_retry = None
+    account_ssh_retry = None
     ssh_public_key = None
     if use_hardware_substitution:
         if args.hardware_substitution is None:
@@ -211,7 +242,11 @@ def allocate_multi(
                 is not False
             ):
                 raise RuntimeError("dynamic substitute egress changes the frozen provider or sealed gate")
-            if args.ssh_retry is not None or args.ssh_public_key is not None:
+            if (
+                args.ssh_retry is not None
+                or args.ssh_public_key is not None
+                or args.account_ssh_retry is not None
+            ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
                 ssh_retry = load_plan(args.ssh_retry)
@@ -227,6 +262,21 @@ def allocate_multi(
                 ssh_public_key = args.ssh_public_key.read_text(encoding="utf-8").strip()
                 if public_key_fingerprint(ssh_public_key) != ssh_retry["retry"]["public_key_fingerprint"]:
                     raise RuntimeError("SSH public key fingerprint mismatch")
+                if args.account_ssh_retry is not None:
+                    account_ssh_retry = load_plan(args.account_ssh_retry)
+                    registration = account_ssh_retry.get("account_key_registration", {})
+                    if (
+                        account_ssh_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or account_ssh_retry.get("ssh_injection_retry_payload_sha256")
+                        != ssh_retry["payload_sha256"]
+                        or registration.get("public_key_fingerprint")
+                        != ssh_retry["retry"]["public_key_fingerprint"]
+                        or registration.get("private_key_leaves_local_mac") is not False
+                        or registration.get("registration_required_before_new_pod_creation")
+                        is not True
+                    ):
+                        raise RuntimeError("account SSH retry changes the frozen key or sealed gate")
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -270,6 +320,10 @@ def allocate_multi(
         ):
             raise RuntimeError("hardware substitution exceeds the frozen GPU, memory, or rate ceiling")
     runpod = load_runpod()
+    if account_ssh_retry is not None and not account_has_public_key(
+        registered_account_public_keys(), ssh_public_key
+    ):
+        raise RuntimeError("frozen SSH public key is not registered on the RunPod account")
     billing_started = now()
     errors = []
     accepted = None
@@ -356,7 +410,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            account_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            if account_ssh_retry is not None
+            else ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if ssh_retry is not None
             else dynamic_egress["billing"]["prior_conservative_development_spend_usd"]
         )
@@ -370,6 +426,11 @@ def allocate_multi(
             receipt.update(
                 ssh_injection_retry_payload_sha256=ssh_retry["payload_sha256"],
                 ssh_public_key_fingerprint=ssh_retry["retry"]["public_key_fingerprint"],
+            )
+        if account_ssh_retry is not None:
+            receipt.update(
+                account_ssh_retry_payload_sha256=account_ssh_retry["payload_sha256"],
+                account_ssh_key_verified_before_allocation=True,
             )
     if stop_after_reservation:
         try:
@@ -760,6 +821,7 @@ def main() -> int:
     parser.add_argument("--substitute-egress-resume", type=Path)
     parser.add_argument("--dynamic-substitute-egress", type=Path)
     parser.add_argument("--ssh-retry", type=Path)
+    parser.add_argument("--account-ssh-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)

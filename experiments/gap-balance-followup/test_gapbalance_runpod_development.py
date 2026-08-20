@@ -267,3 +267,32 @@ def test_ssh_public_key_fingerprint_matches_frozen_local_key():
     retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_INJECTION_RETRY.json")
     public_key = Path("/Users/mazalcohen/.ssh/id_ed25519.pub").read_text()
     assert ORCH.public_key_fingerprint(public_key) == retry["retry"]["public_key_fingerprint"]
+
+
+def test_account_ssh_key_retry_is_result_blind_bounded_and_preallocation():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_ACCOUNT_SSH_KEY_RETRY.json")
+    ssh_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_INJECTION_RETRY.json")
+    assert retry["ssh_injection_retry_payload_sha256"] == ssh_retry["payload_sha256"]
+    assert retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert retry["failed_deployment"]["pods_stopped"] == [
+        "h3rlmwe7dydtpg", "dyx0gchkguob6y"
+    ]
+    assert retry["account_key_precheck"]["target_public_key_already_registered"] is False
+    assert retry["account_key_registration"]["registration_required_before_new_pod_creation"]
+    assert retry["account_key_registration"]["private_key_leaves_local_mac"] is False
+    assert retry["account_key_registration"]["credit_card_charge_permitted"] is False
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.159383)
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.840617)
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_account_public_key_match_ignores_comments_and_unrelated_lines():
+    expected = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAITest expected-comment"
+    registered = [
+        "malformed",
+        "ssh-rsa AAAAB3NzaUnrelated old-key",
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAITest account-comment",
+    ]
+    assert ORCH.account_has_public_key(registered, expected)
+    assert not ORCH.account_has_public_key(registered, "ssh-ed25519 AAAADifferent")
