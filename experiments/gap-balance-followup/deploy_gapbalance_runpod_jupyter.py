@@ -15,6 +15,8 @@ import secrets
 import select
 import shlex
 import subprocess
+import tempfile
+import threading
 import time
 from urllib.parse import urlparse
 import uuid
@@ -173,6 +175,36 @@ def drain_sender_output(sender: subprocess.Popen) -> None:
                     break
             except BlockingIOError:
                 break
+
+
+def archive_chunk_spans(archive_bytes: int, chunk_bytes: int) -> list[tuple[int, int, int]]:
+    if archive_bytes <= 0 or chunk_bytes <= 0:
+        raise RuntimeError("archive and chunk sizes must be positive")
+    return [
+        (index, offset, min(chunk_bytes, archive_bytes - offset))
+        for index, offset in enumerate(range(0, archive_bytes, chunk_bytes))
+    ]
+
+
+def materialize_archive_chunk(
+    archive: Path, target: Path, *, offset: int, length: int
+) -> str:
+    if offset < 0 or length <= 0 or offset + length > archive.stat().st_size:
+        raise RuntimeError("invalid archive chunk span")
+    digest = hashlib.sha256()
+    remaining = length
+    with archive.open("rb") as source, target.open("xb") as destination:
+        source.seek(offset)
+        while remaining:
+            block = source.read(min(8 << 20, remaining))
+            if not block:
+                raise RuntimeError("archive ended during chunk materialization")
+            destination.write(block)
+            digest.update(block)
+            remaining -= len(block)
+    if target.stat().st_size != length:
+        raise RuntimeError("materialized archive chunk size mismatch")
+    return digest.hexdigest()
 
 
 class JupyterTerminal:
@@ -437,6 +469,173 @@ def transfer_one(
     }
 
 
+def transfer_one_chunked(
+    *,
+    terminal: JupyterTerminal,
+    pod: dict,
+    pod_index: int,
+    receipt: dict,
+    archive: Path,
+    archive_sha256: str,
+    archive_bytes: int,
+    runpodctl: Path,
+    deadline: float,
+    poll_interval: int,
+    sender_ready_timeout: int,
+    post_banner_delay: int,
+    chunk_bytes: int,
+    maximum_attempts: int,
+    failed_parent_commit: str,
+    cancel_event: threading.Event,
+) -> dict:
+    spans = archive_chunk_spans(archive_bytes, chunk_bytes)
+    remote_root = (
+        f"/workspace/gapbalance-development-{receipt['public_runpod_commit'][:8]}-p{pod_index}"
+    )
+    failed_root = f"/workspace/gapbalance-development-{failed_parent_commit[:8]}-p{pod_index}"
+    terminal.run(
+        f"rm -f {shlex.quote(failed_root + '/' + archive.name)} && "
+        f"test ! -e {shlex.quote(remote_root)} && "
+        f"mkdir -m 700 -p {shlex.quote(remote_root + '/status')} "
+        f"{shlex.quote(remote_root + '/chunks')}",
+        timeout=30,
+    )
+    chunk_names = [
+        f"{archive.name}.part-{index:05d}-of-{len(spans):05d}"
+        for index, _, _ in spans
+    ]
+    with tempfile.TemporaryDirectory(prefix=f"gapbalance-{pod['id']}-") as temp_dir:
+        temp_root = Path(temp_dir)
+        for (index, offset, length), chunk_name in zip(spans, chunk_names, strict=True):
+            require_budget(deadline)
+            if cancel_event.is_set():
+                raise RuntimeError("peer chunk transfer failed")
+            local_chunk = temp_root / chunk_name
+            chunk_sha256 = materialize_archive_chunk(
+                archive, local_chunk, offset=offset, length=length
+            )
+            succeeded = False
+            try:
+                for attempt in range(1, maximum_attempts + 1):
+                    require_budget(deadline)
+                    if cancel_event.is_set():
+                        raise RuntimeError("peer chunk transfer failed")
+                    base_code = secrets.token_hex(24)
+                    receiver_log = (
+                        f"{remote_root}/status/chunk-{index:05d}-attempt-{attempt}.operational.log"
+                    )
+                    receiver_rc = f"{remote_root}/status/chunk-{index:05d}-attempt-{attempt}.rc"
+                    sender = None
+                    receiver_pid = None
+                    try:
+                        sender, full_code = start_local_sender(
+                            runpodctl,
+                            local_chunk,
+                            base_code,
+                            ready_timeout=sender_ready_timeout,
+                            post_banner_delay=post_banner_delay,
+                        )
+                        remote_chunk = remote_root + "/chunks/" + chunk_name
+                        terminal.run(f"rm -f {shlex.quote(remote_chunk)}", timeout=30)
+                        receiver_body = (
+                            f"cd {shlex.quote(remote_root + '/chunks')} && "
+                            "__gb_deadline=$(($(date +%s) + 180)); __gb_rc=1; "
+                            "while test \"$(date +%s)\" -lt \"$__gb_deadline\"; do "
+                            f"if runpodctl receive {shlex.quote(full_code)}; then __gb_rc=0; break; fi; "
+                            "sleep 2; done; test \"$__gb_rc\" -eq 0"
+                        )
+                        receiver_pid = terminal.start_background(
+                            receiver_body, log=receiver_log, rc_file=receiver_rc
+                        )
+                        while sender.poll() is None:
+                            drain_sender_output(sender)
+                            remote_rc = terminal.read_rc(receiver_rc)
+                            if remote_rc is not None and remote_rc != 0:
+                                raise RuntimeError("encrypted remote chunk receiver failed")
+                            if cancel_event.is_set():
+                                raise RuntimeError("peer chunk transfer failed")
+                            require_budget(deadline)
+                            time.sleep(poll_interval)
+                        drain_sender_output(sender)
+                        if sender.returncode != 0:
+                            raise RuntimeError("encrypted local chunk sender failed")
+                        terminal.wait_rc(
+                            receiver_rc, deadline=deadline, interval=poll_interval
+                        )
+                        terminal.run(
+                            f"test \"$(stat -c %s {shlex.quote(remote_chunk)})\" = {length} && "
+                            f"printf '%s  %s\\n' {shlex.quote(chunk_sha256)} "
+                            f"{shlex.quote(remote_chunk)} | sha256sum -c - >/dev/null",
+                            timeout=60,
+                        )
+                        succeeded = True
+                        break
+                    except Exception:
+                        if receiver_pid is not None:
+                            try:
+                                terminal.run(
+                                    f"kill {receiver_pid} 2>/dev/null || true; "
+                                    f"pkill -P {receiver_pid} 2>/dev/null || true; "
+                                    f"rm -f {shlex.quote(remote_root + '/chunks/' + chunk_name)}",
+                                    timeout=30,
+                                )
+                            except Exception:
+                                pass
+                        if attempt == maximum_attempts:
+                            cancel_event.set()
+                            raise
+                        time.sleep(poll_interval)
+                    finally:
+                        if sender is not None and sender.poll() is None:
+                            sender.terminate()
+                            try:
+                                sender.wait(timeout=10)
+                            except subprocess.TimeoutExpired:
+                                sender.kill()
+                                sender.wait()
+                        if sender is not None and sender.stdout is not None:
+                            sender.stdout.close()
+                        if sender is not None and sender.stderr is not None:
+                            sender.stderr.close()
+            finally:
+                local_chunk.unlink(missing_ok=True)
+            if not succeeded:
+                cancel_event.set()
+                raise RuntimeError("bounded chunk transfer attempts were exhausted")
+    remote_archive = remote_root + "/" + archive.name
+    extract_log = remote_root + "/status/archive-reassembly-extract.operational.log"
+    extract_rc = remote_root + "/status/archive-reassembly-extract.rc"
+    ordered_chunks = " ".join(
+        shlex.quote(remote_root + "/chunks/" + name) for name in chunk_names
+    )
+    extract_body = " && ".join(
+        [
+            f"cat {ordered_chunks} > {shlex.quote(remote_archive + '.partial')}",
+            f"mv {shlex.quote(remote_archive + '.partial')} {shlex.quote(remote_archive)}",
+            f"test \"$(stat -c %s {shlex.quote(remote_archive)})\" = {archive_bytes}",
+            f"printf '%s  %s\\n' {shlex.quote(archive_sha256)} {shlex.quote(remote_archive)} | sha256sum -c -",
+            f"rm -f {ordered_chunks}",
+            f"test ! -e {shlex.quote(remote_root + '/bundle')}",
+            f"mkdir {shlex.quote(remote_root + '/bundle.partial')}",
+            f"tar -xf {shlex.quote(remote_archive)} -C {shlex.quote(remote_root + '/bundle.partial')}",
+            f"mv {shlex.quote(remote_root + '/bundle.partial')} {shlex.quote(remote_root + '/bundle')}",
+            f"rm -f {shlex.quote(remote_archive)}",
+        ]
+    )
+    receiver_pid = terminal.start_background(
+        extract_body, log=extract_log, rc_file=extract_rc
+    )
+    terminal.wait_rc(extract_rc, deadline=deadline, interval=poll_interval)
+    return {
+        "pod_id": pod["id"],
+        "jobs": pod["jobs"],
+        "remote_root": remote_root,
+        "receiver_pid": receiver_pid,
+        "chunk_count": len(spans),
+        "archive_sha256_verified_before_extraction": True,
+    }
+
+
 def verify_remote_bundle(
     terminal: JupyterTerminal,
     deployment: dict,
@@ -529,6 +728,7 @@ def main() -> int:
     parser.add_argument("--croc-code-retry", type=Path, required=True)
     parser.add_argument("--croc-room-retry", type=Path, required=True)
     parser.add_argument("--croc-sender-ready-retry", type=Path, required=True)
+    parser.add_argument("--chunked-transfer-retry", type=Path)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -541,6 +741,11 @@ def main() -> int:
     code_retry = load_hashed(args.croc_code_retry)
     room_retry = load_hashed(args.croc_room_retry)
     sender_retry = load_hashed(args.croc_sender_ready_retry)
+    chunked_retry = (
+        load_hashed(args.chunked_transfer_retry)
+        if args.chunked_transfer_retry is not None
+        else None
+    )
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -556,6 +761,11 @@ def main() -> int:
         or receipt.get("croc_room_retry_payload_sha256") != room_retry["payload_sha256"]
         or receipt.get("croc_sender_ready_retry_payload_sha256")
         != sender_retry["payload_sha256"]
+        or (
+            chunked_retry is not None
+            and receipt.get("chunked_transfer_retry_payload_sha256")
+            != chunked_retry["payload_sha256"]
+        )
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
@@ -577,6 +787,53 @@ def main() -> int:
         != plan["payload_sha256"]
         or sender_retry.get("croc_room_retry_payload_sha256")
         != room_retry["payload_sha256"]
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("croc_sender_ready_retry_payload_sha256")
+            != sender_retry["payload_sha256"]
+        )
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("runpod_development_plan_payload_sha256")
+            != plan["payload_sha256"]
+        )
+        or (
+            chunked_retry is not None
+            and int(chunked_retry.get("retry_transport", {}).get("archive_bytes", -1))
+            != int(bundle_record["archive_bytes"])
+        )
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("retry_transport", {}).get("archive_sha256")
+            != bundle_record["archive_sha256"]
+        )
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("retry_transport", {}).get(
+                "reassembled_archive_sha256_verified_before_extraction"
+            )
+            is not True
+        )
+        or (
+            chunked_retry is not None
+            and len(
+                archive_chunk_spans(
+                    int(bundle_record["archive_bytes"]),
+                    int(chunked_retry["retry_transport"]["chunk_bytes"]),
+                )
+            )
+            != int(chunked_retry["retry_transport"]["chunk_count"])
+        )
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("sealed_gates", {}).get("pherc1218_v2_opened")
+            is not False
+        )
+        or (
+            chunked_retry is not None
+            and chunked_retry.get("sealed_gates", {}).get("scientific_endpoints_scored")
+            is not False
+        )
         or sender_retry.get("sender_readiness", {}).get("require_post_hash_banner") is not True
         or int(sender_retry.get("sender_readiness", {}).get("post_banner_delay_seconds", 0))
         != 5
@@ -659,10 +916,14 @@ def main() -> int:
                 "command -v runpodctl >/dev/null && command -v python >/dev/null && command -v tar >/dev/null",
                 timeout=30,
             )
+        cancel_event = threading.Event()
         with ThreadPoolExecutor(max_workers=len(pods)) as pool:
+            transfer_function = (
+                transfer_one_chunked if chunked_retry is not None else transfer_one
+            )
             futures = {
                 pool.submit(
-                    transfer_one,
+                    transfer_function,
                     terminal=terminals[pod["id"]],
                     pod=pod,
                     pod_index=index,
@@ -679,12 +940,34 @@ def main() -> int:
                     post_banner_delay=int(
                         sender_retry["sender_readiness"]["post_banner_delay_seconds"]
                     ),
+                    **(
+                        {
+                            "chunk_bytes": int(
+                                chunked_retry["retry_transport"]["chunk_bytes"]
+                            ),
+                            "maximum_attempts": int(
+                                chunked_retry["retry_transport"][
+                                    "maximum_attempts_per_chunk"
+                                ]
+                            ),
+                            "failed_parent_commit": chunked_retry["public_parent_commit"],
+                            "cancel_event": cancel_event,
+                        }
+                        if chunked_retry is not None
+                        else {}
+                    ),
                 ): index
                 for index, pod in enumerate(pods)
             }
             indexed = {}
-            for future in as_completed(futures):
-                indexed[futures[future]] = future.result()
+            try:
+                for future in as_completed(futures):
+                    indexed[futures[future]] = future.result()
+            except Exception:
+                cancel_event.set()
+                for future in futures:
+                    future.cancel()
+                raise
             deployments = [indexed[index] for index in range(len(pods))]
         for deployment in deployments:
             verify_remote_bundle(
@@ -728,6 +1011,9 @@ def main() -> int:
         "bundle_archive_sha256": bundle_record["archive_sha256"],
         "bundle_manifest_verified_before_executor": True,
         "ephemeral_transfer_codes_persisted": False,
+        "chunked_transfer_retry_payload_sha256": (
+            chunked_retry["payload_sha256"] if chunked_retry is not None else None
+        ),
         "pods": deployments,
     }
     receipt["status"] = "RUNPOD_DEVELOPMENT_EXECUTOR_RUNNING_NOT_SCORED"

@@ -549,3 +549,20 @@ def test_chunked_transfer_retry_is_resumable_bounded_and_result_blind():
     )
     assert not retry["sealed_gates"]["pherc1218_v2_opened"]
     assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_chunk_spans_cover_archive_once_and_materialize_exact_bytes(tmp_path):
+    spans = DEPLOY_JUPYTER.archive_chunk_spans(17, 6)
+    assert spans == [(0, 0, 6), (1, 6, 6), (2, 12, 5)]
+    archive = tmp_path / "archive.bin"
+    archive.write_bytes(b"0123456789abcdefg")
+    chunk = tmp_path / "part.bin"
+    digest = DEPLOY_JUPYTER.materialize_archive_chunk(
+        archive, chunk, offset=6, length=6
+    )
+    assert chunk.read_bytes() == b"6789ab"
+    assert digest == "7bd3f558c89f14b9e6adf166b21a51ae34fd0f2847fd145cf14cc8c5eb0bd279"
+    with pytest.raises(RuntimeError, match="invalid archive chunk"):
+        DEPLOY_JUPYTER.materialize_archive_chunk(
+            archive, tmp_path / "invalid.bin", offset=16, length=2
+        )
