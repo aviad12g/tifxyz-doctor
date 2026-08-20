@@ -515,3 +515,37 @@ def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
     assert egress["egress_exclusions"]["pherc1218_included"] is False
     assert egress["egress_exclusions"]["confirmation_seeds_500_504_included"] is False
     assert not egress["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_chunked_transfer_retry_is_resumable_bounded_and_result_blind():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_CHUNKED_TRANSFER_RETRY.json")
+    sender_retry = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_CROC_SENDER_READY_RETRY.json"
+    )
+    assert retry["croc_sender_ready_retry_payload_sha256"] == sender_retry[
+        "payload_sha256"
+    ]
+    assert retry["failed_deployment"]["pods_stopped"] == [
+        "qon4qarflyqd7l",
+        "x9hfcpc92rxk0d",
+    ]
+    assert retry["failed_deployment"]["provider_status_after_stop"] == [
+        "EXITED",
+        "EXITED",
+    ]
+    transport = retry["retry_transport"]
+    assert transport["chunk_bytes"] == 128 << 20
+    assert transport["chunk_count"] == 34
+    assert transport["maximum_attempts_per_chunk"] == 4
+    assert transport["restart_only_the_failed_chunk"]
+    assert transport["exact_chunk_size_and_sha256_verified_remotely"]
+    assert transport["reassembled_archive_sha256_verified_before_extraction"]
+    assert retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        2.753135
+    )
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(
+        9.246865
+    )
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]
