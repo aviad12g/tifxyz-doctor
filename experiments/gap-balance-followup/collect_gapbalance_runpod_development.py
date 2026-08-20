@@ -132,44 +132,54 @@ def main() -> int:
         raise RuntimeError("provider receipt is not in the expected running state")
     if receipt.get("plan_payload_sha256") != plan["payload_sha256"]:
         raise RuntimeError("provider receipt is bound to another plan")
-    deployment = receipt["deployment"]
-    host, port = deployment["ssh_host"], int(deployment["ssh_port"])
-    remote_root = deployment["remote_root"]
-    ssh = [
-        "ssh", "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
-        "-o", "ConnectTimeout=15", f"root@{host}",
-    ]
-    status_raw = run_checked([*ssh, f"cat {remote_root}/status/status.json"], 60)
-    status = json.loads(status_raw)
     job_ids = [job["job_id"] for job in plan["jobs"]]
-    if (
-        status.get("state") != "COMPLETE"
-        or status.get("plan_payload_sha256") != plan["payload_sha256"]
-        or status.get("scientific_endpoints_scored") is not False
-        or status.get("confirmation_outputs_inspected") is not False
-        or list(status.get("jobs", {})) != job_ids
-    ):
-        raise RuntimeError("remote RunPod development status is not sealed COMPLETE")
-    for job_id in job_ids:
-        record = status["jobs"][job_id]
-        if record.get("state") != "COMPLETE" or record.get("returncode") != 0:
-            raise RuntimeError(f"remote job is not complete: {job_id}")
+    deployments = receipt["deployment"].get("pods")
+    if deployments is None:
+        deployment = dict(receipt["deployment"])
+        deployment["pod_id"] = receipt["pod"]["id"]
+        deployment["jobs"] = job_ids
+        deployments = [deployment]
+    if [job for deployment in deployments for job in deployment["jobs"]] != job_ids:
+        raise RuntimeError("deployment partitions do not reconstruct the frozen job order")
     args.out.mkdir(parents=True)
     outputs = args.out / "outputs"
     operational = args.out / "operational"
     outputs.mkdir()
     operational.mkdir()
-    rsync_ssh = f"ssh -p {port} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15"
-    run_checked(
-        ["rsync", "--archive", "--partial", "--protect-args", "-e", rsync_ssh,
-         f"root@{host}:{remote_root}/output/", str(outputs) + "/"],
-        2 * 60 * 60,
-    )
-    run_checked(
-        ["rsync", "--archive", "--partial", "--protect-args", "-e", rsync_ssh,
-         f"root@{host}:{remote_root}/status/", str(operational) + "/"],
-        30 * 60,
-    )
+    for deployment in deployments:
+        host, port = deployment["ssh_host"], int(deployment["ssh_port"])
+        remote_root = deployment["remote_root"]
+        ssh = [
+            "ssh", "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
+            "-o", "ConnectTimeout=15", f"root@{host}",
+        ]
+        status_raw = run_checked([*ssh, f"cat {remote_root}/status/status.json"], 60)
+        status = json.loads(status_raw)
+        if (
+            status.get("state") != "COMPLETE"
+            or status.get("plan_payload_sha256") != plan["payload_sha256"]
+            or status.get("scientific_endpoints_scored") is not False
+            or status.get("confirmation_outputs_inspected") is not False
+            or list(status.get("jobs", {})) != deployment["jobs"]
+        ):
+            raise RuntimeError(f"remote RunPod status is not sealed COMPLETE: {deployment['pod_id']}")
+        for job_id in deployment["jobs"]:
+            record = status["jobs"][job_id]
+            if record.get("state") != "COMPLETE" or record.get("returncode") != 0:
+                raise RuntimeError(f"remote job is not complete: {job_id}")
+        rsync_ssh = f"ssh -p {port} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15"
+        run_checked(
+            ["rsync", "--archive", "--partial", "--protect-args", "-e", rsync_ssh,
+             f"root@{host}:{remote_root}/output/", str(outputs) + "/"],
+            2 * 60 * 60,
+        )
+        pod_operational = operational / deployment["pod_id"]
+        pod_operational.mkdir()
+        run_checked(
+            ["rsync", "--archive", "--partial", "--protect-args", "-e", rsync_ssh,
+             f"root@{host}:{remote_root}/status/", str(pod_operational) + "/"],
+            30 * 60,
+        )
     observed_top = {path.name for path in outputs.iterdir() if path.is_dir()}
     if observed_top != set(job_ids) or any(path.is_file() for path in outputs.iterdir()):
         raise RuntimeError("copied RunPod top-level output set mismatch")
@@ -183,10 +193,13 @@ def main() -> int:
         print(f"RUNPOD_DEVELOPMENT_JOB_VERIFIED_NOT_OPENED job={job['job_id']}", flush=True)
     import runpod
 
-    runpod.stop_pod(receipt["pod"]["id"])
+    frozen_pods = receipt.get("pods") or [receipt["pod"]]
+    for pod in frozen_pods:
+        runpod.stop_pod(pod["id"])
     stopped_at = datetime.now(timezone.utc)
     started_at = datetime.fromisoformat(receipt["billing_started_at"])
-    spend = float(receipt["pod"]["aggregate_hourly_rate_usd"]) * max(
+    rate = sum(float(pod["aggregate_hourly_rate_usd"]) for pod in frozen_pods)
+    spend = rate * max(
         0.0, (stopped_at - started_at).total_seconds()
     ) / 3600.0
     if spend > float(receipt["development_billing_cutoff_usd"]):
@@ -195,7 +208,7 @@ def main() -> int:
         "schema_version": "1.0",
         "status": "12 authoritative RunPod development caches verified without opening NPZ",
         "plan_payload_sha256": plan["payload_sha256"],
-        "provider_pod_id": receipt["pod"]["id"],
+        "provider_pod_ids": [pod["id"] for pod in frozen_pods],
         "provider_stopped_at": stopped_at.isoformat(),
         "conservative_development_spend_usd": round(spend, 6),
         "jobs": verified,

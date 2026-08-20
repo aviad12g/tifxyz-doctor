@@ -12,6 +12,7 @@ from pathlib import Path
 PREFIX = b"# GAPBALANCE_DEVELOPMENT_JOB_CONFIG_HEX="
 CONTROLLER_FILES = (
     "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json",
+    "GAPBALANCE_RUNPOD_MULTI_POD_RETRY.json",
     "run_gapbalance_runpod_development_job.py",
     "execute_gapbalance_runpod_development.py",
 )

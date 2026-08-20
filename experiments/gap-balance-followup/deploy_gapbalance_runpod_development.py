@@ -67,7 +67,10 @@ def main() -> int:
     plan = load_hashed(args.plan)
     manifest = load_hashed(args.bundle / "bundle_manifest.json")
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
-    if receipt.get("status") != "POD_RESUMED_AWAITING_DEPLOYMENT":
+    if receipt.get("status") not in {
+        "POD_RESUMED_AWAITING_DEPLOYMENT",
+        "PODS_ALLOCATED_AWAITING_DEPLOYMENT",
+    }:
         raise RuntimeError("provider receipt is not ready for first deployment")
     if receipt.get("plan_payload_sha256") != plan["payload_sha256"]:
         raise RuntimeError("provider receipt is bound to another plan")
@@ -78,50 +81,86 @@ def main() -> int:
         raise RuntimeError("bundle job order mismatch")
     import runpod
 
-    pod_id = receipt["pod"]["id"]
-    host, port = ssh_target(runpod, pod_id)
-    remote_root = f"/workspace/gapbalance-development-{receipt['public_runpod_commit'][:8]}"
-    ssh = [
-        "ssh", "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
-        "-o", "ConnectTimeout=15", f"root@{host}",
-    ]
-    run_checked([*ssh, f"test ! -e {shlex.quote(remote_root)} && mkdir -p {shlex.quote(remote_root + '/bundle')}"], 60)
-    rsync_ssh = f"ssh -p {port} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15"
-    run_checked(
-        [
-            "rsync", "--archive", "--copy-links", "--partial", "--protect-args",
-            "--info=progress2", "-e", rsync_ssh, str(args.bundle) + "/",
-            f"root@{host}:{remote_root}/bundle/",
-        ],
-        2 * 60 * 60,
-    )
-    remote = [
-        "python", f"{remote_root}/bundle/controller/execute_gapbalance_runpod_development.py",
-        "--plan", f"{remote_root}/bundle/controller/GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json",
-        "--bundle-root", f"{remote_root}/bundle",
-        "--bundle-manifest", f"{remote_root}/bundle/bundle_manifest.json",
-        "--input", f"{remote_root}/bundle/input",
-        "--launchers", f"{remote_root}/bundle/launchers",
-        "--wrapper", f"{remote_root}/bundle/controller/run_gapbalance_runpod_development_job.py",
-        "--working", f"{remote_root}/output",
-        "--temp", f"{remote_root}/temp",
-        "--status", f"{remote_root}/status/status.json",
-    ]
-    command = (
-        "mkdir -p " + shlex.quote(remote_root + "/status") + " && nohup "
-        + " ".join(shlex.quote(part) for part in remote)
-        + f" > {shlex.quote(remote_root + '/status/controller.operational.log')} 2>&1 < /dev/null & echo $!"
-    )
-    remote_pid = run_checked([*ssh, command], 60)
-    if not remote_pid.isdigit():
-        raise RuntimeError(f"remote executor did not return PID: {remote_pid!r}")
+    pods = receipt.get("pods")
+    if pods is None:
+        pod = dict(receipt["pod"])
+        pod["jobs"] = job_ids
+        pods = [pod]
+    if [job for pod in pods for job in pod["jobs"]] != job_ids:
+        raise RuntimeError("provider pod partitions do not reconstruct the frozen job order")
+    deployments = []
+    try:
+        for pod_index, pod in enumerate(pods):
+            host, port = ssh_target(runpod, pod["id"])
+            remote_root = (
+                f"/workspace/gapbalance-development-{receipt['public_runpod_commit'][:8]}-p{pod_index}"
+            )
+            ssh = [
+                "ssh", "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
+                "-o", "ConnectTimeout=15", f"root@{host}",
+            ]
+            run_checked(
+                [*ssh, f"test ! -e {shlex.quote(remote_root)} && mkdir -p {shlex.quote(remote_root + '/bundle')}"],
+                60,
+            )
+            rsync_ssh = f"ssh -p {port} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15"
+            run_checked(
+                [
+                    "rsync", "--archive", "--copy-links", "--partial", "--protect-args",
+                    "--info=progress2", "-e", rsync_ssh, str(args.bundle) + "/",
+                    f"root@{host}:{remote_root}/bundle/",
+                ],
+                2 * 60 * 60,
+            )
+            remote = [
+                "python", f"{remote_root}/bundle/controller/execute_gapbalance_runpod_development.py",
+                "--plan", f"{remote_root}/bundle/controller/GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json",
+                "--bundle-root", f"{remote_root}/bundle",
+                "--bundle-manifest", f"{remote_root}/bundle/bundle_manifest.json",
+                "--input", f"{remote_root}/bundle/input",
+                "--launchers", f"{remote_root}/bundle/launchers",
+                "--wrapper", f"{remote_root}/bundle/controller/run_gapbalance_runpod_development_job.py",
+                "--working", f"{remote_root}/output",
+                "--temp", f"{remote_root}/temp",
+                "--status", f"{remote_root}/status/status.json",
+            ]
+            if len(pods) > 1:
+                remote.extend([
+                    "--allocation-layout",
+                    f"{remote_root}/bundle/controller/GAPBALANCE_RUNPOD_MULTI_POD_RETRY.json",
+                ])
+                for job_id in pod["jobs"]:
+                    remote.extend(["--job-id", job_id])
+            command = (
+                "mkdir -p " + shlex.quote(remote_root + "/status") + " && nohup "
+                + " ".join(shlex.quote(part) for part in remote)
+                + f" > {shlex.quote(remote_root + '/status/controller.operational.log')} 2>&1 < /dev/null & echo $!"
+            )
+            remote_pid = run_checked([*ssh, command], 60)
+            if not remote_pid.isdigit():
+                raise RuntimeError(f"remote executor did not return PID: {remote_pid!r}")
+            deployments.append({
+                "pod_id": pod["id"],
+                "jobs": pod["jobs"],
+                "remote_root": remote_root,
+                "remote_executor_pid": int(remote_pid),
+                "ssh_host": host,
+                "ssh_port": port,
+            })
+    except Exception:
+        for pod in pods:
+            try:
+                runpod.stop_pod(pod["id"])
+            except Exception:
+                pass
+        receipt["status"] = "DEPLOYMENT_ERROR_PODS_STOPPED"
+        receipt["deployment_error_at"] = datetime.now(timezone.utc).isoformat()
+        atomic_json(args.provider_receipt, receipt)
+        raise
     receipt["deployment"] = {
         "deployed_at": datetime.now(timezone.utc).isoformat(),
         "bundle_manifest_payload_sha256": manifest["payload_sha256"],
-        "remote_root": remote_root,
-        "remote_executor_pid": int(remote_pid),
-        "ssh_host": host,
-        "ssh_port": port,
+        "pods": deployments,
     }
     receipt["status"] = "RUNPOD_DEVELOPMENT_EXECUTOR_RUNNING_NOT_SCORED"
     atomic_json(args.provider_receipt, receipt)

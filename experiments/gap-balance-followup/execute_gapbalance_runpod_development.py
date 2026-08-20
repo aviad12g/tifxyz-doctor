@@ -90,10 +90,10 @@ def install_runtime() -> None:
         subprocess.run(command, check=True)
 
 
-def smoke_gpus(plan: dict) -> dict:
+def smoke_gpus(worker_count: int) -> dict:
     import torch
 
-    expected = int(plan["execution"]["gpu_count"])
+    expected = int(worker_count)
     if torch.__version__.split("+", 1)[0] != "2.5.1" or str(torch.version.cuda) != "12.1":
         raise RuntimeError(f"frozen torch mismatch: {torch.__version__}/{torch.version.cuda}")
     if torch.cuda.device_count() != expected:
@@ -206,15 +206,36 @@ def main() -> int:
     parser.add_argument("--working", type=Path, required=True)
     parser.add_argument("--temp", type=Path, required=True)
     parser.add_argument("--status", type=Path, required=True)
+    parser.add_argument("--allocation-layout", type=Path)
+    parser.add_argument("--job-id", action="append", default=[])
     args = parser.parse_args()
     plan = load_hashed(args.plan)
     bundle = verify_bundle(args.bundle_root, args.bundle_manifest, plan)
-    job_ids = [job["job_id"] for job in plan["jobs"]]
-    waves = plan["execution"]["waves"]
-    if [job for wave in waves for job in wave] != job_ids or [len(wave) for wave in waves] != [7, 5]:
-        raise RuntimeError("RunPod wave layout mismatch")
-    if bundle.get("job_ids") != job_ids:
+    all_job_ids = [job["job_id"] for job in plan["jobs"]]
+    job_ids = args.job_id or all_job_ids
+    if bundle.get("job_ids") != all_job_ids:
         raise RuntimeError("bundle job list mismatch")
+    if job_ids == all_job_ids:
+        waves = plan["execution"]["waves"]
+        worker_count = int(plan["execution"]["gpu_count"])
+    else:
+        if args.allocation_layout is None:
+            raise RuntimeError("partial pod execution requires the public multi-pod layout")
+        layout = load_hashed(args.allocation_layout)
+        if layout.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]:
+            raise RuntimeError("multi-pod layout is bound to another plan")
+        matches = [
+            partition
+            for candidate in layout.get("allowed_layouts_in_order", [])
+            for partition in candidate["partitions"]
+            if partition["jobs"] == job_ids
+        ]
+        if len(matches) != 1:
+            raise RuntimeError("job subset is not one exact public multi-pod partition")
+        worker_count = int(matches[0]["gpu_count"])
+        waves = matches[0]["waves"]
+    if [job for wave in waves for job in wave] != job_ids or max(map(len, waves)) > worker_count:
+        raise RuntimeError("RunPod worker wave layout mismatch")
     if args.status.exists() or args.working.exists() or args.temp.exists():
         raise RuntimeError("remote status/output/temp roots must start absent")
     args.working.mkdir(parents=True)
@@ -228,7 +249,7 @@ def main() -> int:
     }
     atomic_json(args.status, state)
     install_runtime()
-    state.update(state="RUNNING", runtime_smoke=smoke_gpus(plan))
+    state.update(state="RUNNING", runtime_smoke=smoke_gpus(worker_count))
     atomic_json(args.status, state)
     for wave_index, jobs in enumerate(waves):
         if not run_wave(

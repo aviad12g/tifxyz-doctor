@@ -19,6 +19,7 @@ def load_module(name, filename):
 
 FREEZE = load_module("freeze_gapbalance_runpod_development", "freeze_gapbalance_runpod_development.py")
 RETRY = load_module("freeze_gapbalance_runpod_allocation_retry", "freeze_gapbalance_runpod_allocation_retry.py")
+MULTI = load_module("freeze_gapbalance_runpod_multi_pod_retry", "freeze_gapbalance_runpod_multi_pod_retry.py")
 WRAPPER = load_module("run_gapbalance_runpod_development_job", "run_gapbalance_runpod_development_job.py")
 
 
@@ -81,3 +82,22 @@ def test_allocation_retry_preserves_plan_budget_authority_and_sealed_gates():
     assert retry["sealed_gates"] == plan["sealed_gates"]
     assert retry["authorized_retry"]["gpu_count"] == 7
     assert retry["authorized_retry"]["maximum_accepted_aggregate_hourly_rate_usd"] == 2.38
+
+
+def test_multi_pod_retry_preserves_all_jobs_and_seven_gpu_ceiling():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    retry = MULTI.load_hashed(HERE / "GAPBALANCE_RUNPOD_MULTI_POD_RETRY.json")
+    job_ids = [job["job_id"] for job in plan["jobs"]]
+    assert retry["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert retry["failed_zero_cost_attempt"]["spend_usd"] == 0.0
+    assert retry["budget"] == plan["budget"]
+    assert retry["authority"] == plan["authority"]
+    assert retry["sealed_gates"] == plan["sealed_gates"]
+    assert retry["provider_contract"]["aggregate_hourly_ceiling_usd"] == 2.38
+    for layout in retry["allowed_layouts_in_order"]:
+        assert sum(partition["gpu_count"] for partition in layout["partitions"]) == 7
+        assert [job for partition in layout["partitions"] for job in partition["jobs"]] == job_ids
+        for partition in layout["partitions"]:
+            assert [job for wave in partition["waves"] for job in wave] == partition["jobs"]
+            assert len(partition["waves"]) <= 2
+            assert max(map(len, partition["waves"])) <= partition["gpu_count"]

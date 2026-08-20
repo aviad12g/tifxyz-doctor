@@ -1,0 +1,338 @@
+{
+  "allowed_layouts_in_order": [
+    {
+      "name": "four_plus_three",
+      "partitions": [
+        {
+          "gpu_count": 4,
+          "jobs": [
+            "gapbalance-development-synthetic-seed11-shard00",
+            "gapbalance-development-synthetic-seed11-shard01",
+            "gapbalance-development-synthetic-seed11-shard02",
+            "gapbalance-development-synthetic-seed11-shard03",
+            "gapbalance-development-synthetic-seed23-shard00",
+            "gapbalance-development-synthetic-seed23-shard01",
+            "gapbalance-development-synthetic-seed23-shard02"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed11-shard00",
+              "gapbalance-development-synthetic-seed11-shard01",
+              "gapbalance-development-synthetic-seed11-shard02",
+              "gapbalance-development-synthetic-seed11-shard03"
+            ],
+            [
+              "gapbalance-development-synthetic-seed23-shard00",
+              "gapbalance-development-synthetic-seed23-shard01",
+              "gapbalance-development-synthetic-seed23-shard02"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 3,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard03",
+            "gapbalance-development-synthetic-seed47-shard00",
+            "gapbalance-development-synthetic-seed47-shard01",
+            "gapbalance-development-synthetic-seed47-shard02",
+            "gapbalance-development-synthetic-seed47-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard03",
+              "gapbalance-development-synthetic-seed47-shard00",
+              "gapbalance-development-synthetic-seed47-shard01"
+            ],
+            [
+              "gapbalance-development-synthetic-seed47-shard02",
+              "gapbalance-development-synthetic-seed47-shard03"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "three_plus_two_plus_two",
+      "partitions": [
+        {
+          "gpu_count": 3,
+          "jobs": [
+            "gapbalance-development-synthetic-seed11-shard00",
+            "gapbalance-development-synthetic-seed11-shard01",
+            "gapbalance-development-synthetic-seed11-shard02",
+            "gapbalance-development-synthetic-seed11-shard03",
+            "gapbalance-development-synthetic-seed23-shard00"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed11-shard00",
+              "gapbalance-development-synthetic-seed11-shard01",
+              "gapbalance-development-synthetic-seed11-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed11-shard03",
+              "gapbalance-development-synthetic-seed23-shard00"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 2,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard01",
+            "gapbalance-development-synthetic-seed23-shard02",
+            "gapbalance-development-synthetic-seed23-shard03",
+            "gapbalance-development-synthetic-seed47-shard00"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard01",
+              "gapbalance-development-synthetic-seed23-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed23-shard03",
+              "gapbalance-development-synthetic-seed47-shard00"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 2,
+          "jobs": [
+            "gapbalance-development-synthetic-seed47-shard01",
+            "gapbalance-development-synthetic-seed47-shard02",
+            "gapbalance-development-synthetic-seed47-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed47-shard01",
+              "gapbalance-development-synthetic-seed47-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed47-shard03"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "two_plus_two_plus_two_plus_one",
+      "partitions": [
+        {
+          "gpu_count": 2,
+          "jobs": [
+            "gapbalance-development-synthetic-seed11-shard00",
+            "gapbalance-development-synthetic-seed11-shard01",
+            "gapbalance-development-synthetic-seed11-shard02",
+            "gapbalance-development-synthetic-seed11-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed11-shard00",
+              "gapbalance-development-synthetic-seed11-shard01"
+            ],
+            [
+              "gapbalance-development-synthetic-seed11-shard02",
+              "gapbalance-development-synthetic-seed11-shard03"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 2,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard00",
+            "gapbalance-development-synthetic-seed23-shard01",
+            "gapbalance-development-synthetic-seed23-shard02"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard00",
+              "gapbalance-development-synthetic-seed23-shard01"
+            ],
+            [
+              "gapbalance-development-synthetic-seed23-shard02"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 2,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard03",
+            "gapbalance-development-synthetic-seed47-shard00",
+            "gapbalance-development-synthetic-seed47-shard01"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard03",
+              "gapbalance-development-synthetic-seed47-shard00"
+            ],
+            [
+              "gapbalance-development-synthetic-seed47-shard01"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed47-shard02",
+            "gapbalance-development-synthetic-seed47-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed47-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed47-shard03"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "seven_singles",
+      "partitions": [
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed11-shard00",
+            "gapbalance-development-synthetic-seed11-shard01"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed11-shard00"
+            ],
+            [
+              "gapbalance-development-synthetic-seed11-shard01"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed11-shard02",
+            "gapbalance-development-synthetic-seed11-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed11-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed11-shard03"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard00",
+            "gapbalance-development-synthetic-seed23-shard01"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard00"
+            ],
+            [
+              "gapbalance-development-synthetic-seed23-shard01"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed23-shard02",
+            "gapbalance-development-synthetic-seed23-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed23-shard02"
+            ],
+            [
+              "gapbalance-development-synthetic-seed23-shard03"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed47-shard00",
+            "gapbalance-development-synthetic-seed47-shard01"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed47-shard00"
+            ],
+            [
+              "gapbalance-development-synthetic-seed47-shard01"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed47-shard02"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed47-shard02"
+            ]
+          ]
+        },
+        {
+          "gpu_count": 1,
+          "jobs": [
+            "gapbalance-development-synthetic-seed47-shard03"
+          ],
+          "waves": [
+            [
+              "gapbalance-development-synthetic-seed47-shard03"
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "authority": {
+    "cross_provider_partial_mix_for_selection_permitted": false,
+    "kaggle_completed_jobs_are_secondary_replication_only": true,
+    "partial_primary_scoring_or_selection_permitted": false,
+    "runpod_complete_12_job_set_is_primary": true
+  },
+  "budget": {
+    "absolute_campaign_cap_usd": 25.0,
+    "authorization_date": "2026-08-20",
+    "confirmation_reserve_usd": 13.0,
+    "development_billing_cutoff_usd": 12.0,
+    "forms_authorized": false,
+    "guard_seconds": 300,
+    "on_cutoff": "stop the exact pod, preserve partial operational artifacts, do not score or select partial development output",
+    "user_authorization": "Aviad: ok go"
+  },
+  "failed_zero_cost_attempt": {
+    "allocation_started": false,
+    "provider_error": "There are no longer any instances available with the requested specifications. Please refresh and try again.",
+    "route": "one new seven-GPU community pod",
+    "scientific_outputs_created_or_inspected": false,
+    "spend_usd": 0.0
+  },
+  "payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "prior_allocation_retry_payload_sha256": "2e2ca527e5fc76538774e96650375ec0d12676a8c50e0d26130ad9eed2640879",
+  "provider_contract": {
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "container_disk_in_gb_per_pod": 30,
+    "container_image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "gpu_type_id": "NVIDIA GeForce RTX 4090",
+    "per_gpu_hourly_ceiling_usd": 0.34,
+    "provider": "RunPod community cloud",
+    "total_gpu_count": 7,
+    "volume_in_gb_per_pod": 25
+  },
+  "public_parent_commit": "4e937738d626e90ecdeb8032105b643962b20288",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "holdout_access_before_public_candidate_and_threshold_freeze_permitted": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "result-blind equivalent multi-pod RunPod retry frozen before creation"
+}
