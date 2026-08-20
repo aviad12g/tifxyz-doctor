@@ -131,3 +131,18 @@ def test_result_blind_resume_failure_preserves_stopped_state_and_budget():
     assert not failure["pherc1218_v2_opened"]
     assert not failure["scientific_endpoints_inspected"]
     assert not failure["confirmation_outputs_inspected"]
+
+
+def test_replacement_reservation_preserves_budget_provider_and_egress_gate():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_MULTI_POD_RETRY.json")
+    reservation = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_REPLACEMENT_RESERVATION.json")
+    assert reservation["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert reservation["runpod_multi_pod_retry_payload_sha256"] == retry["payload_sha256"]
+    assert reservation["provider_contract"]["total_gpu_count"] == 7
+    assert reservation["provider_contract"]["aggregate_hourly_ceiling_usd"] == 2.38
+    assert reservation["authorization"]["private_bundle_egress_to_replacements_permitted"] is False
+    assert reservation["budget"]["prior_conservative_development_spend_usd"] == pytest.approx(0.070296)
+    assert reservation["budget"]["remaining_development_cutoff_usd"] == pytest.approx(11.929704)
+    assert not reservation["sealed_gates"]["pherc1218_v2_opened"]
+    assert not reservation["sealed_gates"]["confirmation_outputs_inspected"]

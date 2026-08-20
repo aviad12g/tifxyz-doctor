@@ -126,12 +126,27 @@ def create_equivalent_pod(runpod, *, name: str, gpu_count: int, contract: dict, 
     return pod
 
 
-def allocate_multi(args, plan: dict) -> None:
+def allocate_multi(args, plan: dict, *, stop_after_reservation: bool = False) -> None:
     if args.receipt.exists():
         raise RuntimeError("provider receipt already exists; refusing duplicate allocation")
     if len(args.public_commit) != 40 or any(c not in "0123456789abcdef" for c in args.public_commit):
         raise RuntimeError("public commit must be an exact lowercase Git SHA")
     retry = load_plan(args.multi_pod_retry)
+    reservation = None
+    if stop_after_reservation:
+        if args.replacement_reservation is None:
+            raise RuntimeError("reserve-multi requires the public replacement reservation")
+        reservation = load_plan(args.replacement_reservation)
+        if (
+            reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+            or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
+            or reservation.get("authorization", {}).get("private_bundle_egress_to_replacements_permitted")
+            is not False
+            or reservation.get("provider_contract", {}).get("total_gpu_count") != 7
+            or reservation.get("provider_contract", {}).get("aggregate_hourly_ceiling_usd")
+            != plan["execution"]["maximum_accepted_aggregate_hourly_rate_usd"]
+        ):
+            raise RuntimeError("replacement reservation changes the frozen provider, budget, or egress gate")
     if retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]:
         raise RuntimeError("multi-pod retry is bound to another development plan")
     if (
@@ -213,6 +228,35 @@ def allocate_multi(args, plan: dict) -> None:
         "scientific_endpoints_inspected": False,
         "confirmation_outputs_inspected": False,
     }
+    if stop_after_reservation:
+        try:
+            for item in accepted:
+                runpod.stop_pod(item["id"])
+            for item in accepted:
+                for _ in range(120):
+                    pod = runpod.get_pod(item["id"])
+                    if pod and pod.get("desiredStatus") == "EXITED":
+                        break
+                    time.sleep(5)
+                else:
+                    raise RuntimeError(f"replacement pod did not stop: {item['id']}")
+        except Exception:
+            terminate_many(runpod, [item["id"] for item in accepted])
+            raise
+        stopped_at = now()
+        receipt.update(
+            status="STOPPED_REPLACEMENTS_AWAITING_EXACT_EGRESS_APPROVAL",
+            replacement_reservation_payload_sha256=reservation["payload_sha256"],
+            provider_action_at=stopped_at.isoformat(),
+            conservative_development_spend_usd=round(
+                float(reservation["budget"]["prior_conservative_development_spend_usd"])
+                + receipt["total_hourly_rate_usd"]
+                * max(0.0, (stopped_at - billing_started).total_seconds())
+                / 3600.0,
+                6,
+            ),
+            private_bundle_egress_permitted=False,
+        )
     atomic_json(args.receipt, receipt)
     print(json.dumps(receipt, indent=2, sort_keys=True))
 
@@ -478,13 +522,14 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "reserve-multi", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
     parser.add_argument("--allocation-retry", type=Path)
     parser.add_argument("--multi-pod-retry", type=Path)
     parser.add_argument("--egress-resume", type=Path)
+    parser.add_argument("--replacement-reservation", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -500,10 +545,10 @@ def main() -> int:
         if args.allocation_retry is None:
             raise RuntimeError("allocate requires the public allocation retry")
         allocate(args, plan)
-    elif args.command == "allocate-multi":
+    elif args.command in {"allocate-multi", "reserve-multi"}:
         if args.multi_pod_retry is None:
             raise RuntimeError("allocate-multi requires the public multi-pod retry")
-        allocate_multi(args, plan)
+        allocate_multi(args, plan, stop_after_reservation=args.command == "reserve-multi")
     elif args.command in {"status", "watch"}:
         report_or_watch(args, plan, args.command == "watch")
     else:
