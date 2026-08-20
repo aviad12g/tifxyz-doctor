@@ -248,3 +248,22 @@ def test_dynamic_substitute_egress_is_bounded_and_requires_id_recording():
     assert approval["egress_exclusions"]["pherc1218_included"] is False
     assert approval["egress_exclusions"]["confirmation_seeds_500_504_included"] is False
     assert not approval["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_ssh_injection_retry_is_public_key_only_and_accounts_failed_attempt():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_INJECTION_RETRY.json")
+    assert retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert retry["failed_deployment"]["error"] == "Permission denied (publickey,password)."
+    assert retry["retry"]["inject_public_key_environment_variable"] == "SSH_PUBLIC_KEY"
+    assert retry["retry"]["private_key_leaves_local_mac"] is False
+    assert retry["retry"]["public_key_material_published_in_repo"] is False
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.122661)
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.877339)
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_ssh_public_key_fingerprint_matches_frozen_local_key():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_INJECTION_RETRY.json")
+    public_key = Path("/Users/mazalcohen/.ssh/id_ed25519.pub").read_text()
+    assert ORCH.public_key_fingerprint(public_key) == retry["retry"]["public_key_fingerprint"]

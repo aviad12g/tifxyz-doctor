@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -87,7 +88,33 @@ def terminate_many(runpod, pod_ids: list[str]) -> None:
             pass
 
 
-def create_equivalent_pod(runpod, *, name: str, gpu_count: int, contract: dict, plan: dict) -> dict:
+def public_key_fingerprint(public_key: str) -> str:
+    parts = public_key.strip().split()
+    if len(parts) < 2 or parts[0] not in {"ssh-ed25519", "ssh-rsa", "ecdsa-sha2-nistp256"}:
+        raise RuntimeError("unsupported SSH public key format")
+    try:
+        material = base64.b64decode(parts[1], validate=True)
+    except Exception as error:
+        raise RuntimeError("invalid SSH public key material") from error
+    digest = base64.b64encode(hashlib.sha256(material).digest()).decode().rstrip("=")
+    return f"SHA256:{digest}"
+
+
+def create_equivalent_pod(
+    runpod,
+    *,
+    name: str,
+    gpu_count: int,
+    contract: dict,
+    plan: dict,
+    ssh_public_key: str | None = None,
+) -> dict:
+    pod_environment = {
+        "GAPBALANCE_DEVELOPMENT_PLAN_SHA256": plan["payload_sha256"],
+        "GAPBALANCE_ROLE": "authoritative-development-cache-not-scored",
+    }
+    if ssh_public_key is not None:
+        pod_environment["SSH_PUBLIC_KEY"] = ssh_public_key.strip()
     created = runpod.create_pod(
         name=name,
         image_name=contract["container_image"],
@@ -102,10 +129,7 @@ def create_equivalent_pod(runpod, *, name: str, gpu_count: int, contract: dict, 
         min_vcpu_count=max(8, gpu_count * 4),
         min_memory_in_gb=max(32, gpu_count * 16),
         ports="22/tcp",
-        env={
-            "GAPBALANCE_DEVELOPMENT_PLAN_SHA256": plan["payload_sha256"],
-            "GAPBALANCE_ROLE": "authoritative-development-cache-not-scored",
-        },
+        env=pod_environment,
     )
     pod_id = created["id"]
     pod = None
@@ -149,6 +173,8 @@ def allocate_multi(
     retry = load_plan(args.multi_pod_retry)
     reservation = None
     dynamic_egress = None
+    ssh_retry = None
+    ssh_public_key = None
     if use_hardware_substitution:
         if args.hardware_substitution is None:
             raise RuntimeError("hardware substitution command requires the public substitution")
@@ -185,6 +211,22 @@ def allocate_multi(
                 is not False
             ):
                 raise RuntimeError("dynamic substitute egress changes the frozen provider or sealed gate")
+            if args.ssh_retry is not None or args.ssh_public_key is not None:
+                if args.ssh_retry is None or args.ssh_public_key is None:
+                    raise RuntimeError("SSH injection retry requires both its public freeze and key path")
+                ssh_retry = load_plan(args.ssh_retry)
+                if (
+                    ssh_retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+                    or ssh_retry.get("dynamic_substitute_egress_payload_sha256")
+                    != dynamic_egress["payload_sha256"]
+                    or ssh_retry.get("retry", {}).get("private_key_leaves_local_mac") is not False
+                    or ssh_retry.get("retry", {}).get("inject_public_key_environment_variable")
+                    != "SSH_PUBLIC_KEY"
+                ):
+                    raise RuntimeError("SSH retry changes the frozen egress, key, or sealed gate")
+                ssh_public_key = args.ssh_public_key.read_text(encoding="utf-8").strip()
+                if public_key_fingerprint(ssh_public_key) != ssh_retry["retry"]["public_key_fingerprint"]:
+                    raise RuntimeError("SSH public key fingerprint mismatch")
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -248,6 +290,7 @@ def allocate_multi(
                         gpu_count=int(partition["gpu_count"]),
                         contract=hardware,
                         plan=plan,
+                        ssh_public_key=ssh_public_key,
                     )
                     created.append({
                         "id": pod["id"],
@@ -312,14 +355,22 @@ def allocate_multi(
         "confirmation_outputs_inspected": False,
     }
     if dynamic_egress is not None:
+        prior_spend = (
+            ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            if ssh_retry is not None
+            else dynamic_egress["billing"]["prior_conservative_development_spend_usd"]
+        )
         receipt.update(
             dynamic_substitute_egress_payload_sha256=dynamic_egress["payload_sha256"],
             private_bundle_egress_permitted=True,
-            prior_conservative_development_spend_usd=dynamic_egress["billing"][
-                "prior_conservative_development_spend_usd"
-            ],
+            prior_conservative_development_spend_usd=prior_spend,
             active_billing_started_at=billing_started.isoformat(),
         )
+        if ssh_retry is not None:
+            receipt.update(
+                ssh_injection_retry_payload_sha256=ssh_retry["payload_sha256"],
+                ssh_public_key_fingerprint=ssh_retry["retry"]["public_key_fingerprint"],
+            )
     if stop_after_reservation:
         try:
             for item in accepted:
@@ -708,6 +759,8 @@ def main() -> int:
     parser.add_argument("--hardware-substitution", type=Path)
     parser.add_argument("--substitute-egress-resume", type=Path)
     parser.add_argument("--dynamic-substitute-egress", type=Path)
+    parser.add_argument("--ssh-retry", type=Path)
+    parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)

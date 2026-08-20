@@ -1,0 +1,41 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.122661,
+    "remaining_development_cutoff_usd": 11.877339
+  },
+  "dynamic_substitute_egress_payload_sha256": "042d7576a510a16805bca2967ce95fa479d21386a99eacaeb0c8f88bce66714d",
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Permission denied (publickey,password).",
+    "failed_at": "2026-08-20T19:45:13.574605+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "r08tt64kdrideo",
+      "kd92nx9btdqzzu"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payload_sha256": "47e0510ebf7ddf690495eed8cc87ebc947518f48cf54c48299ad0ddefa86eb1c",
+  "public_parent_commit": "b96295e1cb15ebea53f4796ae54163305ff800da",
+  "retry": {
+    "inject_public_key_environment_variable": "SSH_PUBLIC_KEY",
+    "private_key_leaves_local_mac": false,
+    "public_key_fingerprint": "SHA256:e+q6i7OGbRVczoh8nObWeusmT4J8FIGshwhlHzBN/Mg",
+    "public_key_material_published_in_repo": false,
+    "same_dynamic_destination_and_bundle_egress_authorization": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_SSH_PUBLIC_KEY_INJECTION_RETRY_FROZEN_BEFORE_ALLOCATION"
+}
