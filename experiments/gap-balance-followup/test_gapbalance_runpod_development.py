@@ -199,3 +199,21 @@ def test_substitute_gpu_validation_remains_exact_and_rate_capped():
             expected_gpu_display="RTX A5000",
             maximum_rate_usd=0.32,
         )
+
+
+def test_substitute_reservation_receipt_is_stopped_uniform_and_not_egress_approved():
+    receipt = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SUBSTITUTE_RESERVATION_RECEIPT.json")
+    assert receipt["status"] == "STOPPED_SUBSTITUTE_PODS_PUBLICLY_FROZEN_AWAITING_EXACT_EGRESS_APPROVAL"
+    assert receipt["selected_hardware"] == {
+        "gpu_name": "RTX 3090", "uniform_across_all_12_jobs": True
+    }
+    assert [pod["id"] for pod in receipt["pods"]] == ["68e48azozqvnhb", "b9outlq8lhhsnk"]
+    assert [pod["desired_status"] for pod in receipt["pods"]] == ["EXITED", "EXITED"]
+    assert sum(pod["gpu_count"] for pod in receipt["pods"]) == 7
+    assert receipt["billing"]["aggregate_hourly_rate_usd"] == pytest.approx(1.54)
+    assert receipt["billing"]["conservative_development_spend_usd"] == pytest.approx(0.083282)
+    assert receipt["bundle_egress"]["permitted"] is False
+    assert receipt["bundle_egress"]["explicit_approval_for_exact_replacement_ids_received"] is False
+    assert not receipt["pherc1218_v2_opened"]
+    assert not receipt["scientific_endpoints_inspected"]
+    assert not receipt["confirmation_outputs_inspected"]
