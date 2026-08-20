@@ -72,6 +72,8 @@ def main() -> int:
         "PODS_ALLOCATED_AWAITING_DEPLOYMENT",
     }:
         raise RuntimeError("provider receipt is not ready for first deployment")
+    if receipt.get("selected_hardware") is not None and receipt.get("private_bundle_egress_permitted") is not True:
+        raise RuntimeError("substitute provider receipt lacks explicit private-bundle egress approval")
     if receipt.get("plan_payload_sha256") != plan["payload_sha256"]:
         raise RuntimeError("provider receipt is bound to another plan")
     if manifest.get("plan_payload_sha256") != plan["payload_sha256"]:

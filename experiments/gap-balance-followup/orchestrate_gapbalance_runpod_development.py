@@ -148,27 +148,48 @@ def allocate_multi(
         raise RuntimeError("public commit must be an exact lowercase Git SHA")
     retry = load_plan(args.multi_pod_retry)
     reservation = None
-    if stop_after_reservation:
-        if use_hardware_substitution and args.hardware_substitution is None:
-            raise RuntimeError("reserve-substitute requires the public hardware substitution")
-        if not use_hardware_substitution and args.replacement_reservation is None:
-            raise RuntimeError("reserve-multi requires the public replacement reservation")
-        reservation = load_plan(
-            args.hardware_substitution if use_hardware_substitution else args.replacement_reservation
-        )
-        if use_hardware_substitution:
+    dynamic_egress = None
+    if use_hardware_substitution:
+        if args.hardware_substitution is None:
+            raise RuntimeError("hardware substitution command requires the public substitution")
+        reservation = load_plan(args.hardware_substitution)
+        if (
+            reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+            or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
+            or reservation.get("egress", {}).get("private_bundle_egress_to_replacements_permitted")
+            is not False
+            or reservation.get("numerical_reproducibility", {}).get(
+                "all_12_jobs_must_use_one_uniform_selected_hardware_type"
+            )
+            is not True
+        ):
+            raise RuntimeError("hardware substitution changes a frozen result-blind or egress gate")
+        if not stop_after_reservation:
+            if args.dynamic_substitute_egress is None:
+                raise RuntimeError("active substitute allocation requires dynamic egress approval")
+            dynamic_egress = load_plan(args.dynamic_substitute_egress)
+            destination = dynamic_egress.get("destination_contract", {})
             if (
-                reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
-                or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
-                or reservation.get("egress", {}).get("private_bundle_egress_to_replacements_permitted")
-                is not False
-                or reservation.get("numerical_reproducibility", {}).get(
-                    "all_12_jobs_must_use_one_uniform_selected_hardware_type"
+                dynamic_egress.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+                or dynamic_egress.get("hardware_substitution_payload_sha256")
+                != reservation["payload_sha256"]
+                or destination.get("allowed_gpu_type_ids")
+                != [item["gpu_type_id"] for item in reservation["allowed_hardware_in_order"]]
+                or destination.get("maximum_total_gpu_count") != 7
+                or destination.get("maximum_aggregate_hourly_rate_usd")
+                != plan["execution"]["maximum_accepted_aggregate_hourly_rate_usd"]
+                or dynamic_egress.get("egress_exclusions", {}).get("pherc1218_included") is not False
+                or dynamic_egress.get("egress_exclusions", {}).get(
+                    "confirmation_seeds_500_504_included"
                 )
-                is not True
+                is not False
             ):
-                raise RuntimeError("hardware substitution changes a frozen result-blind or egress gate")
-        elif (
+                raise RuntimeError("dynamic substitute egress changes the frozen provider or sealed gate")
+    elif stop_after_reservation:
+        if args.replacement_reservation is None:
+            raise RuntimeError("reserve-multi requires the public replacement reservation")
+        reservation = load_plan(args.replacement_reservation)
+        if (
             reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
             or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
             or reservation.get("authorization", {}).get("private_bundle_egress_to_replacements_permitted")
@@ -270,7 +291,11 @@ def allocate_multi(
     receipt = {
         "schema_version": "1.0",
         "status": "PODS_ALLOCATED_AWAITING_DEPLOYMENT",
-        "allocation_route": "equivalent_multi_pod_after_two_zero_cost_seven_gpu_failures",
+        "allocation_route": (
+            "result_blind_uniform_hardware_substitution"
+            if use_hardware_substitution
+            else "equivalent_multi_pod_after_two_zero_cost_seven_gpu_failures"
+        ),
         "multi_pod_retry_payload_sha256": retry["payload_sha256"],
         "plan_payload_sha256": plan["payload_sha256"],
         "public_runpod_commit": args.public_commit,
@@ -286,6 +311,15 @@ def allocate_multi(
         "scientific_endpoints_inspected": False,
         "confirmation_outputs_inspected": False,
     }
+    if dynamic_egress is not None:
+        receipt.update(
+            dynamic_substitute_egress_payload_sha256=dynamic_egress["payload_sha256"],
+            private_bundle_egress_permitted=True,
+            prior_conservative_development_spend_usd=dynamic_egress["billing"][
+                "prior_conservative_development_spend_usd"
+            ],
+            active_billing_started_at=billing_started.isoformat(),
+        )
     if stop_after_reservation:
         try:
             for item in accepted:
@@ -663,7 +697,7 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "resume-multi", "resume-substitute", "allocate", "allocate-multi", "reserve-multi", "reserve-substitute", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "resume-multi", "resume-substitute", "allocate", "allocate-multi", "allocate-substitute", "reserve-multi", "reserve-substitute", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
@@ -673,6 +707,7 @@ def main() -> int:
     parser.add_argument("--replacement-reservation", type=Path)
     parser.add_argument("--hardware-substitution", type=Path)
     parser.add_argument("--substitute-egress-resume", type=Path)
+    parser.add_argument("--dynamic-substitute-egress", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -692,16 +727,18 @@ def main() -> int:
         if args.allocation_retry is None:
             raise RuntimeError("allocate requires the public allocation retry")
         allocate(args, plan)
-    elif args.command in {"allocate-multi", "reserve-multi", "reserve-substitute"}:
+    elif args.command in {"allocate-multi", "allocate-substitute", "reserve-multi", "reserve-substitute"}:
         if args.multi_pod_retry is None:
             raise RuntimeError("allocate-multi requires the public multi-pod retry")
-        if args.command == "reserve-substitute" and args.hardware_substitution is None:
-            raise RuntimeError("reserve-substitute requires the public hardware substitution")
+        if args.command in {"allocate-substitute", "reserve-substitute"} and args.hardware_substitution is None:
+            raise RuntimeError("substitute allocation requires the public hardware substitution")
+        if args.command == "allocate-substitute" and args.dynamic_substitute_egress is None:
+            raise RuntimeError("allocate-substitute requires dynamic egress approval")
         allocate_multi(
             args,
             plan,
             stop_after_reservation=args.command in {"reserve-multi", "reserve-substitute"},
-            use_hardware_substitution=args.command == "reserve-substitute",
+            use_hardware_substitution=args.command in {"allocate-substitute", "reserve-substitute"},
         )
     elif args.command in {"status", "watch"}:
         report_or_watch(args, plan, args.command == "watch")

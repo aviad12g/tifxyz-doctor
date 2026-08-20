@@ -1,0 +1,51 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.083282,
+    "remaining_development_cutoff_usd": 11.916718
+  },
+  "bundle": {
+    "includes": [
+      "private trained model weights",
+      "source and frozen assets",
+      "private generated launchers"
+    ],
+    "logical_bytes": 4507901245,
+    "manifest_payload_sha256": "7f46849aeed60db87ebca747a3e9b80885f2e257785951a73c70e8587d0e447c"
+  },
+  "destination_contract": {
+    "allowed_gpu_type_ids": [
+      "NVIDIA GeForce RTX 3090",
+      "NVIDIA RTX A5000",
+      "NVIDIA RTX A6000"
+    ],
+    "cloud_type": "COMMUNITY",
+    "exact_ids_recorded_in_provider_receipt_before_upload": true,
+    "maximum_aggregate_hourly_rate_usd": 2.38,
+    "maximum_total_gpu_count": 7,
+    "one_uniform_gpu_type_for_all_12_jobs": true,
+    "provider": "RunPod"
+  },
+  "egress_exclusions": {
+    "confirmation_seeds_500_504_included": false,
+    "pherc1218_included": false,
+    "scientific_outputs_included": false
+  },
+  "hardware_substitution_payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "multi_pod_retry_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "payload_sha256": "042d7576a510a16805bca2967ce95fa479d21386a99eacaeb0c8f88bce66714d",
+  "public_parent_commit": "2eb12dacb4bc64b64c406da112a9f6ce6c16fa2b",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "DYNAMIC_BOUNDED_RUNPOD_SUBSTITUTE_EGRESS_APPROVED_BEFORE_ALLOCATION",
+  "user_authorization": "I approve uploading the 4.51 GB sealed GapBalance development bundle—including private model weights, source/assets, and generated launchers—to any newly created RunPod community-cloud replacement pods satisfying the public frozen hardware-substitution plan: one uniform RTX 3090, RTX A5000, or RTX A6000 allocation, at most 7 GPUs and $2.38/hour aggregate. Record the exact pod IDs before upload. PHerc1218 and confirmation data remain excluded. Enforce the $12 development cutoff and $25 campaign cap."
+}

@@ -232,3 +232,19 @@ def test_exact_substitute_egress_approval_is_bound_capped_and_excludes_holdout()
     assert approval["egress"]["scientific_outputs_included"] is False
     assert not approval["sealed_gates"]["pherc1218_v2_opened"]
     assert not approval["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_dynamic_substitute_egress_is_bounded_and_requires_id_recording():
+    approval = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DYNAMIC_SUBSTITUTE_EGRESS.json")
+    substitute = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_HARDWARE_SUBSTITUTION.json")
+    assert approval["hardware_substitution_payload_sha256"] == substitute["payload_sha256"]
+    assert approval["destination_contract"]["allowed_gpu_type_ids"] == [
+        item["gpu_type_id"] for item in substitute["allowed_hardware_in_order"]
+    ]
+    assert approval["destination_contract"]["maximum_total_gpu_count"] == 7
+    assert approval["destination_contract"]["maximum_aggregate_hourly_rate_usd"] == pytest.approx(2.38)
+    assert approval["destination_contract"]["exact_ids_recorded_in_provider_receipt_before_upload"]
+    assert approval["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.083282)
+    assert approval["egress_exclusions"]["pherc1218_included"] is False
+    assert approval["egress_exclusions"]["confirmation_seeds_500_504_included"] is False
+    assert not approval["sealed_gates"]["scientific_endpoints_scored"]
