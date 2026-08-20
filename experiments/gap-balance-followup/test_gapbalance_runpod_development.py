@@ -116,3 +116,18 @@ def test_egress_resume_excludes_sealed_holdout_and_accounts_prior_spend():
     assert egress["resume"]["remaining_development_cutoff_usd"] == pytest.approx(11.929704)
     assert egress["budget"] == plan["budget"]
     assert egress["sealed_gates"] == plan["sealed_gates"]
+
+
+def test_result_blind_resume_failure_preserves_stopped_state_and_budget():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    failure = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_RESUME_FAILURE.json")
+    assert failure["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert failure["status"] == "RESULT_BLIND_EXACT_RUNPOD_RESUME_FAILED_NO_ACTIVE_BILLING"
+    assert failure["added_development_spend_usd"] == 0.0
+    assert failure["prior_conservative_development_spend_usd"] == pytest.approx(0.070296)
+    assert [pod["desired_status"] for pod in failure["provider_status_after_failure"]] == [
+        "EXITED", "EXITED", "EXITED"
+    ]
+    assert not failure["pherc1218_v2_opened"]
+    assert not failure["scientific_endpoints_inspected"]
+    assert not failure["confirmation_outputs_inspected"]
