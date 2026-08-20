@@ -52,6 +52,8 @@ def validate_pod(
     require_exited: bool = False,
     require_exact_reused_pod: bool = True,
     expected_gpu_count: int | None = None,
+    expected_gpu_display: str = "RTX 4090",
+    maximum_rate_usd: float | None = None,
 ) -> None:
     frozen = plan["execution"]
     if require_exact_reused_pod and (
@@ -61,12 +63,17 @@ def validate_pod(
     expected_count = frozen["gpu_count"] if expected_gpu_count is None else expected_gpu_count
     if int(pod.get("gpuCount") or -1) != expected_count:
         raise RuntimeError("provider GPU count mismatch")
-    if "RTX 4090" not in (pod.get("machine") or {}).get("gpuDisplayName", ""):
+    if expected_gpu_display not in (pod.get("machine") or {}).get("gpuDisplayName", ""):
         raise RuntimeError("provider GPU type mismatch")
     if pod.get("imageName") != frozen["container_image"]:
         raise RuntimeError("provider image mismatch")
     rate = float(pod.get("costPerHr") or 0)
-    if rate <= 0 or rate > frozen["maximum_accepted_aggregate_hourly_rate_usd"]:
+    rate_ceiling = (
+        frozen["maximum_accepted_aggregate_hourly_rate_usd"]
+        if maximum_rate_usd is None
+        else maximum_rate_usd
+    )
+    if rate <= 0 or rate > rate_ceiling:
         raise RuntimeError(f"provider rate outside frozen ceiling: {rate}")
     if require_exited and pod.get("desiredStatus") != "EXITED":
         raise RuntimeError("exact reusable pod is not stopped")
@@ -116,6 +123,8 @@ def create_equivalent_pod(runpod, *, name: str, gpu_count: int, contract: dict, 
             plan,
             require_exact_reused_pod=False,
             expected_gpu_count=gpu_count,
+            expected_gpu_display=contract.get("gpu_display_name", "RTX 4090"),
+            maximum_rate_usd=float(contract["per_gpu_hourly_ceiling_usd"]) * gpu_count,
         )
         per_gpu = float(pod["costPerHr"]) / gpu_count
         if per_gpu > float(contract["per_gpu_hourly_ceiling_usd"]):
@@ -126,7 +135,13 @@ def create_equivalent_pod(runpod, *, name: str, gpu_count: int, contract: dict, 
     return pod
 
 
-def allocate_multi(args, plan: dict, *, stop_after_reservation: bool = False) -> None:
+def allocate_multi(
+    args,
+    plan: dict,
+    *,
+    stop_after_reservation: bool = False,
+    use_hardware_substitution: bool = False,
+) -> None:
     if args.receipt.exists():
         raise RuntimeError("provider receipt already exists; refusing duplicate allocation")
     if len(args.public_commit) != 40 or any(c not in "0123456789abcdef" for c in args.public_commit):
@@ -134,10 +149,26 @@ def allocate_multi(args, plan: dict, *, stop_after_reservation: bool = False) ->
     retry = load_plan(args.multi_pod_retry)
     reservation = None
     if stop_after_reservation:
-        if args.replacement_reservation is None:
+        if use_hardware_substitution and args.hardware_substitution is None:
+            raise RuntimeError("reserve-substitute requires the public hardware substitution")
+        if not use_hardware_substitution and args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
-        reservation = load_plan(args.replacement_reservation)
-        if (
+        reservation = load_plan(
+            args.hardware_substitution if use_hardware_substitution else args.replacement_reservation
+        )
+        if use_hardware_substitution:
+            if (
+                reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+                or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
+                or reservation.get("egress", {}).get("private_bundle_egress_to_replacements_permitted")
+                is not False
+                or reservation.get("numerical_reproducibility", {}).get(
+                    "all_12_jobs_must_use_one_uniform_selected_hardware_type"
+                )
+                is not True
+            ):
+                raise RuntimeError("hardware substitution changes a frozen result-blind or egress gate")
+        elif (
             reservation.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
             or reservation.get("runpod_multi_pod_retry_payload_sha256") != retry["payload_sha256"]
             or reservation.get("authorization", {}).get("private_bundle_egress_to_replacements_permitted")
@@ -162,41 +193,67 @@ def allocate_multi(args, plan: dict, *, stop_after_reservation: bool = False) ->
         or contract["container_image"] != plan["execution"]["container_image"]
     ):
         raise RuntimeError("multi-pod provider contract differs from the primary plan")
+    hardware_contracts = (
+        [{**contract, **candidate} for candidate in reservation["allowed_hardware_in_order"]]
+        if use_hardware_substitution
+        else [contract]
+    )
+    for candidate in hardware_contracts:
+        if (
+            int(candidate["total_gpu_count"]) != 7
+            or float(candidate["aggregate_hourly_ceiling_usd"])
+            > float(plan["execution"]["maximum_accepted_aggregate_hourly_rate_usd"])
+            or int(candidate.get("gpu_memory_gb", 24)) < 24
+        ):
+            raise RuntimeError("hardware substitution exceeds the frozen GPU, memory, or rate ceiling")
     runpod = load_runpod()
     billing_started = now()
     errors = []
     accepted = None
     selected_layout = None
-    for layout in retry["allowed_layouts_in_order"]:
-        created = []
-        try:
-            for index, partition in enumerate(layout["partitions"]):
-                pod = create_equivalent_pod(
-                    runpod,
-                    name=f"gapbalance-dev-{args.public_commit[:8]}-{layout['name']}-{index}",
-                    gpu_count=int(partition["gpu_count"]),
-                    contract=contract,
-                    plan=plan,
-                )
-                created.append({
-                    "id": pod["id"],
-                    "name": pod["name"],
-                    "gpu_count": int(pod["gpuCount"]),
-                    "gpu_name": pod["machine"]["gpuDisplayName"],
-                    "image_name": pod["imageName"],
-                    "aggregate_hourly_rate_usd": float(pod["costPerHr"]),
-                    "jobs": partition["jobs"],
-                    "waves": partition["waves"],
+    selected_contract = None
+    for hardware in hardware_contracts:
+        for layout in retry["allowed_layouts_in_order"]:
+            created = []
+            try:
+                for index, partition in enumerate(layout["partitions"]):
+                    pod = create_equivalent_pod(
+                        runpod,
+                        name=(
+                            f"gapbalance-dev-{args.public_commit[:8]}-"
+                            f"{hardware['gpu_display_name'].lower().replace(' ', '-')}-"
+                            f"{layout['name']}-{index}"
+                        ),
+                        gpu_count=int(partition["gpu_count"]),
+                        contract=hardware,
+                        plan=plan,
+                    )
+                    created.append({
+                        "id": pod["id"],
+                        "name": pod["name"],
+                        "gpu_count": int(pod["gpuCount"]),
+                        "gpu_name": pod["machine"]["gpuDisplayName"],
+                        "image_name": pod["imageName"],
+                        "aggregate_hourly_rate_usd": float(pod["costPerHr"]),
+                        "jobs": partition["jobs"],
+                        "waves": partition["waves"],
+                    })
+                rate = sum(item["aggregate_hourly_rate_usd"] for item in created)
+                if rate <= 0 or rate > float(hardware["aggregate_hourly_ceiling_usd"]):
+                    raise RuntimeError(f"aggregate provider rate exceeds public ceiling: {rate}")
+                accepted = created
+                selected_layout = layout["name"]
+                selected_contract = hardware
+                break
+            except Exception as error:
+                terminate_many(runpod, [item["id"] for item in created])
+                errors.append({
+                    "gpu_type_id": hardware["gpu_type_id"],
+                    "layout": layout["name"],
+                    "error": str(error),
                 })
-            rate = sum(item["aggregate_hourly_rate_usd"] for item in created)
-            if rate <= 0 or rate > float(contract["aggregate_hourly_ceiling_usd"]):
-                raise RuntimeError(f"aggregate provider rate exceeds public ceiling: {rate}")
-            accepted = created
-            selected_layout = layout["name"]
+        if accepted is not None:
             break
-        except Exception as error:
-            terminate_many(runpod, [item["id"] for item in created])
-            errors.append({"layout": layout["name"], "error": str(error)})
     if accepted is None:
         failure = {
             "schema_version": "1.0",
@@ -222,6 +279,7 @@ def allocate_multi(args, plan: dict, *, stop_after_reservation: bool = False) ->
         "absolute_campaign_cap_usd": plan["budget"]["absolute_campaign_cap_usd"],
         "confirmation_reserve_usd": plan["budget"]["confirmation_reserve_usd"],
         "selected_layout": selected_layout,
+        "selected_hardware": selected_contract,
         "layout_attempt_errors": errors,
         "pods": accepted,
         "total_hourly_rate_usd": sum(item["aggregate_hourly_rate_usd"] for item in accepted),
@@ -522,7 +580,7 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "reserve-multi", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "reserve-multi", "reserve-substitute", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
@@ -530,6 +588,7 @@ def main() -> int:
     parser.add_argument("--multi-pod-retry", type=Path)
     parser.add_argument("--egress-resume", type=Path)
     parser.add_argument("--replacement-reservation", type=Path)
+    parser.add_argument("--hardware-substitution", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -545,10 +604,17 @@ def main() -> int:
         if args.allocation_retry is None:
             raise RuntimeError("allocate requires the public allocation retry")
         allocate(args, plan)
-    elif args.command in {"allocate-multi", "reserve-multi"}:
+    elif args.command in {"allocate-multi", "reserve-multi", "reserve-substitute"}:
         if args.multi_pod_retry is None:
             raise RuntimeError("allocate-multi requires the public multi-pod retry")
-        allocate_multi(args, plan, stop_after_reservation=args.command == "reserve-multi")
+        if args.command == "reserve-substitute" and args.hardware_substitution is None:
+            raise RuntimeError("reserve-substitute requires the public hardware substitution")
+        allocate_multi(
+            args,
+            plan,
+            stop_after_reservation=args.command in {"reserve-multi", "reserve-substitute"},
+            use_hardware_substitution=args.command == "reserve-substitute",
+        )
     elif args.command in {"status", "watch"}:
         report_or_watch(args, plan, args.command == "watch")
     else:

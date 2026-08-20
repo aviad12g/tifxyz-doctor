@@ -22,6 +22,7 @@ RETRY = load_module("freeze_gapbalance_runpod_allocation_retry", "freeze_gapbala
 MULTI = load_module("freeze_gapbalance_runpod_multi_pod_retry", "freeze_gapbalance_runpod_multi_pod_retry.py")
 EGRESS = load_module("freeze_gapbalance_runpod_egress_resume", "freeze_gapbalance_runpod_egress_resume.py")
 WRAPPER = load_module("run_gapbalance_runpod_development_job", "run_gapbalance_runpod_development_job.py")
+ORCH = load_module("orchestrate_gapbalance_runpod_development", "orchestrate_gapbalance_runpod_development.py")
 
 
 def test_public_plan_has_exact_cap_waves_and_blind_gates():
@@ -146,3 +147,55 @@ def test_replacement_reservation_preserves_budget_provider_and_egress_gate():
     assert reservation["budget"]["remaining_development_cutoff_usd"] == pytest.approx(11.929704)
     assert not reservation["sealed_gates"]["pherc1218_v2_opened"]
     assert not reservation["sealed_gates"]["confirmation_outputs_inspected"]
+
+
+def test_ordered_hardware_substitution_is_uniform_capped_and_still_sealed():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    substitute = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_HARDWARE_SUBSTITUTION.json")
+    assert substitute["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert substitute["egress"]["private_bundle_egress_to_replacements_permitted"] is False
+    assert substitute["numerical_reproducibility"][
+        "all_12_jobs_must_use_one_uniform_selected_hardware_type"
+    ]
+    assert substitute["numerical_reproducibility"]["cross_hardware_partial_mix_permitted"] is False
+    assert substitute["numerical_reproducibility"]["partial_scoring_or_selection_permitted"] is False
+    assert [item["gpu_type_id"] for item in substitute["allowed_hardware_in_order"]] == [
+        "NVIDIA GeForce RTX 3090", "NVIDIA RTX A5000", "NVIDIA RTX A6000"
+    ]
+    for item in substitute["allowed_hardware_in_order"]:
+        assert item["total_gpu_count"] == 7
+        assert item["gpu_memory_gb"] >= 24
+        assert item["aggregate_hourly_ceiling_usd"] <= 2.38
+    assert not substitute["sealed_gates"]["pherc1218_v2_opened"]
+    assert not substitute["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_substitute_gpu_validation_remains_exact_and_rate_capped():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    pod = {
+        "id": "replacement",
+        "name": "replacement",
+        "gpuCount": 2,
+        "machine": {"gpuDisplayName": "RTX A5000"},
+        "imageName": plan["execution"]["container_image"],
+        "costPerHr": 0.32,
+        "desiredStatus": "RUNNING",
+    }
+    ORCH.validate_pod(
+        pod,
+        plan,
+        require_exact_reused_pod=False,
+        expected_gpu_count=2,
+        expected_gpu_display="RTX A5000",
+        maximum_rate_usd=0.32,
+    )
+    pod["machine"]["gpuDisplayName"] = "RTX A6000"
+    with pytest.raises(RuntimeError, match="GPU type mismatch"):
+        ORCH.validate_pod(
+            pod,
+            plan,
+            require_exact_reused_pod=False,
+            expected_gpu_count=2,
+            expected_gpu_display="RTX A5000",
+            maximum_rate_usd=0.32,
+        )
