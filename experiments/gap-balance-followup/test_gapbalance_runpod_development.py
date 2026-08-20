@@ -470,6 +470,30 @@ def test_croc_room_retry_is_bounded_polled_and_result_blind():
     assert not room_retry["sealed_gates"]["pherc1218_v2_opened"]
 
 
+def test_croc_sender_readiness_retry_requires_banner_and_delay():
+    sender_retry = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_CROC_SENDER_READY_RETRY.json"
+    )
+    room_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_CROC_ROOM_RETRY.json")
+    assert sender_retry["croc_room_retry_payload_sha256"] == room_retry["payload_sha256"]
+    assert sender_retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    readiness = sender_retry["sender_readiness"]
+    assert readiness["require_post_hash_banner"]
+    assert readiness["maximum_banner_seconds"] == 120
+    assert readiness["post_banner_delay_seconds"] == 5
+    assert sender_retry["local_exact_archive_diagnostic"][
+        "sender_waited_for_receiver_after_90_seconds"
+    ]
+    assert sum(item["conservative_spend_usd"] for item in sender_retry["diagnostic_resumes"]) == pytest.approx(
+        0.015634
+    )
+    assert sender_retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert sender_retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        1.495743
+    )
+    assert not sender_retry["sealed_gates"]["pherc1218_v2_opened"]
+
+
 def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
     egress = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_BUNDLE_V4_EGRESS.json")
     retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")

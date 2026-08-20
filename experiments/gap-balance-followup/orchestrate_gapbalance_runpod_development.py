@@ -217,6 +217,7 @@ def allocate_multi(
     jupyter_pid_retry = None
     croc_code_retry = None
     croc_room_retry = None
+    croc_sender_ready_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -267,6 +268,7 @@ def allocate_multi(
                 or args.jupyter_pid_retry is not None
                 or args.croc_code_retry is not None
                 or args.croc_room_retry is not None
+                or args.croc_sender_ready_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -468,6 +470,30 @@ def allocate_multi(
                         raise RuntimeError(
                             "croc room retry changes a frozen transport, budget, or sealed gate"
                         )
+                if args.croc_sender_ready_retry is not None:
+                    if croc_room_retry is None:
+                        raise RuntimeError("croc sender readiness retry requires the room retry")
+                    croc_sender_ready_retry = load_plan(args.croc_sender_ready_retry)
+                    readiness = croc_sender_ready_retry.get("sender_readiness", {})
+                    payment = croc_sender_ready_retry.get("payment_authority", {})
+                    if (
+                        croc_sender_ready_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or croc_sender_ready_retry.get("croc_room_retry_payload_sha256")
+                        != croc_room_retry["payload_sha256"]
+                        or readiness.get("require_post_hash_banner") is not True
+                        or int(readiness.get("maximum_banner_seconds", 0)) > 120
+                        or int(readiness.get("post_banner_delay_seconds", 0)) != 5
+                        or croc_sender_ready_retry.get("failed_deployment", {}).get(
+                            "bundle_bytes_uploaded"
+                        )
+                        != 0
+                        or payment.get("direct_credit_card_charge_permitted") is not False
+                        or payment.get("runpod_auto_pay_verified_disabled") is not True
+                    ):
+                        raise RuntimeError(
+                            "croc sender readiness retry changes a frozen transport, budget, or sealed gate"
+                        )
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -625,7 +651,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            croc_room_retry["billing"]["prior_conservative_development_spend_usd"]
+            croc_sender_ready_retry["billing"]["prior_conservative_development_spend_usd"]
+            if croc_sender_ready_retry is not None
+            else croc_room_retry["billing"]["prior_conservative_development_spend_usd"]
             if croc_room_retry is not None
             else croc_code_retry["billing"]["prior_conservative_development_spend_usd"]
             if croc_code_retry is not None
@@ -697,6 +725,12 @@ def allocate_multi(
         if croc_room_retry is not None:
             receipt.update(
                 croc_room_retry_payload_sha256=croc_room_retry["payload_sha256"],
+            )
+        if croc_sender_ready_retry is not None:
+            receipt.update(
+                croc_sender_ready_retry_payload_sha256=croc_sender_ready_retry[
+                    "payload_sha256"
+                ],
             )
     if stop_after_reservation:
         try:
@@ -1098,6 +1132,7 @@ def main() -> int:
     parser.add_argument("--jupyter-pid-retry", type=Path)
     parser.add_argument("--croc-code-retry", type=Path)
     parser.add_argument("--croc-room-retry", type=Path)
+    parser.add_argument("--croc-sender-ready-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")

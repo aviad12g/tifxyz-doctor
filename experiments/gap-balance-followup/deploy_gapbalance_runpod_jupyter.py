@@ -98,16 +98,22 @@ def validated_full_croc_code(base_code: str, emitted_line: str) -> str:
 
 
 def start_local_sender(
-    runpodctl: Path, archive: Path, base_code: str, *, timeout: int
+    runpodctl: Path,
+    archive: Path,
+    base_code: str,
+    *,
+    ready_timeout: int,
+    post_banner_delay: int,
 ) -> tuple[subprocess.Popen, str]:
     sender = subprocess.Popen(
         [str(runpodctl), "send", str(archive), "--code", base_code],
         stdout=subprocess.PIPE,
-        stderr=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
     )
     assert sender.stdout is not None
+    assert sender.stderr is not None
     try:
-        deadline = time.monotonic() + timeout
+        deadline = time.monotonic() + ready_timeout
         buffer = b""
         while b"\n" not in buffer:
             if sender.poll() is not None:
@@ -124,7 +130,28 @@ def start_local_sender(
             buffer += chunk
         first_line = buffer.split(b"\n", 1)[0].decode("utf-8", errors="strict").strip()
         full_code = validated_full_croc_code(base_code, first_line)
+        stderr_buffer = b""
+        while b"code is:" not in stderr_buffer:
+            if sender.poll() is not None:
+                raise RuntimeError("runpodctl sender exited before its readiness banner")
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise RuntimeError("runpodctl sender readiness banner exceeded the bound")
+            ready, _, _ = select.select([sender.stderr], [], [], remaining)
+            if not ready:
+                continue
+            chunk = os.read(sender.stderr.fileno(), 1 << 16)
+            if not chunk:
+                raise RuntimeError("runpodctl sender closed stderr before its readiness banner")
+            stderr_buffer = (stderr_buffer + chunk)[-(1 << 20) :]
         os.set_blocking(sender.stdout.fileno(), False)
+        os.set_blocking(sender.stderr.fileno(), False)
+        delay_deadline = time.monotonic() + post_banner_delay
+        while time.monotonic() < delay_deadline:
+            if sender.poll() is not None:
+                raise RuntimeError("runpodctl sender exited during the post-banner delay")
+            drain_sender_output(sender)
+            time.sleep(min(0.2, delay_deadline - time.monotonic()))
         return sender, full_code
     except Exception:
         sender.terminate()
@@ -136,15 +163,16 @@ def start_local_sender(
         raise
 
 
-def drain_sender_stdout(sender: subprocess.Popen) -> None:
-    if sender.stdout is None:
-        return
-    while True:
-        try:
-            if not os.read(sender.stdout.fileno(), 1 << 16):
-                return
-        except BlockingIOError:
-            return
+def drain_sender_output(sender: subprocess.Popen) -> None:
+    for stream in (sender.stdout, sender.stderr):
+        if stream is None:
+            continue
+        while True:
+            try:
+                if not os.read(stream.fileno(), 1 << 16):
+                    break
+            except BlockingIOError:
+                break
 
 
 class JupyterTerminal:
@@ -324,6 +352,8 @@ def transfer_one(
     runpodctl: Path,
     deadline: float,
     poll_interval: int,
+    sender_ready_timeout: int,
+    post_banner_delay: int,
 ) -> dict:
     require_budget(deadline)
     remote_root = (
@@ -341,7 +371,8 @@ def transfer_one(
         runpodctl,
         archive,
         base_code,
-        timeout=120,
+        ready_timeout=sender_ready_timeout,
+        post_banner_delay=post_banner_delay,
     )
     try:
         receiver_body = (
@@ -355,13 +386,13 @@ def transfer_one(
             receiver_body, log=receiver_log, rc_file=receiver_rc
         )
         while sender.poll() is None:
-            drain_sender_stdout(sender)
+            drain_sender_output(sender)
             remote_rc = terminal.read_rc(receiver_rc)
             if remote_rc is not None and remote_rc != 0:
                 raise RuntimeError("encrypted remote bundle receiver failed")
             require_budget(deadline)
             time.sleep(poll_interval)
-        drain_sender_stdout(sender)
+        drain_sender_output(sender)
         if sender.returncode != 0:
             raise RuntimeError("encrypted local bundle sender failed")
         terminal.wait_rc(receiver_rc, deadline=deadline, interval=poll_interval)
@@ -378,6 +409,8 @@ def transfer_one(
     finally:
         if sender.stdout is not None:
             sender.stdout.close()
+        if sender.stderr is not None:
+            sender.stderr.close()
     remote_archive = remote_root + "/" + archive.name
     extract_log = remote_root + "/status/archive-extract.operational.log"
     extract_rc = remote_root + "/status/archive-extract.rc"
@@ -495,6 +528,7 @@ def main() -> int:
     parser.add_argument("--jupyter-pid-retry", type=Path, required=True)
     parser.add_argument("--croc-code-retry", type=Path, required=True)
     parser.add_argument("--croc-room-retry", type=Path, required=True)
+    parser.add_argument("--croc-sender-ready-retry", type=Path, required=True)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -506,6 +540,7 @@ def main() -> int:
     pid_retry = load_hashed(args.jupyter_pid_retry)
     code_retry = load_hashed(args.croc_code_retry)
     room_retry = load_hashed(args.croc_room_retry)
+    sender_retry = load_hashed(args.croc_sender_ready_retry)
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -519,6 +554,8 @@ def main() -> int:
         or receipt.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
         or receipt.get("croc_code_retry_payload_sha256") != code_retry["payload_sha256"]
         or receipt.get("croc_room_retry_payload_sha256") != room_retry["payload_sha256"]
+        or receipt.get("croc_sender_ready_retry_payload_sha256")
+        != sender_retry["payload_sha256"]
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
@@ -536,6 +573,13 @@ def main() -> int:
         or room_retry.get("runpod_development_plan_payload_sha256")
         != plan["payload_sha256"]
         or room_retry.get("croc_code_retry_payload_sha256") != code_retry["payload_sha256"]
+        or sender_retry.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or sender_retry.get("croc_room_retry_payload_sha256")
+        != room_retry["payload_sha256"]
+        or sender_retry.get("sender_readiness", {}).get("require_post_hash_banner") is not True
+        or int(sender_retry.get("sender_readiness", {}).get("post_banner_delay_seconds", 0))
+        != 5
         or room_retry.get("receiver_retry", {}).get("retry_room_not_ready") is not True
         or room_retry.get("receiver_retry", {}).get("poll_rc_during_sender") is not True
         or code_retry.get("runpodctl_code_contract", {}).get("sender_starts_before_receiver")
@@ -629,6 +673,12 @@ def main() -> int:
                     runpodctl=args.runpodctl,
                     deadline=deadline,
                     poll_interval=poll_interval,
+                    sender_ready_timeout=int(
+                        sender_retry["sender_readiness"]["maximum_banner_seconds"]
+                    ),
+                    post_banner_delay=int(
+                        sender_retry["sender_readiness"]["post_banner_delay_seconds"]
+                    ),
                 ): index
                 for index, pod in enumerate(pods)
             }
