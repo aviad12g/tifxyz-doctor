@@ -729,6 +729,7 @@ def main() -> int:
     parser.add_argument("--croc-room-retry", type=Path, required=True)
     parser.add_argument("--croc-sender-ready-retry", type=Path, required=True)
     parser.add_argument("--chunked-transfer-retry", type=Path)
+    parser.add_argument("--chunked-reallocation-retry", type=Path)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -744,6 +745,11 @@ def main() -> int:
     chunked_retry = (
         load_hashed(args.chunked_transfer_retry)
         if args.chunked_transfer_retry is not None
+        else None
+    )
+    reallocation_retry = (
+        load_hashed(args.chunked_reallocation_retry)
+        if args.chunked_reallocation_retry is not None
         else None
     )
     egress = load_hashed(args.bundle_egress)
@@ -765,6 +771,11 @@ def main() -> int:
             chunked_retry is not None
             and receipt.get("chunked_transfer_retry_payload_sha256")
             != chunked_retry["payload_sha256"]
+        )
+        or (
+            reallocation_retry is not None
+            and receipt.get("chunked_reallocation_retry_payload_sha256")
+            != reallocation_retry["payload_sha256"]
         )
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
@@ -795,6 +806,20 @@ def main() -> int:
         or (
             chunked_retry is not None
             and chunked_retry.get("runpod_development_plan_payload_sha256")
+            != plan["payload_sha256"]
+        )
+        or (
+            reallocation_retry is not None
+            and chunked_retry is None
+        )
+        or (
+            reallocation_retry is not None
+            and reallocation_retry.get("chunked_transfer_retry_payload_sha256")
+            != chunked_retry["payload_sha256"]
+        )
+        or (
+            reallocation_retry is not None
+            and reallocation_retry.get("runpod_development_plan_payload_sha256")
             != plan["payload_sha256"]
         )
         or (

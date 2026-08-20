@@ -566,3 +566,23 @@ def test_chunk_spans_cover_archive_once_and_materialize_exact_bytes(tmp_path):
         DEPLOY_JUPYTER.materialize_archive_chunk(
             archive, tmp_path / "invalid.bin", offset=16, length=2
         )
+
+
+def test_chunked_reallocation_retry_is_zero_spend_capped_and_still_sealed():
+    retry = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_CHUNKED_REALLOCATION_RETRY.json"
+    )
+    chunked = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_CHUNKED_TRANSFER_RETRY.json")
+    assert retry["chunked_transfer_retry_payload_sha256"] == chunked["payload_sha256"]
+    assert retry["failed_resume"]["provider_status_after_failure"] == [
+        "EXITED",
+        "EXITED",
+    ]
+    assert retry["billing"]["additional_spend_from_failed_resume_usd"] == 0.0
+    replacement = retry["replacement_contract"]
+    assert replacement["maximum_total_gpu_count"] == 7
+    assert replacement["maximum_aggregate_hourly_rate_usd"] == pytest.approx(2.38)
+    assert replacement["exact_new_pod_ids_recorded_privately_before_upload"]
+    assert replacement["use_chunked_transfer_retry_without_scientific_change"]
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]

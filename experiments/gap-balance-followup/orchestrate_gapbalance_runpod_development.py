@@ -218,6 +218,8 @@ def allocate_multi(
     croc_code_retry = None
     croc_room_retry = None
     croc_sender_ready_retry = None
+    chunked_transfer_retry = None
+    chunked_reallocation_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -269,6 +271,8 @@ def allocate_multi(
                 or args.croc_code_retry is not None
                 or args.croc_room_retry is not None
                 or args.croc_sender_ready_retry is not None
+                or args.chunked_transfer_retry is not None
+                or args.chunked_reallocation_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -494,6 +498,78 @@ def allocate_multi(
                         raise RuntimeError(
                             "croc sender readiness retry changes a frozen transport, budget, or sealed gate"
                         )
+                if args.chunked_transfer_retry is not None:
+                    if croc_sender_ready_retry is None:
+                        raise RuntimeError(
+                            "chunked transfer retry requires the sender readiness retry"
+                        )
+                    chunked_transfer_retry = load_plan(args.chunked_transfer_retry)
+                    chunked = chunked_transfer_retry.get("retry_transport", {})
+                    if (
+                        chunked_transfer_retry.get(
+                            "runpod_development_plan_payload_sha256"
+                        )
+                        != plan["payload_sha256"]
+                        or chunked_transfer_retry.get(
+                            "croc_sender_ready_retry_payload_sha256"
+                        )
+                        != croc_sender_ready_retry["payload_sha256"]
+                        or int(chunked.get("chunk_bytes", 0)) != 128 << 20
+                        or int(chunked.get("maximum_attempts_per_chunk", 0)) != 4
+                        or chunked.get("restart_only_the_failed_chunk") is not True
+                        or chunked_transfer_retry.get("sealed_gates", {}).get(
+                            "scientific_endpoints_scored"
+                        )
+                        is not False
+                    ):
+                        raise RuntimeError(
+                            "chunked transfer retry changes a frozen transport or sealed gate"
+                        )
+                if args.chunked_reallocation_retry is not None:
+                    if chunked_transfer_retry is None:
+                        raise RuntimeError(
+                            "chunked reallocation retry requires the chunked transfer retry"
+                        )
+                    chunked_reallocation_retry = load_plan(
+                        args.chunked_reallocation_retry
+                    )
+                    replacement = chunked_reallocation_retry.get(
+                        "replacement_contract", {}
+                    )
+                    if (
+                        chunked_reallocation_retry.get(
+                            "runpod_development_plan_payload_sha256"
+                        )
+                        != plan["payload_sha256"]
+                        or chunked_reallocation_retry.get(
+                            "chunked_transfer_retry_payload_sha256"
+                        )
+                        != chunked_transfer_retry["payload_sha256"]
+                        or chunked_reallocation_retry.get(
+                            "hardware_substitution_payload_sha256"
+                        )
+                        != reservation["payload_sha256"]
+                        or chunked_reallocation_retry.get(
+                            "dynamic_substitute_egress_payload_sha256"
+                        )
+                        != dynamic_egress["payload_sha256"]
+                        or replacement.get("maximum_total_gpu_count") != 7
+                        or replacement.get("maximum_aggregate_hourly_rate_usd")
+                        != plan["execution"][
+                            "maximum_accepted_aggregate_hourly_rate_usd"
+                        ]
+                        or replacement.get(
+                            "exact_new_pod_ids_recorded_privately_before_upload"
+                        )
+                        is not True
+                        or chunked_reallocation_retry.get("billing", {}).get(
+                            "additional_spend_from_failed_resume_usd"
+                        )
+                        != 0.0
+                    ):
+                        raise RuntimeError(
+                            "chunked reallocation retry changes a frozen provider or budget gate"
+                        )
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -651,7 +727,11 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            croc_sender_ready_retry["billing"]["prior_conservative_development_spend_usd"]
+            chunked_reallocation_retry["billing"]["prior_conservative_development_spend_usd"]
+            if chunked_reallocation_retry is not None
+            else chunked_transfer_retry["billing"]["prior_conservative_development_spend_usd"]
+            if chunked_transfer_retry is not None
+            else croc_sender_ready_retry["billing"]["prior_conservative_development_spend_usd"]
             if croc_sender_ready_retry is not None
             else croc_room_retry["billing"]["prior_conservative_development_spend_usd"]
             if croc_room_retry is not None
@@ -729,6 +809,18 @@ def allocate_multi(
         if croc_sender_ready_retry is not None:
             receipt.update(
                 croc_sender_ready_retry_payload_sha256=croc_sender_ready_retry[
+                    "payload_sha256"
+                ],
+            )
+        if chunked_transfer_retry is not None:
+            receipt.update(
+                chunked_transfer_retry_payload_sha256=chunked_transfer_retry[
+                    "payload_sha256"
+                ],
+            )
+        if chunked_reallocation_retry is not None:
+            receipt.update(
+                chunked_reallocation_retry_payload_sha256=chunked_reallocation_retry[
                     "payload_sha256"
                 ],
             )
@@ -1212,6 +1304,7 @@ def main() -> int:
     parser.add_argument("--croc-room-retry", type=Path)
     parser.add_argument("--croc-sender-ready-retry", type=Path)
     parser.add_argument("--chunked-transfer-retry", type=Path)
+    parser.add_argument("--chunked-reallocation-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
