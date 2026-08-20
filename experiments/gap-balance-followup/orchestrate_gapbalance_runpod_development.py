@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 import hashlib
 import json
 from pathlib import Path
+import secrets
 import time
 
 
@@ -43,6 +44,7 @@ def atomic_json(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temp = path.with_suffix(".tmp")
     temp.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    temp.chmod(0o600)
     temp.replace(path)
 
 
@@ -138,6 +140,7 @@ def create_equivalent_pod(
     contract: dict,
     plan: dict,
     ssh_public_key: str | None = None,
+    jupyter_password: str | None = None,
 ) -> dict:
     pod_environment = {
         "GAPBALANCE_DEVELOPMENT_PLAN_SHA256": plan["payload_sha256"],
@@ -145,6 +148,8 @@ def create_equivalent_pod(
     }
     if ssh_public_key is not None:
         pod_environment["SSH_PUBLIC_KEY"] = ssh_public_key.strip()
+    if jupyter_password is not None:
+        pod_environment["JUPYTER_PASSWORD"] = jupyter_password
     created = runpod.create_pod(
         name=name,
         image_name=contract["container_image"],
@@ -158,7 +163,7 @@ def create_equivalent_pod(
         container_disk_in_gb=contract["container_disk_in_gb_per_pod"],
         min_vcpu_count=max(8, gpu_count * 4),
         min_memory_in_gb=max(32, gpu_count * 16),
-        ports="22/tcp",
+        ports="22/tcp,8888/http" if jupyter_password is not None else "22/tcp",
         env=pod_environment,
     )
     pod_id = created["id"]
@@ -207,6 +212,7 @@ def allocate_multi(
     account_ssh_retry = None
     explicit_ssh_retry = None
     readiness_retry = None
+    jupyter_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -252,6 +258,7 @@ def allocate_multi(
                 or args.explicit_ssh_retry is not None
                 or args.deployment_public_key is not None
                 or args.ssh_readiness_retry is not None
+                or args.jupyter_croc_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -332,6 +339,32 @@ def allocate_multi(
                             raise RuntimeError("SSH readiness retry changes a frozen transport or sealed gate")
                 elif args.ssh_readiness_retry is not None:
                     raise RuntimeError("SSH readiness retry requires the explicit SSH identity retry")
+                if args.jupyter_croc_retry is not None:
+                    if readiness_retry is None:
+                        raise RuntimeError("Jupyter/croc retry requires the SSH readiness retry")
+                    jupyter_retry = load_plan(args.jupyter_croc_retry)
+                    control = jupyter_retry.get("jupyter_control", {})
+                    transfer = jupyter_retry.get("runpodctl_transfer", {})
+                    payment = jupyter_retry.get("payment_authority", {})
+                    if (
+                        jupyter_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or jupyter_retry.get("ssh_readiness_retry_payload_sha256")
+                        != readiness_retry["payload_sha256"]
+                        or int(control.get("http_port", 0)) != 8888
+                        or int(control.get("credential_entropy_bytes_per_pod", 0)) < 32
+                        or int(control.get("maximum_readiness_seconds_per_pod", 0)) > 600
+                        or control.get("credential_material_published_or_printed") is not False
+                        or transfer.get("encrypted_croc_relay") is not True
+                        or transfer.get("bundle_manifest_verified_before_executor") is not True
+                        or transfer.get(
+                            "local_bundle_symlinks_materialized_in_exact_tar_before_egress"
+                        )
+                        is not True
+                        or payment.get("direct_credit_card_charge_permitted") is not False
+                        or payment.get("runpod_auto_pay_verified_disabled") is not True
+                    ):
+                        raise RuntimeError("Jupyter/croc retry changes a frozen transport or sealed gate")
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -386,13 +419,22 @@ def allocate_multi(
     billing_started = now()
     errors = []
     accepted = None
+    accepted_jupyter_access = None
     selected_layout = None
     selected_contract = None
     for hardware in hardware_contracts:
         for layout in retry["allowed_layouts_in_order"]:
             created = []
+            created_jupyter_access = {}
             try:
                 for index, partition in enumerate(layout["partitions"]):
+                    jupyter_password = (
+                        secrets.token_urlsafe(
+                            int(jupyter_retry["jupyter_control"]["credential_entropy_bytes_per_pod"])
+                        )
+                        if jupyter_retry is not None
+                        else None
+                    )
                     pod = create_equivalent_pod(
                         runpod,
                         name=(
@@ -404,6 +446,7 @@ def allocate_multi(
                         contract=hardware,
                         plan=plan,
                         ssh_public_key=ssh_public_key,
+                        jupyter_password=jupyter_password,
                     )
                     created.append({
                         "id": pod["id"],
@@ -415,10 +458,16 @@ def allocate_multi(
                         "jobs": partition["jobs"],
                         "waves": partition["waves"],
                     })
+                    if jupyter_password is not None:
+                        created_jupyter_access[pod["id"]] = {
+                            "base_url": f"https://{pod['id']}-8888.proxy.runpod.net",
+                            "password": jupyter_password,
+                        }
                 rate = sum(item["aggregate_hourly_rate_usd"] for item in created)
                 if rate <= 0 or rate > float(hardware["aggregate_hourly_ceiling_usd"]):
                     raise RuntimeError(f"aggregate provider rate exceeds public ceiling: {rate}")
                 accepted = created
+                accepted_jupyter_access = created_jupyter_access
                 selected_layout = layout["name"]
                 selected_contract = hardware
                 break
@@ -427,7 +476,11 @@ def allocate_multi(
                 errors.append({
                     "gpu_type_id": hardware["gpu_type_id"],
                     "layout": layout["name"],
-                    "error": str(error),
+                    "error": (
+                        error.__class__.__name__
+                        if jupyter_retry is not None
+                        else str(error)
+                    ),
                 })
         if accepted is not None:
             break
@@ -469,7 +522,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            readiness_retry["billing"]["prior_conservative_development_spend_usd"]
+            jupyter_retry["billing"]["prior_conservative_development_spend_usd"]
+            if jupyter_retry is not None
+            else readiness_retry["billing"]["prior_conservative_development_spend_usd"]
             if readiness_retry is not None
             else explicit_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if explicit_ssh_retry is not None
@@ -508,6 +563,12 @@ def allocate_multi(
                 ssh_readiness_retry_payload_sha256=readiness_retry["payload_sha256"],
                 ssh_readiness_probe_required_before_bundle_upload=True,
             )
+        if jupyter_retry is not None:
+            receipt.update(
+                jupyter_croc_retry_payload_sha256=jupyter_retry["payload_sha256"],
+                jupyter_credentials_private=True,
+                jupyter_access=accepted_jupyter_access,
+            )
     if stop_after_reservation:
         try:
             for item in accepted:
@@ -538,7 +599,10 @@ def allocate_multi(
             private_bundle_egress_permitted=False,
         )
     atomic_json(args.receipt, receipt)
-    print(json.dumps(receipt, indent=2, sort_keys=True))
+    printed_receipt = json.loads(json.dumps(receipt))
+    for access in (printed_receipt.get("jupyter_access") or {}).values():
+        access["password"] = "REDACTED"
+    print(json.dumps(printed_receipt, indent=2, sort_keys=True))
 
 
 def allocate(args, plan: dict) -> None:
@@ -900,6 +964,7 @@ def main() -> int:
     parser.add_argument("--account-ssh-retry", type=Path)
     parser.add_argument("--explicit-ssh-retry", type=Path)
     parser.add_argument("--ssh-readiness-retry", type=Path)
+    parser.add_argument("--jupyter-croc-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")

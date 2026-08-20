@@ -23,6 +23,11 @@ MULTI = load_module("freeze_gapbalance_runpod_multi_pod_retry", "freeze_gapbalan
 EGRESS = load_module("freeze_gapbalance_runpod_egress_resume", "freeze_gapbalance_runpod_egress_resume.py")
 WRAPPER = load_module("run_gapbalance_runpod_development_job", "run_gapbalance_runpod_development_job.py")
 ORCH = load_module("orchestrate_gapbalance_runpod_development", "orchestrate_gapbalance_runpod_development.py")
+EXECUTOR = load_module("execute_gapbalance_runpod_development", "execute_gapbalance_runpod_development.py")
+STAGE = load_module("stage_gapbalance_runpod_development_bundle", "stage_gapbalance_runpod_development_bundle.py")
+DEPLOY_JUPYTER = load_module(
+    "deploy_gapbalance_runpod_jupyter", "deploy_gapbalance_runpod_jupyter.py"
+)
 
 
 def test_public_plan_has_exact_cap_waves_and_blind_gates():
@@ -334,3 +339,67 @@ def test_ssh_readiness_retry_is_preupload_time_bounded_and_result_blind():
     assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.751551)
     assert not retry["sealed_gates"]["pherc1218_v2_opened"]
     assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_substitute_executor_accepts_only_a_public_uniform_hardware_choice():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    substitution = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_HARDWARE_SUBSTITUTION.json")
+    assert EXECUTOR.resolve_expected_gpu_name(plan, substitution, "RTX 3090") == "RTX 3090"
+    with pytest.raises(RuntimeError, match="not allowed"):
+        EXECUTOR.resolve_expected_gpu_name(plan, substitution, "RTX 5090")
+    with pytest.raises(RuntimeError, match="requires"):
+        EXECUTOR.resolve_expected_gpu_name(plan, None, "RTX 3090")
+    assert "GAPBALANCE_RUNPOD_HARDWARE_SUBSTITUTION.json" in STAGE.CONTROLLER_FILES
+    assert "verify_gapbalance_runpod_development_bundle.py" in STAGE.CONTROLLER_FILES
+
+
+def test_jupyter_croc_retry_is_result_blind_prepaid_and_bounded():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")
+    readiness = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_READINESS_RETRY.json")
+    assert retry["ssh_readiness_retry_payload_sha256"] == readiness["payload_sha256"]
+    assert retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert retry["jupyter_control"]["http_port"] == 8888
+    assert retry["jupyter_control"]["credential_entropy_bytes_per_pod"] >= 32
+    assert retry["jupyter_control"]["credential_material_published_or_printed"] is False
+    assert retry["runpodctl_transfer"]["encrypted_croc_relay"]
+    assert retry["runpodctl_transfer"]["bundle_manifest_verified_before_executor"]
+    assert retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert retry["payment_authority"]["runpod_auto_pay_verified_disabled"]
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        0.408409
+    )
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(
+        11.591591
+    )
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_private_receipt_writer_removes_group_and_world_access(tmp_path):
+    path = tmp_path / "receipt.json"
+    DEPLOY_JUPYTER.atomic_private_json(path, {"password": "private"})
+    assert path.stat().st_mode & 0o077 == 0
+    assert json.loads(path.read_text()) == {"password": "private"}
+
+
+def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
+    egress = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_BUNDLE_V4_EGRESS.json")
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")
+    assert egress["jupyter_croc_retry_payload_sha256"] == retry["payload_sha256"]
+    assert egress["bundle"] == {
+        "archive_bytes": 4508665856,
+        "archive_file_entries": 317,
+        "archive_sha256": "64cf1fdf4f2f0d160367caad7b134421956d3d6225818c32db01732bb6a7eec4",
+        "archive_symlink_entries": 0,
+        "file_count_excluding_manifest": 316,
+        "logical_bytes_excluding_manifest": 4507906735,
+        "manifest_payload_sha256": "8d373e0fffad45d7099b0d8fdfd33504ae5d16268aefab9dc148f1a8321ae718",
+    }
+    assert egress["bundle_v2_continuity"]["input_asset_records_byte_identical"] == 280
+    assert egress["bundle_v2_continuity"]["private_run_input_records_byte_identical"] == 18
+    assert egress["bundle_v2_continuity"]["private_launcher_records_byte_identical"] == 12
+    assert egress["bundle_v2_continuity"]["scientific_input_identity_changed"] is False
+    assert egress["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert egress["egress_exclusions"]["pherc1218_included"] is False
+    assert egress["egress_exclusions"]["confirmation_seeds_500_504_included"] is False
+    assert not egress["sealed_gates"]["scientific_endpoints_scored"]

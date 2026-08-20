@@ -13,8 +13,10 @@ PREFIX = b"# GAPBALANCE_DEVELOPMENT_JOB_CONFIG_HEX="
 CONTROLLER_FILES = (
     "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json",
     "GAPBALANCE_RUNPOD_MULTI_POD_RETRY.json",
+    "GAPBALANCE_RUNPOD_HARDWARE_SUBSTITUTION.json",
     "run_gapbalance_runpod_development_job.py",
     "execute_gapbalance_runpod_development.py",
+    "verify_gapbalance_runpod_development_bundle.py",
 )
 
 
@@ -99,13 +101,19 @@ def main() -> int:
         for record in prior_manifest.get("files", [])
         if record["path"].startswith("input/assets/")
     }
-    asset_files = [path for path in sorted(args.assets.rglob("*")) if path.is_file()]
-    if not asset_files or not (args.assets / "SOURCE_SHA256SUMS").is_file():
+    observed_asset_files = {
+        path.relative_to(args.assets).as_posix(): path
+        for path in sorted(args.assets.rglob("*"))
+        if path.is_file()
+    }
+    if not observed_asset_files or not (args.assets / "SOURCE_SHA256SUMS").is_file():
         raise RuntimeError("frozen asset root is incomplete")
-    if {path.relative_to(args.assets).as_posix() for path in asset_files} != set(asset_identities):
-        raise RuntimeError("asset file set differs from the verified prior bundle")
-    for source in asset_files:
-        relative = source.relative_to(args.assets).as_posix()
+    missing_assets = set(asset_identities) - set(observed_asset_files)
+    if missing_assets:
+        raise RuntimeError(f"verified prior bundle assets are absent: {sorted(missing_assets)}")
+    excluded_assets = sorted(set(observed_asset_files) - set(asset_identities))
+    for relative in sorted(asset_identities):
+        source = observed_asset_files[relative]
         identity = asset_identities[relative]
         add(
             source,
@@ -180,6 +188,7 @@ def main() -> int:
         "plan_payload_sha256": plan["payload_sha256"],
         "job_ids": [job["job_id"] for job in jobs],
         "files": records,
+        "unlisted_source_asset_files_excluded": excluded_assets,
         "scientific_outputs_present": False,
         "pherc1218_present": False,
         "confirmation_seeds_500_504_present": False,

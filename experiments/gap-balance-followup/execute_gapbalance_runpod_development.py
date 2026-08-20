@@ -72,6 +72,28 @@ def verify_bundle(root: Path, manifest_path: Path, plan: dict) -> dict:
     return manifest
 
 
+def resolve_expected_gpu_name(
+    plan: dict, substitution: dict | None, requested: str | None
+) -> str:
+    expected = requested or plan["execution"]["gpu_type"]
+    if expected == plan["execution"]["gpu_type"]:
+        return expected
+    if substitution is None:
+        raise RuntimeError("substitute GPU requires the public hardware-substitution plan")
+    allowed = substitution.get("allowed_hardware_in_order", [])
+    if (
+        substitution.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or substitution.get("numerical_reproducibility", {}).get(
+            "all_12_jobs_must_use_one_uniform_selected_hardware_type"
+        )
+        is not True
+        or expected not in {item["gpu_display_name"] for item in allowed}
+    ):
+        raise RuntimeError("substitute GPU is not allowed by the public frozen plan")
+    return expected
+
+
 def install_runtime() -> None:
     commands = [
         [
@@ -90,7 +112,7 @@ def install_runtime() -> None:
         subprocess.run(command, check=True)
 
 
-def smoke_gpus(worker_count: int) -> dict:
+def smoke_gpus(worker_count: int, expected_gpu_name: str) -> dict:
     import torch
 
     expected = int(worker_count)
@@ -101,8 +123,8 @@ def smoke_gpus(worker_count: int) -> dict:
     names = []
     for index in range(expected):
         name = torch.cuda.get_device_name(index)
-        if "RTX 4090" not in name:
-            raise RuntimeError(f"GPU {index} is not RTX 4090: {name}")
+        if expected_gpu_name not in name:
+            raise RuntimeError(f"GPU {index} is not {expected_gpu_name}: {name}")
         with torch.cuda.device(index):
             value = torch.ones((16, 16), device=f"cuda:{index}")
             result = value @ value
@@ -207,6 +229,8 @@ def main() -> int:
     parser.add_argument("--temp", type=Path, required=True)
     parser.add_argument("--status", type=Path, required=True)
     parser.add_argument("--allocation-layout", type=Path)
+    parser.add_argument("--hardware-substitution", type=Path)
+    parser.add_argument("--expected-gpu-name")
     parser.add_argument("--job-id", action="append", default=[])
     args = parser.parse_args()
     plan = load_hashed(args.plan)
@@ -236,6 +260,12 @@ def main() -> int:
         waves = matches[0]["waves"]
     if [job for wave in waves for job in wave] != job_ids or max(map(len, waves)) > worker_count:
         raise RuntimeError("RunPod worker wave layout mismatch")
+    substitution = (
+        load_hashed(args.hardware_substitution)
+        if args.hardware_substitution is not None
+        else None
+    )
+    expected_gpu_name = resolve_expected_gpu_name(plan, substitution, args.expected_gpu_name)
     if args.status.exists() or args.working.exists() or args.temp.exists():
         raise RuntimeError("remote status/output/temp roots must start absent")
     args.working.mkdir(parents=True)
@@ -249,7 +279,11 @@ def main() -> int:
     }
     atomic_json(args.status, state)
     install_runtime()
-    state.update(state="RUNNING", runtime_smoke=smoke_gpus(worker_count))
+    state.update(
+        state="RUNNING",
+        expected_gpu_name=expected_gpu_name,
+        runtime_smoke=smoke_gpus(worker_count, expected_gpu_name),
+    )
     atomic_json(args.status, state)
     for wave_index, jobs in enumerate(waves):
         if not run_wave(
