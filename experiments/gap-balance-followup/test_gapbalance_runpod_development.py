@@ -428,6 +428,27 @@ def test_jupyter_pid_retry_is_tagged_result_blind_and_preupload():
     assert not pid_retry["sealed_gates"]["pherc1218_v2_opened"]
 
 
+def test_croc_code_retry_captures_the_sender_qualified_code_before_receive():
+    code_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_CROC_CODE_RETRY.json")
+    pid_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_PID_RETRY.json")
+    assert code_retry["jupyter_pid_retry_payload_sha256"] == pid_retry["payload_sha256"]
+    assert code_retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    contract = code_retry["runpodctl_code_contract"]
+    assert contract["sender_starts_before_receiver"]
+    assert contract["capture_relay_qualified_code_from_sender_stdout"]
+    assert contract["receiver_starts_with_exact_sender_emitted_code"]
+    assert contract["base_secret_entropy_bytes"] == 24
+    base = "a" * 48
+    assert DEPLOY_JUPYTER.validated_full_croc_code(base, base + "-3") == base + "-3"
+    with pytest.raises(RuntimeError, match="relay-qualified"):
+        DEPLOY_JUPYTER.validated_full_croc_code(base, base)
+    assert code_retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert code_retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        1.344645
+    )
+    assert not code_retry["sealed_gates"]["pherc1218_v2_opened"]
+
+
 def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
     egress = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_BUNDLE_V4_EGRESS.json")
     retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")

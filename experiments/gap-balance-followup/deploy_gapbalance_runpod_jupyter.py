@@ -12,6 +12,7 @@ import os
 from pathlib import Path
 import re
 import secrets
+import select
 import shlex
 import subprocess
 import time
@@ -88,6 +89,62 @@ def tagged_pid(output: str, tag: str) -> int:
     if not matches:
         raise RuntimeError("remote background task did not return a tagged PID")
     return int(matches[-1])
+
+
+def validated_full_croc_code(base_code: str, emitted_line: str) -> str:
+    if not re.fullmatch(re.escape(base_code) + r"-[0-9]+", emitted_line):
+        raise RuntimeError("runpodctl sender did not emit the expected relay-qualified code")
+    return emitted_line
+
+
+def start_local_sender(
+    runpodctl: Path, archive: Path, base_code: str, *, timeout: int
+) -> tuple[subprocess.Popen, str]:
+    sender = subprocess.Popen(
+        [str(runpodctl), "send", str(archive), "--code", base_code],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.DEVNULL,
+    )
+    assert sender.stdout is not None
+    try:
+        deadline = time.monotonic() + timeout
+        buffer = b""
+        while b"\n" not in buffer:
+            if sender.poll() is not None:
+                raise RuntimeError("runpodctl sender exited before emitting a code")
+            remaining = deadline - time.monotonic()
+            if remaining <= 0:
+                raise RuntimeError("runpodctl sender did not emit a code within the bound")
+            ready, _, _ = select.select([sender.stdout], [], [], remaining)
+            if not ready:
+                continue
+            chunk = os.read(sender.stdout.fileno(), 4096)
+            if not chunk:
+                raise RuntimeError("runpodctl sender closed stdout before emitting a code")
+            buffer += chunk
+        first_line = buffer.split(b"\n", 1)[0].decode("utf-8", errors="strict").strip()
+        full_code = validated_full_croc_code(base_code, first_line)
+        os.set_blocking(sender.stdout.fileno(), False)
+        return sender, full_code
+    except Exception:
+        sender.terminate()
+        try:
+            sender.wait(timeout=10)
+        except subprocess.TimeoutExpired:
+            sender.kill()
+            sender.wait()
+        raise
+
+
+def drain_sender_stdout(sender: subprocess.Popen) -> None:
+    if sender.stdout is None:
+        return
+    while True:
+        try:
+            if not os.read(sender.stdout.fileno(), 1 << 16):
+                return
+        except BlockingIOError:
+            return
 
 
 class JupyterTerminal:
@@ -269,25 +326,28 @@ def transfer_one(
         f"mkdir -m 700 -p {shlex.quote(remote_root + '/status')}",
         timeout=30,
     )
-    code = secrets.token_hex(24)
+    base_code = secrets.token_hex(24)
     receiver_log = remote_root + "/status/transfer.operational.log"
     receiver_rc = remote_root + "/status/transfer.rc"
-    receiver_body = (
-        f"cd {shlex.quote(remote_root)} && "
-        f"runpodctl receive {shlex.quote(code)}"
-    )
-    receiver_pid = terminal.start_background(
-        receiver_body, log=receiver_log, rc_file=receiver_rc
-    )
-    sender = subprocess.Popen(
-        [str(runpodctl), "send", str(archive), "--code", code],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
+    sender, full_code = start_local_sender(
+        runpodctl,
+        archive,
+        base_code,
+        timeout=120,
     )
     try:
+        receiver_body = (
+            f"cd {shlex.quote(remote_root)} && "
+            f"runpodctl receive {shlex.quote(full_code)}"
+        )
+        receiver_pid = terminal.start_background(
+            receiver_body, log=receiver_log, rc_file=receiver_rc
+        )
         while sender.poll() is None:
+            drain_sender_stdout(sender)
             require_budget(deadline)
             time.sleep(poll_interval)
+        drain_sender_stdout(sender)
         if sender.returncode != 0:
             raise RuntimeError("encrypted local bundle sender failed")
         terminal.wait_rc(receiver_rc, deadline=deadline, interval=poll_interval)
@@ -301,6 +361,9 @@ def transfer_one(
                 sender.kill()
                 sender.wait()
         raise
+    finally:
+        if sender.stdout is not None:
+            sender.stdout.close()
     remote_archive = remote_root + "/" + archive.name
     extract_log = remote_root + "/status/archive-extract.operational.log"
     extract_rc = remote_root + "/status/archive-extract.rc"
@@ -416,6 +479,7 @@ def main() -> int:
     parser.add_argument("--jupyter-croc-retry", type=Path, required=True)
     parser.add_argument("--jupyter-terminal-retry", type=Path, required=True)
     parser.add_argument("--jupyter-pid-retry", type=Path, required=True)
+    parser.add_argument("--croc-code-retry", type=Path, required=True)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -425,6 +489,7 @@ def main() -> int:
     retry = load_hashed(args.jupyter_croc_retry)
     terminal_retry = load_hashed(args.jupyter_terminal_retry)
     pid_retry = load_hashed(args.jupyter_pid_retry)
+    code_retry = load_hashed(args.croc_code_retry)
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -436,6 +501,7 @@ def main() -> int:
         or receipt.get("jupyter_terminal_retry_payload_sha256")
         != terminal_retry["payload_sha256"]
         or receipt.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
+        or receipt.get("croc_code_retry_payload_sha256") != code_retry["payload_sha256"]
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
@@ -447,6 +513,13 @@ def main() -> int:
         != plan["payload_sha256"]
         or pid_retry.get("jupyter_terminal_retry_payload_sha256")
         != terminal_retry["payload_sha256"]
+        or code_retry.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or code_retry.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
+        or code_retry.get("runpodctl_code_contract", {}).get("sender_starts_before_receiver")
+        is not True
+        or int(code_retry.get("runpodctl_code_contract", {}).get("base_secret_entropy_bytes", 0))
+        < 24
         or pid_retry.get("terminal_control", {}).get("background_pid_output_format")
         != "tagged"
         or terminal_retry.get("terminal_control", {}).get("websocket_path_template")

@@ -215,6 +215,7 @@ def allocate_multi(
     jupyter_retry = None
     jupyter_terminal_retry = None
     jupyter_pid_retry = None
+    croc_code_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -263,6 +264,7 @@ def allocate_multi(
                 or args.jupyter_croc_retry is not None
                 or args.jupyter_terminal_retry is not None
                 or args.jupyter_pid_retry is not None
+                or args.croc_code_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -414,6 +416,31 @@ def allocate_multi(
                     ):
                         raise RuntimeError(
                             "Jupyter PID retry changes a frozen transport, budget, or sealed gate"
+                        )
+                if args.croc_code_retry is not None:
+                    if jupyter_pid_retry is None:
+                        raise RuntimeError("croc code retry requires the Jupyter PID retry")
+                    croc_code_retry = load_plan(args.croc_code_retry)
+                    code_contract = croc_code_retry.get("runpodctl_code_contract", {})
+                    payment = croc_code_retry.get("payment_authority", {})
+                    if (
+                        croc_code_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or croc_code_retry.get("jupyter_pid_retry_payload_sha256")
+                        != jupyter_pid_retry["payload_sha256"]
+                        or code_contract.get("sender_starts_before_receiver") is not True
+                        or int(code_contract.get("base_secret_entropy_bytes", 0)) < 24
+                        or code_contract.get("capture_relay_qualified_code_from_sender_stdout")
+                        is not True
+                        or croc_code_retry.get("failed_deployment", {}).get(
+                            "bundle_bytes_uploaded"
+                        )
+                        != 0
+                        or payment.get("direct_credit_card_charge_permitted") is not False
+                        or payment.get("runpod_auto_pay_verified_disabled") is not True
+                    ):
+                        raise RuntimeError(
+                            "croc code retry changes a frozen transport, budget, or sealed gate"
                         )
     elif stop_after_reservation:
         if args.replacement_reservation is None:
@@ -572,7 +599,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            jupyter_pid_retry["billing"]["prior_conservative_development_spend_usd"]
+            croc_code_retry["billing"]["prior_conservative_development_spend_usd"]
+            if croc_code_retry is not None
+            else jupyter_pid_retry["billing"]["prior_conservative_development_spend_usd"]
             if jupyter_pid_retry is not None
             else jupyter_terminal_retry["billing"]["prior_conservative_development_spend_usd"]
             if jupyter_terminal_retry is not None
@@ -632,6 +661,10 @@ def allocate_multi(
         if jupyter_pid_retry is not None:
             receipt.update(
                 jupyter_pid_retry_payload_sha256=jupyter_pid_retry["payload_sha256"],
+            )
+        if croc_code_retry is not None:
+            receipt.update(
+                croc_code_retry_payload_sha256=croc_code_retry["payload_sha256"],
             )
     if stop_after_reservation:
         try:
@@ -1031,6 +1064,7 @@ def main() -> int:
     parser.add_argument("--jupyter-croc-retry", type=Path)
     parser.add_argument("--jupyter-terminal-retry", type=Path)
     parser.add_argument("--jupyter-pid-retry", type=Path)
+    parser.add_argument("--croc-code-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
