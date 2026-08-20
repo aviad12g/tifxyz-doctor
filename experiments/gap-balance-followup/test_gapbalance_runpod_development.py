@@ -317,3 +317,20 @@ def test_explicit_ssh_identity_retry_is_registered_bounded_and_result_blind():
     assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.79589)
     assert not retry["sealed_gates"]["pherc1218_v2_opened"]
     assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_ssh_readiness_retry_is_preupload_time_bounded_and_result_blind():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_SSH_READINESS_RETRY.json")
+    explicit = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_EXPLICIT_SSH_IDENTITY_RETRY.json")
+    assert retry["explicit_ssh_identity_retry_payload_sha256"] == explicit["payload_sha256"]
+    assert retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert retry["mechanical_environment_check"][
+        "both_frozen_public_key_fingerprints_present_in_public_key"
+    ]
+    assert retry["readiness_retry"]["bundle_upload_starts_only_after_probe_success"]
+    assert retry["readiness_retry"]["stop_all_pods_if_probe_never_succeeds"]
+    assert retry["readiness_retry"]["maximum_elapsed_seconds_per_pod"] == 300
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.248449)
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.751551)
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]

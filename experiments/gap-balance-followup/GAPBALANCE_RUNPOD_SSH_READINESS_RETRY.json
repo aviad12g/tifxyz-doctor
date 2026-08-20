@@ -1,0 +1,48 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.248449,
+    "remaining_development_cutoff_usd": 11.751551
+  },
+  "explicit_ssh_identity_retry_payload_sha256": "43ecd39de8315b0b5fb70f695f8143c030b4bc3707ed6430c8bdeb61b12c8a11",
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Permission denied (publickey,password).",
+    "failed_at": "2026-08-20T20:10:03.230275+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "zfai9fysm8msz3",
+      "1xrtn941qzemrl"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "mechanical_environment_check": {
+    "both_frozen_public_key_fingerprints_present_in_public_key": true,
+    "checked_without_opening_scientific_endpoints": true,
+    "public_key_line_count_per_pod": 3,
+    "ssh_public_key_target_present": true
+  },
+  "payload_sha256": "8b768d4bee83f1159e249451812c2103f0e01ae169cd5d1a4e526707dbe1f060",
+  "public_parent_commit": "56307a8279c97969b20e4b614acfac59c0ca0d9a",
+  "readiness_retry": {
+    "bundle_upload_starts_only_after_probe_success": true,
+    "interval_seconds": 10,
+    "maximum_elapsed_seconds_per_pod": 300,
+    "per_attempt_timeout_seconds": 20,
+    "probe": "authenticated SSH mkdir guard",
+    "stop_all_pods_if_probe_never_succeeds": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_SSH_READINESS_RETRY_FROZEN_BEFORE_ALLOCATION"
+}

@@ -206,6 +206,7 @@ def allocate_multi(
     ssh_retry = None
     account_ssh_retry = None
     explicit_ssh_retry = None
+    readiness_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -250,6 +251,7 @@ def allocate_multi(
                 or args.account_ssh_retry is not None
                 or args.explicit_ssh_retry is not None
                 or args.deployment_public_key is not None
+                or args.ssh_readiness_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -310,6 +312,26 @@ def allocate_multi(
                         "public_key_fingerprint"
                     ):
                         raise RuntimeError("explicit deployment SSH key fingerprint mismatch")
+                    if args.ssh_readiness_retry is not None:
+                        readiness_retry = load_plan(args.ssh_readiness_retry)
+                        readiness = readiness_retry.get("readiness_retry", {})
+                        if (
+                            readiness_retry.get("runpod_development_plan_payload_sha256")
+                            != plan["payload_sha256"]
+                            or readiness_retry.get(
+                                "explicit_ssh_identity_retry_payload_sha256"
+                            )
+                            != explicit_ssh_retry["payload_sha256"]
+                            or readiness.get("bundle_upload_starts_only_after_probe_success")
+                            is not True
+                            or readiness.get("stop_all_pods_if_probe_never_succeeds")
+                            is not True
+                            or int(readiness.get("maximum_elapsed_seconds_per_pod", 0))
+                            > 300
+                        ):
+                            raise RuntimeError("SSH readiness retry changes a frozen transport or sealed gate")
+                elif args.ssh_readiness_retry is not None:
+                    raise RuntimeError("SSH readiness retry requires the explicit SSH identity retry")
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -447,7 +469,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            explicit_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            readiness_retry["billing"]["prior_conservative_development_spend_usd"]
+            if readiness_retry is not None
+            else explicit_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if explicit_ssh_retry is not None
             else account_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if account_ssh_retry is not None
@@ -478,6 +502,11 @@ def allocate_multi(
                     "explicit_identity"
                 ]["public_key_fingerprint"],
                 deployment_ssh_key_verified_before_allocation=True,
+            )
+        if readiness_retry is not None:
+            receipt.update(
+                ssh_readiness_retry_payload_sha256=readiness_retry["payload_sha256"],
+                ssh_readiness_probe_required_before_bundle_upload=True,
             )
     if stop_after_reservation:
         try:
@@ -870,6 +899,7 @@ def main() -> int:
     parser.add_argument("--ssh-retry", type=Path)
     parser.add_argument("--account-ssh-retry", type=Path)
     parser.add_argument("--explicit-ssh-retry", type=Path)
+    parser.add_argument("--ssh-readiness-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")

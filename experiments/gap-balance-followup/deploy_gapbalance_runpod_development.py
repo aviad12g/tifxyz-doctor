@@ -64,11 +64,31 @@ def ssh_target(runpod, pod_id: str) -> tuple[str, int]:
 
 
 def run_checked(command: list[str], timeout: int) -> str:
-    result = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
+    try:
+        result = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
+    except subprocess.TimeoutExpired as error:
+        raise RuntimeError(f"command timed out after {timeout} seconds") from error
     if result.returncode != 0:
         message = "\n".join(part for part in (result.stdout, result.stderr) if part).strip()
         raise RuntimeError(f"command failed ({result.returncode}): {message[-4000:]}")
     return result.stdout.strip()
+
+
+def run_checked_until_ready(
+    command: list[str], *, per_attempt_timeout: int, maximum_elapsed: int, interval: int
+) -> str:
+    deadline = time.monotonic() + maximum_elapsed
+    last_error = None
+    while time.monotonic() < deadline:
+        remaining = deadline - time.monotonic()
+        try:
+            return run_checked(command, min(per_attempt_timeout, max(1, int(remaining))))
+        except RuntimeError as error:
+            last_error = error
+        remaining = deadline - time.monotonic()
+        if remaining > 0:
+            time.sleep(min(interval, remaining))
+    raise RuntimeError(f"SSH readiness probe failed within frozen bound: {last_error}")
 
 
 def main() -> int:
@@ -77,6 +97,7 @@ def main() -> int:
     parser.add_argument("--provider-receipt", type=Path, required=True)
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--transport-retry", type=Path)
+    parser.add_argument("--readiness-retry", type=Path)
     parser.add_argument("--ssh-private-key", type=Path)
     args = parser.parse_args()
     plan = load_hashed(args.plan)
@@ -118,6 +139,23 @@ def main() -> int:
             raise RuntimeError("explicit SSH private key does not match the frozen fingerprint")
     elif args.transport_retry is not None or args.ssh_private_key is not None:
         raise RuntimeError("explicit SSH transport was supplied for an unbound provider receipt")
+    readiness_retry = None
+    if receipt.get("ssh_readiness_retry_payload_sha256") is not None:
+        if args.readiness_retry is None or explicit_identity is None:
+            raise RuntimeError("SSH readiness retry requires its public freeze and explicit identity")
+        readiness_retry = load_hashed(args.readiness_retry)
+        readiness = readiness_retry.get("readiness_retry", {})
+        if (
+            readiness_retry["payload_sha256"]
+            != receipt["ssh_readiness_retry_payload_sha256"]
+            or readiness_retry.get("explicit_ssh_identity_retry_payload_sha256")
+            != explicit_identity["payload_sha256"]
+            or readiness.get("bundle_upload_starts_only_after_probe_success") is not True
+            or readiness.get("stop_all_pods_if_probe_never_succeeds") is not True
+        ):
+            raise RuntimeError("SSH readiness retry is not bound to the provider receipt")
+    elif args.readiness_retry is not None:
+        raise RuntimeError("SSH readiness retry was supplied for an unbound provider receipt")
     import runpod
 
     pods = receipt.get("pods")
@@ -144,10 +182,20 @@ def main() -> int:
                 "-o", "ConnectTimeout=15",
             ])
             ssh = [*ssh_transport, f"root@{host}"]
-            run_checked(
-                [*ssh, f"test ! -e {shlex.quote(remote_root)} && mkdir -p {shlex.quote(remote_root + '/bundle')}"],
-                60,
-            )
+            readiness_command = [
+                *ssh,
+                f"test ! -e {shlex.quote(remote_root)} && mkdir -p {shlex.quote(remote_root + '/bundle')}",
+            ]
+            if readiness_retry is None:
+                run_checked(readiness_command, 60)
+            else:
+                frozen_readiness = readiness_retry["readiness_retry"]
+                run_checked_until_ready(
+                    readiness_command,
+                    per_attempt_timeout=int(frozen_readiness["per_attempt_timeout_seconds"]),
+                    maximum_elapsed=int(frozen_readiness["maximum_elapsed_seconds_per_pod"]),
+                    interval=int(frozen_readiness["interval_seconds"]),
+                )
             rsync_ssh = shlex.join(ssh_transport)
             run_checked(
                 [
@@ -214,6 +262,11 @@ def main() -> int:
                 "public_key_fingerprint"
             ],
             identities_only=True,
+        )
+    if readiness_retry is not None:
+        receipt["deployment"].update(
+            ssh_readiness_retry_payload_sha256=readiness_retry["payload_sha256"],
+            ssh_readiness_probe_completed_before_bundle_upload=True,
         )
     receipt["status"] = "RUNPOD_DEVELOPMENT_EXECUTOR_RUNNING_NOT_SCORED"
     atomic_json(args.provider_receipt, receipt)
