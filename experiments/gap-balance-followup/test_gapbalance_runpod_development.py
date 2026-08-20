@@ -18,6 +18,7 @@ def load_module(name, filename):
 
 
 FREEZE = load_module("freeze_gapbalance_runpod_development", "freeze_gapbalance_runpod_development.py")
+RETRY = load_module("freeze_gapbalance_runpod_allocation_retry", "freeze_gapbalance_runpod_allocation_retry.py")
 WRAPPER = load_module("run_gapbalance_runpod_development_job", "run_gapbalance_runpod_development_job.py")
 
 
@@ -67,3 +68,16 @@ def test_import_fix_supplies_exact_12_synthetic_jobs():
         for seed in (11, 23, 47)
         for shard in range(4)
     ]
+
+
+def test_allocation_retry_preserves_plan_budget_authority_and_sealed_gates():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    retry = RETRY.load_hashed(HERE / "GAPBALANCE_RUNPOD_ALLOCATION_RETRY.json")
+    assert retry["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert retry["failed_zero_cost_attempt"]["spend_usd"] == 0.0
+    assert retry["failed_zero_cost_attempt"]["allocation_started"] is False
+    assert retry["budget"] == plan["budget"]
+    assert retry["authority"] == plan["authority"]
+    assert retry["sealed_gates"] == plan["sealed_gates"]
+    assert retry["authorized_retry"]["gpu_count"] == 7
+    assert retry["authorized_retry"]["maximum_accepted_aggregate_hourly_rate_usd"] == 2.38

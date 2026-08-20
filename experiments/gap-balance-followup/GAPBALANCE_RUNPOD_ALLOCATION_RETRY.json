@@ -1,0 +1,51 @@
+{
+  "authority": {
+    "cross_provider_partial_mix_for_selection_permitted": false,
+    "kaggle_completed_jobs_are_secondary_replication_only": true,
+    "partial_primary_scoring_or_selection_permitted": false,
+    "runpod_complete_12_job_set_is_primary": true
+  },
+  "authorized_retry": {
+    "container_disk_in_gb": 30,
+    "container_image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "gpu_count": 7,
+    "gpu_type_id": "NVIDIA GeForce RTX 4090",
+    "job_set_or_wave_change": false,
+    "maximum_accepted_aggregate_hourly_rate_usd": 2.38,
+    "provider": "RunPod community cloud",
+    "public_ip_and_ssh": true,
+    "route": "create one equivalent replacement allocation",
+    "volume_in_gb": 25
+  },
+  "budget": {
+    "absolute_campaign_cap_usd": 25.0,
+    "authorization_date": "2026-08-20",
+    "confirmation_reserve_usd": 13.0,
+    "development_billing_cutoff_usd": 12.0,
+    "forms_authorized": false,
+    "guard_seconds": 300,
+    "on_cutoff": "stop the exact pod, preserve partial operational artifacts, do not score or select partial development output",
+    "user_authorization": "Aviad: ok go"
+  },
+  "failed_zero_cost_attempt": {
+    "allocation_started": false,
+    "pod_id": "9r1cm9r82aonih",
+    "provider_error": "There are not enough free GPUs on the host machine to start this pod.",
+    "provider_state_after_attempt": "EXITED",
+    "runtime_after_attempt": null,
+    "scientific_outputs_created_or_inspected": false,
+    "spend_usd": 0.0
+  },
+  "payload_sha256": "2e2ca527e5fc76538774e96650375ec0d12676a8c50e0d26130ad9eed2640879",
+  "public_parent_commit": "9a922d22b8b7f520b5837cadafa6e22156470ca0",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "holdout_access_before_public_candidate_and_threshold_freeze_permitted": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "result-blind equivalent RunPod allocation retry frozen before creation"
+}

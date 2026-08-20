@@ -45,9 +45,17 @@ def atomic_json(path: Path, payload: dict) -> None:
     temp.replace(path)
 
 
-def validate_pod(pod: dict, plan: dict, *, require_exited: bool = False) -> None:
+def validate_pod(
+    pod: dict,
+    plan: dict,
+    *,
+    require_exited: bool = False,
+    require_exact_reused_pod: bool = True,
+) -> None:
     frozen = plan["execution"]
-    if pod.get("id") != frozen["pod_id"] or pod.get("name") != frozen["pod_name"]:
+    if require_exact_reused_pod and (
+        pod.get("id") != frozen["pod_id"] or pod.get("name") != frozen["pod_name"]
+    ):
         raise RuntimeError("provider returned a different pod")
     if int(pod.get("gpuCount") or -1) != frozen["gpu_count"]:
         raise RuntimeError("provider GPU count mismatch")
@@ -60,6 +68,86 @@ def validate_pod(pod: dict, plan: dict, *, require_exited: bool = False) -> None
         raise RuntimeError(f"provider rate outside frozen ceiling: {rate}")
     if require_exited and pod.get("desiredStatus") != "EXITED":
         raise RuntimeError("exact reusable pod is not stopped")
+
+
+def allocate(args, plan: dict) -> None:
+    if args.receipt.exists():
+        raise RuntimeError("provider receipt already exists; refusing duplicate allocation")
+    if len(args.public_commit) != 40 or any(c not in "0123456789abcdef" for c in args.public_commit):
+        raise RuntimeError("public commit must be an exact lowercase Git SHA")
+    retry = load_plan(args.allocation_retry)
+    if retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]:
+        raise RuntimeError("allocation retry is bound to another development plan")
+    authorized = retry.get("authorized_retry", {})
+    if (
+        authorized.get("route") != "create one equivalent replacement allocation"
+        or authorized.get("gpu_count") != plan["execution"]["gpu_count"]
+        or authorized.get("container_image") != plan["execution"]["container_image"]
+        or authorized.get("maximum_accepted_aggregate_hourly_rate_usd")
+        != plan["execution"]["maximum_accepted_aggregate_hourly_rate_usd"]
+        or retry.get("budget") != plan["budget"]
+        or retry.get("sealed_gates") != plan["sealed_gates"]
+    ):
+        raise RuntimeError("allocation retry changes a frozen execution or budget gate")
+    runpod = load_runpod()
+    created = runpod.create_pod(
+        name=f"gapbalance-dev-{args.public_commit[:8]}-g7",
+        image_name=authorized["container_image"],
+        gpu_type_id=authorized["gpu_type_id"],
+        cloud_type="COMMUNITY",
+        support_public_ip=True,
+        start_ssh=True,
+        gpu_count=authorized["gpu_count"],
+        volume_in_gb=authorized["volume_in_gb"],
+        volume_mount_path="/workspace",
+        container_disk_in_gb=authorized["container_disk_in_gb"],
+        min_vcpu_count=28,
+        min_memory_in_gb=112,
+        ports="22/tcp",
+        env={
+            "GAPBALANCE_DEVELOPMENT_PLAN_SHA256": plan["payload_sha256"],
+            "GAPBALANCE_ROLE": "authoritative-development-cache-not-scored",
+        },
+    )
+    pod_id = created["id"]
+    try:
+        pod = None
+        for _ in range(120):
+            pod = runpod.get_pod(pod_id)
+            if pod and pod.get("desiredStatus") == "RUNNING" and pod.get("runtime"):
+                break
+            time.sleep(5)
+        else:
+            raise RuntimeError("equivalent replacement pod did not become RUNNING")
+        validate_pod(pod, plan, require_exact_reused_pod=False)
+    except Exception:
+        runpod.terminate_pod(pod_id)
+        raise
+    started = now()
+    receipt = {
+        "schema_version": "1.0",
+        "status": "POD_RESUMED_AWAITING_DEPLOYMENT",
+        "allocation_route": "new_equivalent_pod_after_result_blind_resume_failure",
+        "allocation_retry_payload_sha256": retry["payload_sha256"],
+        "plan_payload_sha256": plan["payload_sha256"],
+        "public_runpod_commit": args.public_commit,
+        "billing_started_at": started.isoformat(),
+        "development_billing_cutoff_usd": plan["budget"]["development_billing_cutoff_usd"],
+        "absolute_campaign_cap_usd": plan["budget"]["absolute_campaign_cap_usd"],
+        "confirmation_reserve_usd": plan["budget"]["confirmation_reserve_usd"],
+        "pod": {
+            "id": pod["id"],
+            "name": pod["name"],
+            "gpu_count": int(pod["gpuCount"]),
+            "gpu_name": pod["machine"]["gpuDisplayName"],
+            "image_name": pod["imageName"],
+            "aggregate_hourly_rate_usd": float(pod["costPerHr"]),
+        },
+        "scientific_endpoints_inspected": False,
+        "confirmation_outputs_inspected": False,
+    }
+    atomic_json(args.receipt, receipt)
+    print(json.dumps(receipt, indent=2, sort_keys=True))
 
 
 def resume(args, plan: dict) -> None:
@@ -167,10 +255,11 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "allocate", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
+    parser.add_argument("--allocation-retry", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -178,6 +267,10 @@ def main() -> int:
     plan = load_plan(args.plan)
     if args.command == "resume":
         resume(args, plan)
+    elif args.command == "allocate":
+        if args.allocation_retry is None:
+            raise RuntimeError("allocate requires the public allocation retry")
+        allocate(args, plan)
     elif args.command in {"status", "watch"}:
         report_or_watch(args, plan, args.command == "watch")
     else:
