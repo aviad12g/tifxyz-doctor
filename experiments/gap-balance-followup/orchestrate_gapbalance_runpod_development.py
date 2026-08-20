@@ -214,6 +214,7 @@ def allocate_multi(
     readiness_retry = None
     jupyter_retry = None
     jupyter_terminal_retry = None
+    jupyter_pid_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -261,6 +262,7 @@ def allocate_multi(
                 or args.ssh_readiness_retry is not None
                 or args.jupyter_croc_retry is not None
                 or args.jupyter_terminal_retry is not None
+                or args.jupyter_pid_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -390,6 +392,28 @@ def allocate_multi(
                     ):
                         raise RuntimeError(
                             "Jupyter terminal retry changes a frozen transport, budget, or sealed gate"
+                        )
+                if args.jupyter_pid_retry is not None:
+                    if jupyter_terminal_retry is None:
+                        raise RuntimeError("Jupyter PID retry requires the terminal-path retry")
+                    jupyter_pid_retry = load_plan(args.jupyter_pid_retry)
+                    terminal_control = jupyter_pid_retry.get("terminal_control", {})
+                    payment = jupyter_pid_retry.get("payment_authority", {})
+                    if (
+                        jupyter_pid_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or jupyter_pid_retry.get("jupyter_terminal_retry_payload_sha256")
+                        != jupyter_terminal_retry["payload_sha256"]
+                        or terminal_control.get("background_pid_output_format") != "tagged"
+                        or jupyter_pid_retry.get("failed_deployment", {}).get(
+                            "bundle_bytes_uploaded"
+                        )
+                        != 0
+                        or payment.get("direct_credit_card_charge_permitted") is not False
+                        or payment.get("runpod_auto_pay_verified_disabled") is not True
+                    ):
+                        raise RuntimeError(
+                            "Jupyter PID retry changes a frozen transport, budget, or sealed gate"
                         )
     elif stop_after_reservation:
         if args.replacement_reservation is None:
@@ -548,7 +572,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            jupyter_terminal_retry["billing"]["prior_conservative_development_spend_usd"]
+            jupyter_pid_retry["billing"]["prior_conservative_development_spend_usd"]
+            if jupyter_pid_retry is not None
+            else jupyter_terminal_retry["billing"]["prior_conservative_development_spend_usd"]
             if jupyter_terminal_retry is not None
             else jupyter_retry["billing"]["prior_conservative_development_spend_usd"]
             if jupyter_retry is not None
@@ -602,6 +628,10 @@ def allocate_multi(
                 jupyter_terminal_retry_payload_sha256=jupyter_terminal_retry[
                     "payload_sha256"
                 ],
+            )
+        if jupyter_pid_retry is not None:
+            receipt.update(
+                jupyter_pid_retry_payload_sha256=jupyter_pid_retry["payload_sha256"],
             )
     if stop_after_reservation:
         try:
@@ -1000,6 +1030,7 @@ def main() -> int:
     parser.add_argument("--ssh-readiness-retry", type=Path)
     parser.add_argument("--jupyter-croc-retry", type=Path)
     parser.add_argument("--jupyter-terminal-retry", type=Path)
+    parser.add_argument("--jupyter-pid-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")

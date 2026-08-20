@@ -83,6 +83,13 @@ def require_budget(deadline: float) -> None:
         raise RuntimeError("development budget guard reached")
 
 
+def tagged_pid(output: str, tag: str) -> int:
+    matches = re.findall(re.escape(tag) + r":([0-9]+)", output)
+    if not matches:
+        raise RuntimeError("remote background task did not return a tagged PID")
+    return int(matches[-1])
+
+
 class JupyterTerminal:
     def __init__(self, base_url: str, password: str, session: requests.Session, websocket):
         self.base_url = base_url.rstrip("/")
@@ -208,15 +215,14 @@ class JupyterTerminal:
         raise RuntimeError("remote Jupyter command timed out")
 
     def start_background(self, body: str, *, log: str, rc_file: str) -> int:
+        tag = "__GAPBALANCE_BACKGROUND_PID__"
         command = (
             f"nohup sh -lc {shlex.quote(body + '; __rc=$?; printf \'%s\\n\' \"$__rc\" > ' + shlex.quote(rc_file) + '; exit $__rc')} "
-            f"> {shlex.quote(log)} 2>&1 < /dev/null & printf '%s\\n' \"$!\""
+            f"> {shlex.quote(log)} 2>&1 < /dev/null & "
+            f"printf '\\n{tag}:%s\\n' \"$!\""
         )
         output = self.run(command, timeout=30)
-        matches = re.findall(r"(?m)^([0-9]+)\r?$", output)
-        if not matches:
-            raise RuntimeError("remote background task did not return a PID")
-        return int(matches[-1])
+        return tagged_pid(output, tag)
 
     def wait_rc(self, rc_file: str, *, deadline: float, interval: int) -> None:
         while True:
@@ -395,13 +401,10 @@ def start_executor(
         "nohup "
         + shlex.join(command)
         + f" > {shlex.quote(root + '/status/controller.operational.log')} 2>&1 < /dev/null & "
-        + "printf '%s\\n' \"$!\""
+        + "printf '\\n__GAPBALANCE_EXECUTOR_PID__:%s\\n' \"$!\""
     )
     output = terminal.run(shell, timeout=30)
-    matches = re.findall(r"(?m)^([0-9]+)\r?$", output)
-    if not matches:
-        raise RuntimeError("remote executor did not return a PID")
-    return int(matches[-1])
+    return tagged_pid(output, "__GAPBALANCE_EXECUTOR_PID__")
 
 
 def main() -> int:
@@ -412,6 +415,7 @@ def main() -> int:
     parser.add_argument("--bundle-archive", type=Path, required=True)
     parser.add_argument("--jupyter-croc-retry", type=Path, required=True)
     parser.add_argument("--jupyter-terminal-retry", type=Path, required=True)
+    parser.add_argument("--jupyter-pid-retry", type=Path, required=True)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -420,6 +424,7 @@ def main() -> int:
     manifest = load_hashed(args.bundle / "bundle_manifest.json")
     retry = load_hashed(args.jupyter_croc_retry)
     terminal_retry = load_hashed(args.jupyter_terminal_retry)
+    pid_retry = load_hashed(args.jupyter_pid_retry)
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -430,6 +435,7 @@ def main() -> int:
         or receipt.get("jupyter_croc_retry_payload_sha256") != retry["payload_sha256"]
         or receipt.get("jupyter_terminal_retry_payload_sha256")
         != terminal_retry["payload_sha256"]
+        or receipt.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
@@ -437,6 +443,12 @@ def main() -> int:
         != plan["payload_sha256"]
         or terminal_retry.get("jupyter_croc_retry_payload_sha256")
         != retry["payload_sha256"]
+        or pid_retry.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or pid_retry.get("jupyter_terminal_retry_payload_sha256")
+        != terminal_retry["payload_sha256"]
+        or pid_retry.get("terminal_control", {}).get("background_pid_output_format")
+        != "tagged"
         or terminal_retry.get("terminal_control", {}).get("websocket_path_template")
         != "/terminals/websocket/{terminal_name}"
         or egress.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]

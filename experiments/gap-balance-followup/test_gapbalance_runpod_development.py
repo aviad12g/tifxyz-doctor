@@ -405,6 +405,29 @@ def test_jupyter_terminal_retry_corrects_only_the_result_blind_control_path():
     assert not terminal_retry["sealed_gates"]["scientific_endpoints_scored"]
 
 
+def test_jupyter_pid_retry_is_tagged_result_blind_and_preupload():
+    pid_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_PID_RETRY.json")
+    terminal_retry = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_JUPYTER_TERMINAL_RETRY.json"
+    )
+    assert pid_retry["jupyter_terminal_retry_payload_sha256"] == terminal_retry[
+        "payload_sha256"
+    ]
+    assert pid_retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert pid_retry["terminal_control"]["background_pid_output_format"] == "tagged"
+    assert DEPLOY_JUPYTER.tagged_pid(
+        "echoed shell text\\r\\n__GAPBALANCE_BACKGROUND_PID__:4312\\r\\n",
+        "__GAPBALANCE_BACKGROUND_PID__",
+    ) == 4312
+    with pytest.raises(RuntimeError, match="tagged PID"):
+        DEPLOY_JUPYTER.tagged_pid("[1] 4312", "__GAPBALANCE_BACKGROUND_PID__")
+    assert pid_retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert pid_retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        0.661228
+    )
+    assert not pid_retry["sealed_gates"]["pherc1218_v2_opened"]
+
+
 def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
     egress = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_BUNDLE_V4_EGRESS.json")
     retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")
