@@ -382,6 +382,29 @@ def test_private_receipt_writer_removes_group_and_world_access(tmp_path):
     assert json.loads(path.read_text()) == {"password": "private"}
 
 
+def test_jupyter_terminal_retry_corrects_only_the_result_blind_control_path():
+    terminal_retry = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_JUPYTER_TERMINAL_RETRY.json"
+    )
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")
+    assert terminal_retry["jupyter_croc_retry_payload_sha256"] == retry["payload_sha256"]
+    assert terminal_retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert terminal_retry["failed_deployment"]["pods_stopped"] == [
+        "gsi94er70i7fsq",
+        "a9ipinizimqz15",
+    ]
+    assert terminal_retry["terminal_control"]["websocket_path_template"] == (
+        "/terminals/websocket/{terminal_name}"
+    )
+    assert terminal_retry["terminal_control"]["delete_terminal_after_failed_handshake"]
+    assert terminal_retry["payment_authority"]["direct_credit_card_charge_permitted"] is False
+    assert terminal_retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        0.61748
+    )
+    assert not terminal_retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not terminal_retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
 def test_exact_bundle_v4_egress_preserves_inputs_and_sealed_holdout():
     egress = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_BUNDLE_V4_EGRESS.json")
     retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_JUPYTER_CROC_RETRY.json")

@@ -92,7 +92,13 @@ class JupyterTerminal:
 
     @classmethod
     def open(
-        cls, base_url: str, password: str, *, maximum_elapsed: int, interval: int
+        cls,
+        base_url: str,
+        password: str,
+        *,
+        maximum_elapsed: int,
+        interval: int,
+        websocket_path_template: str,
     ) -> "JupyterTerminal":
         parsed = urlparse(base_url)
         if parsed.scheme != "https" or parsed.path not in {"", "/"}:
@@ -101,6 +107,7 @@ class JupyterTerminal:
         deadline = time.monotonic() + maximum_elapsed
         last_error: Exception | None = None
         while time.monotonic() < deadline:
+            terminal_name: str | None = None
             try:
                 login = session.get(base_url.rstrip("/") + "/login", timeout=20)
                 login.raise_for_status()
@@ -136,7 +143,8 @@ class JupyterTerminal:
                 websocket_url = (
                     "wss://"
                     + parsed.netloc
-                    + f"/api/terminals/{terminal_name}/channels?session_id={uuid.uuid4()}"
+                    + websocket_path_template.format(terminal_name=terminal_name)
+                    + f"?session_id={uuid.uuid4()}"
                 )
                 websocket = websocket_connect(
                     websocket_url,
@@ -152,6 +160,15 @@ class JupyterTerminal:
                 return terminal
             except Exception as error:
                 last_error = error
+                if terminal_name is not None:
+                    try:
+                        session.delete(
+                            base_url.rstrip("/") + f"/api/terminals/{terminal_name}",
+                            headers={"X-XSRFToken": xsrf, "Referer": base_url.rstrip("/") + "/"},
+                            timeout=20,
+                        )
+                    except Exception:
+                        pass
                 time.sleep(min(interval, max(0.0, deadline - time.monotonic())))
         raise RuntimeError("Jupyter service did not become ready within the frozen bound") from last_error
 
@@ -394,6 +411,7 @@ def main() -> int:
     parser.add_argument("--bundle", type=Path, required=True)
     parser.add_argument("--bundle-archive", type=Path, required=True)
     parser.add_argument("--jupyter-croc-retry", type=Path, required=True)
+    parser.add_argument("--jupyter-terminal-retry", type=Path, required=True)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -401,6 +419,7 @@ def main() -> int:
     plan = load_hashed(args.plan)
     manifest = load_hashed(args.bundle / "bundle_manifest.json")
     retry = load_hashed(args.jupyter_croc_retry)
+    terminal_retry = load_hashed(args.jupyter_terminal_retry)
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -409,9 +428,17 @@ def main() -> int:
         receipt.get("status") != "PODS_ALLOCATED_AWAITING_DEPLOYMENT"
         or receipt.get("plan_payload_sha256") != plan["payload_sha256"]
         or receipt.get("jupyter_croc_retry_payload_sha256") != retry["payload_sha256"]
+        or receipt.get("jupyter_terminal_retry_payload_sha256")
+        != terminal_retry["payload_sha256"]
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+        or terminal_retry.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or terminal_retry.get("jupyter_croc_retry_payload_sha256")
+        != retry["payload_sha256"]
+        or terminal_retry.get("terminal_control", {}).get("websocket_path_template")
+        != "/terminals/websocket/{terminal_name}"
         or egress.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
         or egress.get("jupyter_croc_retry_payload_sha256") != retry["payload_sha256"]
         or manifest.get("plan_payload_sha256") != plan["payload_sha256"]
@@ -473,6 +500,9 @@ def main() -> int:
                 record["password"],
                 maximum_elapsed=int(retry["jupyter_control"]["maximum_readiness_seconds_per_pod"]),
                 interval=int(retry["jupyter_control"]["readiness_poll_interval_seconds"]),
+                websocket_path_template=terminal_retry["terminal_control"][
+                    "websocket_path_template"
+                ],
             )
             terminals[pod["id"]].run(
                 "command -v runpodctl >/dev/null && command -v python >/dev/null && command -v tar >/dev/null",
