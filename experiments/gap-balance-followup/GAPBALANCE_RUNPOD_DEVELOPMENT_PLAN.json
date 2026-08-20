@@ -1,0 +1,194 @@
+{
+  "authority": {
+    "cross_provider_partial_mix_for_selection_permitted": false,
+    "kaggle_completed_jobs_are_secondary_replication_only": true,
+    "partial_primary_scoring_or_selection_permitted": false,
+    "runpod_complete_12_job_set_is_primary": true
+  },
+  "budget": {
+    "absolute_campaign_cap_usd": 25.0,
+    "authorization_date": "2026-08-20",
+    "confirmation_reserve_usd": 13.0,
+    "development_billing_cutoff_usd": 12.0,
+    "forms_authorized": false,
+    "guard_seconds": 300,
+    "on_cutoff": "stop the exact pod, preserve partial operational artifacts, do not score or select partial development output",
+    "user_authorization": "Aviad: ok go"
+  },
+  "development_import_fix_payload_sha256": "b06e3e634e6723239fcfb13fb9fa5e353cb21511fd12f4eca259970fbef662ac",
+  "execution": {
+    "container_image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "existing_pod_only": true,
+    "gpu_count": 7,
+    "gpu_type": "RTX 4090",
+    "maximum_accepted_aggregate_hourly_rate_usd": 2.38,
+    "pod_id": "9r1cm9r82aonih",
+    "pod_name": "vesuvius-synth-primary-ba4efa85-g7",
+    "provider": "RunPod community cloud",
+    "waves": [
+      [
+        "gapbalance-development-synthetic-seed11-shard00",
+        "gapbalance-development-synthetic-seed11-shard01",
+        "gapbalance-development-synthetic-seed11-shard02",
+        "gapbalance-development-synthetic-seed11-shard03",
+        "gapbalance-development-synthetic-seed23-shard00",
+        "gapbalance-development-synthetic-seed23-shard01",
+        "gapbalance-development-synthetic-seed23-shard02"
+      ],
+      [
+        "gapbalance-development-synthetic-seed23-shard03",
+        "gapbalance-development-synthetic-seed47-shard00",
+        "gapbalance-development-synthetic-seed47-shard01",
+        "gapbalance-development-synthetic-seed47-shard02",
+        "gapbalance-development-synthetic-seed47-shard03"
+      ]
+    ]
+  },
+  "jobs": [
+    {
+      "config_payload_sha256": "f3e71ce31bdb08c64f7fa035dfc8b9f4137c671b0e253336aeeff4d276fb4b46",
+      "job_id": "gapbalance-development-synthetic-seed11-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q0",
+      "launcher_sha256": "30bc6b644b8c96b9f23564ebd89e9b6ff3753a066cb7d84f92cc4f9546e64bb7",
+      "metadata_sha256": "1e13ad9d8fa0e0c4a4130b8fc40a0493f527db604996bd8d506a0cef31945b2e",
+      "mode": "synthetic",
+      "package_sums_sha256": "c7203af657e754c75bfb08677813b351460986392497d16135d17db7d64f02dd",
+      "seed": 11,
+      "shard_index": 0
+    },
+    {
+      "config_payload_sha256": "b2f8493c12a3ec9f4cf2cdbcbb958545105557ccb3780247df4db4905a483f46",
+      "job_id": "gapbalance-development-synthetic-seed11-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q1",
+      "launcher_sha256": "8aca082b9a12745972f9551a96fdaccf8af7f64266b803061c1d8a46c1298521",
+      "metadata_sha256": "04df27856375c637e21dc5481eb94859edce8523f124dce80f66e2c98f1c5163",
+      "mode": "synthetic",
+      "package_sums_sha256": "f5f13c57f7e0c7b1c26dc73d3797807e64874881b57d7b44754f8a769952631c",
+      "seed": 11,
+      "shard_index": 1
+    },
+    {
+      "config_payload_sha256": "39741d16dca16556094df4625875a43105228291a23b6c1150b95b75e7a1b223",
+      "job_id": "gapbalance-development-synthetic-seed11-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q2",
+      "launcher_sha256": "77087d5f8992692b727a266d67041922de2fd4ebfe6959f0d8d5220e5e9ed3d6",
+      "metadata_sha256": "0fd57422c6e5ed58f593d60baf683aff4848696da63f32d041d1c6995cc071f1",
+      "mode": "synthetic",
+      "package_sums_sha256": "fd3781210e3537925f7b639a222bf86a5cb0cccb6a6be4f2d8019fccf7fdfd15",
+      "seed": 11,
+      "shard_index": 2
+    },
+    {
+      "config_payload_sha256": "9a78e9998d6b3cf4bfa7c5f2df396d238ed3d3b934deb3543e4f35e955c93931",
+      "job_id": "gapbalance-development-synthetic-seed11-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q3",
+      "launcher_sha256": "cc0dd6cd41ab0b193da3f1f470fad9234fef601e7992becfc8876cde9b2ee972",
+      "metadata_sha256": "c270966ea093716d3bee3f1ff87c2d6ab127c0015088e7abc512eb6fbfda05ae",
+      "mode": "synthetic",
+      "package_sums_sha256": "4609462b81d02e4f8cff8cd4dd986ab7cd3c28cad6fcc5992c5cf7258a081cb5",
+      "seed": 11,
+      "shard_index": 3
+    },
+    {
+      "config_payload_sha256": "6971188955c8fe2d9f614bfd1d01d073cacd8491082689171e664574366dcf09",
+      "job_id": "gapbalance-development-synthetic-seed23-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q0",
+      "launcher_sha256": "69066286fa5b6390eb84fada6022c3261eb1316ba2ef038ec9f99f7d8c1c6a21",
+      "metadata_sha256": "f11db9bf95e8c872bd7e22b499fc33f0e068b21ccaefac63e437b1f5a290df11",
+      "mode": "synthetic",
+      "package_sums_sha256": "3a3d64aecd96087a748721fac72a16664f1bb4c17d79e4e88d2571798e85e8a9",
+      "seed": 23,
+      "shard_index": 0
+    },
+    {
+      "config_payload_sha256": "aadce45cad026a76042267c457948966dc3bb3e57eb36ea7dc3849a5af4d54f1",
+      "job_id": "gapbalance-development-synthetic-seed23-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q1",
+      "launcher_sha256": "22e93225025f28acf8a999c6917cb0a54f3e2278be1f414993c595ae1252f5a8",
+      "metadata_sha256": "9681c8a0fab86b95bb7a5a362b5fea81aea6aef187792635deccb49dcbdf9aaf",
+      "mode": "synthetic",
+      "package_sums_sha256": "f7ce3b79f10a07417f334b410ad209c9f39ab2d47c12e3cb82e09ff1523099b3",
+      "seed": 23,
+      "shard_index": 1
+    },
+    {
+      "config_payload_sha256": "0ed613a6e418487a59dfcf2979d2317f110843c53a6b99120d254858b2410636",
+      "job_id": "gapbalance-development-synthetic-seed23-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q2",
+      "launcher_sha256": "d1fad5b53318e7dc92d09b8b7e814201753bc21360f34f6587427ba6a580a619",
+      "metadata_sha256": "b4d52d89409a76292a0b1109655a29a13080b616a220dc0a25fb31f733010b04",
+      "mode": "synthetic",
+      "package_sums_sha256": "bdd19e3a3b4394e27f6f2ef366dcb1868470fcc328ba00d6b83f955e213c8e36",
+      "seed": 23,
+      "shard_index": 2
+    },
+    {
+      "config_payload_sha256": "8e97c846d57393fd1c33e2e8a624630813113333d9e33364d30f21b7cb06f430",
+      "job_id": "gapbalance-development-synthetic-seed23-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q3",
+      "launcher_sha256": "6bac2c6e7beb9c4ad1ce0f03f6f46ff4bf0d00dcdd9b7b91ad505d20264467a5",
+      "metadata_sha256": "ad46d4b615fb092be3aed02545db040d51f41adb5b53763396c409d785f599af",
+      "mode": "synthetic",
+      "package_sums_sha256": "e687ac1d6bfb782926d6ff687d30423ddb6b9185d545883a42b46faf52a2d544",
+      "seed": 23,
+      "shard_index": 3
+    },
+    {
+      "config_payload_sha256": "ca242501910482e8ad98883b80e0ac4490790738578bd2d9d80d11615fb18fe5",
+      "job_id": "gapbalance-development-synthetic-seed47-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q0",
+      "launcher_sha256": "250b5b0c8e30e45dab9d6a23953abac6edd984e76a108080d2b579ae91139851",
+      "metadata_sha256": "645429f62619784e4ff2feb4a33361401df9637f9bc24c7b1dfe6c900f139e80",
+      "mode": "synthetic",
+      "package_sums_sha256": "bd0b0a4457690a1d776c44764bd11df9c108c21b2a428c0057524c9c0c630566",
+      "seed": 47,
+      "shard_index": 0
+    },
+    {
+      "config_payload_sha256": "14db2c710d9c7e69f65ebafd0e9c7ac7ca43b83828535e1cd5f7525b06d4fb33",
+      "job_id": "gapbalance-development-synthetic-seed47-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q1",
+      "launcher_sha256": "d9135855360ac4ef2379cdfd65be95d814e88b7eb04b378142675546c7007e40",
+      "metadata_sha256": "76cc5d6f2f87e5f0f1cd2e8b09236fac6eb6ff0f7cdc92b0f7b46d2c6f5a9983",
+      "mode": "synthetic",
+      "package_sums_sha256": "b5da7929ed741767cf852def9d037b59653584d6ff12d031068e458e8c0d95eb",
+      "seed": 47,
+      "shard_index": 1
+    },
+    {
+      "config_payload_sha256": "f6b5eb98c69d4c1d9383bdd9642728e032da77700650fc4ddde5b9411308b578",
+      "job_id": "gapbalance-development-synthetic-seed47-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q2",
+      "launcher_sha256": "fabaf9374a0fc928c4e6369ba955498c69808ebbf6ffe5fe68369f7c7223fc05",
+      "metadata_sha256": "88952643d6bd131bd47c8098b7b556b061a1c2bfef7f5de281fe346d7699ed5d",
+      "mode": "synthetic",
+      "package_sums_sha256": "094aeedd5e8eced867631174443dd6f1e70fee54f23d2cbbf336c05ea7c17657",
+      "seed": 47,
+      "shard_index": 2
+    },
+    {
+      "config_payload_sha256": "5e14ee23cbc2a4840a76528e5ff818a2f32ae5cccc8d9127a5de0d3880586786",
+      "job_id": "gapbalance-development-synthetic-seed47-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q3",
+      "launcher_sha256": "4632524c16adfcc9728724aa48a19f9e4bf5802d4e5468dd250cb5a747740650",
+      "metadata_sha256": "cbd6c2b7e5396e061d199a06418a31999458053644353bd5582bf2d76f427b00",
+      "mode": "synthetic",
+      "package_sums_sha256": "72d4fda334c5d131b97f521058e11ea962c498a121b3e7cdcd8d05b06dad0dd2",
+      "seed": 47,
+      "shard_index": 3
+    }
+  ],
+  "payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "private_package_manifest_payload_sha256": "8ead7fbb99eb74bb3bf81538b9b81fdaff24924a6739f87c4f3a402d7720fa0a",
+  "public_parent_commit": "8d8c7d6e5151b90d4039b385fcd9efda9dca7386",
+  "schema_version": "1.0",
+  "scientific_source_commit": "e4fd7d507c21dae9e9d50af1bd35bf3402e67c3b",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "holdout_access_before_public_candidate_and_threshold_freeze_permitted": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RunPod development replacement frozen before paid execution or endpoint access"
+}
