@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -26,6 +27,18 @@ def load_hashed(path: Path) -> dict:
     if canonical(body) != expected:
         raise RuntimeError(f"payload SHA-256 mismatch: {path}")
     return payload
+
+
+def public_key_fingerprint(public_key: str) -> str:
+    parts = public_key.strip().split()
+    if len(parts) < 2:
+        raise RuntimeError("invalid SSH public key")
+    try:
+        material = base64.b64decode(parts[1], validate=True)
+    except Exception as error:
+        raise RuntimeError("invalid SSH public key material") from error
+    digest = base64.b64encode(hashlib.sha256(material).digest()).decode().rstrip("=")
+    return f"SHA256:{digest}"
 
 
 def atomic_json(path: Path, payload: dict) -> None:
@@ -63,6 +76,8 @@ def main() -> int:
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--provider-receipt", type=Path, required=True)
     parser.add_argument("--bundle", type=Path, required=True)
+    parser.add_argument("--transport-retry", type=Path)
+    parser.add_argument("--ssh-private-key", type=Path)
     args = parser.parse_args()
     plan = load_hashed(args.plan)
     manifest = load_hashed(args.bundle / "bundle_manifest.json")
@@ -81,6 +96,28 @@ def main() -> int:
     job_ids = [job["job_id"] for job in plan["jobs"]]
     if manifest.get("job_ids") != job_ids:
         raise RuntimeError("bundle job order mismatch")
+    explicit_identity = None
+    if receipt.get("explicit_ssh_retry_payload_sha256") is not None:
+        if args.transport_retry is None or args.ssh_private_key is None:
+            raise RuntimeError("explicit SSH retry requires its public freeze and private key path")
+        explicit_identity = load_hashed(args.transport_retry)
+        identity = explicit_identity.get("explicit_identity", {})
+        if (
+            explicit_identity["payload_sha256"]
+            != receipt["explicit_ssh_retry_payload_sha256"]
+            or identity.get("identities_only") is not True
+            or identity.get("private_key_leaves_local_mac") is not False
+            or identity.get("public_key_fingerprint")
+            != receipt.get("deployment_ssh_public_key_fingerprint")
+        ):
+            raise RuntimeError("explicit SSH transport is not bound to the provider receipt")
+        derived_public_key = run_checked(
+            ["ssh-keygen", "-y", "-f", str(args.ssh_private_key)], 15
+        )
+        if public_key_fingerprint(derived_public_key) != identity["public_key_fingerprint"]:
+            raise RuntimeError("explicit SSH private key does not match the frozen fingerprint")
+    elif args.transport_retry is not None or args.ssh_private_key is not None:
+        raise RuntimeError("explicit SSH transport was supplied for an unbound provider receipt")
     import runpod
 
     pods = receipt.get("pods")
@@ -97,15 +134,21 @@ def main() -> int:
             remote_root = (
                 f"/workspace/gapbalance-development-{receipt['public_runpod_commit'][:8]}-p{pod_index}"
             )
-            ssh = [
-                "ssh", "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
-                "-o", "ConnectTimeout=15", f"root@{host}",
-            ]
+            ssh_transport = ["ssh"]
+            if explicit_identity is not None:
+                ssh_transport.extend([
+                    "-i", str(args.ssh_private_key), "-o", "IdentitiesOnly=yes",
+                ])
+            ssh_transport.extend([
+                "-p", str(port), "-o", "StrictHostKeyChecking=accept-new",
+                "-o", "ConnectTimeout=15",
+            ])
+            ssh = [*ssh_transport, f"root@{host}"]
             run_checked(
                 [*ssh, f"test ! -e {shlex.quote(remote_root)} && mkdir -p {shlex.quote(remote_root + '/bundle')}"],
                 60,
             )
-            rsync_ssh = f"ssh -p {port} -o StrictHostKeyChecking=accept-new -o ConnectTimeout=15"
+            rsync_ssh = shlex.join(ssh_transport)
             run_checked(
                 [
                     "rsync", "--archive", "--copy-links", "--partial", "--protect-args",
@@ -164,6 +207,14 @@ def main() -> int:
         "bundle_manifest_payload_sha256": manifest["payload_sha256"],
         "pods": deployments,
     }
+    if explicit_identity is not None:
+        receipt["deployment"].update(
+            transport_retry_payload_sha256=explicit_identity["payload_sha256"],
+            ssh_public_key_fingerprint=explicit_identity["explicit_identity"][
+                "public_key_fingerprint"
+            ],
+            identities_only=True,
+        )
     receipt["status"] = "RUNPOD_DEVELOPMENT_EXECUTOR_RUNNING_NOT_SCORED"
     atomic_json(args.provider_receipt, receipt)
     print(json.dumps(receipt["deployment"], indent=2, sort_keys=True))

@@ -296,3 +296,24 @@ def test_account_public_key_match_ignores_comments_and_unrelated_lines():
     ]
     assert ORCH.account_has_public_key(registered, expected)
     assert not ORCH.account_has_public_key(registered, "ssh-ed25519 AAAADifferent")
+
+
+def test_explicit_ssh_identity_retry_is_registered_bounded_and_result_blind():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_EXPLICIT_SSH_IDENTITY_RETRY.json")
+    account_retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_ACCOUNT_SSH_KEY_RETRY.json")
+    assert retry["account_ssh_retry_payload_sha256"] == account_retry["payload_sha256"]
+    assert retry["failed_deployment"]["bundle_bytes_uploaded"] == 0
+    assert retry["failed_deployment"]["pods_stopped"] == [
+        "08ejwbnqjtkvgz", "jengjdyvy1t9ny"
+    ]
+    assert retry["explicit_identity"]["account_key_registered_before_new_pod_creation"]
+    assert retry["explicit_identity"]["identities_only"]
+    assert retry["explicit_identity"]["private_key_leaves_local_mac"] is False
+    public_key = Path("/Users/mazalcohen/.runpod/ssh/dcbs-phase165.pub").read_text()
+    assert ORCH.public_key_fingerprint(public_key) == retry["explicit_identity"][
+        "public_key_fingerprint"
+    ]
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(0.20411)
+    assert retry["billing"]["remaining_development_cutoff_usd"] == pytest.approx(11.79589)
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]

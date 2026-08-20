@@ -1,0 +1,42 @@
+{
+  "account_ssh_retry_payload_sha256": "aac6c1da1126ed8880f39c726cac2cc91c26eff898929db0b92fd81deda9b2e2",
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.20411,
+    "remaining_development_cutoff_usd": 11.79589
+  },
+  "explicit_identity": {
+    "account_key_registered_before_new_pod_creation": true,
+    "identities_only": true,
+    "private_key_leaves_local_mac": false,
+    "public_key_fingerprint": "SHA256:zWM6c2h0OCkWYQkR8uvwR0/ldypoq+Hts9n/p2E5oSA",
+    "public_key_material_published_in_repo": false,
+    "transport": "RunPod exposed TCP port 22"
+  },
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Permission denied (publickey,password).",
+    "failed_at": "2026-08-20T20:03:29.079642+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "08ejwbnqjtkvgz",
+      "jengjdyvy1t9ny"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payload_sha256": "43ecd39de8315b0b5fb70f695f8143c030b4bc3707ed6430c8bdeb61b12c8a11",
+  "public_parent_commit": "124ca59da0b5293b0b7f5737cc9185c252b33be8",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_EXPLICIT_REGISTERED_SSH_IDENTITY_RETRY_FROZEN_BEFORE_ALLOCATION"
+}

@@ -205,7 +205,9 @@ def allocate_multi(
     dynamic_egress = None
     ssh_retry = None
     account_ssh_retry = None
+    explicit_ssh_retry = None
     ssh_public_key = None
+    deployment_public_key = None
     if use_hardware_substitution:
         if args.hardware_substitution is None:
             raise RuntimeError("hardware substitution command requires the public substitution")
@@ -246,6 +248,8 @@ def allocate_multi(
                 args.ssh_retry is not None
                 or args.ssh_public_key is not None
                 or args.account_ssh_retry is not None
+                or args.explicit_ssh_retry is not None
+                or args.deployment_public_key is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -277,6 +281,35 @@ def allocate_multi(
                         is not True
                     ):
                         raise RuntimeError("account SSH retry changes the frozen key or sealed gate")
+                if args.explicit_ssh_retry is not None or args.deployment_public_key is not None:
+                    if (
+                        args.explicit_ssh_retry is None
+                        or args.deployment_public_key is None
+                        or account_ssh_retry is None
+                    ):
+                        raise RuntimeError(
+                            "explicit SSH identity retry requires its public freeze, public key, and account retry"
+                        )
+                    explicit_ssh_retry = load_plan(args.explicit_ssh_retry)
+                    identity = explicit_ssh_retry.get("explicit_identity", {})
+                    if (
+                        explicit_ssh_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or explicit_ssh_retry.get("account_ssh_retry_payload_sha256")
+                        != account_ssh_retry["payload_sha256"]
+                        or identity.get("private_key_leaves_local_mac") is not False
+                        or identity.get("identities_only") is not True
+                        or identity.get("account_key_registered_before_new_pod_creation")
+                        is not True
+                    ):
+                        raise RuntimeError("explicit SSH identity retry changes the frozen key or sealed gate")
+                    deployment_public_key = args.deployment_public_key.read_text(
+                        encoding="utf-8"
+                    ).strip()
+                    if public_key_fingerprint(deployment_public_key) != identity.get(
+                        "public_key_fingerprint"
+                    ):
+                        raise RuntimeError("explicit deployment SSH key fingerprint mismatch")
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -320,10 +353,14 @@ def allocate_multi(
         ):
             raise RuntimeError("hardware substitution exceeds the frozen GPU, memory, or rate ceiling")
     runpod = load_runpod()
-    if account_ssh_retry is not None and not account_has_public_key(
-        registered_account_public_keys(), ssh_public_key
-    ):
-        raise RuntimeError("frozen SSH public key is not registered on the RunPod account")
+    if account_ssh_retry is not None:
+        registered_keys = registered_account_public_keys()
+        if not account_has_public_key(registered_keys, ssh_public_key):
+            raise RuntimeError("frozen SSH public key is not registered on the RunPod account")
+        if deployment_public_key is not None and not account_has_public_key(
+            registered_keys, deployment_public_key
+        ):
+            raise RuntimeError("explicit deployment SSH key is not registered on the RunPod account")
     billing_started = now()
     errors = []
     accepted = None
@@ -410,7 +447,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            account_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            explicit_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
+            if explicit_ssh_retry is not None
+            else account_ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if account_ssh_retry is not None
             else ssh_retry["billing"]["prior_conservative_development_spend_usd"]
             if ssh_retry is not None
@@ -431,6 +470,14 @@ def allocate_multi(
             receipt.update(
                 account_ssh_retry_payload_sha256=account_ssh_retry["payload_sha256"],
                 account_ssh_key_verified_before_allocation=True,
+            )
+        if explicit_ssh_retry is not None:
+            receipt.update(
+                explicit_ssh_retry_payload_sha256=explicit_ssh_retry["payload_sha256"],
+                deployment_ssh_public_key_fingerprint=explicit_ssh_retry[
+                    "explicit_identity"
+                ]["public_key_fingerprint"],
+                deployment_ssh_key_verified_before_allocation=True,
             )
     if stop_after_reservation:
         try:
@@ -822,7 +869,9 @@ def main() -> int:
     parser.add_argument("--dynamic-substitute-egress", type=Path)
     parser.add_argument("--ssh-retry", type=Path)
     parser.add_argument("--account-ssh-retry", type=Path)
+    parser.add_argument("--explicit-ssh-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
+    parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
