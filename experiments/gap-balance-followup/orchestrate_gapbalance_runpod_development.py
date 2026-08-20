@@ -297,6 +297,73 @@ def allocate(args, plan: dict) -> None:
     print(json.dumps(receipt, indent=2, sort_keys=True))
 
 
+def resume_multi(args, plan: dict) -> None:
+    receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
+    approval = load_plan(args.egress_resume)
+    if (
+        receipt.get("status") != "STOPPED"
+        or receipt.get("plan_payload_sha256") != plan["payload_sha256"]
+        or approval.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
+        or approval.get("multi_pod_retry_payload_sha256") != receipt.get("multi_pod_retry_payload_sha256")
+        or approval.get("resume", {}).get("prior_conservative_spend_usd")
+        != receipt.get("conservative_development_spend_usd")
+        or approval.get("budget") != plan["budget"]
+        or approval.get("sealed_gates") != plan["sealed_gates"]
+    ):
+        raise RuntimeError("egress/resume approval is not bound to the stopped capped allocation")
+    approved_pods = approval["resume"]["exact_pods_only"]
+    if approved_pods != [
+        {"id": pod["id"], "gpu_count": pod["gpu_count"], "jobs": pod["jobs"]}
+        for pod in receipt["pods"]
+    ]:
+        raise RuntimeError("egress/resume approval pod set mismatch")
+    runpod = load_runpod()
+    resumed_ids = []
+    try:
+        for frozen in receipt["pods"]:
+            pod = runpod.get_pod(frozen["id"])
+            if pod is None or pod.get("desiredStatus") != "EXITED":
+                raise RuntimeError(f"approved pod is not stopped: {frozen['id']}")
+            runpod.resume_pod(frozen["id"], gpu_count=frozen["gpu_count"])
+            resumed_ids.append(frozen["id"])
+        for frozen in receipt["pods"]:
+            for _ in range(120):
+                pod = runpod.get_pod(frozen["id"])
+                if pod and pod.get("desiredStatus") == "RUNNING" and pod.get("runtime"):
+                    break
+                time.sleep(5)
+            else:
+                raise RuntimeError(f"approved pod did not resume: {frozen['id']}")
+            validate_pod(
+                pod,
+                plan,
+                require_exact_reused_pod=False,
+                expected_gpu_count=frozen["gpu_count"],
+            )
+            if float(pod["costPerHr"]) != float(frozen["aggregate_hourly_rate_usd"]):
+                raise RuntimeError(f"resumed pod rate changed: {frozen['id']}")
+    except Exception:
+        for pod_id in resumed_ids:
+            try:
+                runpod.stop_pod(pod_id)
+            except Exception:
+                pass
+        raise
+    receipt.update(
+        status="PODS_ALLOCATED_AWAITING_DEPLOYMENT",
+        egress_resume_payload_sha256=approval["payload_sha256"],
+        active_billing_started_at=now().isoformat(),
+        prior_conservative_development_spend_usd=receipt["conservative_development_spend_usd"],
+    )
+    atomic_json(args.receipt, receipt)
+    print(json.dumps({
+        "status": receipt["status"],
+        "pod_ids": resumed_ids,
+        "prior_conservative_development_spend_usd": receipt["prior_conservative_development_spend_usd"],
+        "active_billing_started_at": receipt["active_billing_started_at"],
+    }, indent=2, sort_keys=True))
+
+
 def resume(args, plan: dict) -> None:
     if args.receipt.exists():
         raise RuntimeError("provider receipt already exists; refusing duplicate resume")
@@ -347,7 +414,7 @@ def report_or_watch(args, plan: dict, watch: bool) -> None:
     receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
     if receipt.get("plan_payload_sha256") != plan["payload_sha256"]:
         raise RuntimeError("receipt is bound to another RunPod plan")
-    started = datetime.fromisoformat(receipt["billing_started_at"])
+    started = datetime.fromisoformat(receipt.get("active_billing_started_at", receipt["billing_started_at"]))
     frozen_pods = receipt.get("pods") or [receipt["pod"]]
     rate = sum(float(item["aggregate_hourly_rate_usd"]) for item in frozen_pods)
     cutoff = float(receipt["development_billing_cutoff_usd"])
@@ -360,7 +427,8 @@ def report_or_watch(args, plan: dict, watch: bool) -> None:
             any_running = any_running or desired == "RUNNING"
             provider.append({"id": frozen["id"], "desired_status": desired})
         elapsed = max(0.0, (now() - started).total_seconds())
-        conservative_spend = rate * elapsed / 3600.0
+        prior_spend = float(receipt.get("prior_conservative_development_spend_usd", 0.0))
+        conservative_spend = prior_spend + rate * elapsed / 3600.0
         guarded = conservative_spend + (rate * args.guard_seconds / 3600.0 if any_running else 0.0)
         stopped = False
         if args.enforce and any_running and guarded >= cutoff:
@@ -394,9 +462,9 @@ def stop_or_terminate(args, terminate: bool) -> None:
     frozen_pods = receipt.get("pods") or [receipt["pod"]]
     for frozen in frozen_pods:
         (runpod.terminate_pod if terminate else runpod.stop_pod)(frozen["id"])
-    started = datetime.fromisoformat(receipt["billing_started_at"])
+    started = datetime.fromisoformat(receipt.get("active_billing_started_at", receipt["billing_started_at"]))
     rate = sum(float(item["aggregate_hourly_rate_usd"]) for item in frozen_pods)
-    spend = rate * max(
+    spend = float(receipt.get("prior_conservative_development_spend_usd", 0.0)) + rate * max(
         0.0, (now() - started).total_seconds()
     ) / 3600.0
     receipt.update(
@@ -410,12 +478,13 @@ def stop_or_terminate(args, terminate: bool) -> None:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("command", choices=("resume", "allocate", "allocate-multi", "status", "watch", "stop", "terminate"))
+    parser.add_argument("command", choices=("resume", "resume-multi", "allocate", "allocate-multi", "status", "watch", "stop", "terminate"))
     parser.add_argument("--plan", type=Path, required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     parser.add_argument("--public-commit", default="")
     parser.add_argument("--allocation-retry", type=Path)
     parser.add_argument("--multi-pod-retry", type=Path)
+    parser.add_argument("--egress-resume", type=Path)
     parser.add_argument("--enforce", action="store_true")
     parser.add_argument("--guard-seconds", type=int, default=300)
     parser.add_argument("--interval", type=int, default=30)
@@ -423,6 +492,10 @@ def main() -> int:
     plan = load_plan(args.plan)
     if args.command == "resume":
         resume(args, plan)
+    elif args.command == "resume-multi":
+        if args.egress_resume is None:
+            raise RuntimeError("resume-multi requires the public egress/resume approval")
+        resume_multi(args, plan)
     elif args.command == "allocate":
         if args.allocation_retry is None:
             raise RuntimeError("allocate requires the public allocation retry")

@@ -20,6 +20,7 @@ def load_module(name, filename):
 FREEZE = load_module("freeze_gapbalance_runpod_development", "freeze_gapbalance_runpod_development.py")
 RETRY = load_module("freeze_gapbalance_runpod_allocation_retry", "freeze_gapbalance_runpod_allocation_retry.py")
 MULTI = load_module("freeze_gapbalance_runpod_multi_pod_retry", "freeze_gapbalance_runpod_multi_pod_retry.py")
+EGRESS = load_module("freeze_gapbalance_runpod_egress_resume", "freeze_gapbalance_runpod_egress_resume.py")
 WRAPPER = load_module("run_gapbalance_runpod_development_job", "run_gapbalance_runpod_development_job.py")
 
 
@@ -101,3 +102,17 @@ def test_multi_pod_retry_preserves_all_jobs_and_seven_gpu_ceiling():
             assert [job for wave in partition["waves"] for job in wave] == partition["jobs"]
             assert len(partition["waves"]) <= 2
             assert max(map(len, partition["waves"])) <= partition["gpu_count"]
+
+
+def test_egress_resume_excludes_sealed_holdout_and_accounts_prior_spend():
+    plan = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json")
+    egress = EGRESS.load_hashed(HERE / "GAPBALANCE_RUNPOD_EGRESS_RESUME.json")
+    assert egress["runpod_development_plan_payload_sha256"] == plan["payload_sha256"]
+    assert egress["egress"]["replication_count"] == 3
+    assert egress["egress"]["pherc1218_included"] is False
+    assert egress["egress"]["confirmation_seeds_500_504_included"] is False
+    assert egress["egress"]["scientific_outputs_included"] is False
+    assert egress["resume"]["prior_conservative_spend_usd"] == pytest.approx(0.070296)
+    assert egress["resume"]["remaining_development_cutoff_usd"] == pytest.approx(11.929704)
+    assert egress["budget"] == plan["budget"]
+    assert egress["sealed_gates"] == plan["sealed_gates"]
