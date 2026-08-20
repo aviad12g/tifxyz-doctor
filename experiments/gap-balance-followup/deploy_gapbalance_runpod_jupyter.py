@@ -284,17 +284,25 @@ class JupyterTerminal:
     def wait_rc(self, rc_file: str, *, deadline: float, interval: int) -> None:
         while True:
             require_budget(deadline)
-            output = self.run(
-                f"if test -f {shlex.quote(rc_file)}; then cat {shlex.quote(rc_file)}; "
-                "else printf 'WAIT\\n'; fi",
-                timeout=30,
-            ).strip()
-            lines = [line.strip() for line in output.splitlines() if line.strip()]
-            if lines and lines[-1] == "0":
+            rc = self.read_rc(rc_file)
+            if rc == 0:
                 return
-            if lines and lines[-1] != "WAIT":
+            if rc is not None:
                 raise RuntimeError("remote background task failed")
             time.sleep(interval)
+
+    def read_rc(self, rc_file: str) -> int | None:
+        tag = "__GAPBALANCE_REMOTE_RC__"
+        output = self.run(
+            f"if test -f {shlex.quote(rc_file)}; then "
+            f"printf '{tag}:%s\\n' \"$(cat {shlex.quote(rc_file)})\"; "
+            f"else printf '{tag}:WAIT\\n'; fi",
+            timeout=30,
+        )
+        matches = re.findall(re.escape(tag) + r":(WAIT|[0-9]+)", output)
+        if not matches:
+            raise RuntimeError("remote background status was not tagged")
+        return None if matches[-1] == "WAIT" else int(matches[-1])
 
     def close(self) -> None:
         try:
@@ -338,13 +346,19 @@ def transfer_one(
     try:
         receiver_body = (
             f"cd {shlex.quote(remote_root)} && "
-            f"runpodctl receive {shlex.quote(full_code)}"
+            "__gb_deadline=$(($(date +%s) + 180)); __gb_rc=1; "
+            "while test \"$(date +%s)\" -lt \"$__gb_deadline\"; do "
+            f"if runpodctl receive {shlex.quote(full_code)}; then __gb_rc=0; break; fi; "
+            "sleep 2; done; test \"$__gb_rc\" -eq 0"
         )
         receiver_pid = terminal.start_background(
             receiver_body, log=receiver_log, rc_file=receiver_rc
         )
         while sender.poll() is None:
             drain_sender_stdout(sender)
+            remote_rc = terminal.read_rc(receiver_rc)
+            if remote_rc is not None and remote_rc != 0:
+                raise RuntimeError("encrypted remote bundle receiver failed")
             require_budget(deadline)
             time.sleep(poll_interval)
         drain_sender_stdout(sender)
@@ -480,6 +494,7 @@ def main() -> int:
     parser.add_argument("--jupyter-terminal-retry", type=Path, required=True)
     parser.add_argument("--jupyter-pid-retry", type=Path, required=True)
     parser.add_argument("--croc-code-retry", type=Path, required=True)
+    parser.add_argument("--croc-room-retry", type=Path, required=True)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -490,6 +505,7 @@ def main() -> int:
     terminal_retry = load_hashed(args.jupyter_terminal_retry)
     pid_retry = load_hashed(args.jupyter_pid_retry)
     code_retry = load_hashed(args.croc_code_retry)
+    room_retry = load_hashed(args.croc_room_retry)
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
@@ -502,6 +518,7 @@ def main() -> int:
         != terminal_retry["payload_sha256"]
         or receipt.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
         or receipt.get("croc_code_retry_payload_sha256") != code_retry["payload_sha256"]
+        or receipt.get("croc_room_retry_payload_sha256") != room_retry["payload_sha256"]
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
@@ -516,6 +533,11 @@ def main() -> int:
         or code_retry.get("runpod_development_plan_payload_sha256")
         != plan["payload_sha256"]
         or code_retry.get("jupyter_pid_retry_payload_sha256") != pid_retry["payload_sha256"]
+        or room_retry.get("runpod_development_plan_payload_sha256")
+        != plan["payload_sha256"]
+        or room_retry.get("croc_code_retry_payload_sha256") != code_retry["payload_sha256"]
+        or room_retry.get("receiver_retry", {}).get("retry_room_not_ready") is not True
+        or room_retry.get("receiver_retry", {}).get("poll_rc_during_sender") is not True
         or code_retry.get("runpodctl_code_contract", {}).get("sender_starts_before_receiver")
         is not True
         or int(code_retry.get("runpodctl_code_contract", {}).get("base_secret_entropy_bytes", 0))

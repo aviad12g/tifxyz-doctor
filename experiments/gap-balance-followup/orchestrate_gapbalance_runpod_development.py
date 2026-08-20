@@ -216,6 +216,7 @@ def allocate_multi(
     jupyter_terminal_retry = None
     jupyter_pid_retry = None
     croc_code_retry = None
+    croc_room_retry = None
     ssh_public_key = None
     deployment_public_key = None
     if use_hardware_substitution:
@@ -265,6 +266,7 @@ def allocate_multi(
                 or args.jupyter_terminal_retry is not None
                 or args.jupyter_pid_retry is not None
                 or args.croc_code_retry is not None
+                or args.croc_room_retry is not None
             ):
                 if args.ssh_retry is None or args.ssh_public_key is None:
                     raise RuntimeError("SSH injection retry requires both its public freeze and key path")
@@ -442,6 +444,30 @@ def allocate_multi(
                         raise RuntimeError(
                             "croc code retry changes a frozen transport, budget, or sealed gate"
                         )
+                if args.croc_room_retry is not None:
+                    if croc_code_retry is None:
+                        raise RuntimeError("croc room retry requires the croc code retry")
+                    croc_room_retry = load_plan(args.croc_room_retry)
+                    receiver_retry = croc_room_retry.get("receiver_retry", {})
+                    payment = croc_room_retry.get("payment_authority", {})
+                    if (
+                        croc_room_retry.get("runpod_development_plan_payload_sha256")
+                        != plan["payload_sha256"]
+                        or croc_room_retry.get("croc_code_retry_payload_sha256")
+                        != croc_code_retry["payload_sha256"]
+                        or receiver_retry.get("retry_room_not_ready") is not True
+                        or receiver_retry.get("poll_rc_during_sender") is not True
+                        or int(receiver_retry.get("maximum_retry_seconds", 0)) > 180
+                        or croc_room_retry.get("failed_deployment", {}).get(
+                            "bundle_bytes_uploaded"
+                        )
+                        != 0
+                        or payment.get("direct_credit_card_charge_permitted") is not False
+                        or payment.get("runpod_auto_pay_verified_disabled") is not True
+                    ):
+                        raise RuntimeError(
+                            "croc room retry changes a frozen transport, budget, or sealed gate"
+                        )
     elif stop_after_reservation:
         if args.replacement_reservation is None:
             raise RuntimeError("reserve-multi requires the public replacement reservation")
@@ -599,7 +625,9 @@ def allocate_multi(
     }
     if dynamic_egress is not None:
         prior_spend = (
-            croc_code_retry["billing"]["prior_conservative_development_spend_usd"]
+            croc_room_retry["billing"]["prior_conservative_development_spend_usd"]
+            if croc_room_retry is not None
+            else croc_code_retry["billing"]["prior_conservative_development_spend_usd"]
             if croc_code_retry is not None
             else jupyter_pid_retry["billing"]["prior_conservative_development_spend_usd"]
             if jupyter_pid_retry is not None
@@ -665,6 +693,10 @@ def allocate_multi(
         if croc_code_retry is not None:
             receipt.update(
                 croc_code_retry_payload_sha256=croc_code_retry["payload_sha256"],
+            )
+        if croc_room_retry is not None:
+            receipt.update(
+                croc_room_retry_payload_sha256=croc_room_retry["payload_sha256"],
             )
     if stop_after_reservation:
         try:
@@ -1065,6 +1097,7 @@ def main() -> int:
     parser.add_argument("--jupyter-terminal-retry", type=Path)
     parser.add_argument("--jupyter-pid-retry", type=Path)
     parser.add_argument("--croc-code-retry", type=Path)
+    parser.add_argument("--croc-room-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")
