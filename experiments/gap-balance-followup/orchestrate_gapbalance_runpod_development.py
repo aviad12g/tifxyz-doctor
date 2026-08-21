@@ -1171,25 +1171,54 @@ def resume_chunked(args, plan: dict) -> None:
 def resume_verification(args, plan: dict) -> None:
     receipt = json.loads(args.receipt.read_text(encoding="utf-8"))
     retry = load_plan(args.pycache_verification_retry)
+    stale_retry = (
+        load_plan(args.stale_rc_retry) if args.stale_rc_retry is not None else None
+    )
     if len(args.public_commit) != 40 or any(
         character not in "0123456789abcdef" for character in args.public_commit
     ):
         raise RuntimeError("public commit must be an exact lowercase Git SHA")
     frozen_pods = receipt.get("pods") or []
-    prior = float(retry.get("billing", {}).get("prior_conservative_development_spend_usd", -1))
+    authority = stale_retry or retry
+    prior = float(
+        authority.get("billing", {}).get(
+            "prior_conservative_development_spend_usd", -1
+        )
+    )
+    failure = (
+        stale_retry.get("failed_retry", {})
+        if stale_retry is not None
+        else retry.get("failed_deployment", {})
+    )
+    expected_status = (
+        "BUNDLE_VERIFICATION_RETRY_ERROR_PODS_STOPPED"
+        if stale_retry is not None
+        else "JUPYTER_CROC_DEPLOYMENT_ERROR_PODS_STOPPED"
+    )
     if (
-        receipt.get("status") != "JUPYTER_CROC_DEPLOYMENT_ERROR_PODS_STOPPED"
+        receipt.get("status") != expected_status
         or receipt.get("plan_payload_sha256") != plan["payload_sha256"]
         or retry.get("runpod_development_plan_payload_sha256") != plan["payload_sha256"]
         or retry.get("chunked_reallocation_retry_payload_sha256")
         != receipt.get("chunked_reallocation_retry_payload_sha256")
-        or [pod["id"] for pod in frozen_pods]
-        != retry.get("failed_deployment", {}).get("pods_stopped")
-        or retry.get("failed_deployment", {}).get("provider_status_after_failure")
+        or [pod["id"] for pod in frozen_pods] != failure.get("pods_stopped")
+        or failure.get("provider_status_after_failure")
         != ["EXITED"] * len(frozen_pods)
-        or retry.get("failed_deployment", {}).get("bundle_extracted_on_both_pods")
-        is not True
+        or (
+            stale_retry is None
+            and retry.get("failed_deployment", {}).get("bundle_extracted_on_both_pods")
+            is not True
+        )
         or retry.get("retry", {}).get("reupload_bundle") is not False
+        or (
+            stale_retry is not None
+            and stale_retry.get("pycache_verification_retry_payload_sha256")
+            != retry["payload_sha256"]
+        )
+        or (
+            stale_retry is not None
+            and stale_retry.get("retry", {}).get("reupload_bundle") is not False
+        )
         or prior >= float(plan["budget"]["development_billing_cutoff_usd"])
         or retry.get("payment_authority", {}).get("direct_credit_card_charge_permitted")
         is not False
@@ -1232,6 +1261,9 @@ def resume_verification(args, plan: dict) -> None:
         status="PODS_EXTRACTED_AWAITING_BLIND_VERIFICATION",
         public_runpod_commit=args.public_commit,
         pycache_verification_retry_payload_sha256=retry["payload_sha256"],
+        stale_rc_retry_payload_sha256=(
+            stale_retry["payload_sha256"] if stale_retry is not None else None
+        ),
         active_billing_started_at=now().isoformat(),
         prior_conservative_development_spend_usd=prior,
         conservative_development_spend_usd=prior,
@@ -1384,6 +1416,7 @@ def main() -> int:
     parser.add_argument("--chunked-transfer-retry", type=Path)
     parser.add_argument("--chunked-reallocation-retry", type=Path)
     parser.add_argument("--pycache-verification-retry", type=Path)
+    parser.add_argument("--stale-rc-retry", type=Path)
     parser.add_argument("--ssh-public-key", type=Path)
     parser.add_argument("--deployment-public-key", type=Path)
     parser.add_argument("--enforce", action="store_true")

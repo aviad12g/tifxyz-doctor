@@ -638,8 +638,31 @@ def test_remote_verifier_removes_generated_pycache_and_disables_bytecode():
         deadline=100.0,
         poll_interval=5,
     )
-    assert terminal.commands == [
-        ("rm -rf /workspace/exact/bundle/controller/__pycache__", 30)
-    ]
+    assert terminal.commands == [(
+        "rm -rf /workspace/exact/bundle/controller/__pycache__; "
+        "rm -f /workspace/exact/status/bundle-verification.operational.log "
+        "/workspace/exact/status/bundle-verification.rc",
+        30,
+    )]
     assert terminal.background is not None
     assert "python -B /workspace/exact/bundle/controller/verify_gapbalance" in terminal.background[0]
+
+
+def test_stale_verifier_rc_retry_is_exact_bounded_and_result_blind():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_STALE_RC_RETRY.json")
+    pycache = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_PYCACHE_VERIFICATION_RETRY.json")
+    assert retry["pycache_verification_retry_payload_sha256"] == pycache["payload_sha256"]
+    assert retry["failed_retry"]["bundle_reuploaded"] is False
+    assert retry["failed_retry"]["provider_status_after_failure"] == [
+        "EXITED",
+        "EXITED",
+    ]
+    correction = retry["retry"]
+    assert correction["delete_only_exact_prior_verifier_log_and_rc_before_launch"]
+    assert correction["execute_verifier_with_python_dash_B"]
+    assert correction["reupload_bundle"] is False
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        6.078399
+    )
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]

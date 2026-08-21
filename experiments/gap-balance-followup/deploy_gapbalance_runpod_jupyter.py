@@ -651,7 +651,8 @@ def verify_remote_bundle(
     plan = root + "/bundle/controller/GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json"
     manifest = root + "/bundle/bundle_manifest.json"
     terminal.run(
-        f"rm -rf {shlex.quote(root + '/bundle/controller/__pycache__')}",
+        f"rm -rf {shlex.quote(root + '/bundle/controller/__pycache__')}; "
+        f"rm -f {shlex.quote(log)} {shlex.quote(rc_file)}",
         timeout=30,
     )
     command = shlex.join(
@@ -736,6 +737,7 @@ def main() -> int:
     parser.add_argument("--chunked-transfer-retry", type=Path)
     parser.add_argument("--chunked-reallocation-retry", type=Path)
     parser.add_argument("--pycache-verification-retry", type=Path)
+    parser.add_argument("--stale-rc-retry", type=Path)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -761,6 +763,11 @@ def main() -> int:
     verification_retry = (
         load_hashed(args.pycache_verification_retry)
         if args.pycache_verification_retry is not None
+        else None
+    )
+    stale_rc_retry = (
+        load_hashed(args.stale_rc_retry)
+        if args.stale_rc_retry is not None
         else None
     )
     egress = load_hashed(args.bundle_egress)
@@ -797,6 +804,11 @@ def main() -> int:
             verification_retry is not None
             and receipt.get("pycache_verification_retry_payload_sha256")
             != verification_retry["payload_sha256"]
+        )
+        or (
+            stale_rc_retry is not None
+            and receipt.get("stale_rc_retry_payload_sha256")
+            != stale_rc_retry["payload_sha256"]
         )
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
@@ -891,6 +903,26 @@ def main() -> int:
                 "scientific_endpoints_scored"
             )
             is not False
+        )
+        or (
+            stale_rc_retry is not None
+            and verification_retry is None
+        )
+        or (
+            stale_rc_retry is not None
+            and stale_rc_retry.get("pycache_verification_retry_payload_sha256")
+            != verification_retry["payload_sha256"]
+        )
+        or (
+            stale_rc_retry is not None
+            and stale_rc_retry.get("retry", {}).get(
+                "delete_only_exact_prior_verifier_log_and_rc_before_launch"
+            )
+            is not True
+        )
+        or (
+            stale_rc_retry is not None
+            and stale_rc_retry.get("retry", {}).get("reupload_bundle") is not False
         )
         or (
             chunked_retry is not None
@@ -1136,6 +1168,9 @@ def main() -> int:
             verification_retry["payload_sha256"]
             if verification_retry is not None
             else None
+        ),
+        "stale_rc_retry_payload_sha256": (
+            stale_rc_retry["payload_sha256"] if stale_rc_retry is not None else None
         ),
         "pods": deployments,
     }
