@@ -1,0 +1,44 @@
+{
+  "affected_identity": {
+    "dataset_id": 11704096,
+    "manifest_sha256": "b62e5a8f3e8ff4e2de7a5b3626f85fcee91df338c9e250867b2342b903ea9dfe",
+    "provider": "kaggle",
+    "ref": "jhjeong0815/pherc1218-tight-contact-val",
+    "version": 2
+  },
+  "author_notice": {
+    "author": "Jinhojeong",
+    "issue": 191,
+    "issue_comment_id": 5366060707,
+    "repository": "ScrollPrize/villa",
+    "summary": "Hold off pinning any version while crop CT, label stitching, and gap-census comparison faults are corrected and verified.",
+    "url": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5366060707"
+  },
+  "confirmation_gate": {
+    "candidate_and_threshold_freeze_may_continue": true,
+    "corrected_future_release_permitted": false,
+    "development_scoring_may_continue": true,
+    "pherc1218_v1_permitted": false,
+    "pherc1218_v2_permitted": false,
+    "real_confirmation_may_open": false,
+    "synthetic_confirmation_seeds_500_504_may_open": false
+  },
+  "confirmation_outputs_inspected": false,
+  "npz_ct_labels_predictions_probabilities_panels_or_endpoints_opened": false,
+  "payload_sha256": "e25f56f18d189f3e91a22814cc5feb25cb1049773294206ac53a5ca0f46be6a6",
+  "prior_v2_record": "Historical metadata-only reconciliation remains an audit record but no longer certifies scientific validity or confirmation eligibility.",
+  "reopen_requirements": [
+    "author publishes the complete verified correction account and corrected release",
+    "corrected provider identity and manifest pass a new metadata-only audit",
+    "a public amendment freezes the new identity, eligibility lists, and fixed panels before confirmation access",
+    "candidate, thresholds, gates, metrics, and selection rule remain unchanged",
+    "the active quarantine is explicitly superseded by a hashed public record"
+  ],
+  "schema_version": "1.0",
+  "status": "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
+  "withdrawal_reasons": [
+    "faults in crop CT",
+    "faults in label stitching",
+    "unit error in the cross-validation-set gap-census comparison"
+  ]
+}

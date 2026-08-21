@@ -86,6 +86,21 @@ def test_public_frozen_contract_validates():
     MODULE.validate_contract(load_public_frozen())
 
 
+def test_active_author_withdrawal_quarantine_fails_closed():
+    quarantine = ROOT / "PHERC1218_HOLDOUT_QUARANTINE.json"
+    with pytest.raises(MODULE.ContractError, match="quarantined by the dataset author"):
+        MODULE.require_no_active_quarantine(load_public_frozen(), quarantine)
+
+
+def test_tampered_holdout_quarantine_fails_closed(tmp_path):
+    quarantine = json.loads((ROOT / "PHERC1218_HOLDOUT_QUARANTINE.json").read_text())
+    quarantine["confirmation_gate"]["real_confirmation_may_open"] = True
+    path = tmp_path / "PHERC1218_HOLDOUT_QUARANTINE.json"
+    path.write_text(json.dumps(quarantine))
+    with pytest.raises(MODULE.ContractError, match="payload mismatch"):
+        MODULE.require_no_active_quarantine(load_public_frozen(), path)
+
+
 def test_metadata_only_manifest_validation_and_panel_selection(tmp_path):
     manifest = tmp_path / "MANIFEST.jsonl"
     write_manifest(manifest)

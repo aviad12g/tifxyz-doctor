@@ -1,4 +1,16 @@
-GapBalance Stage 0 passed result-blind on PHerc1218 dataset version 2.
+WITHDRAWN: PHerc1218 dataset version 2 is quarantined and is not an eligible
+GapBalance confirmation holdout.
+
+The dataset author withdrew every published version in GitHub Issue #191
+comment 5366060707 after finding crop-CT faults, label-stitching faults, and a
+unit error in the cross-validation-set gap-census comparison. The active,
+hashed fail-closed record is `PHERC1218_HOLDOUT_QUARANTINE.json`.
+
+The historical Stage-0 audit below established metadata reconciliation only.
+It did not inspect scientific endpoints and does not override the withdrawal.
+
+GapBalance Stage 0 had passed result-blind metadata checks on PHerc1218 dataset
+version 2 before the author's later withdrawal.
 
 The provider marks version 2 Ready and explicitly identifies the six
 version-1 excess crops as pilot-extraction leftovers. The exact v2 manifest,

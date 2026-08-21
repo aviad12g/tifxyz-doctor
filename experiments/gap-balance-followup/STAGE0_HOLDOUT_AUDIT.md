@@ -1,6 +1,14 @@
 # GapBalance Stage-0 holdout feasibility audit
 
-Status: **REAL HOLDOUT CERTIFIED; RESULT-BLIND PROTOCOL FROZEN**
+> **Superseded for confirmation eligibility on 2026-08-21.** The PHerc1218
+> author subsequently withdrew every published version after finding faults in
+> crop CT and label stitching plus a unit error in the cross-validation-set
+> gap-census comparison. Version 1 and version 2 are both forbidden. See the
+> active hashed record `PHERC1218_HOLDOUT_QUARANTINE.json`. The metadata-only
+> reconciliation below remains historical audit evidence; it is not a current
+> scientific-validity certification.
+
+Status: **HISTORICAL METADATA AUDIT ONLY; REAL HOLDOUT QUARANTINED**
 
 This audit concerns a follow-up to the immutable preregistered Gap8 result. It
 does not reopen, overwrite, reinterpret, or tune against the previously opened

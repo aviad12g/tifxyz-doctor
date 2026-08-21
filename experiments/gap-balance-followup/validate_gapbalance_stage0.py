@@ -47,6 +47,33 @@ def require(condition: bool, message: str) -> None:
         raise ContractError(message)
 
 
+def require_no_active_quarantine(contract: dict[str, Any], path: Path) -> None:
+    """Reject a withdrawn holdout before any manifest or payload access."""
+    if not path.exists():
+        return
+    quarantine = json.loads(path.read_text(encoding="utf-8"))
+    body = dict(quarantine)
+    observed = body.pop("payload_sha256", None)
+    require(observed == canonical_sha256(body), "holdout quarantine payload mismatch")
+    require(
+        quarantine.get("status")
+        == "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
+        "unknown holdout quarantine status",
+    )
+    real = contract.get("confirmation", {}).get("real", {})
+    affected = quarantine.get("affected_identity", {})
+    require(
+        real.get("ref") == affected.get("ref"),
+        "holdout quarantine does not match the contract dataset",
+    )
+    require(
+        quarantine.get("confirmation_gate", {}).get("real_confirmation_may_open")
+        is False,
+        "active holdout quarantine does not fail closed",
+    )
+    raise ContractError("PHerc1218 holdout is quarantined by the dataset author")
+
+
 def validate_contract(contract: dict[str, Any]) -> dict[str, Any]:
     require(contract.get("schema_version") == "1.0", "unexpected schema_version")
     encoded = json.dumps(contract, sort_keys=True)
@@ -303,6 +330,9 @@ def main() -> int:
 
     try:
         contract = json.loads(args.contract.read_text(encoding="utf-8"))
+        require_no_active_quarantine(
+            contract, args.contract.with_name("PHERC1218_HOLDOUT_QUARANTINE.json")
+        )
         if args.contract_only:
             validate_contract(contract)
             result = {"status": "CONTRACT_VALIDATED", "npz_opened_or_parsed": False}
