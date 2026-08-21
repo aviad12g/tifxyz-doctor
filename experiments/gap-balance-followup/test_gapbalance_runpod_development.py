@@ -586,3 +586,60 @@ def test_chunked_reallocation_retry_is_zero_spend_capped_and_still_sealed():
     assert replacement["use_chunked_transfer_retry_without_scientific_change"]
     assert not retry["sealed_gates"]["pherc1218_v2_opened"]
     assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_pycache_verification_retry_reuses_exact_bundle_without_scoring():
+    retry = WRAPPER.load_plan(HERE / "GAPBALANCE_RUNPOD_PYCACHE_VERIFICATION_RETRY.json")
+    reallocation = WRAPPER.load_plan(
+        HERE / "GAPBALANCE_RUNPOD_CHUNKED_REALLOCATION_RETRY.json"
+    )
+    assert retry["chunked_reallocation_retry_payload_sha256"] == reallocation[
+        "payload_sha256"
+    ]
+    assert retry["failed_deployment"]["bundle_extracted_on_both_pods"]
+    assert retry["failed_deployment"][
+        "bundle_archives_sha256_verified_before_extraction"
+    ]
+    correction = retry["retry"]
+    assert correction["delete_only_generated_controller_pycache_before_verification"]
+    assert correction["execute_verifier_with_python_dash_B"]
+    assert correction["reopen_only_existing_verified_extracted_bundles"]
+    assert correction["reupload_bundle"] is False
+    assert correction["rerun_scientific_cache_jobs_before_verification"] is False
+    assert retry["billing"]["prior_conservative_development_spend_usd"] == pytest.approx(
+        6.054676
+    )
+    assert not retry["sealed_gates"]["pherc1218_v2_opened"]
+    assert not retry["sealed_gates"]["scientific_endpoints_scored"]
+
+
+def test_remote_verifier_removes_generated_pycache_and_disables_bytecode():
+    class Terminal:
+        def __init__(self):
+            self.commands = []
+            self.background = None
+
+        def run(self, command, *, timeout):
+            self.commands.append((command, timeout))
+            return ""
+
+        def start_background(self, body, *, log, rc_file):
+            self.background = (body, log, rc_file)
+            return 41
+
+        def wait_rc(self, rc_file, *, deadline, interval):
+            assert rc_file.endswith("bundle-verification.rc")
+
+    terminal = Terminal()
+    DEPLOY_JUPYTER.verify_remote_bundle(
+        terminal,
+        {"remote_root": "/workspace/exact"},
+        "a" * 64,
+        deadline=100.0,
+        poll_interval=5,
+    )
+    assert terminal.commands == [
+        ("rm -rf /workspace/exact/bundle/controller/__pycache__", 30)
+    ]
+    assert terminal.background is not None
+    assert "python -B /workspace/exact/bundle/controller/verify_gapbalance" in terminal.background[0]

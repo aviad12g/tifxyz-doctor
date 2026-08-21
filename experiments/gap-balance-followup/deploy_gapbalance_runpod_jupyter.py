@@ -650,9 +650,14 @@ def verify_remote_bundle(
     verifier = root + "/bundle/controller/verify_gapbalance_runpod_development_bundle.py"
     plan = root + "/bundle/controller/GAPBALANCE_RUNPOD_DEVELOPMENT_PLAN.json"
     manifest = root + "/bundle/bundle_manifest.json"
+    terminal.run(
+        f"rm -rf {shlex.quote(root + '/bundle/controller/__pycache__')}",
+        timeout=30,
+    )
     command = shlex.join(
         [
             "python",
+            "-B",
             verifier,
             "--plan",
             plan,
@@ -730,6 +735,7 @@ def main() -> int:
     parser.add_argument("--croc-sender-ready-retry", type=Path, required=True)
     parser.add_argument("--chunked-transfer-retry", type=Path)
     parser.add_argument("--chunked-reallocation-retry", type=Path)
+    parser.add_argument("--pycache-verification-retry", type=Path)
     parser.add_argument("--bundle-egress", type=Path, required=True)
     parser.add_argument("--runpodctl", type=Path, required=True)
     args = parser.parse_args()
@@ -752,12 +758,22 @@ def main() -> int:
         if args.chunked_reallocation_retry is not None
         else None
     )
+    verification_retry = (
+        load_hashed(args.pycache_verification_retry)
+        if args.pycache_verification_retry is not None
+        else None
+    )
     egress = load_hashed(args.bundle_egress)
     receipt = json.loads(args.provider_receipt.read_text(encoding="utf-8"))
     transfer = retry["runpodctl_transfer"]
     bundle_record = egress["bundle"]
+    expected_receipt_status = (
+        "PODS_EXTRACTED_AWAITING_BLIND_VERIFICATION"
+        if verification_retry is not None
+        else "PODS_ALLOCATED_AWAITING_DEPLOYMENT"
+    )
     if (
-        receipt.get("status") != "PODS_ALLOCATED_AWAITING_DEPLOYMENT"
+        receipt.get("status") != expected_receipt_status
         or receipt.get("plan_payload_sha256") != plan["payload_sha256"]
         or receipt.get("jupyter_croc_retry_payload_sha256") != retry["payload_sha256"]
         or receipt.get("jupyter_terminal_retry_payload_sha256")
@@ -776,6 +792,11 @@ def main() -> int:
             reallocation_retry is not None
             and receipt.get("chunked_reallocation_retry_payload_sha256")
             != reallocation_retry["payload_sha256"]
+        )
+        or (
+            verification_retry is not None
+            and receipt.get("pycache_verification_retry_payload_sha256")
+            != verification_retry["payload_sha256"]
         )
         or receipt.get("private_bundle_egress_permitted") is not True
         or receipt.get("jupyter_credentials_private") is not True
@@ -821,6 +842,55 @@ def main() -> int:
             reallocation_retry is not None
             and reallocation_retry.get("runpod_development_plan_payload_sha256")
             != plan["payload_sha256"]
+        )
+        or (
+            verification_retry is not None
+            and reallocation_retry is None
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("chunked_reallocation_retry_payload_sha256")
+            != reallocation_retry["payload_sha256"]
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("runpod_development_plan_payload_sha256")
+            != plan["payload_sha256"]
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("retry", {}).get("reupload_bundle") is not False
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("retry", {}).get(
+                "delete_only_generated_controller_pycache_before_verification"
+            )
+            is not True
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("retry", {}).get(
+                "execute_verifier_with_python_dash_B"
+            )
+            is not True
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("failed_deployment", {}).get("pods_stopped")
+            != [pod["id"] for pod in receipt.get("pods", [])]
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("failed_deployment", {}).get("bundle_commit")
+            != verification_retry.get("public_parent_commit")
+        )
+        or (
+            verification_retry is not None
+            and verification_retry.get("sealed_gates", {}).get(
+                "scientific_endpoints_scored"
+            )
+            is not False
         )
         or (
             chunked_retry is not None
@@ -941,59 +1011,74 @@ def main() -> int:
                 "command -v runpodctl >/dev/null && command -v python >/dev/null && command -v tar >/dev/null",
                 timeout=30,
             )
-        cancel_event = threading.Event()
-        with ThreadPoolExecutor(max_workers=len(pods)) as pool:
-            transfer_function = (
-                transfer_one_chunked if chunked_retry is not None else transfer_one
-            )
-            futures = {
-                pool.submit(
-                    transfer_function,
-                    terminal=terminals[pod["id"]],
-                    pod=pod,
-                    pod_index=index,
-                    receipt=receipt,
-                    archive=args.bundle_archive,
-                    archive_sha256=bundle_record["archive_sha256"],
-                    archive_bytes=int(bundle_record["archive_bytes"]),
-                    runpodctl=args.runpodctl,
-                    deadline=deadline,
-                    poll_interval=poll_interval,
-                    sender_ready_timeout=int(
-                        sender_retry["sender_readiness"]["maximum_banner_seconds"]
+        if verification_retry is not None:
+            bundle_commit = verification_retry["failed_deployment"]["bundle_commit"]
+            deployments = [
+                {
+                    "pod_id": pod["id"],
+                    "jobs": pod["jobs"],
+                    "remote_root": (
+                        f"/workspace/gapbalance-development-{bundle_commit[:8]}-p{index}"
                     ),
-                    post_banner_delay=int(
-                        sender_retry["sender_readiness"]["post_banner_delay_seconds"]
-                    ),
-                    **(
-                        {
-                            "chunk_bytes": int(
-                                chunked_retry["retry_transport"]["chunk_bytes"]
-                            ),
-                            "maximum_attempts": int(
-                                chunked_retry["retry_transport"][
-                                    "maximum_attempts_per_chunk"
-                                ]
-                            ),
-                            "failed_parent_commit": chunked_retry["public_parent_commit"],
-                            "cancel_event": cancel_event,
-                        }
-                        if chunked_retry is not None
-                        else {}
-                    ),
-                ): index
+                    "reused_verified_extracted_bundle": True,
+                    "archive_sha256_verified_before_extraction": True,
+                }
                 for index, pod in enumerate(pods)
-            }
-            indexed = {}
-            try:
-                for future in as_completed(futures):
-                    indexed[futures[future]] = future.result()
-            except Exception:
-                cancel_event.set()
-                for future in futures:
-                    future.cancel()
-                raise
-            deployments = [indexed[index] for index in range(len(pods))]
+            ]
+        else:
+            cancel_event = threading.Event()
+            with ThreadPoolExecutor(max_workers=len(pods)) as pool:
+                transfer_function = (
+                    transfer_one_chunked if chunked_retry is not None else transfer_one
+                )
+                futures = {
+                    pool.submit(
+                        transfer_function,
+                        terminal=terminals[pod["id"]],
+                        pod=pod,
+                        pod_index=index,
+                        receipt=receipt,
+                        archive=args.bundle_archive,
+                        archive_sha256=bundle_record["archive_sha256"],
+                        archive_bytes=int(bundle_record["archive_bytes"]),
+                        runpodctl=args.runpodctl,
+                        deadline=deadline,
+                        poll_interval=poll_interval,
+                        sender_ready_timeout=int(
+                            sender_retry["sender_readiness"]["maximum_banner_seconds"]
+                        ),
+                        post_banner_delay=int(
+                            sender_retry["sender_readiness"]["post_banner_delay_seconds"]
+                        ),
+                        **(
+                            {
+                                "chunk_bytes": int(
+                                    chunked_retry["retry_transport"]["chunk_bytes"]
+                                ),
+                                "maximum_attempts": int(
+                                    chunked_retry["retry_transport"][
+                                        "maximum_attempts_per_chunk"
+                                    ]
+                                ),
+                                "failed_parent_commit": chunked_retry["public_parent_commit"],
+                                "cancel_event": cancel_event,
+                            }
+                            if chunked_retry is not None
+                            else {}
+                        ),
+                    ): index
+                    for index, pod in enumerate(pods)
+                }
+                indexed = {}
+                try:
+                    for future in as_completed(futures):
+                        indexed[futures[future]] = future.result()
+                except Exception:
+                    cancel_event.set()
+                    for future in futures:
+                        future.cancel()
+                    raise
+                deployments = [indexed[index] for index in range(len(pods))]
         for deployment in deployments:
             verify_remote_bundle(
                 terminals[deployment["pod_id"]],
@@ -1016,7 +1101,11 @@ def main() -> int:
     except Exception:
         stop_all(runpod, pods)
         receipt.update(
-            status="JUPYTER_CROC_DEPLOYMENT_ERROR_PODS_STOPPED",
+            status=(
+                "BUNDLE_VERIFICATION_RETRY_ERROR_PODS_STOPPED"
+                if verification_retry is not None
+                else "JUPYTER_CROC_DEPLOYMENT_ERROR_PODS_STOPPED"
+            ),
             deployment_error_at=now().isoformat(),
             scientific_endpoints_inspected=False,
             confirmation_outputs_inspected=False,
@@ -1029,7 +1118,11 @@ def main() -> int:
 
     receipt["deployment"] = {
         "deployed_at": now().isoformat(),
-        "transport": "authenticated_jupyter_https_wss_plus_encrypted_runpodctl_croc",
+        "transport": (
+            "reused_sha256_verified_extracted_bundle"
+            if verification_retry is not None
+            else "authenticated_jupyter_https_wss_plus_encrypted_runpodctl_croc"
+        ),
         "jupyter_croc_retry_payload_sha256": retry["payload_sha256"],
         "bundle_egress_payload_sha256": egress["payload_sha256"],
         "bundle_manifest_payload_sha256": manifest["payload_sha256"],
@@ -1038,6 +1131,11 @@ def main() -> int:
         "ephemeral_transfer_codes_persisted": False,
         "chunked_transfer_retry_payload_sha256": (
             chunked_retry["payload_sha256"] if chunked_retry is not None else None
+        ),
+        "pycache_verification_retry_payload_sha256": (
+            verification_retry["payload_sha256"]
+            if verification_retry is not None
+            else None
         ),
         "pods": deployments,
     }
