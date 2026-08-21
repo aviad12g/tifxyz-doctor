@@ -1,6 +1,6 @@
 # GapBalance holdout-quarantine amendment
 
-Status: **public, result-blind, and fail-closed; confirmation is blocked**
+Status: **`BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED`**
 
 This additive amendment does not rewrite the hash-bound
 `GAPBALANCE_PROTOCOL.md`, training contract, completed checkpoints,
@@ -16,9 +16,9 @@ validation set. The authoritative notice is GitHub Issue #191 comment
 <https://github.com/ScrollPrize/villa/issues/191#issuecomment-5366060707>
 
 `PHERC1218_HOLDOUT_QUARANTINE.json` freezes the exact affected version-2
-identity, author notice, reasons, sealed-state assertions, and supersession
-requirements. Its payload SHA-256 is
-`e25f56f18d189f3e91a22814cc5feb25cb1049773294206ac53a5ca0f46be6a6`.
+identity, author notice, reasons, sealed-state assertions, compute stop, and
+supersession requirements. Its payload SHA-256 is
+`663cf15a2db85c26a6a895dafbacf259de0b2fe3a4c5c76f3d734cdf6ae60c01`.
 
 ## Immediate consequences
 
@@ -28,9 +28,13 @@ requirements. Its payload SHA-256 is
   metadata-audit evidence only; they do not certify scientific validity.
 - No PHerc1218 NPZ, CT, label, prediction, probability, panel, or endpoint has
   been opened in this experiment.
-- Development caching, development scoring, and the frozen Gap2/Gap4
-  candidate-selection rule may continue unchanged because those inputs exclude
-  PHerc1218 and all confirmation data.
+- Completed training checkpoints and already verified result-blind caches are
+  preserved byte-for-byte, but no additional GapBalance job is scheduled, no
+  RunPod pod is restarted, and no development endpoint is scored while the
+  real holdout is uncertified.
+- Gap2/Gap4 configurations, thresholds, gates, metrics, and the
+  candidate-selection rule remain frozen and ready for a later reassessment;
+  they are not executed or reinterpreted now.
 - Even after one candidate and every threshold are publicly frozen, the entire
   one-shot confirmation remains sealed. Synthetic confirmation seeds 500--504
   must not be opened separately while the real confirmation holdout is under
@@ -50,5 +54,5 @@ All of the following must be public before confirmation access:
 5. a hashed public supersession explicitly deactivates
    `PHERC1218_HOLDOUT_QUARANTINE.json`.
 
-If no corrected release satisfies these requirements, the experiment stops
-after development selection and reports that sealed confirmation was not run.
+If no corrected release satisfies these requirements, the experiment remains
+blocked without development selection or sealed confirmation.

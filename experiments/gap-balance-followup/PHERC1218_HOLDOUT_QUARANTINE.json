@@ -15,17 +15,23 @@
     "url": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5366060707"
   },
   "confirmation_gate": {
-    "candidate_and_threshold_freeze_may_continue": true,
+    "candidate_and_threshold_freeze_may_continue": false,
     "corrected_future_release_permitted": false,
-    "development_scoring_may_continue": true,
+    "development_scoring_may_continue": false,
     "pherc1218_v1_permitted": false,
     "pherc1218_v2_permitted": false,
     "real_confirmation_may_open": false,
     "synthetic_confirmation_seeds_500_504_may_open": false
   },
+  "compute_gate": {
+    "existing_verified_artifacts_preserved": true,
+    "free_job_scheduling_permitted": false,
+    "paid_compute_permitted": false,
+    "runpod_restart_permitted": false
+  },
   "confirmation_outputs_inspected": false,
   "npz_ct_labels_predictions_probabilities_panels_or_endpoints_opened": false,
-  "payload_sha256": "e25f56f18d189f3e91a22814cc5feb25cb1049773294206ac53a5ca0f46be6a6",
+  "payload_sha256": "663cf15a2db85c26a6a895dafbacf259de0b2fe3a4c5c76f3d734cdf6ae60c01",
   "prior_v2_record": "Historical metadata-only reconciliation remains an audit record but no longer certifies scientific validity or confirmation eligibility.",
   "reopen_requirements": [
     "author publishes the complete verified correction account and corrected release",
@@ -34,8 +40,9 @@
     "candidate, thresholds, gates, metrics, and selection rule remain unchanged",
     "the active quarantine is explicitly superseded by a hashed public record"
   ],
+  "quarantine_status": "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
   "schema_version": "1.0",
-  "status": "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
+  "status": "BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED",
   "withdrawal_reasons": [
     "faults in crop CT",
     "faults in label stitching",

@@ -1,5 +1,5 @@
-WITHDRAWN: PHerc1218 dataset version 2 is quarantined and is not an eligible
-GapBalance confirmation holdout.
+BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED: PHerc1218 dataset version 2 is quarantined
+and is not an eligible GapBalance confirmation holdout.
 
 The dataset author withdrew every published version in GitHub Issue #191
 comment 5366060707 after finding crop-CT faults, label-stitching faults, and a

@@ -8,7 +8,7 @@
 > reconciliation below remains historical audit evidence; it is not a current
 > scientific-validity certification.
 
-Status: **HISTORICAL METADATA AUDIT ONLY; REAL HOLDOUT QUARANTINED**
+Status: **`BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED`**
 
 This audit concerns a follow-up to the immutable preregistered Gap8 result. It
 does not reopen, overwrite, reinterpret, or tune against the previously opened

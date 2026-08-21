@@ -57,8 +57,13 @@ def require_no_active_quarantine(contract: dict[str, Any], path: Path) -> None:
     require(observed == canonical_sha256(body), "holdout quarantine payload mismatch")
     require(
         quarantine.get("status")
-        == "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
+        == "BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED",
         "unknown holdout quarantine status",
+    )
+    require(
+        quarantine.get("quarantine_status")
+        == "ACTIVE_AUTHOR_WITHDRAWAL_ALL_PHERC1218_VERSIONS_QUARANTINED",
+        "holdout quarantine is not active",
     )
     real = contract.get("confirmation", {}).get("real", {})
     affected = quarantine.get("affected_identity", {})
@@ -70,6 +75,10 @@ def require_no_active_quarantine(contract: dict[str, Any], path: Path) -> None:
         quarantine.get("confirmation_gate", {}).get("real_confirmation_may_open")
         is False,
         "active holdout quarantine does not fail closed",
+    )
+    require(
+        quarantine.get("compute_gate", {}).get("runpod_restart_permitted") is False,
+        "blocked holdout does not stop paid development compute",
     )
     raise ContractError("PHerc1218 holdout is quarantined by the dataset author")
 
