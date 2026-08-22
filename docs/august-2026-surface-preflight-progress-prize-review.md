@@ -4,10 +4,15 @@
 distinct contribution from the already-submitted Gap8 and UUID-reliability
 entries. Do not create a duplicate response for either earlier entry.
 
-Provider and public state were rechecked on 2026-08-21. ScrollPrize/villa PR
+Provider and public state were rechecked on 2026-08-22. ScrollPrize/villa PR
 [#1463](https://github.com/ScrollPrize/villa/pull/1463) is open, mergeable, and
 not merged. Its exact public head is
 [`0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928`](https://github.com/aviad12g/villa/commit/0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928).
+All four GitHub Actions workflows currently associated with that exact head
+completed successfully: Large PR review gate, CodeQL, Continuous Integration
+(CI), and Test vesuvius Python. The separate Vercel deployment status remains
+failed because a Scroll team member must authorize the deployment; it is not
+recorded as a project-test failure.
 
 ## Email
 
@@ -90,8 +95,10 @@ ultimately read complete scrolls.
   validation dataset, its labels, or its gap census. PHerc1218 versions 1 and 2
   remain forbidden for GapBalance.
 - The previously reported Python-compatibility workflow interruption was an
-  external dependency-fetch `503`; it was not a project-test failure. This
-  payload does not represent the full upstream CI matrix as passing.
+  external dependency-fetch `503`; it was not a project-test failure. All four
+  GitHub Actions workflows now pass on the exact head. The separate Vercel
+  deployment authorization status remains failed, so this payload does not
+  describe every provider status as green.
 
 ## Terms and Conditions
 

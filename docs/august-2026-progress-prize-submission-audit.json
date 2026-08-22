@@ -1,0 +1,64 @@
+{
+  "audited_at_utc": "2026-08-22T11:06:07Z",
+  "form": {
+    "form_id": "1FAIpQLSev2vJobu521iB6OuyehDktzYTEo131F4iUGwt3Qxa9a1fk6A",
+    "title": "August 2026 Progress Prizes"
+  },
+  "provider_evidence": {
+    "message_ids_published": false,
+    "receipt_count": 4,
+    "sender": "Forms Response Receipts <forms-receipts-noreply@google.com>",
+    "source": "Authenticated Gmail response-receipt messages",
+    "unique_response_bodies": 3
+  },
+  "receipts": [
+    {
+      "contribution": "Gap8 fusion-aware surface training",
+      "duplicate_group": "gap8",
+      "public_urls": [
+        "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/experiments/fusion-aware-surface",
+        "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/docs/fusion-aware-final-evidence"
+      ],
+      "receipt_utc": "2026-08-15T09:33:13Z",
+      "response_state": "CONFIRMED_BY_GOOGLE_FORMS_RECEIPT"
+    },
+    {
+      "contribution": "Gap8 fusion-aware surface training",
+      "duplicate_group": "gap8",
+      "duplicate_of_receipt_utc": "2026-08-15T09:33:13Z",
+      "full_plaintext_response_identical": true,
+      "public_urls": [
+        "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/experiments/fusion-aware-surface",
+        "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/docs/fusion-aware-final-evidence"
+      ],
+      "receipt_utc": "2026-08-15T10:33:50Z",
+      "response_state": "CONFIRMED_DUPLICATE_BY_GOOGLE_FORMS_RECEIPT"
+    },
+    {
+      "contribution": "TIFXYZ UUID reliability and interoperability",
+      "public_urls": [
+        "https://github.com/aviad12g/tifxyz-doctor/commit/723e4f04ea297ac2d51457d571b0aa036ad06472",
+        "https://github.com/ScrollPrize/villa/pull/1299",
+        "https://github.com/aviad12g/tifxyz-doctor",
+        "https://github.com/aviad12g/tifxyz-doctor/releases/tag/v0.2.0"
+      ],
+      "receipt_utc": "2026-08-15T10:53:49Z",
+      "response_state": "CONFIRMED_BY_GOOGLE_FORMS_RECEIPT"
+    },
+    {
+      "contribution": "Fail-Closed Surface-to-Ink",
+      "public_urls": [
+        "https://github.com/aviad12g/tifxyz-doctor/tree/agent/freeze-fusion-aware-checkpoints/experiments/fail-closed-surface-to-ink"
+      ],
+      "receipt_utc": "2026-08-15T13:37:08Z",
+      "response_state": "CONFIRMED_BY_GOOGLE_FORMS_RECEIPT"
+    }
+  ],
+  "separate_surface_preflight_payload": {
+    "contribution": "vesuvius.surface_preflight PR #1463",
+    "public_head": "0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928",
+    "state": "READY_FOR_REVIEW_NOT_SUBMITTED",
+    "submission_receipt_found": false
+  },
+  "submission_action_performed_during_audit": false
+}
