@@ -1,8 +1,10 @@
 # August 2026 Progress Prize — surface-pairing preflight review payload
 
-**Status:** Ready for Aviad Cohen's review. **Not submitted.** This is a
+**Status:** **Submitted once and confirmed by Google Forms receipt** at
+2026-08-22T11:29:38Z after Aviad Cohen's explicit authorization. This is a
 distinct contribution from the already-submitted Gap8 and UUID-reliability
-entries. Do not create a duplicate response for either earlier entry.
+entries. Do not create another response for this contribution or either
+earlier entry.
 
 Provider and public state were rechecked on 2026-08-22. ScrollPrize/villa PR
 [#1463](https://github.com/ScrollPrize/villa/pull/1463) is open, mergeable, and

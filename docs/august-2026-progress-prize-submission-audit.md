@@ -1,15 +1,17 @@
 # August 2026 Progress Prize submission audit
 
-**Audit time:** 2026-08-22T11:06:07Z
-**Scope:** provider receipts only; no form was submitted during this audit.
+**Audit time:** 2026-08-22T11:30:24Z
+**Scope:** provider receipts plus the explicitly authorized, single submission
+of the separate `vesuvius.surface_preflight` contribution.
 
-The authenticated mailbox contains four Google Forms response receipts for
-the exact August 2026 Progress Prizes form. They prove three distinct public
-contributions were submitted on 2026-08-15:
+The authenticated mailbox contains five Google Forms response receipts for
+the exact August 2026 Progress Prizes form. They prove four distinct public
+contributions were submitted:
 
 1. Gap8 fusion-aware surface training at 09:33:13Z.
 2. TIFXYZ UUID reliability and interoperability at 10:53:49Z.
 3. Fail-Closed Surface-to-Ink at 13:37:08Z.
+4. `vesuvius.surface_preflight` PR #1463 on 2026-08-22 at 11:29:38Z.
 
 There is also a second Gap8 receipt at 10:33:50Z. Its complete plain-text
 response is mechanically identical to the first Gap8 response, so it is
@@ -22,9 +24,10 @@ timestamps are recorded in
 
 ## Separate PR #1463 payload
 
-The `vesuvius.surface_preflight` review payload is a separate contribution. No
-Google Forms receipt for it was found in this audit, and no new response was
-submitted. Its public source remains available in
+The `vesuvius.surface_preflight` review payload was submitted once as a
+separate contribution after Aviad Cohen's explicit authorization. Google
+Forms displayed its submission-confirmation page and delivered a response
+receipt at 2026-08-22T11:29:38Z. Its public source remains available in
 [ScrollPrize/villa PR #1463](https://github.com/ScrollPrize/villa/pull/1463)
 at exact head
 [`0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928`](https://github.com/aviad12g/villa/commit/0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928).
