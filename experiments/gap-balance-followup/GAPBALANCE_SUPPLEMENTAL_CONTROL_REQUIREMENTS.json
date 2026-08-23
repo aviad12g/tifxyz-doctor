@@ -1,0 +1,26 @@
+{
+  "confirmation_outputs_inspected": false,
+  "control_rules": {
+    "contact_reference_z_max_level1": 11011,
+    "contact_reference_z_min_level1": 65,
+    "maximum_ct_empty_frac": 0.1,
+    "maximum_single_slab_share": 0.35,
+    "minimum_distinct_source_slabs": 4,
+    "minimum_eligible_controls": 48,
+    "minimum_z_span_fraction_of_contact_range": 0.5,
+    "required_manifest_fields": [
+      "arm",
+      "file",
+      "sha256",
+      "ct_empty_frac",
+      "source_slab",
+      "center_z_level1"
+    ]
+  },
+  "payload_sha256": "82fe963314a683ed911d52e79bd9763208b3a6a60e449a35f3aca09225f2cbbc",
+  "purpose": "Prospectively freeze the minimum metadata-only acceptance rules for a PHerc1218 control supplement before its release or inspection.",
+  "quarantine_superseded": false,
+  "schema_version": "1.0",
+  "scientific_endpoints_scored": false,
+  "status": "PROSPECTIVE_CONTROL_REQUIREMENTS_DO_NOT_SUPERSEDE_QUARANTINE"
+}

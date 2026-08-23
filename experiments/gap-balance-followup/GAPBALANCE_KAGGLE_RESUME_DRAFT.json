@@ -1,0 +1,192 @@
+{
+  "activation": {
+    "confirmation_access_permitted": false,
+    "launch_permitted": false,
+    "required_public_preconditions": [
+      "a corrected contact release and supplemental control release pass metadata-only audit",
+      "a hash-bound public supersession explicitly deactivates the active quarantine",
+      "the exact uniform-Kaggle resume record is committed publicly before any launch"
+    ],
+    "scoring_permitted": false
+  },
+  "active_quarantine_payload_sha256": "663cf15a2db85c26a6a895dafbacf259de0b2fe3a4c5c76f3d734cdf6ae60c01",
+  "chain": [
+    {
+      "executed": false,
+      "step": "metadata_only_holdout_reassessment"
+    },
+    {
+      "executed": false,
+      "step": "public_quarantine_supersession"
+    },
+    {
+      "executed": false,
+      "step": "complete_uniform_kaggle_development_cache"
+    },
+    {
+      "executed": false,
+      "step": "mechanical_cache_verification"
+    },
+    {
+      "executed": false,
+      "step": "one_shot_development_scoring"
+    },
+    {
+      "executed": false,
+      "step": "public_candidate_and_threshold_freeze"
+    },
+    {
+      "executed": false,
+      "step": "sealed_confirmation_cache_and_scoring"
+    },
+    {
+      "executed": false,
+      "step": "publish_all_outcomes"
+    }
+  ],
+  "completed_cache_jobs": [
+    {
+      "expected_files": {
+        "cache_manifests": 9,
+        "job_indexes": 1,
+        "npz": 216
+      },
+      "job_id": "gapbalance-development-real",
+      "kernel_id": "aviadcohen1/vesuvius-gapbalance-development-real-all-runs",
+      "provider": "kaggle",
+      "provider_version": 2,
+      "scientific_endpoints_scored": false
+    },
+    {
+      "expected_files": {
+        "cache_manifests": 3,
+        "job_indexes": 1,
+        "npz": 60
+      },
+      "job_id": "gapbalance-development-synthetic-seed11-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q0",
+      "provider": "kaggle",
+      "provider_version": 2,
+      "scientific_endpoints_scored": false
+    },
+    {
+      "expected_files": {
+        "cache_manifests": 3,
+        "job_indexes": 1,
+        "npz": 60
+      },
+      "job_id": "gapbalance-development-synthetic-seed11-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q1",
+      "provider": "kaggle",
+      "provider_version": 1,
+      "scientific_endpoints_scored": false
+    },
+    {
+      "expected_files": {
+        "cache_manifests": 3,
+        "job_indexes": 1,
+        "npz": 60
+      },
+      "job_id": "gapbalance-development-synthetic-seed11-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q2",
+      "provider": "kaggle",
+      "provider_version": 1,
+      "scientific_endpoints_scored": false
+    },
+    {
+      "expected_files": {
+        "cache_manifests": 3,
+        "job_indexes": 1,
+        "npz": 60
+      },
+      "job_id": "gapbalance-development-synthetic-seed11-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s11-q3",
+      "provider": "kaggle",
+      "provider_version": 1,
+      "scientific_endpoints_scored": false
+    }
+  ],
+  "confirmation_outputs_inspected": false,
+  "cross_provider_partial_mix_permitted": false,
+  "frozen_launch_order": [
+    "gapbalance-development-synthetic-seed23-shard00",
+    "gapbalance-development-synthetic-seed23-shard01",
+    "gapbalance-development-synthetic-seed23-shard02",
+    "gapbalance-development-synthetic-seed23-shard03",
+    "gapbalance-development-synthetic-seed47-shard00",
+    "gapbalance-development-synthetic-seed47-shard01",
+    "gapbalance-development-synthetic-seed47-shard02",
+    "gapbalance-development-synthetic-seed47-shard03"
+  ],
+  "maximum_concurrent_jobs": 2,
+  "payload_sha256": "7693390b399666b0092abe7fa06dd592d96b621452edfbcc085ffa5213411d0f",
+  "pending_cache_jobs": [
+    {
+      "job_id": "gapbalance-development-synthetic-seed23-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q0",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 0
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed23-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q1",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 1
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed23-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q2",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 2
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed23-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s23-q3",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 3
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed47-shard00",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q0",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 0
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed47-shard01",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q1",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 1
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed47-shard02",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q2",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 2
+    },
+    {
+      "job_id": "gapbalance-development-synthetic-seed47-shard03",
+      "kernel_id": "aviadcohen1/gapbalance-dev-syn-s47-q3",
+      "provider": "kaggle",
+      "provider_version": null,
+      "shard_index": 3
+    }
+  ],
+  "provider": "free Kaggle GPU",
+  "provider_cost_usd": 0,
+  "schema_version": "1.0",
+  "scientific_endpoints_scored": false,
+  "source_plan": {
+    "file": "GAPBALANCE_KAGGLE_DEVELOPMENT_PLAN.json",
+    "file_sha256": "0c6838df5b64e8d2393c72a44593450c6807de1d71630d82d6ad34069a2946e6",
+    "payload_sha256": "a4d579d63a2cce2ae2feb1688ffaa49338e16d61a8f5abdcb8bc10b6797db161"
+  },
+  "status": "DRAFT_BLOCKED_PENDING_HOLDOUT_SUPERSESSION",
+  "uniform_primary_rule_if_later_activated": "Use the complete 12-job Kaggle synthetic cache set with the verified Kaggle real cache; never mix partial RunPod outputs into development selection."
+}
