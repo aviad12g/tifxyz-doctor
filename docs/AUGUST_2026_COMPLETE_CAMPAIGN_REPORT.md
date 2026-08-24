@@ -581,3 +581,21 @@ August produced one mixed but scientifically informative segmentation experiment
 - form receipts were not allowed to become award claims.
 
 That discipline is the durable output of the campaign alongside the code, checkpoints, tests, reports, and upstream pull requests.
+
+## Additive update after the 22 August cutoff
+
+On 24 August, Jinhojeong published an exact-truth run of flummoxjr's
+prospectively specified facing-pairs CC-guard check on the eight hash-bound
+cells of Aviad's physical-fusion pilot. The reported result was that 97.6% of
+94,134 step-3 rejections were genuinely different sheets and 0 of 2,400
+accepted sites were same-sheet false accepts. The pitch-300 cells are an
+important structural exception: all 941 rejections there were same-turn
+self-facing curvature, not two-sheet contacts.
+
+This supports the bounded interpretation of the synthetic diagnostic
+instrument. It does not change Gap8's 5/7-gate verdict, certify real-scroll
+efficacy, certify PHerc1218, unblock GapBalance, or authorize retuning. No form
+was resubmitted. Exact commits, file hashes, result tables, and the public
+recomputation limitation are recorded in
+`docs/fusion-aware-final-evidence/POST_SUBMISSION_CC_GUARD_VALIDATION.md` and
+its machine-readable JSON companion.
