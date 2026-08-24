@@ -1,0 +1,71 @@
+{
+  "audited_at_utc": "2026-08-22T11:06:07Z",
+  "contribution": {
+    "changed_files": [
+      "vesuvius/README.md",
+      "vesuvius/docs/surface-preflight.md",
+      "vesuvius/pyproject.toml",
+      "vesuvius/src/vesuvius/surface_preflight.py",
+      "vesuvius/tests/test_surface_preflight.py"
+    ],
+    "exact_head_commit": "0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928",
+    "github_actions": [
+      {
+        "conclusion": "success",
+        "name": "Large PR review gate",
+        "run_id": 31946939341,
+        "run_url": "https://github.com/ScrollPrize/villa/actions/runs/31946939341"
+      },
+      {
+        "conclusion": "success",
+        "name": "CodeQL",
+        "run_id": 31946939347,
+        "run_url": "https://github.com/ScrollPrize/villa/actions/runs/31946939347"
+      },
+      {
+        "conclusion": "success",
+        "name": "Continuous Integration (CI)",
+        "run_id": 31946939321,
+        "run_url": "https://github.com/ScrollPrize/villa/actions/runs/31946939321"
+      },
+      {
+        "conclusion": "success",
+        "name": "Test vesuvius Python",
+        "run_id": 31946939372,
+        "run_url": "https://github.com/ScrollPrize/villa/actions/runs/31946939372"
+      }
+    ],
+    "pr_number": 1463,
+    "pr_state": "open",
+    "pr_title": "Add fail-closed TIFXYZ volume preflight",
+    "public_head_url": "https://github.com/aviad12g/villa/commit/0ea5aec2c8a2de7c3a080d7d0d3a7524ac8fe928",
+    "public_pr_url": "https://github.com/ScrollPrize/villa/pull/1463",
+    "upstream_mergeable_observed": true,
+    "upstream_merged_observed": false,
+    "vercel_deployment_status": "failure_authorization_required"
+  },
+  "independent_validation": {
+    "comment_id": 5307369457,
+    "comment_url": "https://github.com/ScrollPrize/villa/pull/1463#issuecomment-5307369457",
+    "default_sample_count": 1024,
+    "expected_verdicts_matched": 7,
+    "maximum_reported_absolute_support_error_percentage_points": 1.5,
+    "pairing_count": 7,
+    "scope": "surface-to-volume input-pairing gate behavior only"
+  },
+  "limitations": {
+    "all_github_actions_observed_success": true,
+    "certifies_pherc1218_holdout": false,
+    "certifies_surface_geometry": false,
+    "claims_ink_or_text": false,
+    "claims_segmentation_improvement": false,
+    "full_upstream_ci_claimed_passing": false,
+    "pherc1218_v1_or_v2_permitted_for_gapbalance": false
+  },
+  "schema_version": "1.0",
+  "submission": {
+    "distinct_from_submitted_gap8": true,
+    "distinct_from_submitted_uuid_reliability": true,
+    "state": "READY_FOR_AVIAD_REVIEW_NOT_SUBMITTED"
+  }
+}

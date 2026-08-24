@@ -1,0 +1,75 @@
+{
+  "allowed_hardware_in_order": [
+    {
+      "aggregate_hourly_ceiling_usd": 1.54,
+      "cloud_type": "COMMUNITY",
+      "gpu_display_name": "RTX 3090",
+      "gpu_memory_gb": 24,
+      "gpu_type_id": "NVIDIA GeForce RTX 3090",
+      "per_gpu_hourly_ceiling_usd": 0.22,
+      "total_gpu_count": 7
+    },
+    {
+      "aggregate_hourly_ceiling_usd": 1.12,
+      "cloud_type": "COMMUNITY",
+      "gpu_display_name": "RTX A5000",
+      "gpu_memory_gb": 24,
+      "gpu_type_id": "NVIDIA RTX A5000",
+      "per_gpu_hourly_ceiling_usd": 0.16,
+      "total_gpu_count": 7
+    },
+    {
+      "aggregate_hourly_ceiling_usd": 2.31,
+      "cloud_type": "COMMUNITY",
+      "gpu_display_name": "RTX A6000",
+      "gpu_memory_gb": 48,
+      "gpu_type_id": "NVIDIA RTX A6000",
+      "per_gpu_hourly_ceiling_usd": 0.33,
+      "total_gpu_count": 7
+    }
+  ],
+  "budget": {
+    "absolute_campaign_cap_usd": 25.0,
+    "confirmation_reserve_usd": 13.0,
+    "development_billing_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.070296,
+    "remaining_development_cutoff_usd": 11.929704,
+    "user_spending_authorization": "I approve RunPod spending up to $12 for development, within a $25 total campaign cap."
+  },
+  "egress": {
+    "private_bundle_egress_to_replacements_permitted": false,
+    "rule": "stop replacements and publish exact ids before requesting explicit private-bundle egress approval"
+  },
+  "numerical_reproducibility": {
+    "all_12_jobs_must_use_one_uniform_selected_hardware_type": true,
+    "cross_hardware_partial_mix_permitted": false,
+    "frozen_inputs_weights_software_and_thresholds_change": false,
+    "partial_scoring_or_selection_permitted": false,
+    "selection_requires_all_12_primary_caches": true
+  },
+  "payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "prior_4090_reservation_failure": {
+    "attempt_started_at": "2026-08-20T17:44:18.939737+00:00",
+    "layouts_failed": [
+      "four_plus_three",
+      "three_plus_two_plus_two",
+      "two_plus_two_plus_two_plus_one",
+      "seven_singles"
+    ],
+    "provider_error": "There are no longer any instances available with the requested specifications. Please refresh and try again.",
+    "status": "MULTI_POD_ALLOCATION_FAILED_NO_ACTIVE_PODS"
+  },
+  "public_parent_commit": "656121e3b416501d5ca1e16ac0b44b8bd399a2aa",
+  "replacement_reservation_payload_sha256": "f756cebd0bfa106b3f4b72462b75b2e00af79422077890973042316db17dcc16",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "runpod_multi_pod_retry_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_ORDERED_RUNPOD_HARDWARE_SUBSTITUTION_FROZEN_BEFORE_CREATION",
+  "unchanged_job_layouts_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796"
+}

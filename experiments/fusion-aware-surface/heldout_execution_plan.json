@@ -1,0 +1,1477 @@
+{
+  "final_evidence_renderer": {
+    "bytes": 21477,
+    "file": "render_final_evidence.py",
+    "sha256": "579cfe0c5ef9e6138c90be044e9b2a105ec1067d94b6444dec08c13e7076720c"
+  },
+  "final_result_validator": {
+    "bytes": 60595,
+    "file": "validate_final_results.py",
+    "sha256": "bb5c83a62e6ba0362c12acf8b2a0cad03aa830f586bbabae794dff7efee55d6a"
+  },
+  "heldout_cache_launcher": {
+    "bytes": 33801,
+    "file": "heldout_cache_launcher.py",
+    "sha256": "a2600783dd137c10ea281225ab5a47812d6a89e39463c553d885fd1684fff1aa"
+  },
+  "heldout_delivery_collector": {
+    "bytes": 9840,
+    "file": "collect_heldout_delivery_inputs.py",
+    "sha256": "1d67d2f60bae28b531bc4e6dd1ae5748ebcb1bafd14e1bc35049c53645255662"
+  },
+  "heldout_delivery_freezer": {
+    "bytes": 14000,
+    "file": "freeze_heldout_cache_delivery.py",
+    "sha256": "e3e908ea5ff2e635f2cd46b80519a7df98735c382d756dfbc10f9ea9c635a09c"
+  },
+  "heldout_package_generator": {
+    "bytes": 7491,
+    "file": "generate_heldout_job_packages.py",
+    "sha256": "197aa51d05aadfc515f96360c9f181566e40e28f6d4cb5f28896ca9f7729f65d"
+  },
+  "heldout_queue_controller": {
+    "bytes": 17857,
+    "file": "orchestrate_heldout_queue.py",
+    "max_active_gpu_jobs": 2,
+    "sha256": "2563fd8bf67b99a29195328672541e0bbddfd895e1ea5b3d82be72aea8fcbb96"
+  },
+  "metric_runtime_preparer": {
+    "bytes": 13205,
+    "file": "prepare_metric_runtime.py",
+    "sha256": "d3ccf8e62353e105c12f7e44fad3c74063eb916d039176de499098da8099db91"
+  },
+  "one_shot_scorers": {
+    "real": {
+      "expected_manifests": 7,
+      "expected_probability_caches": 266,
+      "output": "sealed_real_test_results.json",
+      "requires_jobs": [
+        "real-test-baseline",
+        "real-test-control-seed11",
+        "real-test-control-seed23",
+        "real-test-control-seed47",
+        "real-test-gap8-seed11",
+        "real-test-gap8-seed23",
+        "real-test-gap8-seed47"
+      ],
+      "script": {
+        "file": "score_real_test_parallel.py",
+        "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c"
+      }
+    },
+    "synthetic": {
+      "expected_manifests": 70,
+      "expected_ray_caches": 700,
+      "output": "sealed_synthetic_test_results.json",
+      "requires_jobs": [
+        "synthetic-baseline-all-shards",
+        "synthetic-control-seed11-all-shards",
+        "synthetic-control-seed23-all-shards",
+        "synthetic-control-seed47-all-shards",
+        "synthetic-gap8-seed11-all-shards",
+        "synthetic-gap8-seed23-all-shards",
+        "synthetic-gap8-seed47-all-shards"
+      ],
+      "script": {
+        "file": "score_synthetic_test_v2.py",
+        "sha256": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05"
+      }
+    }
+  },
+  "one_shot_scoring_launcher": {
+    "bytes": 35039,
+    "file": "one_shot_scoring_launcher.py",
+    "sha256": "fc13f00a906dc7bea31c81cc65171c967226f2927e7b14d0c601a4bed755ceab"
+  },
+  "one_shot_scoring_stager": {
+    "bytes": 22686,
+    "file": "stage_heldout_for_scoring.py",
+    "sha256": "f98929748c6041d3d9b0e9d47802c97429bca6d69718100d09ef5c483bf51bc3"
+  },
+  "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e",
+  "plan_generator": {
+    "bytes": 31705,
+    "file": "build_heldout_execution_plan.py",
+    "sha256": "e135e027ae29e308e2a17421cdb242f6e3389f8b8aff298a20926f9c502ce9fd"
+  },
+  "pre_inference_protocol_clarification": {
+    "bytes": 2036,
+    "file": "PROTOCOL_CLARIFICATION.md",
+    "first_public_commit": "1e0ced2c928fa0842aa8c601f39dbcd49272247e",
+    "scope": "synthetic primary-gate pooling only",
+    "sha256": "c849d7a268465dd17b8c5d0c6774e7caab5caa343eb2dacb0cf4d862db3166dd"
+  },
+  "preregistration_commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+  "public_checkpoint_freeze_commit": "5d98eb683d692c7d4fe7b8f9e4dd0a285e8bf4ff",
+  "public_checkpoint_freeze_manifest_sha256": "b8dec8f2c21d2e3686e3435a136de747b3e95f47820b2eb8a41b7044808f8564",
+  "public_evaluation_input_freeze_commit": "62521d98a1771f736cf48dc1e9609a04a5779bb2",
+  "public_evaluation_input_freeze_manifest_sha256": "9e0e70b1e98d9d879ac0b27ba902cbfdc960f4577580146488f076efebda9fad",
+  "real_panel_manifest": {
+    "bytes": 25072,
+    "file": "real_panel_manifest.json",
+    "payload_sha256": "65dbd84d13aac0fe2e27baf877e5b836d58f2202f9c5e9bcf84bb41694500844",
+    "sha256": "e1799845c7b8bd428e6bd374f745d6b42399673a5b8c2c11d9282324b3e72779"
+  },
+  "real_panel_renderer": {
+    "bytes": 18796,
+    "file": "render_real_panels.py",
+    "sha256": "de0d3f5e27d0baf337efdf14f271350f21c6a182f287e4a6f0b704cf1b658d04"
+  },
+  "real_test_jobs": [
+    {
+      "expected_cache_manifest": "cache_manifest_baseline_test.json",
+      "job_id": "real-test-baseline",
+      "kernel_id": null,
+      "kernel_version": null,
+      "mode": "real_test_cache",
+      "model_state_sha256": null,
+      "run": "baseline",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.45,
+      "test_patch_count": 38
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed11_test.json",
+      "job_id": "real-test-control-seed11",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+      "kernel_version": 4,
+      "mode": "real_test_cache",
+      "model_state_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "run": "control_seed11",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed23_test.json",
+      "job_id": "real-test-control-seed23",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+      "kernel_version": 4,
+      "mode": "real_test_cache",
+      "model_state_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "run": "control_seed23",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.45,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "9ad56528323f821e60c98faff48265c327a4ede351148e0596a14737aa493f2d"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_control_seed47_test.json",
+      "job_id": "real-test-control-seed47",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "run": "control_seed47",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.55,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "2eede7befa96f01aed362040705da55643fffe287b11c9759596e5197f99ecb2"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed11_test.json",
+      "job_id": "real-test-gap8-seed11",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3",
+      "run": "gap8_seed11",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "cb590391f03ce81f8f3d350490a367ec9618e59f689baccec2277b9b79d9680a"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed23_test.json",
+      "job_id": "real-test-gap8-seed23",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde",
+      "run": "gap8_seed23",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.6,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "963ef73888cb70066f0773bb2f75b1a7d11ab4c9b0568453bff005536c3e0021"
+    },
+    {
+      "expected_cache_manifest": "cache_manifest_gap8_seed47_test.json",
+      "job_id": "real-test-gap8-seed47",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "model_state_sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a",
+      "run": "gap8_seed47",
+      "scroll_patch_counts": {
+        "s4": 36,
+        "s5": 2
+      },
+      "selected_threshold": 0.5,
+      "test_patch_count": 38,
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
+    }
+  ],
+  "result_blind_launcher_alias_contract_correction": {
+    "cause": "the exact CPU launcher base source reports the canonical one_shot_scoring_launcher.py alias while the predecessor plan recorded its CPU packaging alias",
+    "correction": {
+      "bytes_changed": false,
+      "new_file_alias": "one_shot_scoring_launcher.py",
+      "old_file_alias": "one_shot_scoring_launcher_cpu_exact.py",
+      "source_bytes": 30608,
+      "source_sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 46171,
+      "commit": "49cf95f68fe254528f22e96b57b1e4ddea0d383d",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3b63247a2ff6037c5e66784cc2672e06595fd91bacc679b6b36306fb6bad76a1",
+      "sha256": "c233109c92fb5d775d78a9d48875bf4015f3da8bba37985fac3945180035306d"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_runtime_started_in_failed_attempt": false,
+      "scorer_source_bytes_changed": false
+    },
+    "status": "result-blind launcher file-alias contract correction"
+  },
+  "result_blind_parallel_real_asset_transport": {
+    "correction": {
+      "immutable_training_asset_ledger_changed": false,
+      "real_scorer_fetched_from_public_plan_commit": true,
+      "real_scorer_sha256_verified_before_execution": true,
+      "synthetic_public_scorer_transport_pattern_reused": true
+    },
+    "failed_attempt": {
+      "elapsed_seconds": 6,
+      "failure_stage": "asset-ledger validation before held-out staging",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+      "kernel_version": 5,
+      "message": "project source is not asset-ledger bound: score_real_test.py",
+      "status": "ERROR"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18296,
+      "commit": "012b0bb0587a217f737edb4176469bfde776ae60",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "5de4ab189a35bbc882553cfa52354e6a77d61c72d77efa246b43bcd78ed1e953",
+      "sha256": "d2a725e5f71afc0d01813e4275927f4c153b6cd3c7420a4fd029e21c5c9af9fe"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 34736,
+      "commit": "6540d1044cecf3a9a686daf207b2362c37be66a3",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "738383be47566aadc9b9695972c1ae6dae71e59fd443aa515d88a57999fb629c",
+      "sha256": "f425a1c33bd3597b81b5734912bcbf5ef7f9a1fcd5382aa12a9c2802c543d548"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "held_out_input_staging_started_in_failed_attempt": false,
+      "panel_renderer_started_in_failed_attempt": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started_in_failed_attempt": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind accelerated real scorer public-source transport correction"
+  },
+  "result_blind_parallel_real_scoring_retry": {
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_long_real_scorer": true,
+      "official_metric_subprocesses_run_concurrently": 4,
+      "panel_failure_stderr_may_be_emitted_as_operational_log": true,
+      "per_cache_metric_function_changed": false,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "failure_elapsed_seconds": 34706,
+    "failure_message": "fixed real-panel rendering failed; output remains sealed",
+    "failure_stage": "after real scorer completion, during fixed real-panel rendering",
+    "predecessor_cache_delivery": {
+      "bytes": 17685,
+      "commit": "367050ad1ff23f97be7996fffb978220678bd91c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "e76019aaba37574cbc8899ede3cc939f065246d3012ac2d4efd70d3c55571afd",
+      "sha256": "a249eb36c68ea4fe13b34c549adaf42c91754e3a45c24de1dff179aeb83189f0"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 32213,
+      "commit": "624c1ef41fa078ea9b3d3d97207a56ab6662e27b",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "d60199310fd589cef799a66b3a4513927aeba9edae1914c2f54da25384d383cf",
+      "sha256": "e1a2741bfae98eb5054c3c4a11195fa6ee265b3aa7848eb8117a68ac45ad09bd"
+    },
+    "provider_attempts": {
+      "real": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 4,
+        "status": "ERROR"
+      },
+      "synthetic": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 4,
+        "status": "COMPLETE"
+      }
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "sealed_v4_results_used_to_design_correction": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "sealed_state": {
+      "cache_npz_probability_endpoint_or_panel_opened": false,
+      "real_v4_kernel_complete_artifact_set_available": false,
+      "real_v4_result_opened_downloaded_or_used": false,
+      "real_v4_scorer_invocation_completed": true,
+      "synthetic_v4_result_opened_downloaded_or_used": false
+    },
+    "status": "result-blind parallel real-scoring and panel fail-fast retry"
+  },
+  "result_blind_public_commit_binding_correction": {
+    "actual_equivalence_commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+    "erroneous_unpublished_equivalence_commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "scientific_outputs_opened_or_used": false,
+    "status": "result-blind local Git commit binding corrected before provider retry"
+  },
+  "result_blind_public_real_scorer_source_correction": {
+    "cause": "the exact-scorer plan recorded the original scorer hash but its public plan commit still contained the later parallel source file",
+    "predecessor_execution_plan": {
+      "bytes": 47369,
+      "commit": "76b31337156e74319f5abe4967cff7f8cd9eab9a",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "26dbb62369f7b2ef79060b80a350d2330bdfe3158e85b6df17cbe143ab4e797c",
+      "sha256": "ce7bca665b82ad3cf5894724dbd32441401a18d65f02cdad97343e5cece38d0a"
+    },
+    "restored_source": {
+      "bytes": 8210,
+      "file": "score_real_test.py",
+      "preregistration_commit": "5ca0444fb31863c8e02466316bf9e560cf567876",
+      "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "exact_preregistered_scorer_restored": true,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_runtime_started_in_failed_attempt": false
+    },
+    "status": "result-blind publication of the already-required exact original real scorer"
+  },
+  "result_blind_real_panel_index_provenance_correction": {
+    "cause": "the stager correctly recorded the hash-bound original cache-job execution-plan identity, while the fixed panel validator's exact expected schema omitted that operational provenance field",
+    "corrected_panel_renderer": {
+      "bytes": 18796,
+      "file": "render_real_panels.py",
+      "sha256": "de0d3f5e27d0baf337efdf14f271350f21c6a182f287e4a6f0b704cf1b658d04"
+    },
+    "correction": {
+      "expected_identity_derived_from": {
+        "bytes": 20443,
+        "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+        "file": "heldout_execution_plan.json",
+        "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+        "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+      },
+      "field_must_match_exactly": true,
+      "materialized_file_alias": "cache_job_execution_plan.json",
+      "required_score_input_field": "cache_job_execution_plan",
+      "stager_scientific_projection_allowlist_extended_for_this_record": true,
+      "unknown_or_tampered_fields_rejected": true
+    },
+    "failed_attempt": {
+      "cache_npz_probability_endpoint_or_panel_opened": false,
+      "failure_message": "real score-input index provenance mismatch",
+      "pod_id": "z0vqb3dt43vkga",
+      "provider": "RunPod CPU",
+      "receipt": {
+        "file": "provider_receipt.json",
+        "payload_sha256": "755d5bcfb6306125cca82acc8a06969a14abc4bab6c5c0df97a7c269d271f133"
+      },
+      "scientific_result_created_or_opened": false,
+      "stage": "fixed real-panel public-context validation after pinned metric build and before panel or scorer output"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 21015,
+      "commit": "5ba626c37b7ca7899f65c43fa24359c9b6851306",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "ada3295cffd573a867ce2e189988b30d4bf0e80bb9ad5b73ba66bf5e32c23a20",
+      "sha256": "cb008acbca91405e60df8e1813eb4c11b6d5fce6cfae632ec8cac13b49cc6170"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 49885,
+      "commit": "07a82d5f211609ac96ec266c41a5c5a3c5b1f2bd",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "cbaff81b679f0d90e7d7cffa37ce5acce447b89ae88b322472e508cdd48d6479",
+      "sha256": "b3fc826aa00d4d1f9a18472fba54a93d3b89d89f5b3e0270df28c110ac746481"
+    },
+    "predecessor_panel_renderer": {
+      "bytes": 18206,
+      "file": "render_real_panels.py",
+      "sha256": "e05b746c17f0a2b2b33a60b41b72408c799204bbca533667b8169ca415343d15"
+    },
+    "public_tooling_commit": "116544f7cdd4562596bd0a964ceea12fd1427374",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_or_manifest_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_outputs_inspected": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "result-blind real-panel score-index provenance correction"
+  },
+  "result_blind_runpod_cpu_exact_scorer_correction": {
+    "decision": {
+      "CPU_launcher_passes_no_parallel_worker_arguments": true,
+      "exact_original_real_scorer_restored": {
+        "file": "score_real_test.py",
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+      },
+      "fixed_panel_renderer_still_runs_before_the_scorer": true,
+      "parallel_scorer_scientific_equivalence_assumed": false,
+      "parallel_scorer_used_for_retry": false
+    },
+    "local_preflight": {
+      "provider_attempt_created": false,
+      "remaining_differences": [
+        "CPU scoring-asset stager identity is operational metadata",
+        "parallel real scorer identity differs from the cache-job scientific plan"
+      ]
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 19598,
+      "commit": "4b5baaf5e23af0b8efbe74b90cd17157c695f10c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "2c23316d23d087b1dcf9d95815bcb6c1097a8b228984465592c090a21f7810b0",
+      "sha256": "eebf95021f4d5d305298ea52e0b3059e1c5dc877d1dafaa8de99edc5574bab29"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 44210,
+      "commit": "99643d5ed891611ac333fc222c1040c37f8c2a3b",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "dde5f0a0d566f02f9f6623a3528f9727154330a0d7ebc77684e078ff82ed6056",
+      "sha256": "f1f4544a4b94cf5ba388d80d5dca441d1704db1d00821dbd6da899d140ab3f1f"
+    },
+    "public_tooling_commit": "ba7b1d76a15e9e902e148dabadb669b0c0d99000",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "probability_or_endpoint_opened": false,
+      "scientific_result_created_or_opened": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind restoration of exact original real scorer for CPU execution"
+  },
+  "result_blind_runpod_cpu_projection_correction": {
+    "cause": "the scientific-projection allowlist did not classify the newly published result_blind_runpod_cpu_real_scoring record as operational metadata",
+    "correction": {
+      "cache_job_plan_or_delivery_scientific_records_changed": false,
+      "cpu_provider_record_is_operational_metadata": true,
+      "scientific_projection_comparison_retained": true,
+      "this_projection_record_is_operational_metadata": true
+    },
+    "failed_attempt": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "fixed_panel_renderer_started": false,
+      "official_metric_scorer_started": false,
+      "pod_id": "h2xei44m0ee9m5",
+      "provider": "RunPod CPU",
+      "scientific_result_created_or_opened": false,
+      "stage": "plan/delivery validation before sealed cache staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 19246,
+      "commit": "3103a4d8b4825c52439cab5f965a5304c8ea33e4",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "6b91f2e936119e61c756f118ccba136dd7da1d446b8ccf92fa7972a7d1c1e958",
+      "sha256": "734d941916d0e5d3cc66a53dbc121651736d31136d0fec04382aee9f1e8b6ccb"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 42198,
+      "commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "82cf269002854401f59ad96882b9a98abbd77a69479b45d1d291e15d70102e3a",
+      "sha256": "3c529c058bda82746d3d325db0169f430637b53aa5f91e4efb1123a7c7ef9406"
+    },
+    "public_tooling_commit": "fc823b1efe1f43fbfed71f34c8ebac0bf4caeab4",
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "probability_or_endpoint_opened": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind CPU-provider scientific-projection allowlist correction"
+  },
+  "result_blind_runpod_cpu_real_scoring": {
+    "budget": {
+      "absolute_cap_usd": 3.5,
+      "compute_cutoff_usd": 3.25,
+      "guard_seconds": 300,
+      "reserve_usd": 0.25,
+      "user_authorized_new_cpu_pod_and_private_upload": true
+    },
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_real_scorer": true,
+      "minimal_asset_subset_is_byte_bound_to_original_278_record_ledger": true,
+      "official_metric_subprocesses_run_concurrently": 32,
+      "per_cache_metric_function_changed": false,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "sealed_cache_layout_adapter": "relative directory symlink from each frozen run name to its verified sealed-caches directory; no NPZ is copied or opened",
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18917,
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "a22027c2068d40a6be83b63d925016600974c79264db3d60d844bed8bccbf70d",
+      "sha256": "fc594e97f5d3a816cac4faac11fab545684ccc061b68a9c85f5a8bfe940303d6"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 39063,
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "b600eb61f46dfeacf0b0ba12a37ecf77e553ce61d88e5a83f6056ab724337740",
+      "sha256": "1d67f9f87c17ca93cea612b2586ebfba4687a3e8ecbe9ed6f300a54d3b847494"
+    },
+    "provider": {
+      "compute_type": "CPU",
+      "cpu_flavor": "cpu3g",
+      "gpu_count": 0,
+      "maximum_price_usd_per_hour": 1.25,
+      "minimum_memory_gb": 120,
+      "name": "RunPod",
+      "new_temporary_pod": true,
+      "temporary_public_ssh": true,
+      "terminate_after_verified_result_copy": true,
+      "vcpu_count": 32
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "failed_or_sealed_results_used_to_design_correction": false,
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "sealed_predecessors": {
+      "failed_gpu_resume_attempts_billed_or_transferred_private_data": false,
+      "real_kaggle_version_6_error_and_unopened": true,
+      "scientific_outputs_used_to_design_correction": false,
+      "synthetic_version_4_complete_and_unopened": true
+    },
+    "status": "result-blind CPU-only RunPod real-scoring correction frozen before private cache egress",
+    "transfer": {
+      "model_checkpoints_excluded": true,
+      "new_private_checkpoint_or_research_input_upload": false,
+      "private": "266 sealed real NPZ caches, seven indexes, and seven manifests",
+      "private_npz_payloads_opened_before_transfer": false,
+      "public": "five scoring-only source assets, frozen thresholds, pinned metric source/runtime, and controllers"
+    }
+  },
+  "result_blind_runpod_real_scoring_retry": {
+    "budget": {
+      "absolute_cap_usd": 3.5,
+      "compute_cutoff_usd": 3.25,
+      "guard_seconds": 300,
+      "no_additional_spend_authorized": true,
+      "reserve_usd": 0.25
+    },
+    "correction": {
+      "aggregation_bootstrap_or_json_serialization_changed": false,
+      "fixed_panel_renderer_runs_before_real_scorer": true,
+      "official_metric_subprocesses_run_concurrently": 32,
+      "only_sealed_real_caches_and_public_metric_assets_are_newly_transferred": true,
+      "per_cache_metric_function_changed": false,
+      "preexisting_private_assets_are_reused_in_place": true,
+      "result_rows_reassembled_in_original_frozen_cache_order": true,
+      "synthetic_v4_is_retained_without_rerun": true
+    },
+    "failed_real_attempt": {
+      "failure_stage": "held-out input staging before fixed panels or scorer invocation",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+      "kernel_version": 6,
+      "scientific_result_created_or_opened": false,
+      "status": "ERROR"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 18589,
+      "commit": "be34445c6ca3b1a82f213e0cce05a2379b30c14c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "c1e1b8482fd15cda44f7367a553c696276ea8c9db051580b8b349cb67d953287",
+      "sha256": "f1b94e74874c4625b60b4db2a70cc9e7bc81f5326992b538bf620d5702979dad"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 36548,
+      "commit": "9940f7db306e15398dcbe9ed44e270ac0d6d41e1",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "42cb86c2a450ddaa08e5748e94284c19b59be622f8cb6888fb32a5a6667776d8",
+      "sha256": "3d57362fea73943f4f884a0427c286537573e669f0e999f9cc6cef29d12a02e7"
+    },
+    "provider": {
+      "gpu_count": 7,
+      "gpu_type": "RTX 4090",
+      "machine_id": "zgxuf36p5h0i",
+      "memory_gb": 411,
+      "name": "RunPod",
+      "pod_id": "9r1cm9r82aonih",
+      "price_usd_per_hour": 2.38,
+      "reuse_existing_stopped_volume": true,
+      "vcpu_count": 224
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "failed_or_sealed_results_used_to_design_correction": false,
+      "held_out_cache_or_manifest_changed": false,
+      "official_metric_source_or_runtime_changed": false,
+      "test_time_tuning_permitted": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind RunPod real-scoring retry frozen before private cache egress"
+  },
+  "result_blind_scorer_exception_projection_correction": {
+    "corrected_launcher": {
+      "bytes": 33660,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "bfa271e2fadcf586b4af081fcdb5cdf34018fd6400a56ae5e98017f8951e0e35"
+    },
+    "corrected_stager": {
+      "bytes": 22564,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "78947c24200a3eca4cd4b2f38d78105737000ca824b99b1ff03adb91d42d9cf0"
+    },
+    "failed_attempt": {
+      "failure_message": "one-shot scorer failed; scientific stdout remains sealed",
+      "file": "provider_receipt.json",
+      "payload_sha256": "ff6d5dfc169e14b8159a0bf47ba9aed1c44d47c3aa5d9a16a6d7386236eef7a0",
+      "pod_id": "k0fxlidhmzyi23",
+      "scientific_outputs_inspected": false,
+      "stage": "exact real scorer subprocess after complete staging"
+    },
+    "projection": {
+      "maximum_exception_lines": 3,
+      "maximum_line_bytes": 1024,
+      "scientific_stdout_projected": false,
+      "stream": "stderr"
+    },
+    "public_tooling_commit": "0c4a5df6a66030678866360679e8aa54fc91e8c7",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "held_out_result_opened_or_used": false,
+      "scorer_source_changed": false
+    },
+    "status": "bounded scorer stderr exception projection frozen before retry"
+  },
+  "result_blind_scorer_public_import_dependency_correction": {
+    "corrected_launcher": {
+      "bytes": 34491,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "7f1f91dfc6ff1c5846e70684829785789f3b0f00fcc7525833eecd9a52145081"
+    },
+    "corrected_stager": {
+      "bytes": 22627,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "4bb39c63e15107fed9899a56d620da361a5b90544ae8164945bca1111e9fc58d"
+    },
+    "failed_attempt": {
+      "failure_message": "No module named 'inference'",
+      "failure_type": "ModuleNotFoundError",
+      "file": "provider_receipt.json",
+      "payload_sha256": "9c347768feeef2123b49f33f5db6e86920b5fbcfc2435d18465b6ca262c8e2b6",
+      "pod_id": "djai7jtnk3helh",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false,
+      "stage": "exact real scorer after verified private signed-bundle transport"
+    },
+    "public_import_dependencies": [
+      {
+        "bytes": 2176,
+        "file": "fusion_loss.py",
+        "sha256": "a5611df0b1535f033bfc9a7a68600e8303ff5948623f5c983eb95f0bd3977ef4"
+      },
+      {
+        "bytes": 2596,
+        "file": "gap_supervision.py",
+        "sha256": "f7bdd74af92b1de7b507515aa879baa4c2622b3051f6a5b1c053e5329778e08c"
+      },
+      {
+        "bytes": 3602,
+        "file": "inference.py",
+        "sha256": "1ba249a04809de64ecfbb4856e0f81737e7f278a7dad3e8f17ba2c1b5490dce1"
+      },
+      {
+        "bytes": 2178,
+        "file": "normalization.py",
+        "sha256": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261"
+      },
+      {
+        "bytes": 11823,
+        "file": "train_fusion_aware.py",
+        "sha256": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07"
+      }
+    ],
+    "public_tooling_commit": "845aadd6b49322f5c09c4ae1af7faa8bc63630ec",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "dependency_source_bytes_changed": false,
+      "npz_panel_probability_endpoint_or_result_opened": false
+    },
+    "status": "exact public scorer import dependencies frozen before retry"
+  },
+  "result_blind_scorer_public_metric_worker_correction": {
+    "corrected_launcher": {
+      "bytes": 35039,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "fc13f00a906dc7bea31c81cc65171c967226f2927e7b14d0c601a4bed755ceab"
+    },
+    "corrected_stager": {
+      "bytes": 22686,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "f98929748c6041d3d9b0e9d47802c97429bca6d69718100d09ef5c483bf51bc3"
+    },
+    "failed_attempt": {
+      "failure_message": "official_metric.py sibling worker absent",
+      "failure_type": "FileNotFoundError",
+      "file": "provider_receipt.json",
+      "payload_sha256": "9f1a1a4371e4145b0bb5e09560aa880ac153b18c27ce63219d5e7513afa6b028",
+      "pod_id": "g6napb4zi036b1",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false,
+      "stage": "first independent official-metric subprocess after verified private transport"
+    },
+    "public_metric_worker": {
+      "bytes": 3918,
+      "file": "official_metric.py",
+      "sha256": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb"
+    },
+    "public_tooling_commit": "65c53e8e17473d546823b2654928f15a34e6226a",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "metric_worker_source_bytes_changed": false,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "scorer_default_worker_path_changed": false
+    },
+    "status": "exact public official-metric sibling frozen before retry"
+  },
+  "result_blind_scoring_asset_correction": {
+    "cause": {
+      "asset_dataset_source": "aviadcohen1/vesuvius-fusion-aware-training-assets/1",
+      "asset_ledger_records": 278,
+      "asset_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
+      "corrected_scorer_absent_from_immutable_asset_ledger": true
+    },
+    "correction": {
+      "asset_dataset_version_changed": false,
+      "canonical_provider_kernel_ids_used": true,
+      "corrected_scorer": {
+        "bytes": 10336,
+        "file": "score_synthetic_test_v2.py",
+        "first_public_commit": "1e0ced2c928fa0842aa8c601f39dbcd49272247e",
+        "sha256": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05"
+      },
+      "source": "hash-bound fetch from the public execution-plan commit"
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 1,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 1,
+        "mode": "synthetic"
+      }
+    ],
+    "failure_message": "project source is not asset-ledger bound: score_synthetic_test_v2.py",
+    "failure_stage": "asset-ledger validation before held-out input staging",
+    "predecessor_public_cache_delivery": {
+      "bytes": 14848,
+      "commit": "7eb2fd90e33f0bf3b3fad91fcce8e7b98f8b8413",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "cf2292c6a596338116c63e3be13c3fe5d03c9df5f6017a7b7feac1c2f3ca50cc",
+      "sha256": "80929fb81c4f2a13a3e6e28fac3eaff2253cd7ea6243767a1b7d5aa47324870f"
+    },
+    "predecessor_public_execution_plan": {
+      "bytes": 20443,
+      "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+      "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "held_out_input_staging_started_in_failed_attempts": false,
+      "retry_is_first_scientific_scorer_invocation": true,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started_in_failed_attempts": false,
+      "threshold_seed_panel_gate_or_claim_changed": false
+    },
+    "status": "result-blind scorer transport correction after fail-closed pre-staging rejection"
+  },
+  "result_blind_scoring_cache_identity_schema_correction": {
+    "cause": "the scoring stager required a reduced file/bytes/sha256 schema while the already-verified cache indexes intentionally retain immutable source and geometry identity fields",
+    "correction": {
+      "cache_job_index_manifest_or_npz_changed": false,
+      "matches_public_delivery_validator": true,
+      "real_identity_fields": [
+        "file",
+        "bytes",
+        "sha256",
+        "source_image"
+      ],
+      "synthetic_identity_fields": [
+        "file",
+        "bytes",
+        "sha256",
+        "name",
+        "kind",
+        "seed",
+        "pitch_um",
+        "papyrus",
+        "kollesis"
+      ]
+    },
+    "local_preflight": {
+      "failure_message": "synthetic-baseline-all-shards: cache identity schema mismatch",
+      "mode": "synthetic",
+      "provider_scorer_version_created": false,
+      "stage": "sealed identity validation before symlink staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 16362,
+      "commit": "c668ba040cfcbc04905191169a6fc02b38b252bf",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "cd210bf8ba6e5dca0c767510ab4fff7ff5c38cb0d895ffa4e71b7292324075a9",
+      "sha256": "208e425e09241e940dc3a071bd1ef41b45ef26d4faf37d462517486e2adb8e43"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 25510,
+      "commit": "52d73f8fc3125e9c8ec471000795192011aee954",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "02ac5205c7b59fbb2852ca9d2782263d9cf54526a4579656d74ad29239ebbbf0",
+      "sha256": "726ae764a1829db155bb5a03d01a247959cf491f6d333712df58e981c5a40f35"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_parsed_or_scientifically_inspected": false,
+      "full_synthetic_staging_preflight_required_before_provider_retry": true,
+      "scientific_result_created_or_opened": false,
+      "threshold_seed_panel_gate_or_claim_changed": false
+    },
+    "status": "result-blind cache-identity schema correction after local preflight rejection"
+  },
+  "result_blind_scoring_job_plan_compatibility_correction": {
+    "cache_job_execution_plan": {
+      "bytes": 20443,
+      "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+      "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+    },
+    "cause": "immutable cache-job indexes correctly bind the original pre-inference plan; the corrected scorer stager incorrectly required them to bind the later operational-only scoring plan",
+    "correction": {
+      "cache_job_index_or_manifest_changed": false,
+      "cache_job_indexes_verified_against_original_plan": true,
+      "current_scoring_plan_remains_publicly_hash_bound": true,
+      "scientific_projection_of_both_plans_must_match_exactly": true
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 2,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 2,
+        "mode": "synthetic"
+      }
+    ],
+    "failure_stage": "held-out input staging before scorer invocation",
+    "predecessor_corrected_cache_delivery": {
+      "bytes": 15425,
+      "commit": "3c8722ccf6d13b046367496af785a99a7ce1c5af",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "8bf9473e690d25a8bb1462b0d1ac6afea7293e2cca317b07a39f6c3fabc60953",
+      "sha256": "8f9dff27af3c1175edc40ae8cbd1dfc2678d9830c9e47f06b7bda7666c616f23"
+    },
+    "predecessor_corrected_execution_plan": {
+      "bytes": 22974,
+      "commit": "393dee840bf4ef6c75f228023d089a8ea22c8785",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "68d649f1c97484d0ec9974763e60b64ca57004661dcf3d55806a86d7f112361c",
+      "sha256": "c01a9dc7274c638f1206eea1a68cf91721464b5ffc04acc319e93fe98d393b70"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_job_index_metadata_may_have_been_read": true,
+      "cache_npz_opened_or_inspected": false,
+      "input_staging_process_started_in_failed_attempts": true,
+      "retry_is_first_scientific_scorer_invocation": true,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started": false,
+      "threshold_seed_panel_gate_or_claim_changed": false
+    },
+    "status": "result-blind cache-job-plan compatibility correction after pre-scoring rejection"
+  },
+  "result_blind_scoring_publication_projection_correction": {
+    "cause": "the scientific-projection allowlist did not yet classify the launcher-alias and exact-public-scorer records as operational metadata",
+    "correction": {
+      "added_operational_fields": [
+        "result_blind_launcher_alias_contract_correction",
+        "result_blind_public_real_scorer_source_correction",
+        "result_blind_scoring_publication_projection_correction"
+      ],
+      "comparison_algorithm_changed": false,
+      "stager_bytes": 19922,
+      "stager_sha256": "1fa4aec460bdd7425b70c35f5d432fc41ac5b66a36908e1604dc3f080223950d"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 48537,
+      "commit": "faf7606b82edbc06a02973a721e3e168148b4622",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "9a334ec8a3e2da5337c048d7f842a1d6edbcf2639e1d0504b64750d02fd01745",
+      "sha256": "73cac78d784cbf0151aa4be13c5be1558bab0b4e5511acacde5fc385e5ae2972"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_projection_comparison_retained": true,
+      "scientific_runtime_started_in_failed_attempt": false
+    },
+    "status": "result-blind public-record scientific-projection allowlist correction"
+  },
+  "result_blind_scoring_runtime_projection_correction": {
+    "cause": "the scientific projection allowlist predated the published runtime transport record and therefore compared that operational record to the original cache plan",
+    "correction": {
+      "cache_job_plan_or_delivery_records_changed": false,
+      "runtime_projection_record_is_operational_metadata": true,
+      "runtime_transport_record_is_operational_metadata": true,
+      "scientific_projection_comparison_retained": true
+    },
+    "local_preflight": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "provider_scorer_version_created": false,
+      "stage": "plan/delivery validation before sealed cache staging"
+    },
+    "predecessor_cache_delivery": {
+      "bytes": 17334,
+      "commit": "76f60591b72b4ec0b3def6d4bc2cc551722b0e3c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "f44893fb8d0107970f2e9e75e5226dab65b1ca4cd1d115ffcc2abaa31fe52efa",
+      "sha256": "2b8f1c659acf283f0c45ab2b868479bd27ed810914b00774013d2975b281cb10"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 30362,
+      "commit": "251ffa9111cc7f5d5977ddc26006c68fc1b0c0af",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "a9d317bd50df2adb0d1e2b6e25103d0d8e9ce3b75efce170f81c0818f8b5880f",
+      "sha256": "ef1be4c5bba0f165602d6885fabdd0e308d79059034863965e9d561e6a4266a3"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "cache_staging_started_in_failed_preflight": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind runtime-record scientific projection correction"
+  },
+  "result_blind_scoring_runtime_transport_correction": {
+    "cause": "the frozen CUDA 12.1 PyTorch wheel requested a transitive cuDNN build no longer present on the provider index; the scorer kernels request no GPU and consume already-produced caches",
+    "correction": {
+      "binary_wheels_only": true,
+      "cache_manifest_or_npz_changed": false,
+      "extra_index": "https://pypi.org/simple",
+      "other_runtime_versions_changed": false,
+      "primary_index": "https://download.pytorch.org/whl/cpu",
+      "scorer_kernel_accelerator": "none",
+      "torch": "2.5.1+cpu",
+      "torchvision": "0.20.1+cpu"
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 3,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 3,
+        "mode": "synthetic"
+      }
+    ],
+    "failure_message": "no matching distribution for the cu121 torch dependency nvidia-cudnn-cu12==9.1.0.70",
+    "failure_stage": "runtime installation before held-out input staging",
+    "predecessor_cache_delivery": {
+      "bytes": 16716,
+      "commit": "7fe1c06671b56c66554ca377d4808af3cf76187c",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "607c83abc2db98f030b4b9802ccc467764b99ea525341b876a285c99cb502f08",
+      "sha256": "bab108e680dd493357361690b206c50d76ed63c1cfa99b4fd50e528c676ab47c"
+    },
+    "predecessor_execution_plan": {
+      "bytes": 27580,
+      "commit": "e36169e53acbf83ae77642dc47b00c6f98a24ec1",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "d8cc6199483121145edddf141d33384b323e6a320448209394a0061265f9d361",
+      "sha256": "176291c91b0161e5761dc6efddfca1e2513166fd2893d3fea768b58f3cddd04a"
+    },
+    "python312_linux_resolution_preflight": {
+      "abi": "cp312",
+      "bytes": 260266954,
+      "files": 30,
+      "implementation": "cp",
+      "platform_tags": [
+        "linux_x86_64",
+        "manylinux2014_x86_64"
+      ],
+      "python_version": "3.12",
+      "sorted_wheel_ledger_sha256": "7e8967a004c7e6e97a1e223f33f8edb78731c1d1dfa7c21ea52df9c63747bfec",
+      "status": "all exact top-level requirements and transitive wheels resolved"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_npz_opened_or_inspected": false,
+      "held_out_input_staging_started_in_failed_attempts": false,
+      "runtime_package_versions_changed": false,
+      "scientific_result_created_or_opened": false,
+      "scorer_invocation_started_in_failed_attempts": false,
+      "threshold_model_seed_panel_endpoint_gate_or_claim_changed": false
+    },
+    "status": "result-blind Python 3.12 scorer runtime transport correction"
+  },
+  "result_blind_verified_parallel_projection_correction": {
+    "corrected_scoring_stager": {
+      "bytes": 20954,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "5a94052d908557e1d8f3b0ab5e145569632c5ce1164d3bcbbd5b3ecdc2ec58e0"
+    },
+    "held_out_result_opened_or_used": false,
+    "operational_fields_added": [
+      "result_blind_verified_parallel_real_scoring",
+      "result_blind_public_commit_binding_correction",
+      "result_blind_verified_parallel_projection_correction"
+    ],
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "status": "result-blind verified parallel records classified as operational metadata"
+  },
+  "result_blind_verified_parallel_real_scoring": {
+    "equivalence_report": {
+      "bytes": 1838,
+      "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+      "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+      "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+      "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960"
+    },
+    "exact_predecessor_scorer": {
+      "file": "score_real_test.py",
+      "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+    },
+    "parallel_workers": 32,
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "aggregation_bootstrap_or_serialization_changed": false,
+      "cache_threshold_or_input_changed": false,
+      "frozen_cache_order_preserved": true,
+      "only_independent_subprocess_scheduling_changed": true,
+      "per_cache_metric_subprocess_changed": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "result-blind verified parallel real scoring frozen before retry"
+  },
+  "result_blind_verified_parallel_scorer_projection_correction": {
+    "corrected_scoring_stager": {
+      "bytes": 22505,
+      "file": "stage_heldout_for_scoring.py",
+      "sha256": "e9b4f30d2abb2d7241376986fe5180743682bdb084114d8cceeea81694b88a54"
+    },
+    "failed_attempt": {
+      "failure_message": "corrected plan changes the cache-job scientific contract",
+      "file": "provider_receipt.json",
+      "payload_sha256": "190ee66c4c9e7172fdf608ce058e138028ba07813ae36def747e699e59303365",
+      "pod_id": "1f8axs6hidbwrm",
+      "scientific_outputs_inspected": false,
+      "stage": "held-out staging before panels or scoring"
+    },
+    "projection": {
+      "current_verified_parallel_scorer": {
+        "file": "score_real_test_parallel.py",
+        "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c"
+      },
+      "exact_predecessor_scorer": {
+        "file": "score_real_test.py",
+        "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+      },
+      "projection_scope": "one_shot_scorers.real.script"
+    },
+    "public_tooling_commit": "03cdc54b21a3558289dd18d5201c6fff85bd784c",
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "aggregation_bootstrap_serialization_or_cache_order_changed": false,
+      "held_out_result_opened_or_used": false,
+      "only_independent_subprocess_scheduling_changed": true,
+      "per_cache_metric_subprocess_changed": false
+    },
+    "status": "verified-parallel scorer identity projected to exact predecessor for cache-job comparison"
+  },
+  "run_order": [
+    "baseline",
+    "control_seed11",
+    "control_seed23",
+    "control_seed47",
+    "gap8_seed11",
+    "gap8_seed23",
+    "gap8_seed47"
+  ],
+  "runpod_cpu_scoring_asset_stager": {
+    "bytes": 4547,
+    "file": "stage_runpod_cpu_scoring_assets.py",
+    "sha256": "e2387488c71fb76d07aaad15c9110ece387e61cce28907830ccda6a8746c3e4f"
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "held_out_outputs_inspected_when_plan_frozen": false,
+    "manual_threshold_entry_permitted": false,
+    "protocol_clarification_publicly_frozen_before_held_out_inference": true,
+    "scientific_run_order_or_shard_membership_changes_permitted": false,
+    "test_time_tuning_permitted": false,
+    "thresholds_publicly_frozen_before_held_out_inference": true
+  },
+  "scoring_package_generator": {
+    "bytes": 12933,
+    "file": "generate_scoring_job_packages.py",
+    "sha256": "cb1e85da88113999c480cf1c95fe5ff4fcaabe03fdd07fb4674f0b27a2dc6d58"
+  },
+  "scoring_pair_controller": {
+    "bytes": 12652,
+    "file": "orchestrate_scoring_pair.py",
+    "sha256": "c83c16be4f7d7f93a50370427a457fb579d31fd97af1bc6c8d47636e60a57d23"
+  },
+  "scoring_result_collector": {
+    "bytes": 8380,
+    "file": "collect_scoring_results.py",
+    "sha256": "5cea8db41181c693e70b7088267445996b821f38b55b156061696ea6682f75a7"
+  },
+  "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f",
+  "source_split_manifest_sha256": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe",
+  "source_split_records_sha256": "20c600d6061bf8715ada20423a05c2f03a9bc14827b2c79bac7b7e1b3cc0499d",
+  "status": "held-out execution plan frozen before held-out inference",
+  "synthetic_ray_jobs": [
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_baseline_shard00.json",
+        "synthetic_manifest_baseline_shard01.json",
+        "synthetic_manifest_baseline_shard02.json",
+        "synthetic_manifest_baseline_shard03.json",
+        "synthetic_manifest_baseline_shard04.json",
+        "synthetic_manifest_baseline_shard05.json",
+        "synthetic_manifest_baseline_shard06.json",
+        "synthetic_manifest_baseline_shard07.json",
+        "synthetic_manifest_baseline_shard08.json",
+        "synthetic_manifest_baseline_shard09.json"
+      ],
+      "job_id": "synthetic-baseline-all-shards",
+      "kernel_id": null,
+      "kernel_version": null,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": null,
+      "run": "baseline",
+      "selected_threshold": 0.45,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed11_shard00.json",
+        "synthetic_manifest_control_seed11_shard01.json",
+        "synthetic_manifest_control_seed11_shard02.json",
+        "synthetic_manifest_control_seed11_shard03.json",
+        "synthetic_manifest_control_seed11_shard04.json",
+        "synthetic_manifest_control_seed11_shard05.json",
+        "synthetic_manifest_control_seed11_shard06.json",
+        "synthetic_manifest_control_seed11_shard07.json",
+        "synthetic_manifest_control_seed11_shard08.json",
+        "synthetic_manifest_control_seed11_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed11-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+      "kernel_version": 4,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "run": "control_seed11",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "18b52d4fa2895307fa282a3b26e9cdeeeafd4204991c8ed4636fe366065a6f82"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed23_shard00.json",
+        "synthetic_manifest_control_seed23_shard01.json",
+        "synthetic_manifest_control_seed23_shard02.json",
+        "synthetic_manifest_control_seed23_shard03.json",
+        "synthetic_manifest_control_seed23_shard04.json",
+        "synthetic_manifest_control_seed23_shard05.json",
+        "synthetic_manifest_control_seed23_shard06.json",
+        "synthetic_manifest_control_seed23_shard07.json",
+        "synthetic_manifest_control_seed23_shard08.json",
+        "synthetic_manifest_control_seed23_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed23-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+      "kernel_version": 4,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "run": "control_seed23",
+      "selected_threshold": 0.45,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "9ad56528323f821e60c98faff48265c327a4ede351148e0596a14737aa493f2d"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_control_seed47_shard00.json",
+        "synthetic_manifest_control_seed47_shard01.json",
+        "synthetic_manifest_control_seed47_shard02.json",
+        "synthetic_manifest_control_seed47_shard03.json",
+        "synthetic_manifest_control_seed47_shard04.json",
+        "synthetic_manifest_control_seed47_shard05.json",
+        "synthetic_manifest_control_seed47_shard06.json",
+        "synthetic_manifest_control_seed47_shard07.json",
+        "synthetic_manifest_control_seed47_shard08.json",
+        "synthetic_manifest_control_seed47_shard09.json"
+      ],
+      "job_id": "synthetic-control-seed47-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "run": "control_seed47",
+      "selected_threshold": 0.55,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2481,
+      "training_run_manifest_sha256": "2eede7befa96f01aed362040705da55643fffe287b11c9759596e5197f99ecb2"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed11_shard00.json",
+        "synthetic_manifest_gap8_seed11_shard01.json",
+        "synthetic_manifest_gap8_seed11_shard02.json",
+        "synthetic_manifest_gap8_seed11_shard03.json",
+        "synthetic_manifest_gap8_seed11_shard04.json",
+        "synthetic_manifest_gap8_seed11_shard05.json",
+        "synthetic_manifest_gap8_seed11_shard06.json",
+        "synthetic_manifest_gap8_seed11_shard07.json",
+        "synthetic_manifest_gap8_seed11_shard08.json",
+        "synthetic_manifest_gap8_seed11_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed11-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-11",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "d3061db89cb48a3a619910bd57aebd5c8f2ae3439074874c9ff8a84c71b6c2f3",
+      "run": "gap8_seed11",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "cb590391f03ce81f8f3d350490a367ec9618e59f689baccec2277b9b79d9680a"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed23_shard00.json",
+        "synthetic_manifest_gap8_seed23_shard01.json",
+        "synthetic_manifest_gap8_seed23_shard02.json",
+        "synthetic_manifest_gap8_seed23_shard03.json",
+        "synthetic_manifest_gap8_seed23_shard04.json",
+        "synthetic_manifest_gap8_seed23_shard05.json",
+        "synthetic_manifest_gap8_seed23_shard06.json",
+        "synthetic_manifest_gap8_seed23_shard07.json",
+        "synthetic_manifest_gap8_seed23_shard08.json",
+        "synthetic_manifest_gap8_seed23_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed23-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-23",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "1b8df06140ebbc58733648f938452afc42757f9c184593a2b1dcb4e8fa7e4dde",
+      "run": "gap8_seed23",
+      "selected_threshold": 0.6,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "963ef73888cb70066f0773bb2f75b1a7d11ab4c9b0568453bff005536c3e0021"
+    },
+    {
+      "cell_count": 100,
+      "expected_cache_manifests": [
+        "synthetic_manifest_gap8_seed47_shard00.json",
+        "synthetic_manifest_gap8_seed47_shard01.json",
+        "synthetic_manifest_gap8_seed47_shard02.json",
+        "synthetic_manifest_gap8_seed47_shard03.json",
+        "synthetic_manifest_gap8_seed47_shard04.json",
+        "synthetic_manifest_gap8_seed47_shard05.json",
+        "synthetic_manifest_gap8_seed47_shard06.json",
+        "synthetic_manifest_gap8_seed47_shard07.json",
+        "synthetic_manifest_gap8_seed47_shard08.json",
+        "synthetic_manifest_gap8_seed47_shard09.json"
+      ],
+      "job_id": "synthetic-gap8-seed47-all-shards",
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-gap8-seed-47",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "model_state_sha256": "022f3921b241f1f59af655d7be3434a59025dc3f4af226779398998c2e3acf6a",
+      "run": "gap8_seed47",
+      "selected_threshold": 0.5,
+      "shard_count": 10,
+      "shard_indices": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "training_run_manifest_bytes": 2463,
+      "training_run_manifest_sha256": "f472604140dcc1f72ba9749edb0603b043bcd50d0efe0f69ceed06086c75d2a2"
+    }
+  ],
+  "threshold_binding": {
+    "frozen_thresholds": {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    },
+    "kernel_id": "aviadcohen1/vesuvius-fusion-aware-freeze-thresholds",
+    "kernel_version": 6,
+    "launcher_sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9",
+    "public_freeze_commit": "4aba9ec10c124cf7c4a473c4687b592c81fa5c9b",
+    "threshold_run_manifest": {
+      "bytes": 10760,
+      "file": "threshold_run_manifest.json",
+      "payload_sha256": "fd1aec3be58e1bf8bbce5019c36bfeecb2e4ce5313300ce52a488f699123b798",
+      "sha256": "68687d01042dea85aa9e2a56f4ec4ccad91b37b8d2b3667de1a7d3ea5b9f56db"
+    }
+  },
+  "visual_assessment_recorder": {
+    "bytes": 6637,
+    "file": "record_visual_assessment.py",
+    "sha256": "42ed230b13813edc14be410d0260a0dd42c3f1c13a5e9ecb232b327fbbf3fcf8"
+  }
+}

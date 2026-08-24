@@ -1,0 +1,52 @@
+{
+  "authorization": {
+    "development_cutoff_usd": 12.0,
+    "private_bundle_egress_to_replacements_permitted": false,
+    "user_spending_authorization": "I approve RunPod spending up to $12 for development, within a $25 total campaign cap."
+  },
+  "budget": {
+    "absolute_campaign_cap_usd": 25.0,
+    "confirmation_reserve_usd": 13.0,
+    "prior_conservative_development_spend_usd": 0.070296,
+    "remaining_development_cutoff_usd": 11.929704
+  },
+  "egress_rule": "replacement ids must be known, stopped, publicly recorded, and explicitly approved before the sealed private bundle is uploaded",
+  "failed_exact_resume_attempts": [
+    {
+      "attempted_at": "2026-08-20T17:39:47Z",
+      "failed_pod_id": "2kabd0cjfwmksd",
+      "provider_error": "There are not enough free GPUs on the host machine to start this pod."
+    },
+    {
+      "attempted_at": "2026-08-20T17:42:10Z",
+      "failed_pod_id": "2kabd0cjfwmksd",
+      "provider_error": "There are not enough free GPUs on the host machine to start this pod."
+    }
+  ],
+  "payload_sha256": "f756cebd0bfa106b3f4b72462b75b2e00af79422077890973042316db17dcc16",
+  "provider_contract": {
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "cloud_type": "COMMUNITY",
+    "container_image": "runpod/pytorch:2.4.0-py3.11-cuda12.4.1-devel-ubuntu22.04",
+    "gpu_type_id": "NVIDIA GeForce RTX 4090",
+    "total_gpu_count": 7
+  },
+  "public_parent_commit": "f3ba6853c9721507a966ddec56fde2e37f97f96f",
+  "result_blind_resume_failure_payload_sha256": "ecea048b4a966d652e44088cc8114dd3de3fea8d1c2ca52893cf41ecae3a5a8e",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "runpod_multi_pod_retry_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "source_pods": [
+    "2kabd0cjfwmksd",
+    "u8lnz95h5a9n9e",
+    "ac37jxgb4y5pss"
+  ],
+  "status": "RESULT_BLIND_EQUIVALENT_REPLACEMENT_RESERVATION_FROZEN_BEFORE_CREATION",
+  "stop_rule": "stop every accepted replacement immediately after provider validation and before any private bundle egress"
+}

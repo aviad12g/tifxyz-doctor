@@ -1,0 +1,71 @@
+{
+  "confirmation": {
+    "real": {
+      "dataset_id": 11704096,
+      "eligibility": {
+        "contact": "arm=crops AND both_instances_present=true AND ct_empty_frac<=0.10",
+        "control": "arm=control AND ct_empty_frac<=0.10",
+        "minimum_contact": 48,
+        "minimum_control": 48,
+        "minimum_contact_under_4_voxels": 24
+      },
+      "expected_inventory": "PENDING_CORRECTED_VERSION",
+      "manifest_sha256": "PENDING_CORRECTED_VERSION",
+      "provider": "kaggle",
+      "ref": "jhjeong0815/pherc1218-tight-contact-val",
+      "version": "PENDING_CORRECTED_VERSION"
+    },
+    "synthetic_seeds": [
+      500,
+      501,
+      502,
+      503,
+      504
+    ]
+  },
+  "development": {
+    "real": "exact original 24-patch Scroll-1 validation manifest",
+    "synthetic_seeds": [
+      400,
+      401,
+      402,
+      403
+    ]
+  },
+  "experiment": {
+    "arms": {
+      "control": 1.0,
+      "gap2": 2.0,
+      "gap4": 4.0
+    },
+    "matched_seeds": [
+      11,
+      23,
+      47
+    ],
+    "new_training_jobs": 6,
+    "reused_control_checkpoint_sha256": {
+      "11": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "23": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "47": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44"
+    },
+    "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f"
+  },
+  "execution": {
+    "paid_compute_authorized": false,
+    "training_authorized": false
+  },
+  "gates": {
+    "detection_delta_pp_min_pooled": -2.0,
+    "detection_delta_pp_min_seed": -4.0,
+    "false_split_delta_pp_max_pooled": 2.0,
+    "false_split_delta_pp_max_seed": 4.0,
+    "fusion_delta_pp_max_pooled": -5.0,
+    "fusion_direction_required_all_seeds": true,
+    "real_blend_noninferiority_margin": -0.005,
+    "real_toposcore_noninferiority_margin": -0.005,
+    "require_all_fixed_panels_without_replacement": true
+  },
+  "schema_version": "1.0",
+  "status": "BLOCKED_PENDING_CORRECTED_PHERC1218_VERSION"
+}

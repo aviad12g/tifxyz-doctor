@@ -1,0 +1,55 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "budget_guard_seconds": 300,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 1.344645,
+    "remaining_development_cutoff_usd": 10.655355
+  },
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Both receivers rejected the unqualified base secret because runpodctl appends the selected relay index to the sender-emitted code.",
+    "failed_at": "2026-08-20T21:39:40.388452+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "hcspglaxk4xn0f",
+      "dw8redp6fjulmx"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "jupyter_pid_retry_payload_sha256": "19051cb573cfde57cf4012ecc13ca5a9c3dcccd8ca2ba5364a320b4deaa045fb",
+  "official_source_verification": {
+    "commit": "22dc71f8a2d7992befda9a40a24f356c43f70398",
+    "repository": "https://github.com/runpod/runpodctl.git",
+    "tag": "v2.8.0",
+    "transfer_source_path": "cmd/transfer/transfer.go",
+    "transfer_source_sha256": "0ec495dd3f7e7af5ce5f6df7d29e60167e818c43d88c6f84be7ca2e3aba5d992"
+  },
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "payload_sha256": "25552fff906fcfd8a4e6af6efa9cb3b9b2b199eda63ae301d2dcdc94d26c6a77",
+  "public_parent_commit": "5e5cdfa8225c407cce888fcfe658ac37dac66e6b",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "runpodctl_code_contract": {
+    "base_secret_entropy_bytes": 24,
+    "capture_relay_qualified_code_from_sender_stdout": true,
+    "full_code_published_or_persisted": false,
+    "receiver_starts_with_exact_sender_emitted_code": true,
+    "relay_index_is_final_dash_separated_component": true,
+    "sender_code_capture_timeout_seconds": 120,
+    "sender_starts_before_receiver": true
+  },
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_CROC_RELAY_CODE_CAPTURE_RETRY_FROZEN_BEFORE_REALLOCATION"
+}

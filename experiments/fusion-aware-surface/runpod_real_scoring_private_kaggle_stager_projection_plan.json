@@ -1,0 +1,800 @@
+{
+  "budget": {
+    "absolute_cap_usd": 21.0,
+    "additional_authorized_cap_usd": 21.0,
+    "compute_cutoff_usd": 13.0,
+    "guard_seconds": 300,
+    "legacy_campaign_guarded_spend_upper_bound_usd": 11.65498976211111,
+    "maximum_provider_wall_seconds_at_price_ceiling": 36562,
+    "maximum_runtime_seconds_before_guard_at_price_ceiling": 36262,
+    "on_cutoff": "stop the CPU Pod, preserve sealed volume artifacts, and never score a partial result",
+    "prior_executor_contract_retry_operational_allowance_usd": 0.5,
+    "prior_fresh_retry_operational_allowance_usd": 0.25,
+    "prior_launcher_failure_guarded_allowance_usd": 0.5,
+    "prior_manifest_identity_retry_operational_allowance_usd": 0.5,
+    "prior_metric_archive_retry_operational_allowance_usd": 0.75,
+    "prior_private_auth_retry_operational_allowance_usd": 0.5,
+    "prior_public_transfer_timeout_guarded_allowance_usd": 0.5,
+    "prior_stager_projection_failure_guarded_allowance_usd": 0.4,
+    "reserve_usd": 1.0
+  },
+  "deployer": {
+    "bytes": 6039,
+    "file": "deploy_runpod_real_scoring.py",
+    "sha256": "4eda4e94f2605dcc062640a1cfc27b5e3e84a63b9670ff86a27824f9440e55f6"
+  },
+  "embedded_real_launcher": {
+    "bytes": 33832,
+    "file": "one_shot_scoring_launcher.py",
+    "sha256": "2a7f8c7c06507eb76cf9161c4a9b4888e4d62455e4078901e5f9ecd9aa68f618"
+  },
+  "fresh_pod_deployer": {
+    "bytes": 11898,
+    "file": "deploy_new_runpod_real_scoring_from_kaggle.py",
+    "sha256": "bb7851d3f1c094bfd138e7dc1344e906c53634c58ac8517ad487fc9caca7c27a"
+  },
+  "frozen_thresholds": {
+    "bytes": 345175,
+    "file": "frozen_thresholds.json",
+    "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+  },
+  "input_collector": {
+    "bytes": 8179,
+    "file": "collect_runpod_real_scoring_inputs.py",
+    "sha256": "b924c0a1ba073f04ea3ef16055508c430101ddc2b4022f1a81c63b04f1109e54"
+  },
+  "metric_runtime_tree": {
+    "bytes": 139958068,
+    "files": 20,
+    "ledger_sha256": "e1eeeab165d728780d07620b945304b3de4602982ba9df4c5a0092f5aa7f1ced"
+  },
+  "new_transfer": {
+    "new_private_checkpoint_or_research_input_upload": false,
+    "private": "only 266 sealed real NPZ caches plus their seven indexes and seven manifests",
+    "private_npz_payloads_opened_before_transfer": false,
+    "private_upload_authorized_by_aviad": true,
+    "public": "five ledger-bound scoring assets, frozen thresholds, pinned metric source/runtime, launcher, and controllers"
+  },
+  "payload_sha256": "91e1f453fb0d5ac64b3dce95d2bf1b98cef427f1baca44aa2de8a8c59224369c",
+  "pre_create_events": [
+    {
+      "conservative_spend_upper_bound_usd": 0.05,
+      "pod_id": "j0d4boyxwegn7q",
+      "private_transfer_started": false,
+      "result": "created allocation failed frozen provider-shape validation and was immediately terminated",
+      "route": "RunPod v1 REST CPU placement",
+      "scientific_outputs_inspected": false
+    },
+    {
+      "conservative_spend_upper_bound_usd": 0.05,
+      "observed_shape": {
+        "gpu_count": 0,
+        "memory_gb": 128,
+        "price_usd_per_hour": 1.28,
+        "vcpu_count": 32
+      },
+      "pod_id": "f9izrr4i2y25kt",
+      "private_transfer_started": false,
+      "result": "exact CPU shape exceeded the frozen $1.25/hour ceiling by $0.03/hour and was immediately terminated",
+      "route": "RunPod exact CPU instance cpu3g-32-128",
+      "scientific_outputs_inspected": false
+    }
+  ],
+  "pre_execution_events": [
+    {
+      "correction": "replace one dictionary union with explicit assignment; identical resulting mapping",
+      "error": "base-image Python did not support dictionary-union syntax",
+      "pod_id": "h2xei44m0ee9m5",
+      "scientific_outputs_inspected": false,
+      "scientific_runtime_started": false,
+      "stage": "executor plan/input identity verification before runtime installation",
+      "state": "ERROR"
+    },
+    {
+      "correction": "build exact CPython 3.12.13 from the official source archive whose SHA-256 is frozen; invoke exact uv 0.8.22 with that executable",
+      "error": "base-image Python could invoke the uv package but no CPython 3.12.13 interpreter was available to uv",
+      "pod_id": "h2xei44m0ee9m5",
+      "scientific_outputs_inspected": false,
+      "scientific_runtime_started": false,
+      "stage": "pinned Python environment creation before panel or scorer invocation",
+      "state": "ERROR"
+    }
+  ],
+  "private_kaggle_transport": {
+    "credential_lifecycle": "upload once over the accepted SSH endpoint with mode 0600; delete immediately after private version-1 download; never log or publish credential content",
+    "dataset_handle": "aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/versions/1",
+    "dataset_id": "aviadcohen1/vesuvius-fusion-real-heldout-transport-v1",
+    "dataset_private": true,
+    "dataset_version": 1,
+    "expected_total_bytes": 5791288517,
+    "expected_total_files": 284,
+    "kagglehub_wheelhouse_tree": {
+      "bytes": 2332451,
+      "files": 11,
+      "ledger_sha256": "8ce5a93740006753f13fce6254b1c5487fa70679d9e5f6b5c39a42a9f36ece9e"
+    },
+    "npz_payloads_opened_or_parsed": false,
+    "remote_inventory_exact_path_and_size_match": true,
+    "staging_manifest": {
+      "bytes": 1078,
+      "file": "real_transport_dataset_manifest.json",
+      "payload_sha256": "4dc44e346f8743ef532060e8bba03483fc6be461f8d2216dcf9cd7fdeef7d572",
+      "sha256": "c8da09eb8477f4f00577cca054737c73b6c9d6d0fb5758ec683b2e1f7c14ec7c"
+    },
+    "transport_only": true,
+    "upload_receipt_payload_sha256": "11fd3b6ec8b1bf174bba90edf657e117d195d638596744fc6dfa3f0c200d112a"
+  },
+  "private_kaggle_transport_retry": {
+    "correction": {
+      "downloaded_files_rehashed_before_executor": true,
+      "empty_or_partial_predecessor_workspace_excluded": true,
+      "ephemeral_provider_credential_removed_after_download": true,
+      "fresh_absent_transport_input_status_and_work_roots": true,
+      "private_dataset_version_exactly_one": true,
+      "same_private_sealed_input_identities": true
+    },
+    "prior_receipt": {
+      "file": "provider_receipt.json",
+      "payload_sha256": "112c4b544a52badb7239f5a340daaa1fcdf30e8ab0cd0c4a9df9799054b37178",
+      "provider_state": "EXITED",
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "result_probability_endpoint_panel_or_npz_opened": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "result-blind exact private-Kaggle transport retry frozen before CPU resume"
+  },
+  "private_transport_deployer": {
+    "bytes": 10762,
+    "file": "deploy_new_runpod_real_scoring_from_kaggle.py",
+    "sha256": "7cf36a8ca69cf4ec676e9b8ba13afb38164b019c86ad067026d05f595212a925"
+  },
+  "private_transport_puller": {
+    "bytes": 16103,
+    "file": "pull_runpod_real_transport_dataset.py",
+    "sha256": "855c8c94ebfaa9800101501e30cbd9c58954f64888eb54bc461e8dfc05e46e45"
+  },
+  "private_transport_wrapper": {
+    "bytes": 13126,
+    "file": "runpod_prepare_and_execute_from_kaggle.py",
+    "sha256": "0ef4fb86ddea009a23c8fb744b819832f5059c61e0331c8488040927b03f744c"
+  },
+  "provider": {
+    "cloud_type": "SECURE",
+    "compute_type": "CPU",
+    "container_disk_gb": 30,
+    "cpu_flavor": "cpu3g",
+    "gpu_count": 0,
+    "image": "runpod/stack",
+    "instance_id": "cpu3g-32-128",
+    "maximum_price_usd_per_hour": 1.28,
+    "minimum_memory_gb": 120,
+    "name": "vesuvius-real-scoring-cpu-32",
+    "new_temporary_pod": true,
+    "temporary_public_ssh": true,
+    "terminate_after_verified_result_copy": true,
+    "vcpu_count": 32
+  },
+  "provider_orchestrator": {
+    "bytes": 9002,
+    "file": "orchestrate_runpod_real_scoring.py",
+    "sha256": "947876efa54c7a30eaf0605cb305f85f888aee7557fb8d6fa3bb1a55a15154a0"
+  },
+  "public_cache_delivery": {
+    "bytes": 22715,
+    "commit": "c05f5e58e643be23dc5dd7479f33774f85a62cc0",
+    "file": "heldout_cache_delivery_manifest.json",
+    "payload_sha256": "f4ef8da4a2ac423949772894f1c03280bd8c40c44b6783feb1c989bf81340109",
+    "sha256": "51c7062875c14a5a810037205acf1184511289be7e72bf7d9d9ecce742334fbc"
+  },
+  "public_execution_plan": {
+    "bytes": 55068,
+    "commit": "6f0a49bb99592098f980ce57fdbc6d62578af352",
+    "file": "heldout_execution_plan.json",
+    "payload_sha256": "e039587d21b9b7265cb36ea3101e648904df1f8728c6c86e84190b518800429f",
+    "sha256": "b1d00dbf940db8397044050e19044563af26449dac3dc52062d8fb7727f5e57c"
+  },
+  "public_metric_archive": {
+    "bytes": 139813060,
+    "file": "vesuvius-metric-resources.zip",
+    "sha256": "64d24044b7381dbb660a0e9f602ad0f8fd37d1935c09a8ee3b78088433910e68"
+  },
+  "public_metric_verifier": {
+    "bytes": 822,
+    "file": "verify_official_metric.py",
+    "sha256": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00"
+  },
+  "public_runpod_commit": "a0da4a8d470be7f189842304003bb80f45bb8dc3",
+  "remote_executor": {
+    "bytes": 17065,
+    "file": "runpod_execute_real_scoring.py",
+    "sha256": "0bbff5ec1f24d2e1017a97c5b19f7c3d0f869d465bc9b1d68ac011528e9b870d"
+  },
+  "result_blind_corrected_executor_contract_retry": {
+    "correction": {
+      "all_existing_file_and_runtime_identity_checks_retained": true,
+      "exact_32_worker_equivalence_contract_required": true,
+      "exact_cpu_provider_contract_required": true,
+      "exact_result_blind_scientific_gate_required": true,
+      "fresh_replacement_cpu_pod": true,
+      "propagate_result_blind_executor_error": true,
+      "top_level_status_text_is_scientific_gate": false
+    },
+    "deterministic_preflight": {
+      "corrected_retry_status_differs": true,
+      "old_executor_guaranteed_to_reject_before_science": true,
+      "old_literal_original_status_required": true
+    },
+    "failed_receipt": {
+      "credentials_removed": true,
+      "executor_returned_nonzero": true,
+      "file": "provider_receipt.json",
+      "payload_sha256": "a6600156531335198840c1b3ef1f714c1691df1ddd05b86f4cad93a900c8c97d",
+      "pod_id": "qe5a0ki9ziedu3",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false,
+      "stopped_workspace_status_preserved": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "parallel_workers": 32
+    },
+    "status": "corrected executor contract handoff frozen before CPU create"
+  },
+  "result_blind_corrected_stager_projection_retry": {
+    "failed_receipt": {
+      "credentials_removed": true,
+      "file": "provider_receipt.json",
+      "panels_or_scorer_started": false,
+      "payload_sha256": "190ee66c4c9e7172fdf608ce058e138028ba07813ae36def747e699e59303365",
+      "pod_id": "1f8axs6hidbwrm",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "only_verified_parallel_scorer_identity_projection_changed": true,
+      "parallel_workers": 32
+    },
+    "status": "corrected verified-parallel scorer projection frozen before CPU create"
+  },
+  "result_blind_current_kaggle_access_token_retry": {
+    "correction": {
+      "authentication_environment": "KAGGLE_API_TOKEN points to ephemeral file",
+      "credential_kind": "Kaggle access token",
+      "credential_value_or_hash_frozen_logged_or_recorded": false,
+      "fresh_replacement_cpu_pod": true,
+      "remote_filename": "access_token",
+      "remote_mode": "0600",
+      "remove_immediately_after_download_attempt": true
+    },
+    "failed_receipt": {
+      "credentials_removed": true,
+      "failure_state": "PULLING_PRIVATE_TRANSPORT",
+      "failure_status_code": 403,
+      "failure_type": "KaggleApiHTTPError",
+      "file": "provider_receipt.json",
+      "payload_sha256": "8f28d835440edbc04b52f6047d210c4890457b05fee11b4a2c8675c747e030c1",
+      "pod_id": "gs5gwji1vhpkxr",
+      "real_scorer_started": false,
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_payloads_opened_or_parsed": false,
+      "parallel_workers": 32,
+      "private_dataset_files_changed": false,
+      "private_dataset_id_or_version_changed": false
+    },
+    "status": "current access-token private transport correction frozen before CPU create"
+  },
+  "result_blind_isolated_scoring_input_correction": {
+    "correction": {
+      "executor_bytes": 13173,
+      "executor_sha256": "e4eb46faf1a5107fbbb37c398b144fe17da588546a0c0d3aa1539e4dab6be290",
+      "input_view": "<fresh working root>/input-view",
+      "view_contents": "seven sealed job-index symlinks plus exact public scoring assets, threshold, metric-source, and metric-runtime views"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 12965,
+      "file": "runpod_real_scoring_metric_runtime_path_plan.json",
+      "payload_sha256": "a7cd4bfd7c8c02fa321466d5ef1512cec5391fc273fe3c92d6392d2c75d66542",
+      "public_commit": "71f280e0558ef5777893a87b25f540078d1575c9",
+      "sha256": "1bdcfa0149472658e72310b020b65b0b22aa35454ccb1889581689f8188ec2a8"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "input_bytes_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "prior_failed_work_preserved_but_excluded_from_discovery": true
+    },
+    "status": "result-blind isolate exact authorized inputs from preserved failed-attempt scratch trees"
+  },
+  "result_blind_kagglehub_completion_marker_retry": {
+    "correction": {
+      "exact_expected_non_dataset_marker": ".complete/datasets/aviadcohen1/vesuvius-fusion-real-heldout-transport-v1/1/bundle.complete",
+      "expected_marker_bytes": 0,
+      "fresh_replacement_cpu_pod": true,
+      "pinned_kagglehub_version": "1.0.2",
+      "propagate_result_blind_child_error": true,
+      "reject_any_other_completion_entry": true,
+      "remove_only_completion_tree_before_dataset_inventory": true
+    },
+    "failed_receipt": {
+      "file": "provider_receipt.json",
+      "payload_sha256": "5d0325a2e921e5f8a749c0d5e6b36eee418a1ba412c87c43fc1e61d13c07e1e9",
+      "pipeline_entered_private_transport": true,
+      "pod_id": "fhhyfymouwt3hi",
+      "real_scorer_started": false,
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_payloads_opened_or_parsed": false,
+      "parallel_workers": 32,
+      "private_dataset_expected_files": 284,
+      "private_dataset_files_changed": false,
+      "private_source_files": 281
+    },
+    "status": "exact pinned KaggleHub completion-marker correction frozen before CPU create"
+  },
+  "result_blind_launcher_alias_contract_correction": {
+    "embedded_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "d24e0afe14f265dd05c055d64d58fc80bc36763b4402dadc40766ec62193ae81"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 7288,
+      "file": "runpod_real_scoring_plan.json",
+      "payload_sha256": "5faacc1617fcd971a7db40a311e381a0092590f227fd8cd8d2a5fec5702dcc6a",
+      "sha256": "782579bce50df7e29482d3b18578e9db692cb136d871497f0a66da4f35c2f7bf"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "launcher_base_source_bytes_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind canonical launcher alias and public-plan rebind"
+  },
+  "result_blind_launcher_diagnostic_retry": {
+    "correction": {
+      "all_existing_identity_and_runtime_checks_retained": true,
+      "fresh_replacement_cpu_pod": true,
+      "maximum_projected_line_bytes": 1024,
+      "maximum_projected_lines": 3,
+      "project_only_exception_type_and_message_lines": true,
+      "scientific_stdout_projected": false
+    },
+    "failed_receipt": {
+      "credentials_removed": true,
+      "file": "provider_receipt.json",
+      "launcher_returned_nonzero": true,
+      "payload_sha256": "d31e57bed67fce89d7edfa12db4726c486f469b2547d1ea2c35c47903aca9d98",
+      "pod_id": "6num11abstth2a",
+      "private_transport_verified": true,
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "parallel_workers": 32
+    },
+    "status": "bounded operational launcher diagnostic frozen before CPU create"
+  },
+  "result_blind_metric_runtime_path_correction": {
+    "correction": {
+      "executor_bytes": 11542,
+      "executor_sha256": "48eaf791f3f990aebf4b9f7766cd75a54d7018709d38c233f27baef41119cb94",
+      "path_prefix": "<exact scoring environment>/bin"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 12027,
+      "file": "runpod_real_scoring_metric_layout_plan.json",
+      "payload_sha256": "8d9e166f304a70b7ed6016b5002163457fe99971ada28810bf800f16dc885c7d",
+      "public_commit": "334194a1af646b093870ae3b50f7538fda29a50c",
+      "sha256": "380e9c0ba54a6d9eafb8d0a781b9dab3e2b0ca851a61691fb72be225b59a8bc9"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "metric_runtime_wheel_or_version_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind expose the already-installed pinned metric executables on PATH"
+  },
+  "result_blind_parallel_public_runtime_transfer_retry": {
+    "correction": {
+      "fresh_replacement_cpu_pod": true,
+      "maximum_parallel_ssh_streams": 8,
+      "metric_runtime_tree_identity_changed": false,
+      "public_metric_runtime_files": 20,
+      "remote_wrapper_rehashes_complete_tree_before_private_pull": true
+    },
+    "failed_receipt": {
+      "file": "provider_receipt.json",
+      "payload_sha256": "510eded976df38ec5734dfbf679a6e3f677fb81678792a31e3d4dc1cf269e7a1",
+      "pod_id": "73fco9qoqn3mzf",
+      "private_transport_started": false,
+      "scientific_outputs_inspected": false,
+      "scorer_started": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "npz_panel_probability_endpoint_or_result_opened": false,
+      "parallel_scorer_workers": 32
+    },
+    "status": "bounded parallel public-runtime transfer frozen before CPU create"
+  },
+  "result_blind_public_metric_archive_layout_retry": {
+    "correction": {
+      "exact_metric_source_retained": true,
+      "fresh_replacement_cpu_pod": true,
+      "required_top_level_directories": [
+        "topological-metrics-kaggle",
+        "wheels"
+      ],
+      "separately_frozen_runtime_wheels_retained": true,
+      "unused_bundled_wheels_removed": true
+    },
+    "failed_receipt": {
+      "credentials_removed": true,
+      "failure_message": "public metric archive layout mismatch",
+      "failure_state": "PREPARING_PUBLIC_RUNTIME",
+      "file": "provider_receipt.json",
+      "payload_sha256": "8ecd5153f7b95c396f6950ab7e91d4e2c760741a199f3fd6e799be9bee49f6fe",
+      "pod_id": "e0x9q58e4qrv6s",
+      "private_dataset_pull_started": false,
+      "real_scorer_started": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "held_out_result_opened_or_used": false,
+      "metric_runtime_versions_changed": false,
+      "metric_source_bytes_changed": false,
+      "parallel_workers": 32
+    },
+    "status": "exact two-directory public metric archive correction frozen before CPU create"
+  },
+  "result_blind_public_metric_layout_correction": {
+    "correction": {
+      "canonical_view": "/workspace/topological-metrics-kaggle",
+      "executor_bytes": 11412,
+      "executor_sha256": "6aa3496089e9fcc191bb3b40886249c27064c437b2e9c37bed753cfdf282a909",
+      "pinned_public_source": "/workspace/real-scoring-public/metric-source"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 11009,
+      "file": "runpod_real_scoring_pip_seeded_plan.json",
+      "payload_sha256": "049233e64cc7967dcdf5a63d2534e31f56d7a717e26a5616447ce6dd62074e6a",
+      "public_commit": "ed09ab306780f6d96ebac35c3651c68164d68993",
+      "sha256": "6f6f3359a24f79c185908bbaee7b798ce61d1aa811ed16038e8c1f2d2e9cd594"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "metric_source_bytes_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind canonical filesystem view for the already-pinned public metric source"
+  },
+  "result_blind_public_metric_verifier_transport_correction": {
+    "correction": {
+      "executor_bytes": 13825,
+      "executor_sha256": "5d5208483b06cd079ff0f5e1a14704a257f470cebe0738ccf2b881a18b86456a",
+      "public_metric_verifier": {
+        "bytes": 822,
+        "file": "verify_official_metric.py",
+        "sha256": "09ba89028aa48405a3fc96390b76b455bd0b26d07c908b976f8d6fdfd1aa4e00"
+      }
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 14118,
+      "file": "runpod_real_scoring_isolated_input_plan.json",
+      "payload_sha256": "01909a9ff9625fb57fe830b5195037c42bea499dad94e28258284477f8c0c0a7",
+      "public_commit": "77ffc9bc476f8f149ad698d115ed53f142535e13",
+      "sha256": "3fe6e3b8b97ec8be086103fb1ec906dc563b2044f1f305e4d3621a102569c52f"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "metric_smoke_test_or_source_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind transport the exact public verifier already required by the frozen metric preparer"
+  },
+  "result_blind_public_real_scorer_source_correction": {
+    "embedded_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "8eaee6005de6996b5ece96726c5b27bf86e80649c34e133ce7bab972b505e7d9"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 8097,
+      "file": "runpod_real_scoring_alias_corrected_plan.json",
+      "payload_sha256": "f6fea141b7c1b2204c0450d9ae66ce6c21cefe37344ace03e110c19c46dd20e8",
+      "public_commit": "1755c87da5d79aea3b514a4e9bad46a27d765879",
+      "sha256": "4e22bc51dcb07337df6d99cb5ed294e9022621937d4d5d83684efd9aa8638d3f"
+    },
+    "restored_scorer": {
+      "bytes": 8210,
+      "file": "score_real_test.py",
+      "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "exact_preregistered_scorer_restored": true,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind public-source correction for the already-frozen exact scorer"
+  },
+  "result_blind_real_panel_index_provenance_retry": {
+    "correction": {
+      "existing_verified_sealed_input_volume_reused": true,
+      "new_private_input_upload_required": false,
+      "score_input_cache_job_execution_plan_exactly_bound": true,
+      "score_input_cache_job_execution_plan_required": true,
+      "unknown_or_tampered_score_input_fields_rejected": true
+    },
+    "embedded_real_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "74ffaa3d1a65ca2e82b560ae62d63c72d039dba00caa9d9d98e95f3645de26ab"
+    },
+    "failed_attempt": {
+      "failure_message": "real score-input index provenance mismatch",
+      "pod_id": "z0vqb3dt43vkga",
+      "provider": "RunPod CPU",
+      "receipt": {
+        "file": "provider_receipt.json",
+        "payload_sha256": "755d5bcfb6306125cca82acc8a06969a14abc4bab6c5c0df97a7c269d271f133"
+      },
+      "scientific_outputs_inspected": false,
+      "stage": "fixed real-panel public-context validation after pinned metric build and before panel or scorer output"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 15400,
+      "file": "runpod_real_scoring_metric_verifier_plan.json",
+      "payload_sha256": "8c2322ed872901f08541b5aef11b43881db7af73d5063cd5cbe055fd20408863",
+      "public_commit": "c96c4424560bd2cee3e4f3d986a2075a54cf6a2d",
+      "sha256": "f4635f53a343f423e44a9e2ed8716d93a9f8741476e2b0b2442fda5830d4efce"
+    },
+    "public_cache_delivery": {
+      "bytes": 21422,
+      "commit": "0712bb152957dc67af52c8704850819dbefdaa59",
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "f07325081390f8c88cfd9531bbbeb28fc053b6e27b954af21d9fb1d2e3117210",
+      "sha256": "6033e8a5e4309d1b4b0f8223f63f0c3215e1866269e00517f9bb83ab315717b1"
+    },
+    "public_execution_plan": {
+      "bytes": 52907,
+      "commit": "414aa55ebba2c273e45b685a989663ab387be4cb",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "0154df3bcf8568b5c52ad36e9d9eb68594062d57f78c5426bf7c9015129be096",
+      "sha256": "bed684b2fb1d4d505bffc8bc4350036d7745dd90acb4031f18018f753f4cc560"
+    },
+    "schema_version": "1.0",
+    "scientific_gate": {
+      "cache_model_metric_threshold_seed_panel_selection_endpoint_gate_aggregation_or_claim_changed": false,
+      "result_probability_endpoint_panel_or_npz_opened": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "result-blind CPU retry after exact real-panel score-index provenance correction"
+  },
+  "result_blind_scoring_publication_projection_correction": {
+    "embedded_launcher": {
+      "bytes": 31522,
+      "file": "one_shot_scoring_launcher.py",
+      "sha256": "b7b64d5c2d6f9bf5509e77fc30c103cc56bfc70c3e9c97159c93cfbb627e6438"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 9186,
+      "file": "runpod_real_scoring_exact_source_plan.json",
+      "payload_sha256": "d35958c82dbcff0fc6885ad6ca3fe404e54e6d9ad5d65f969b07503678c59af4",
+      "public_commit": "25d7e446039d75df280264d088cb0662a67aedf6",
+      "sha256": "584cfd75878e68a10ba632a22f948ddc1d48710a14d724d91af8d2eb5df75faa"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "scientific_projection_comparison_retained": true
+    },
+    "status": "result-blind public-record projection allowlist correction"
+  },
+  "result_blind_scoring_runtime_pip_seed_correction": {
+    "correction": {
+      "executor_bytes": 10701,
+      "executor_sha256": "b7ce43602f30e22209c847d708d27c75bffb15aa46aed54a0fbf4af3d33dde00",
+      "uv_venv_added_argument": "--seed"
+    },
+    "predecessor_runpod_plan": {
+      "bytes": 10096,
+      "file": "runpod_real_scoring_projection_corrected_plan.json",
+      "payload_sha256": "ef3a70dc713409e0dac70e24e6143158303fb021c60344852b28b10f3325e06a",
+      "public_commit": "93ed905b62854f12c89098b1810f81eccbf552f3",
+      "sha256": "b89aa6169a846825977083e7a1855af1d94b389caccffce1099c4c92c2d8a70d"
+    },
+    "scientific_gate": {
+      "cache_or_result_opened": false,
+      "exact_wheel_requirements_changed": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false
+    },
+    "status": "result-blind seed pip into the exact uv scoring environment"
+  },
+  "result_blind_transport_manifest_file_identity_retry": {
+    "correction": {
+      "file_identity_fields": [
+        "file",
+        "bytes",
+        "sha256"
+      ],
+      "fresh_replacement_cpu_pod": true,
+      "manifest_bytes_changed": false,
+      "payload_sha256_validated_separately": true
+    },
+    "failed_receipt": {
+      "credentials_removed": true,
+      "failure_message": "private transport staging-manifest identity mismatch",
+      "failure_state": "PULLING_PRIVATE_TRANSPORT",
+      "file": "provider_receipt.json",
+      "payload_sha256": "3ff42e51ae0be7015baec33d340d3d68b393dff4eb127f65345add1d29110aea",
+      "pod_id": "7mzd19hdn2k797",
+      "real_scorer_started": false,
+      "scientific_outputs_inspected": false
+    },
+    "independent_metadata_check": {
+      "local_manifest_bytes": 1078,
+      "local_manifest_sha256": "c8da09eb8477f4f00577cca054737c73b6c9d6d0fb5758ec683b2e1f7c14ec7c",
+      "npz_downloaded_opened_or_parsed": false,
+      "remote_manifest_bytes": 1078,
+      "remote_manifest_sha256": "c8da09eb8477f4f00577cca054737c73b6c9d6d0fb5758ec683b2e1f7c14ec7c"
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "parallel_workers": 32,
+      "private_dataset_id_version_or_files_changed": false
+    },
+    "status": "exact three-field manifest file-identity correction frozen before CPU create"
+  },
+  "result_blind_verified_parallel_cpu_retry": {
+    "equivalence_report": {
+      "bytes": 1838,
+      "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+      "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+      "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+      "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960"
+    },
+    "fresh_cpu_pod": true,
+    "parallel_workers": 32,
+    "provider_contract": {
+      "compute_type": "CPU",
+      "gpu_count": 0,
+      "maximum_price_usd_per_hour": 1.28,
+      "minimum_memory_gb": 120,
+      "new_temporary_pod": true,
+      "terminate_after_verified_result_copy": true,
+      "vcpu_count": 32
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "frozen_cache_order_preserved": true,
+      "held_out_result_opened_or_used": false,
+      "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+      "only_independent_subprocess_scheduling_changed": true,
+      "per_cache_metric_subprocess_changed": false,
+      "test_time_tuning_permitted": false
+    },
+    "status": "fresh CPU private-Kaggle verified-parallel retry frozen before provider create",
+    "transport_contract": {
+      "direct_local_sealed_cache_upload": false,
+      "downloaded_file_identities_reverified": true,
+      "ephemeral_credential_removed_after_download": true,
+      "private_dataset_version": 1
+    }
+  },
+  "result_blind_verified_parallel_cpu_rsync_retry": {
+    "correction": {
+      "fresh_replacement_cpu_pod": true,
+      "install_public_rsync_before_transfer": true,
+      "private_dataset_pull_started_in_failed_attempt": false,
+      "private_file_transfer_started_in_failed_attempt": false
+    },
+    "failed_receipt": {
+      "executor_started": false,
+      "file": "provider_receipt.json",
+      "payload_sha256": "d34948d26760d8beaa1d87c2dd21723bee94f06797512cbfc9944b7ed4f13637",
+      "pod_id": "rnn42mxk533jqe",
+      "scientific_outputs_inspected": false
+    },
+    "schema_version": "1.0",
+    "scientific_contract": {
+      "cache_model_metric_threshold_seed_panel_endpoint_gate_aggregation_order_or_claim_changed": false,
+      "gpu_count": 0,
+      "held_out_result_opened_or_used": false,
+      "parallel_workers": 32
+    },
+    "status": "public rsync install correction frozen before replacement CPU create"
+  },
+  "runtime": {
+    "fixed_panels_before_scoring": true,
+    "python": "3.12.13",
+    "python_build": "result-blind local build from the exact public source archive on the frozen 32-vCPU pod",
+    "python_executable": "/workspace/python-3.12.13/bin/python3.12",
+    "python_source_archive": "/workspace/Python-3.12.13.tgz",
+    "python_source_sha256": "0816c4761c97ecdb3f50a3924de0a93fd78cb63ee8e6c04201ddfaedca500b0b",
+    "python_source_url": "https://www.python.org/ftp/python/3.12.13/Python-3.12.13.tgz",
+    "real_parallel_workers": 32,
+    "row_order": "original frozen cache order",
+    "sealed_cache_layout_adapter": "create a relative directory symlink from each frozen run name to its verified sealed-caches directory, or accept only that exact pre-existing symlink after a result-blind pre-runtime retry; no NPZ is copied or opened",
+    "uv_bootstrap": "0.8.22"
+  },
+  "runtime_bootstrap_plan": {
+    "bytes": 2506,
+    "file": "runpod_real_scoring_runtime_bootstrap_plan.json",
+    "sha256": "571d14308e2809f2ae8923262cf776cf471ee61d8c32b0d52dc276015a758878"
+  },
+  "runtime_predecessor_plan": {
+    "bytes": 7288,
+    "file": "runpod_real_scoring_plan.json",
+    "sha256": "782579bce50df7e29482d3b18578e9db692cb136d871497f0a66da4f35c2f7bf"
+  },
+  "runtime_preparer": {
+    "bytes": 6134,
+    "file": "prepare_runpod_real_scoring_runtime.py",
+    "sha256": "8dd422e20fdbb8ca867226c11fb0135c18a5250a761bdcfac85d26732c600a13"
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "all_adverse_null_or_failure_outcomes_must_be_published": true,
+    "gpu_compute_permitted": false,
+    "model_metric_threshold_seed_panel_endpoint_gate_or_claim_changed": false,
+    "partial_real_result_is_scorable": false,
+    "scientific_result_opened_or_used": false,
+    "synthetic_version_4_remains_complete_and_sealed": true
+  },
+  "scoring_assets": {
+    "bytes": 109850,
+    "files": 5,
+    "ledger_records": 5,
+    "ledger_sha256": "77b8babe8c2641aa0f1ec082c8f4fcb7c5dc808df39c2262b9f43aa359d8bff9",
+    "manifest": {
+      "bytes": 779,
+      "file": "scoring_asset_subset_manifest.json",
+      "payload_sha256": "2518a021ba2f18feec7535077cc599d03ab73055567fe3545fb46b75ce805f34",
+      "sha256": "53de1531fd46b97f1730b0a8a1efa8ac863a832e6b8adab5b19b3f3c6e8794a2"
+    },
+    "model_checkpoints_excluded": true,
+    "parent_ledger_records": 278,
+    "parent_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba"
+  },
+  "scoring_assets_tree": {
+    "bytes": 150348,
+    "files": 8,
+    "ledger_sha256": "07bef1e0656286a3fac5019ac86653af9c4bd2e60898714ba4d3aa27b9536282"
+  },
+  "sealed_real_inputs": {
+    "bytes": 57083,
+    "file": "runpod_real_input_manifest.json",
+    "payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563",
+    "sha256": "292f8b4de60e97d29cfa45a3879e30455405dec8f159e3928391eab439de813e"
+  },
+  "status": "fresh CPU corrected stager-projection retry frozen before create"
+}

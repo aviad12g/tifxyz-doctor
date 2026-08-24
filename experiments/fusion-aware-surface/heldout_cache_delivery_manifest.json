@@ -1,0 +1,592 @@
+{
+  "authority": {
+    "kaggle_synthetic_role": "sealed secondary cross-platform replication",
+    "real_provider": "Kaggle",
+    "selection_between_synthetic_platforms_permitted": false,
+    "synthetic_kernel_locator_fields_are_non_authoritative_transport_placeholders": true,
+    "synthetic_primary_provider": "RunPod"
+  },
+  "counts": {
+    "jobs": 14,
+    "real_jobs": 7,
+    "real_probability_caches": 266,
+    "synthetic_jobs": 7,
+    "synthetic_ray_caches": 700
+  },
+  "delivery_freezer": {
+    "bytes": 8644,
+    "file": "freeze_provider_neutral_heldout_delivery.py",
+    "sha256": "54f4cc844252925d2a5232241d99caddf4bc0470b02bb0098d451fb1f517a214"
+  },
+  "delivery_source_records": {
+    "real": {
+      "bytes": 4052,
+      "file": "kaggle_real_delivery_source_records.json",
+      "payload_sha256": "9d1709b2a3cdefff71ab3f2c0f8d10be27514cca27de6c73b94fb0d4ee4b8c38",
+      "sha256": "e53fed670d13da6002f70f74bab2a76b80d0c23fa0942f2b4eeed353c994e169"
+    },
+    "synthetic": {
+      "bytes": 8226,
+      "file": "runpod_primary_delivery_records.json",
+      "payload_sha256": "87da061261de93802c640df6158ad51baa517bdd62e14c0c944fff80ab6ad9f1",
+      "sha256": "99ea9e128e69d8fa9b49dc39e468794c85a6233236c946c603dfb4a6863db339"
+    }
+  },
+  "job_order": [
+    "real-test-baseline",
+    "real-test-control-seed11",
+    "real-test-control-seed23",
+    "real-test-control-seed47",
+    "real-test-gap8-seed11",
+    "real-test-gap8-seed23",
+    "real-test-gap8-seed47",
+    "synthetic-baseline-all-shards",
+    "synthetic-control-seed11-all-shards",
+    "synthetic-control-seed23-all-shards",
+    "synthetic-control-seed47-all-shards",
+    "synthetic-gap8-seed11-all-shards",
+    "synthetic-gap8-seed23-all-shards",
+    "synthetic-gap8-seed47-all-shards"
+  ],
+  "jobs": [
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-baseline",
+        "kernel_version": 3,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-baseline",
+      "job_index": {
+        "bytes": 11522,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "4ddc1c5f3c9f0619907820e398726e0951c91180d4fcb9870180f77abdaf15aa",
+        "sealed_cache_file_count": 38,
+        "sha256": "d3b12c2d87f4a21eeb6522d6b6e56e765cfed447b99e1f6e8deca9e5593a40ba"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-baseline",
+      "kernel_version": 3,
+      "mode": "real_test_cache",
+      "run": "baseline"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed11",
+        "kernel_version": 3,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-control-seed11",
+      "job_index": {
+        "bytes": 11796,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "14d1acb059ac77b8c4309c189d609137d1298ed9b497bc343e06b8de876a0647",
+        "sealed_cache_file_count": 38,
+        "sha256": "bf5eca1cc48821066a8640684f68ea40508507aa2d64e50d0753a8ae797f837b"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed11",
+      "kernel_version": 3,
+      "mode": "real_test_cache",
+      "run": "control_seed11"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed23",
+        "kernel_version": 1,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-control-seed23",
+      "job_index": {
+        "bytes": 11797,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "d72d92ec5ae83d43903fc7370700ba72601e8eabb01d21165292e28c1d168551",
+        "sealed_cache_file_count": 38,
+        "sha256": "289dfc8d0938c469f9d30bebd558725fdb6a9828bce43d7a30190b4e271690b1"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed23",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "run": "control_seed23"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed47",
+        "kernel_version": 1,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-control-seed47",
+      "job_index": {
+        "bytes": 11797,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "46e9773032c46553d97661c35fa5144118d82fe73ab4528ea429b48d410452d4",
+        "sealed_cache_file_count": 38,
+        "sha256": "d2f4eb86ceabcb97985f2191aee2a8634cedafc50c1505038f3a4cae600ea28a"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-control-seed47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "run": "control_seed47"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed11",
+        "kernel_version": 1,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-gap8-seed11",
+      "job_index": {
+        "bytes": 11781,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "423ca00a418e6d2a443eceed083740f7adf1f19ceb9b317880d3237dbd69f87c",
+        "sealed_cache_file_count": 38,
+        "sha256": "a4293475b324df1681562580114450ca9abfa2abe6537896e231370376518986"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed11",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "run": "gap8_seed11"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed23",
+        "kernel_version": 1,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-gap8-seed23",
+      "job_index": {
+        "bytes": 11781,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "f7089956e2fd2056005430b18643000c1123b997f20e2423b3b1ce21eee0ca9f",
+        "sealed_cache_file_count": 38,
+        "sha256": "6182d4ec15233aa21814beccd38e8541a6912a127a7552174a41415a98364d1f"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed23",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "run": "gap8_seed23"
+    },
+    {
+      "execution_origin": {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed47",
+        "kernel_version": 1,
+        "provider": "Kaggle"
+      },
+      "job_id": "real-test-gap8-seed47",
+      "job_index": {
+        "bytes": 11781,
+        "cache_manifest_count": 1,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "8f5f211ec8bdd614db1c98595f7ef890da3f93a2784e440034642ba6d69ba04f",
+        "sealed_cache_file_count": 38,
+        "sha256": "577cec84612e498872486b0bb198664a8aeb887951966401935b9002c6b07bed"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-real-test-gap8-seed47",
+      "kernel_version": 1,
+      "mode": "real_test_cache",
+      "run": "gap8_seed47"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-baseline-all-shards",
+      "job_index": {
+        "bytes": 39715,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "623304d6bedb3a695b2f58c8a2f422e99faf8bc7f38530ce3fdbce96b8d9fbcc",
+        "sealed_cache_file_count": 100,
+        "sha256": "f25d92b4cea0d267c97efe7a5687e7d036d07471681b4cadfa5cbac1169ba731"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-baseline-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "baseline"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-control-seed11-all-shards",
+      "job_index": {
+        "bytes": 40097,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "1e2e153718508d694f7360f76e65ee07369ae0c76dc71d1f06c612bafa9c3556",
+        "sealed_cache_file_count": 100,
+        "sha256": "111686a31f9b6b974099aa13178bafe1eff399a8caa54f61dec52f5a0a9a7544"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-control-seed11-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "control_seed11"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-control-seed23-all-shards",
+      "job_index": {
+        "bytes": 40098,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "5a3c00f2227e174dcfe7a2672f7a6efd73aa58cc0bfd537adf6f4ecc31f8332b",
+        "sealed_cache_file_count": 100,
+        "sha256": "323d6a6b9ab98de2f3211003b6bd2c6c7b56d6db086c673f5009595774ff8394"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-control-seed23-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "control_seed23"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-control-seed47-all-shards",
+      "job_index": {
+        "bytes": 40098,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "ede216295f23c8f228f095231dd84d655bd9bea2bd535b48e39ef98c6022ceab",
+        "sealed_cache_file_count": 100,
+        "sha256": "2bbc13e816f3f98f49044ec60c9b7212ba13213d9f29c902d65e8c1855ff7d21"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-control-seed47-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "control_seed47"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-gap8-seed11-all-shards",
+      "job_index": {
+        "bytes": 40028,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "9265b121cbc97b077f119a9ea3106c45a565a0c5f9b34e2a382d0351864738b2",
+        "sealed_cache_file_count": 100,
+        "sha256": "8899e41b7b62ea2e73e8fb4d83857b09bbb603afc650d0c142433140a48d4dbe"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-gap8-seed11-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "gap8_seed11"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-gap8-seed23-all-shards",
+      "job_index": {
+        "bytes": 40028,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "434211536d53aba4eeb375a4bb07f3db1dc84244c1cf75b6a9945ed1523e30c0",
+        "sealed_cache_file_count": 100,
+        "sha256": "967fb20f715cc9672934eafc1f129111e72b9d58a16b326bc1c775b18daa5bab"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-gap8-seed23-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "gap8_seed23"
+    },
+    {
+      "execution_origin": {
+        "pod_id": "9r1cm9r82aonih",
+        "provider": "RunPod",
+        "public_replacement_commit": "46d9f77ed263594a07c6847f0c7020dd702ac02c",
+        "replacement_plan_payload_sha256": "3299440eb84b4bf62f1f1552215aff76bc2afe842ae5f2898222a6f726cbe984"
+      },
+      "job_id": "synthetic-gap8-seed47-all-shards",
+      "job_index": {
+        "bytes": 40028,
+        "cache_manifest_count": 10,
+        "file": "heldout_job_index.json",
+        "payload_sha256": "806b32e5d486a9ecaec4cc63b8a6f749bde03062a347ec791b6ce92f65dd879c",
+        "sealed_cache_file_count": 100,
+        "sha256": "09b629a4f2ad8a023f22d024126da9ac8eeecee74a243e252cf9c744ab146954"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-synthetic-gap8-seed47-all-shards",
+      "kernel_version": 1,
+      "mode": "synthetic_ray_cache",
+      "run": "gap8_seed47"
+    }
+  ],
+  "payload_sha256": "85cf0c992bdff646d376f3c8cf8d114d374c537263a9443fe6c2e320cbea63af",
+  "public_execution_plan": {
+    "bytes": 61799,
+    "commit": "95ea19d20aff1984976fcaf6cecaca30387882c6",
+    "file": "heldout_execution_plan.json",
+    "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e",
+    "sha256": "cd02eec3812b5b04dd3902681aad875d78dc43a3c567f28f3b5ce05e184ff4a6"
+  },
+  "result_blind_launcher_alias_contract_correction": {
+    "launcher_bytes_changed": false,
+    "launcher_sha256": "3d82a8887794ebae5a602dd710851e971326e9ddee0d7c238853fb85a344c052",
+    "public_execution_plan_commit": "76b31337156e74319f5abe4967cff7f8cd9eab9a",
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_parallel_real_asset_transport": {
+    "failed_real_version": 5,
+    "public_execution_plan_commit": "9940f7db306e15398dcbe9ed44e270ac0d6d41e1",
+    "real_v6_retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_parallel_real_scoring_retry": {
+    "public_execution_plan_commit": "6540d1044cecf3a9a686daf207b2362c37be66a3",
+    "real_v4": {
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+      "kernel_version": 4,
+      "status": "ERROR"
+    },
+    "real_v5_retry_permitted": true,
+    "scientific_contract_changed": false,
+    "sealed_v4_results_opened_downloaded_or_used": false,
+    "synthetic_v4": {
+      "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+      "kernel_version": 4,
+      "status": "COMPLETE"
+    },
+    "synthetic_v4_retained": true
+  },
+  "result_blind_public_commit_binding_correction": {
+    "actual_equivalence_commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+    "erroneous_unpublished_equivalence_commit": "85b0190541e402c1c20e6f7870da5669ed756521",
+    "schema_version": "1.0",
+    "scientific_contract_changed": false,
+    "scientific_outputs_opened_or_used": false,
+    "status": "result-blind local Git commit binding corrected before provider retry"
+  },
+  "result_blind_public_real_scorer_source_correction": {
+    "exact_original_real_scorer_published": true,
+    "public_execution_plan_commit": "faf7606b82edbc06a02973a721e3e168148b4622",
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false,
+    "source_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+  },
+  "result_blind_real_panel_index_provenance_correction": {
+    "exact_cache_job_provenance_required": true,
+    "public_execution_plan_commit": "414aa55ebba2c273e45b685a989663ab387be4cb",
+    "public_tooling_commit": "116544f7cdd4562596bd0a964ceea12fd1427374",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_runpod_cpu_exact_scorer_correction": {
+    "exact_original_real_scorer_restored": true,
+    "public_execution_plan_commit": "49cf95f68fe254528f22e96b57b1e4ddea0d383d",
+    "public_tooling_commit": "ba7b1d76a15e9e902e148dabadb669b0c0d99000",
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_runpod_cpu_projection_correction": {
+    "public_execution_plan_commit": "99643d5ed891611ac333fc222c1040c37f8c2a3b",
+    "public_tooling_commit": "fc823b1efe1f43fbfed71f34c8ebac0bf4caeab4",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_runpod_cpu_real_scoring": {
+    "cpu_only_retry_permitted": true,
+    "gpu_compute_permitted": false,
+    "public_execution_plan_commit": "51101c314506f9b7a7cf3a5e3a7c985caae2d3f9",
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false,
+    "synthetic_v4_retained": true
+  },
+  "result_blind_runpod_real_scoring_retry": {
+    "failed_real_version": 6,
+    "public_execution_plan_commit": "7ce0e780380525dd445e5ef2fc58631a3c9d2886",
+    "runpod_real_retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false,
+    "synthetic_v4_retained": true
+  },
+  "result_blind_scorer_exception_projection_correction": {
+    "held_out_result_opened_or_used": false,
+    "public_execution_plan_commit": "0aaa9d53976b330054815ae945010e9fe13e80e9",
+    "public_tooling_commit": "0c4a5df6a66030678866360679e8aa54fc91e8c7",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_stdout_projected": false
+  },
+  "result_blind_scorer_public_import_dependency_correction": {
+    "exact_public_dependencies_fetched_before_scorer": true,
+    "public_execution_plan_commit": "c90b2277d98edea347189d7b9fba45baee065620",
+    "public_tooling_commit": "845aadd6b49322f5c09c4ae1af7faa8bc63630ec",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_output_opened_or_used": false
+  },
+  "result_blind_scorer_public_metric_worker_correction": {
+    "exact_public_metric_worker_materialized_beside_scorer": true,
+    "public_execution_plan_commit": "95ea19d20aff1984976fcaf6cecaca30387882c6",
+    "public_tooling_commit": "65c53e8e17473d546823b2654928f15a34e6226a",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_output_opened_or_used": false
+  },
+  "result_blind_scoring_asset_correction": {
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 1,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 1,
+        "mode": "synthetic"
+      }
+    ],
+    "public_execution_plan_commit": "393dee840bf4ef6c75f228023d089a8ea22c8785",
+    "retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_cache_identity_schema_correction": {
+    "provider_scorer_version_created_for_failed_preflight": false,
+    "public_execution_plan_commit": "e36169e53acbf83ae77642dc47b00c6f98a24ec1",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_job_plan_compatibility_correction": {
+    "cache_job_execution_plan": {
+      "bytes": 20443,
+      "commit": "46d030245c14ecb2be63796a308581c462fc2e29",
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "3826bf641941b5d70fa52f9a23fc1711ae538be8fc974dbba1b5f0db8f18afdd",
+      "sha256": "29d08a7430c8870582a96579fcc77737ac699aef64efc159ba94ede87009da5d"
+    },
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 2,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 2,
+        "mode": "synthetic"
+      }
+    ],
+    "public_execution_plan_commit": "52d73f8fc3125e9c8ec471000795192011aee954",
+    "retry_permitted": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_publication_projection_correction": {
+    "added_operational_field_count": 3,
+    "public_execution_plan_commit": "07a82d5f211609ac96ec266c41a5c5a3c5b1f2bd",
+    "scientific_contract_changed": false,
+    "scientific_projection_comparison_retained": true,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_runtime_projection_correction": {
+    "provider_scorer_version_created_for_failed_preflight": false,
+    "public_execution_plan_commit": "624c1ef41fa078ea9b3d3d97207a56ab6662e27b",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_scoring_runtime_transport_correction": {
+    "failed_attempts": [
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-real-scoring",
+        "kernel_version": 3,
+        "mode": "real"
+      },
+      {
+        "kernel_id": "aviadcohen1/vesuvius-fusion-one-shot-synthetic-scoring",
+        "kernel_version": 3,
+        "mode": "synthetic"
+      }
+    ],
+    "public_execution_plan_commit": "251ffa9111cc7f5d5977ddc26006c68fc1b0c0af",
+    "retry_permitted_after_exact_wheel_resolution": true,
+    "scientific_contract_changed": false,
+    "scientific_result_created_or_opened": false
+  },
+  "result_blind_verified_parallel_projection_correction": {
+    "held_out_result_opened_or_used": false,
+    "public_execution_plan_commit": "6f0a49bb99592098f980ce57fdbc6d62578af352",
+    "scientific_contract_changed": false
+  },
+  "result_blind_verified_parallel_real_scoring": {
+    "equivalence_report": {
+      "bytes": 1838,
+      "commit": "85b0190613ea35b73f16079a67ae52d9eaa9cf8e",
+      "file": "PARALLEL_REAL_SCORER_EQUIVALENCE.json",
+      "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+      "sha256": "b46fa4c7514f15fe0c75a761ac1c0857d9ec301ab79664ffab398b3f99a38960"
+    },
+    "held_out_result_opened_or_used": false,
+    "parallel_workers": 32,
+    "public_execution_plan_commit": "c88213541046a665bd7b0122f52a0271f86de4c0",
+    "real_retry_permitted": true,
+    "scientific_contract_changed": false
+  },
+  "result_blind_verified_parallel_scorer_projection_correction": {
+    "held_out_result_opened_or_used": false,
+    "public_execution_plan_commit": "03353db5431c685d038b43ad3bef44e53ed883aa",
+    "public_tooling_commit": "03cdc54b21a3558289dd18d5201c6fff85bd784c",
+    "retry_permitted_after_full_preflight": true,
+    "scientific_contract_changed": false
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "all_cache_jobs_completed": true,
+    "cache_npz_payloads_opened_or_inspected_by_delivery_freezer": false,
+    "one_shot_scoring_permitted_after_this_public_freeze": true,
+    "scientific_endpoints_printed": false,
+    "scientific_endpoints_scored": false,
+    "thresholds_publicly_frozen_before_cache_inference": true
+  },
+  "status": "all 14 publicly planned held-out caches sealed before one-shot scoring",
+  "threshold_binding": {
+    "frozen_thresholds": {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    },
+    "kernel_id": "aviadcohen1/vesuvius-fusion-aware-freeze-thresholds",
+    "kernel_version": 6,
+    "launcher_sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9",
+    "public_freeze_commit": "4aba9ec10c124cf7c4a473c4687b592c81fa5c9b",
+    "threshold_run_manifest": {
+      "bytes": 10760,
+      "file": "threshold_run_manifest.json",
+      "payload_sha256": "fd1aec3be58e1bf8bbce5019c36bfeecb2e4ce5313300ce52a488f699123b798",
+      "sha256": "68687d01042dea85aa9e2a56f4ec4ccad91b37b8d2b3667de1a7d3ea5b9f56db"
+    }
+  }
+}

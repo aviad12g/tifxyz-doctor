@@ -1,0 +1,51 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "additional_spend_from_failed_resume_usd": 0.0,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 2.753135,
+    "remaining_development_cutoff_usd": 9.246865
+  },
+  "chunked_transfer_retry_payload_sha256": "60f0b895c1c10560acdc8c0792adb1f7ca2dd21f80deee6f5a3e4f7b5c3ab313",
+  "dynamic_substitute_egress_payload_sha256": "042d7576a510a16805bca2967ce95fa479d21386a99eacaeb0c8f88bce66714d",
+  "failed_resume": {
+    "confirmation_outputs_inspected": false,
+    "error": "The original stopped host no longer had four free RTX 3090 GPUs, so the resume was rejected before either pod entered billable RUNNING state.",
+    "failed_at": "2026-08-20T22:57:56+00:00",
+    "original_pod_ids": [
+      "qon4qarflyqd7l",
+      "x9hfcpc92rxk0d"
+    ],
+    "provider_status_after_failure": [
+      "EXITED",
+      "EXITED"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "hardware_substitution_payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "payload_sha256": "414f476230fb9ceac3503bd79a923e3d37787523df52494492bb8baa05a80a17",
+  "public_parent_commit": "c8e61959b40fbb460965689aec309cd5a749d3fe",
+  "replacement_contract": {
+    "exact_new_pod_ids_recorded_privately_before_upload": true,
+    "maximum_aggregate_hourly_rate_usd": 2.38,
+    "maximum_total_gpu_count": 7,
+    "ordered_uniform_hardware": [
+      "RTX 3090",
+      "RTX A5000",
+      "RTX A6000"
+    ],
+    "reuse_public_frozen_job_partitions": true,
+    "terminate_each_rejected_partial_layout": true,
+    "use_chunked_transfer_retry_without_scientific_change": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_CHUNKED_REPLACEMENT_ALLOCATION_RETRY_FROZEN"
+}

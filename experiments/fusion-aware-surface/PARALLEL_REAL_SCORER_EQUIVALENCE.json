@@ -1,0 +1,54 @@
+{
+  "comparisons": [
+    {
+      "exact_python_value_equality": true,
+      "frozen_cache_order_preserved": true,
+      "parallel_workers": 4,
+      "result_sha256": "812b700472bd399dbc456eb5c8b699265aa9c691b2eda7c9095e975ba4ed8832"
+    },
+    {
+      "exact_python_value_equality": true,
+      "frozen_cache_order_preserved": true,
+      "parallel_workers": 16,
+      "result_sha256": "812b700472bd399dbc456eb5c8b699265aa9c691b2eda7c9095e975ba4ed8832"
+    },
+    {
+      "exact_python_value_equality": true,
+      "frozen_cache_order_preserved": true,
+      "parallel_workers": 32,
+      "result_sha256": "812b700472bd399dbc456eb5c8b699265aa9c691b2eda7c9095e975ba4ed8832"
+    }
+  ],
+  "exact_scorer": {
+    "file": "score_real_test.py",
+    "sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+  },
+  "fixture_scope": {
+    "held_out_cache_used": false,
+    "shape_zyx": [
+      8,
+      8,
+      8
+    ],
+    "synthetic_public_fixture_count": 4,
+    "threshold": 0.5
+  },
+  "official_metric_worker": {
+    "file": "official_metric.py",
+    "sha256": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb"
+  },
+  "parallel_scorer": {
+    "file": "score_real_test_parallel.py",
+    "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c"
+  },
+  "payload_sha256": "d373745060c54a956191af64f0fd49fdea75aaade60ee61abe11cf555ac64e67",
+  "schema_version": "1.0",
+  "scientific_contract": {
+    "aggregation_bootstrap_or_serialization_changed": false,
+    "cache_threshold_or_input_changed": false,
+    "only_independent_subprocess_scheduling_changed": true,
+    "per_cache_metric_subprocess_changed": false
+  },
+  "sequential_result_sha256": "812b700472bd399dbc456eb5c8b699265aa9c691b2eda7c9095e975ba4ed8832",
+  "status": "public official-metric parallel scorer equivalence verified"
+}

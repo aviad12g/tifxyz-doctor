@@ -1,0 +1,92 @@
+{
+  "common_covered_valid_pixels": 2119675,
+  "coverage_maps_array_identical": true,
+  "forward": {
+    "above_0.5": 729,
+    "above_0.9": 0,
+    "max": 0.8130190968513489,
+    "mean": 0.13051978931318656,
+    "min": 0.11162322759628296,
+    "quantiles": {
+      "0.5": 0.12833735346794128,
+      "0.9": 0.1380403608083725,
+      "0.95": 0.14365507662296295,
+      "0.99": 0.16280186086893075,
+      "0.995": 0.17886152595281582,
+      "0.999": 0.24127262061834176
+    },
+    "std": 0.013536333363297641
+  },
+  "input_manifests": {
+    "forward_sha256": "a20949056e7c090716abfb7125aeb6719bc869afff075d5b3817ad81aa1d081e",
+    "reverse_sha256": "d55dcd4c9eadb1f8480741678bff4191b5d7e21c2f9d318e61cec2361724bef0"
+  },
+  "mask_valid_pixels": 2198800,
+  "outside_mask_probability_zero": true,
+  "pearson_probability": 0.032425078700343855,
+  "reverse": {
+    "above_0.5": 926,
+    "above_0.9": 0,
+    "max": 0.7860625982284546,
+    "mean": 0.13660792764090807,
+    "min": 0.11441650241613388,
+    "quantiles": {
+      "0.5": 0.13230980932712555,
+      "0.9": 0.15133008658885957,
+      "0.95": 0.1611975938081741,
+      "0.99": 0.19833711206912952,
+      "0.995": 0.23410134822130194,
+      "0.999": 0.36631970369815225
+    },
+    "std": 0.019615237385774295
+  },
+  "same_quantile_tail_overlap": {
+    "0.9": {
+      "forward_count": 211968,
+      "forward_threshold": 0.1380403608083725,
+      "intersection": 34148,
+      "jaccard": 0.0876065964062516,
+      "reverse_count": 211968,
+      "reverse_threshold": 0.15133008658885957,
+      "union": 389788
+    },
+    "0.95": {
+      "forward_count": 105985,
+      "forward_threshold": 0.14365507662296295,
+      "intersection": 9952,
+      "jaccard": 0.04926318082141602,
+      "reverse_count": 105984,
+      "reverse_threshold": 0.1611975938081741,
+      "union": 202017
+    },
+    "0.99": {
+      "forward_count": 21197,
+      "forward_threshold": 0.16280186086893075,
+      "intersection": 142,
+      "jaccard": 0.0033607876550222474,
+      "reverse_count": 21197,
+      "reverse_threshold": 0.19833711206912952,
+      "union": 42252
+    },
+    "0.995": {
+      "forward_count": 10599,
+      "forward_threshold": 0.17886152595281582,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "reverse_count": 10599,
+      "reverse_threshold": 0.23410134822130194,
+      "union": 21198
+    },
+    "0.999": {
+      "forward_count": 2120,
+      "forward_threshold": 0.24127262061834176,
+      "intersection": 0,
+      "jaccard": 0.0,
+      "reverse_count": 2120,
+      "reverse_threshold": 0.36631970369815225,
+      "union": 4240
+    }
+  },
+  "schema_version": 1,
+  "verdict_role": "numerical_order_stability_gate_not_letter_claim"
+}

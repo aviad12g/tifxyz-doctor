@@ -1,0 +1,201 @@
+{
+  "expected_run_provenance": {
+    "panel_renderer": {
+      "bytes": 18796,
+      "file": "render_real_panels.py",
+      "sha256": "de0d3f5e27d0baf337efdf14f271350f21c6a182f287e4a6f0b704cf1b658d04"
+    },
+    "real": {
+      "launcher": {
+        "bytes": 35039,
+        "file": "one_shot_scoring_launcher.py",
+        "sha256": "fc13f00a906dc7bea31c81cc65171c967226f2927e7b14d0c601a4bed755ceab"
+      },
+      "public_cache_delivery": {
+        "commit": "b0816c12df4cd78ecd992d8aac734bffc1f1dc18",
+        "file_sha256": "6d4b730087dd61897db40741761e97fa329b2c19f7e520495bf964341b0935bc",
+        "payload_sha256": "85cf0c992bdff646d376f3c8cf8d114d374c537263a9443fe6c2e320cbea63af"
+      },
+      "public_execution_plan": {
+        "commit": "95ea19d20aff1984976fcaf6cecaca30387882c6",
+        "file_sha256": "cd02eec3812b5b04dd3902681aad875d78dc43a3c567f28f3b5ce05e184ff4a6",
+        "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e"
+      },
+      "public_imports": [
+        {
+          "bytes": 2176,
+          "file": "fusion_loss.py",
+          "sha256": "a5611df0b1535f033bfc9a7a68600e8303ff5948623f5c983eb95f0bd3977ef4"
+        },
+        {
+          "bytes": 2596,
+          "file": "gap_supervision.py",
+          "sha256": "f7bdd74af92b1de7b507515aa879baa4c2622b3051f6a5b1c053e5329778e08c"
+        },
+        {
+          "bytes": 3602,
+          "file": "inference.py",
+          "sha256": "1ba249a04809de64ecfbb4856e0f81737e7f278a7dad3e8f17ba2c1b5490dce1"
+        },
+        {
+          "bytes": 2178,
+          "file": "normalization.py",
+          "sha256": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261"
+        },
+        {
+          "bytes": 11823,
+          "file": "train_fusion_aware.py",
+          "sha256": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07"
+        }
+      ],
+      "public_metric_worker": {
+        "bytes": 3918,
+        "file": "official_metric.py",
+        "sha256": "da5236e67117c1ca6a634c38656dad5cad7579d97017e27bd1c3854f6bcec0fb"
+      },
+      "scorer": {
+        "file": "score_real_test_parallel.py",
+        "sha256": "f280c5ed7c74df27d9986757e05109d358caf429e23e4698fb44c91616387f7c"
+      }
+    },
+    "synthetic": {
+      "launcher": {
+        "bytes": 29689,
+        "file": "one_shot_scoring_launcher.py",
+        "sha256": "24fe2028071227f9f44e71cd86b74a01fe584d56586b29e7b755d34ffc6a772e"
+      },
+      "package_launcher_sha256": "99637fcd462b0934c283af4e4f10b6e776605bcf7650bebd78a57c0822b42b62",
+      "public_cache_delivery": {
+        "commit": "367050ad1ff23f97be7996fffb978220678bd91c",
+        "file_sha256": "a249eb36c68ea4fe13b34c549adaf42c91754e3a45c24de1dff179aeb83189f0",
+        "payload_sha256": "e76019aaba37574cbc8899ede3cc939f065246d3012ac2d4efd70d3c55571afd"
+      },
+      "public_execution_plan": {
+        "commit": "624c1ef41fa078ea9b3d3d97207a56ab6662e27b",
+        "file_sha256": "e1a2741bfae98eb5054c3c4a11195fa6ee265b3aa7848eb8117a68ac45ad09bd",
+        "payload_sha256": "d60199310fd589cef799a66b3a4513927aeba9edae1914c2f54da25384d383cf"
+      },
+      "scorer": {
+        "file": "score_synthetic_test_v2.py",
+        "sha256": "d594cea7d58b08bbeccab5ec65f0a3d64191a70d07e9423314cd607d9fe53d05"
+      }
+    },
+    "threshold_binding": {
+      "frozen_thresholds": {
+        "bytes": 345175,
+        "file": "frozen_thresholds.json",
+        "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+        "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+      },
+      "kernel_id": "aviadcohen1/vesuvius-fusion-aware-freeze-thresholds",
+      "kernel_version": 6,
+      "launcher_sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9",
+      "public_freeze_commit": "4aba9ec10c124cf7c4a473c4687b592c81fa5c9b",
+      "threshold_run_manifest": {
+        "bytes": 10760,
+        "file": "threshold_run_manifest.json",
+        "payload_sha256": "fd1aec3be58e1bf8bbce5019c36bfeecb2e4ce5313300ce52a488f699123b798",
+        "sha256": "68687d01042dea85aa9e2a56f4ec4ccad91b37b8d2b3667de1a7d3ea5b9f56db"
+      }
+    }
+  },
+  "freezer": {
+    "bytes": 7363,
+    "file": "freeze_runpod_kaggle_final_validation.py",
+    "sha256": "0844d657e7db0ead7536ddd8a992c43fcd4bb9d7f27990bdb7b8a301135fdbcc"
+  },
+  "payload_sha256": "c7d90777ce204afa1fd113ffb545bc36c2ff0f16a34737516ce24f980628f6ce",
+  "renderer": {
+    "bytes": 5540,
+    "file": "render_runpod_kaggle_final_evidence.py",
+    "sha256": "9bebdf214b4d84d8c1b3bc8425694c4d6792572fcc83b87c7f727b65f92d4bed"
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "adverse_null_and_failed_outcomes_must_be_published": true,
+    "all_four_panels_and_twelve_comparisons_must_be_reported": true,
+    "all_seven_preregistered_gates_must_be_reported": true,
+    "official_form_submission_permitted_without_aviad_review": false,
+    "paired_collection_completed_before_validation_freeze": true,
+    "panels_opened_or_inspected_by_freezer": false,
+    "real_and_synthetic_results_opened_or_parsed_by_freezer": false,
+    "result_dependent_tuning_or_selection_permitted": false
+  },
+  "sources": {
+    "collection_plan": {
+      "bytes": 4609,
+      "file": "runpod_kaggle_mixed_collection_plan.json",
+      "payload_sha256": "d852c0755650867d75327c972097f4c348604952a62f7331b347f594dc841e71",
+      "sha256": "fe0b816940e538e9e57357a865210e000a4ceb5b90b2d45edb0bfe2ea719c3ef"
+    },
+    "delivery": {
+      "bytes": 24313,
+      "file": "heldout_cache_delivery_manifest.json",
+      "payload_sha256": "85cf0c992bdff646d376f3c8cf8d114d374c537263a9443fe6c2e320cbea63af",
+      "sha256": "6d4b730087dd61897db40741761e97fa329b2c19f7e520495bf964341b0935bc"
+    },
+    "operational_audit": {
+      "bytes": 41721,
+      "file": "OPERATIONAL_ATTEMPT_AUDIT.md",
+      "sha256": "67688ebd460a0e86119c8d58d66e1000303e327afc27033df282ac3b44518bb0"
+    },
+    "package_index": {
+      "bytes": 4502,
+      "file": "generated_scoring_packages_index.json",
+      "payload_sha256": "5f335db484103c85aefb1e6ce74e61c1857d715f1282213609ee3bc9f32ff193",
+      "sha256": "ca38b660f898b7c21c14afca39e0800431e1c29615401b659a37e1b99a2e4c1b"
+    },
+    "pair_receipt": {
+      "bytes": 2940,
+      "file": "fusion-aware-scoring-pair-v4.json",
+      "payload_sha256": "bf581c3e9971098254070037a13a34b274b9fa42f122de78abc66edf66ef72c1",
+      "sha256": "a432b8a49f9a43af3f0b06a5b849bd8123d8aca311775aa100f5d50bb8283e6e"
+    },
+    "panel_source": {
+      "bytes": 25072,
+      "file": "real_panel_manifest.json",
+      "payload_sha256": "65dbd84d13aac0fe2e27baf877e5b836d58f2202f9c5e9bcf84bb41694500844",
+      "sha256": "e1799845c7b8bd428e6bd374f745d6b42399673a5b8c2c11d9282324b3e72779"
+    },
+    "result_sources": {
+      "bytes": 7728,
+      "file": "mixed_scoring_result_sources.json",
+      "payload_sha256": "45d824725cf0cf4b0062cec8ae9760d7382aeb394ba296f14e1070ee9b436fec",
+      "sha256": "9bcb36ddf219cabc631cd8ef286e33eae94c1b7796d20ded78271c4b4a2dd357"
+    },
+    "runpod_plan": {
+      "bytes": 43684,
+      "file": "runpod_real_scoring_private_kaggle_metric_worker_plan.json",
+      "payload_sha256": "de932744ea97afebe38de4e5dac13030353b2a3c49d27a69e77ae3336003894a",
+      "sha256": "49cd221325e14d41c439efd54151260487113efef993869c6ad54f4daaa8f747"
+    },
+    "scientific_plan": {
+      "bytes": 61799,
+      "file": "heldout_execution_plan.json",
+      "payload_sha256": "040c34e18f26e2b76cea937617c5375ef2222fc07b226a38451b275cb624820e",
+      "sha256": "cd02eec3812b5b04dd3902681aad875d78dc43a3c567f28f3b5ce05e184ff4a6"
+    },
+    "split": {
+      "bytes": 66251,
+      "file": "real_split_manifest.json",
+      "sha256": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe"
+    },
+    "thresholds": {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "payload_sha256": "ebede0c11902f5a9200689a65d9c7b8a0c58f2845d63d52d22c4bd827d295b3a",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    },
+    "visual_recorder": {
+      "bytes": 6637,
+      "file": "record_visual_assessment.py",
+      "sha256": "42ed230b13813edc14be410d0260a0dd42c3f1c13a5e9ecb232b327fbbf3fcf8"
+    }
+  },
+  "status": "RunPod-real and Kaggle-synthetic final validation frozen before scientific result access",
+  "validator": {
+    "bytes": 16393,
+    "file": "validate_runpod_kaggle_final_results.py",
+    "sha256": "f977b9e105f378ed55390d87e6079d30910ef4cedd640b0bb0cd659c08b91bfe"
+  }
+}

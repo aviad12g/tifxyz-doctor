@@ -1,0 +1,36 @@
+{
+  "budget": {
+    "absolute_cap_usd": 13.5,
+    "compute_cutoff_usd": 13.15,
+    "guard_seconds": 300,
+    "prior_terminated_attempt_upper_bound_usd": 0.1,
+    "reserve_usd": 0.25
+  },
+  "extension": {
+    "additional_authorized_usd": 10.0,
+    "reason": "measured sealed-upload throughput made the original cap insufficient for transfer plus the unchanged scorer",
+    "spending_target": false,
+    "user_authorization": "if you really need last extra 10$ its ok but thats the last!"
+  },
+  "payload_sha256": "d27cb4017fbffeb2b44a69a1377556773f86cfb9277417c73be1da8608b62841",
+  "predecessor": {
+    "execution_plan_commit": "fe8844bd2642e9257062ffd5f45bc50e7869710f",
+    "execution_plan_payload_sha256": "f552b54e102ca1187cfc839dbffb42413f2b867e899bf68eb56dbc94b37cadac",
+    "original_absolute_cap_usd": 3.5,
+    "original_compute_cutoff_usd": 3.15
+  },
+  "provider": {
+    "compute_type": "CPU",
+    "gpu_count": 0,
+    "pod_id": "h2xei44m0ee9m5",
+    "price_usd_per_hour": 1.28,
+    "vcpu_count": 32
+  },
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "private_npz_or_scientific_output_inspected": false,
+    "synthetic_version_4_remains_complete_and_sealed": true
+  },
+  "status": "result-blind CPU-only RunPod budget extension recorded during sealed input transfer"
+}

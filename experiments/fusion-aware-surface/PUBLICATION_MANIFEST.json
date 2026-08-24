@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "status": "frozen before training",
+  "frozen_design_commit": "78d60707a148330ec41f8284418de80889337fa3",
+  "scientific_files": {
+    "PREREGISTRATION.md": "a24fc0489f6cb77c9b1a22166eae7432bc2dc3694e2cb59ef12c65aa8303ff6a",
+    "README.md": "db1bee3f356f8e5433eda57b66751f18c7c5b7979192c9b0272b2ba7465e245a",
+    "real_split_manifest.json": "dedc881134d9de2ed2605162f82dfb219b52c6e05629c68223100b148b15d4fe",
+    "real_panel_manifest.json": "e1799845c7b8bd428e6bd374f745d6b42399673a5b8c2c11d9282324b3e72779",
+    "train_fusion_aware.py": "c793f5d76103a63e4c3d11f460d1603f12d7d55a31e2495eab08d0d070940d07",
+    "fusion_loss.py": "a5611df0b1535f033bfc9a7a68600e8303ff5948623f5c983eb95f0bd3977ef4",
+    "gap_supervision.py": "f7bdd74af92b1de7b507515aa879baa4c2622b3051f6a5b1c053e5329778e08c",
+    "normalization.py": "42f51a56eeed337dbce08b9af15fa63096993f6353ae72cc879fc9e104794261",
+    "kaggle_train_runner.py": "86076016197f303708fe091b7533d6ffe1a58991723bff879ae49a012a392529"
+  },
+  "training_design": {
+    "arms": ["control", "gap8"],
+    "seeds": [11, 23, 47],
+    "optimizer_steps_per_run": 1500,
+    "run_count": 6,
+    "training_started": false,
+    "validation_or_test_outputs_inspected": false
+  },
+  "private_execution_bundle": {
+    "dataset_id": "aviadcohen1/vesuvius-fusion-aware-training-assets",
+    "source_ledger_sha256": "1b3d78b2f85808a4a2953b7b8ed3a5969f07714f341cea269fb11746f7892fba",
+    "source_file_count": 278
+  }
+}

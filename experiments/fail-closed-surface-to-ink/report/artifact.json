@@ -1,0 +1,487 @@
+{
+  "surface": "report",
+  "manifest": {
+    "version": 1,
+    "surface": "report",
+    "title": "Fail-Closed Surface-to-Ink",
+    "description": "A reproducible 13-scroll validation and stopping framework for Vesuvius Challenge geometry and ink searches.",
+    "generatedAt": "2026-08-12T12:00:00Z",
+    "cards": [
+      {
+        "id": "coverage",
+        "description": "Officially eligible scroll volumes evaluated under the campaign decision framework.",
+        "dataset": "summary",
+        "sourceId": "summary_sql",
+        "metrics": [
+          {
+            "label": "Eligible scrolls audited",
+            "field": "covered_scrolls",
+            "format": "number"
+          },
+          {
+            "label": "Eligible scrolls",
+            "field": "eligible_scrolls",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "raw_surfaces",
+        "description": "Scrolls that reached a clean surface at or above the campaign's internal 0.5 cm² raw-render gate.",
+        "dataset": "summary",
+        "sourceId": "summary_sql",
+        "metrics": [
+          {
+            "label": "Raw-screened scrolls",
+            "field": "raw_screened_scrolls",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "candidates",
+        "description": "Candidates surviving independent raw-depth and artifact controls.",
+        "dataset": "summary",
+        "sourceId": "summary_sql",
+        "metrics": [
+          {
+            "label": "Defensible text candidates",
+            "field": "defensible_candidates",
+            "format": "number"
+          }
+        ]
+      },
+      {
+        "id": "pherc0813_area",
+        "description": "Largest PHerc0813 calibrated component after the saturation continuation.",
+        "dataset": "summary",
+        "sourceId": "summary_sql",
+        "metrics": [
+          {
+            "label": "PHerc0813 accepted area",
+            "field": "pherc0813_area_cm2",
+            "format": "number",
+            "unit": "cm²"
+          }
+        ]
+      }
+    ],
+    "charts": [
+      {
+        "id": "scroll_outcomes",
+        "title": "Eligible scroll outcomes under the fail-closed workflow",
+        "subtitle": "Count of 13 eligible scrolls by furthest independently supported stage; the 0.5 cm² raw gate is internal, not an official prize rule.",
+        "type": "bar",
+        "dataset": "scroll_outcomes",
+        "sourceId": "scroll_outcomes_sql",
+        "encodings": {
+          "x": {
+            "field": "outcome",
+            "type": "nominal",
+            "label": "Furthest supported stage"
+          },
+          "y": {
+            "field": "count",
+            "type": "quantitative",
+            "label": "Scrolls",
+            "format": "number"
+          }
+        },
+        "xAxisTitle": "Scrolls",
+        "valueFormat": "number",
+        "layout": "full",
+        "showLegend": false
+      },
+      {
+        "id": "pherc0813_saturation",
+        "title": "PHerc0813 GrowPatch proposal and accepted component area",
+        "subtitle": "Area in cm² at generations 40, 60, and 80; generations 60 and 80 contain the same 1,520 accepted quads.",
+        "type": "bar",
+        "dataset": "pherc0813_saturation",
+        "sourceId": "pherc0813_saturation_sql",
+        "encodings": {
+          "x": {
+            "field": "generation",
+            "type": "ordinal",
+            "label": "GrowPatch generation"
+          },
+          "y": {
+            "field": "area_cm2",
+            "type": "quantitative",
+            "label": "Area (cm²)",
+            "format": "number"
+          },
+          "color": {
+            "field": "series",
+            "type": "nominal",
+            "label": "Surface measure"
+          }
+        },
+        "yAxisTitle": "Area (cm²)",
+        "valueFormat": "number",
+        "layout": "full",
+        "showLegend": true
+      }
+    ],
+    "tables": [
+      {
+        "id": "failure_controls",
+        "title": "Silent failure modes and independent controls",
+        "dataset": "failure_controls",
+        "sourceId": "failure_controls_sql",
+        "defaultSort": {
+          "field": "order",
+          "direction": "asc"
+        },
+        "columns": [
+          {
+            "field": "order",
+            "label": "#",
+            "format": "number"
+          },
+          {
+            "field": "failure_mode",
+            "label": "Failure mode",
+            "type": "text"
+          },
+          {
+            "field": "control",
+            "label": "Independent control",
+            "type": "text"
+          },
+          {
+            "field": "observed_result",
+            "label": "Observed result",
+            "type": "text"
+          }
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "official_rules",
+        "label": "Vesuvius Challenge open prize rules",
+        "url": "https://scrollprize.org/prizes"
+      },
+      {
+        "id": "summary_sql",
+        "label": "Release summary snapshot query",
+        "path": "report/queries/summary.sql"
+      },
+      {
+        "id": "scroll_outcomes_sql",
+        "label": "Scroll outcome snapshot query",
+        "path": "report/queries/scroll_outcomes.sql"
+      },
+      {
+        "id": "pherc0813_saturation_sql",
+        "label": "PHerc0813 saturation snapshot query",
+        "path": "report/queries/pherc0813_saturation.sql"
+      },
+      {
+        "id": "failure_controls_sql",
+        "label": "Failure-control snapshot query",
+        "path": "report/queries/failure_controls.sql"
+      },
+      {
+        "id": "campaign_record",
+        "label": "First Letters breadth status, 2026-08-12",
+        "path": "evidence/breadth-status.json"
+      },
+      {
+        "id": "failure_catalog",
+        "label": "Fail-Closed Surface-to-Ink failure-mode catalog",
+        "path": "FAILURE_MODE_CATALOG.md"
+      },
+      {
+        "id": "coarse_ml",
+        "label": "Three-way same-scroll falsification summary",
+        "path": "evidence/coarse-ml-three-way-summary.json"
+      },
+      {
+        "id": "pherc1203_canonical",
+        "label": "PHerc1203 canonical ResNet-152 order-stability audit",
+        "path": "evidence/pherc1203-canonical-r152-order-stability.json"
+      },
+      {
+        "id": "release_provenance",
+        "label": "Compact release provenance",
+        "path": "RELEASE_PROVENANCE.json"
+      }
+    ],
+    "blocks": [
+      {
+        "id": "title",
+        "type": "markdown",
+        "body": "# Fail-Closed Surface-to-Ink"
+      },
+      {
+        "id": "summary",
+        "type": "markdown",
+        "body": "## The contribution turns negative search evidence into reusable quality control\n\nThis modular framework validates TIFFXYZ geometry, public-m7 sheet support, full normal-offset sampling, raw-depth evidence, model consensus, exact surface novelty, and provenance before a candidate can advance. Demonstrated across all 13 eligible scrolls, it found no defensible text candidate—but exposed failure modes that otherwise create plausible surfaces, false glyphs, and repeated GPU work."
+      },
+      {
+        "id": "metrics",
+        "type": "metric-strip",
+        "cardIds": [
+          "coverage",
+          "raw_surfaces",
+          "candidates",
+          "pherc0813_area"
+        ]
+      },
+      {
+        "id": "outcomes_heading",
+        "type": "markdown",
+        "body": "## Four scrolls reached raw review; none produced defensible text\n\nThe 0.5 cm² threshold was a precommitted cost-control gate, not a prize rule. Scrolls below it stopped before raw rendering; scrolls above it underwent independent depth and artifact review."
+      },
+      {
+        "id": "outcomes_chart",
+        "type": "chart",
+        "chartId": "scroll_outcomes",
+        "layout": "full"
+      },
+      {
+        "id": "pherc0813_heading",
+        "type": "markdown",
+        "body": "## PHerc0813 proved that proposal area can grow while valid evidence plateaus\n\nA clean 93-layer raw stack and six model-independent candidate regions all failed depth review. Extending GrowPatch from generation 40 to 80 then increased whole proposal area nearly fivefold, but accepted geometry stopped changing after generation 60."
+      },
+      {
+        "id": "saturation_chart",
+        "type": "chart",
+        "chartId": "pherc0813_saturation",
+        "layout": "full"
+      },
+      {
+        "id": "failure_heading",
+        "type": "markdown",
+        "body": "## Independent controls catch failures that visual plausibility misses\n\nThe framework treats attractive output as a nomination, not a pass. Each failure below was observed on public Vesuvius data and changed the campaign's decisions or implementation."
+      },
+      {
+        "id": "failure_table",
+        "type": "table",
+        "tableId": "failure_controls",
+        "layout": "full"
+      },
+      {
+        "id": "canonical_order_stability",
+        "type": "markdown",
+        "sourceId": "pherc1203_canonical",
+        "body": "## A pinned canonical model failed the order-stability gate\n\nOn PHerc1203, physically scale-matched forward and reverse ResNet-152 maps both passed integrity and coverage checks but had Pearson correlation **0.032425**, top-1% Jaccard **0.003361**, and zero overlap in the top 0.5%. Fixed raw review found zero defensible or borderline text candidates, so shifted-origin inference was skipped. This is a negative sensitivity result for a 2 µm checkpoint applied to 9.362 µm data—not evidence that the scroll contains no writing."
+      },
+      {
+        "id": "ml_falsification",
+        "type": "markdown",
+        "sourceId": "coarse_ml",
+        "body": "## Near-perfect fit still failed 1.228 mm away\n\nA three-seed same-scroll experiment reached train-A AUROC **0.99595 ± 0.00344** but local-B AUROC only **0.51207 ± 0.05094** and AP **0.27209 ± 0.01882** at prevalence **0.26490**. Zero seeds passed the precommitted train-plus-local gate, so distant-C remained sealed. The result closes decoder retuning and target-domain SSL on the same coarse representation—not the possibility that new physical data can reveal ink."
+      },
+      {
+        "id": "prize_alignment",
+        "type": "markdown",
+        "sourceId": "official_rules",
+        "body": "## The release directly matches the current Progress Prize criteria\n\nThe official rules favor real-data improvements, actionable analytic tools, standard community formats, modular integration, early open source, and thorough documentation. This release supplies command-line tools, 129 portable synthetic tests, compact hash-bound demonstrations, usage guides, and an MIT license. The next stated deadline is **August 31, 2026 at 11:59pm Pacific**."
+      },
+      {
+        "id": "limitations",
+        "type": "markdown",
+        "body": "## Scope and limitations\n\nThe 13-scroll stopping decision is conditional on public assets and methods available through August 12, 2026. Public-m7 is a geometry cue, manual review is not papyrological proof, and a conservative raw audit can miss weak ink. The framework intentionally reports **not established** rather than converting missing evidence into a pass. Reopen the First Letters search only for a materially new scan or prediction, an independent expert-corrected sheet, or raw strokes that survive depth and artifact controls."
+      },
+      {
+        "id": "recommendation",
+        "type": "markdown",
+        "body": "## Recommended community use\n\nRun the toolkit as a quality layer before expensive inference: inventory first, validate stored geometry and selected-sheet support, reload and revalidate the exact serialized full-resolution surface, inspect raw evidence across depth, preserve orientation contradictions, and measure exact accepted-surface novelty before growing farther. This makes future unwrapping work faster, safer, and easier to reproduce."
+      }
+    ]
+  },
+  "snapshot": {
+    "version": 1,
+    "generatedAt": "2026-08-12T12:00:00Z",
+    "status": "ready",
+    "datasets": {
+      "summary": [
+        {
+          "eligible_scrolls": 13,
+          "covered_scrolls": 13,
+          "raw_screened_scrolls": 4,
+          "defensible_candidates": 0,
+          "pherc0813_area_cm2": 0.536269
+        }
+      ],
+      "scroll_outcomes": [
+        {
+          "outcome": "Clean ≥0.5 cm² raw surface; review negative",
+          "count": 4,
+          "scrolls": "PHerc0125, PHerc0800, PHerc0813, PHerc1203",
+          "internal_gate_cm2": 0.5,
+          "prize_letters_required": 10,
+          "prize_max_area_cm2": 4
+        },
+        {
+          "outcome": "Clean patch below internal raw-render gate",
+          "count": 5,
+          "scrolls": "PHerc0191, PHerc0211, PHerc0257, PHerc1218, PHerc1447",
+          "internal_gate_cm2": 0.5,
+          "prize_letters_required": 10,
+          "prize_max_area_cm2": 4
+        },
+        {
+          "outcome": "No established clean patch / boundary failure",
+          "count": 4,
+          "scrolls": "PHerc0268, PHerc0358, PHerc0826, PHerc1545",
+          "internal_gate_cm2": 0.5,
+          "prize_letters_required": 10,
+          "prize_max_area_cm2": 4
+        }
+      ],
+      "pherc0813_saturation": [
+        {
+          "generation": "40",
+          "series": "Whole proposal",
+          "area_cm2": 2.1333,
+          "accepted_quad_count": 1444,
+          "exact_new_quads_vs_prior": null
+        },
+        {
+          "generation": "40",
+          "series": "Accepted component",
+          "area_cm2": 0.509167,
+          "accepted_quad_count": 1444,
+          "exact_new_quads_vs_prior": null
+        },
+        {
+          "generation": "60",
+          "series": "Whole proposal",
+          "area_cm2": 5.3284,
+          "accepted_quad_count": 1520,
+          "exact_new_quads_vs_prior": 76
+        },
+        {
+          "generation": "60",
+          "series": "Accepted component",
+          "area_cm2": 0.536269,
+          "accepted_quad_count": 1520,
+          "exact_new_quads_vs_prior": 76
+        },
+        {
+          "generation": "80",
+          "series": "Whole proposal",
+          "area_cm2": 10.1028,
+          "accepted_quad_count": 1520,
+          "exact_new_quads_vs_prior": 0
+        },
+        {
+          "generation": "80",
+          "series": "Accepted component",
+          "area_cm2": 0.536269,
+          "accepted_quad_count": 1520,
+          "exact_new_quads_vs_prior": 0
+        }
+      ],
+      "failure_controls": [
+        {
+          "order": 1,
+          "failure_mode": "GrowPatch seed drift",
+          "control": "Fresh public-m7 samples along recomputed physical normals",
+          "observed_result": "Smooth patches left the seeded sheet immediately or during growth"
+        },
+        {
+          "order": 2,
+          "failure_mode": "Whole-area inflation",
+          "control": "Strict accepted-component area and exact quad increment",
+          "observed_result": "PHerc0813 proposal 2.13→10.10 cm²; accepted 0.509→0.536 cm²"
+        },
+        {
+          "order": 3,
+          "failure_mode": "Duplicate continuation",
+          "control": "Exact serialized coordinate and quad identity",
+          "observed_result": "Generation 60 and 80 accepted components byte-identical"
+        },
+        {
+          "order": 4,
+          "failure_mode": "Exact-one-run veto",
+          "control": "Published clean-surface calibration",
+          "observed_result": "399/400 clean control transects were multi-run"
+        },
+        {
+          "order": 5,
+          "failure_mode": "Fold / normal flip / self-overlap",
+          "control": "Native quad geometry, topology, and exact non-adjacent intersection",
+          "observed_result": "Rejected invalid surfaces before raw rendering"
+        },
+        {
+          "order": 6,
+          "failure_mode": "XYZ↔ZYX or sign/order confusion",
+          "control": "Synthetic axis tests and published-stack calibration",
+          "observed_result": "Median Pearson ≈0.9972 and mask IoU 1.0 on calibrated replay"
+        },
+        {
+          "order": 7,
+          "failure_mode": "Fiber/crack/fold/void false positives",
+          "control": "Seven-depth raw review and fiber/specificity maps",
+          "observed_result": "PHerc0813 nominated six regions; 0 defensible or borderline"
+        },
+        {
+          "order": 8,
+          "failure_mode": "Tiling seams",
+          "control": "Coverage and grid-boundary gradient controls",
+          "observed_result": "Observed 15.6×–25.4× boundary gradients in one screen"
+        },
+        {
+          "order": 9,
+          "failure_mode": "Orientation instability",
+          "control": "Co-equal forward/reverse maps and linked-region overlap",
+          "observed_result": "Putative regions relocated under depth reversal"
+        },
+        {
+          "order": 10,
+          "failure_mode": "Training-set leakage",
+          "control": "Model-card/revision audit",
+          "observed_result": "A supposed held-out replay segment appeared in model finetuning data"
+        },
+        {
+          "order": 11,
+          "failure_mode": "Local label memorization",
+          "control": "Three seeds and sealed train/local/distant spatial partitions",
+          "observed_result": "Train AUROC 0.996; local AUROC 0.512 only 1.228 mm away"
+        }
+      ]
+    }
+  },
+  "sources": [
+    {
+      "id": "official_rules",
+      "label": "Vesuvius Challenge open prize rules",
+      "url": "https://scrollprize.org/prizes"
+    },
+    {
+      "id": "campaign_record",
+      "label": "First Letters breadth status, 2026-08-12",
+      "path": "evidence/breadth-status.json"
+    },
+    {
+      "id": "failure_catalog",
+      "label": "Fail-Closed Surface-to-Ink failure-mode catalog",
+      "path": "FAILURE_MODE_CATALOG.md"
+    },
+    {
+      "id": "coarse_ml",
+      "label": "Three-way same-scroll falsification summary",
+      "path": "evidence/coarse-ml-three-way-summary.json"
+    },
+    {
+      "id": "pherc1203_canonical",
+      "label": "PHerc1203 canonical ResNet-152 order-stability audit",
+      "path": "evidence/pherc1203-canonical-r152-order-stability.json"
+    },
+    {
+      "id": "release_provenance",
+      "label": "Compact release provenance",
+      "path": "RELEASE_PROVENANCE.json"
+    }
+  ],
+  "package_info": {
+    "root": "fail-closed-surface-to-ink-v1",
+    "manifestPath": "report/artifact.json",
+    "snapshotPath": "report/artifact.json"
+  }
+}

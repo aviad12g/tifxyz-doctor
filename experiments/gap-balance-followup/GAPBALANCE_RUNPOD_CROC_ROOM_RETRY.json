@@ -1,0 +1,46 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "budget_guard_seconds": 300,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 1.420147,
+    "remaining_development_cutoff_usd": 10.579853
+  },
+  "croc_code_retry_payload_sha256": "25552fff906fcfd8a4e6af6efa9cb3b9b2b199eda63ae301d2dcdc94d26c6a77",
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Both relay-qualified receivers started before the sender rooms were ready, returned room not ready, and exited RC1.",
+    "failed_at": "2026-08-20T21:46:45.608162+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "qjyw7ovtfxfuog",
+      "omnvg6zy6aklmm"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "payload_sha256": "b24067516da2af3bbc83998ae8c7c6b168625fb9e49c222b6b223e22cf77aa49",
+  "public_parent_commit": "2ecf91fbdcf240a7aaa59b2cc2b1dc88e6ec3169",
+  "receiver_retry": {
+    "maximum_retry_seconds": 180,
+    "poll_rc_during_sender": true,
+    "retry_interval_seconds": 2,
+    "retry_room_not_ready": true,
+    "stop_sender_and_all_pods_on_terminal_failure": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_CROC_ROOM_READINESS_RETRY_FROZEN_BEFORE_REALLOCATION"
+}

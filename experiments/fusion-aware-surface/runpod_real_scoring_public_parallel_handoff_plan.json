@@ -1,0 +1,49 @@
+{
+  "budget": {
+    "absolute_campaign_cap_usd": 13.5,
+    "guard_seconds": 300,
+    "prior_attempt_compute_upper_bound_usd": 3.391445323,
+    "replacement_compute_cutoff_usd": 9.758554677,
+    "reserve_usd": 0.25
+  },
+  "correction": {
+    "event": "all 281 private files were present; remaining public metric trees were needlessly single-stream",
+    "private_files_opened": false,
+    "remote_private_file_count": 281,
+    "scientific_outputs_inspected": false
+  },
+  "exact_scientific_route": {
+    "launcher_sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179",
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "score_real_test_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79"
+  },
+  "parallel_transport": {
+    "expected_metric_runtime_files": 20,
+    "expected_metric_source_files": 208,
+    "expected_regular_files": 280,
+    "expected_remote_sealed_files": 281,
+    "granularity": "regular_file",
+    "maximum_workers": 10,
+    "parallel_public_regular_files": true,
+    "private_transfer_already_complete": true,
+    "remote_executor_verifies_every_manifest_and_cache_identity_before_scoring": true,
+    "rsync_flags_unchanged": [
+      "--archive",
+      "--copy-links",
+      "--partial",
+      "--protect-args"
+    ],
+    "same_sealed_input_manifest_payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563"
+  },
+  "payload_sha256": "f9b56937e3b4f87e22d435b84e91ebdf2a02029b0e29efee33bdf1c467ba58d3",
+  "predecessor_safe_transfer_plan_payload_sha256": "a9fba00c742714843d70b44b1172ef122672028212ead4cf6aea5cc13caf5567",
+  "predecessor_replacement_plan_payload_sha256": "d53a614da0f6906aa84f364dad46843c86a302cbbd562924b9adad3d8e9df799",
+  "schema_version": "1.0",
+  "status": "result-blind public-runtime parallel handoff frozen before use",
+  "tool": {
+    "bytes": 12022,
+    "file": "resume_parallel_runpod_real_scoring_transfer.py",
+    "sha256": "c7f17fd80f70b1c65f6bc31bcd0abf8d5fe1aedbf5526766df1fd99b4d25c2c9"
+  },
+  "user_authorization": "work end to end i exped this to be fully done once im back!"
+}

@@ -1,0 +1,211 @@
+{
+  "confirmation_outputs_inspected": false,
+  "new_training_contract": {
+    "expanded_archive_sha256": "981448a526d2e04cb59b0b1f40331fa901ece5c0514161733814c5b7ea823021",
+    "projected_source_file_count": 278,
+    "projected_source_ledger_sha256": "26898ae63ccc342d300d711fa1ed371efd1dd6ce95152593859f39902d364fe3",
+    "trainer_sha256": "d427dfcfb5f4946d366ba86a6c9725d8e1caf7264691549a29db65225b186a97"
+  },
+  "original_control_checkpoint_freeze": {
+    "path": "experiments/fusion-aware-surface/checkpoint_manifest.json",
+    "status": "all six training checkpoints frozen before validation or test evaluation"
+  },
+  "payload_sha256": "8db7660a89182ff255ce391a75f0716e34197450cd4258796cb88d792e08137a",
+  "runs": {
+    "control_seed11": {
+      "arm": "control",
+      "checkpoint_sha256": "7a2e6168f32b3a3389bdc2b43b39a6654568a6da467e71948f523e7cbef6248f",
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-11",
+        "version": 4
+      },
+      "seed": 11,
+      "source": "reused from the original public checkpoint freeze"
+    },
+    "control_seed23": {
+      "arm": "control",
+      "checkpoint_sha256": "d40c4b856c9a65cc2de127e98d37d08633e03e6b7b5e375bec8991b1bf9487b3",
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-23",
+        "version": 4
+      },
+      "seed": 23,
+      "source": "reused from the original public checkpoint freeze"
+    },
+    "control_seed47": {
+      "arm": "control",
+      "checkpoint_sha256": "fd86b40b3b25f45f86f2ba43668997d4351fec7d3ebd35fa41856e4c0d505e44",
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-fusion-aware-control-seed-47",
+        "version": 1
+      },
+      "seed": 47,
+      "source": "reused from the original public checkpoint freeze"
+    },
+    "gap2_seed11": {
+      "arm": "gap2",
+      "checkpoint_sha256": "c4b67bb7d59144b1beca3483d765d1f6042b20d3646922887485a563486df5f9",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "c4b67bb7d59144b1beca3483d765d1f6042b20d3646922887485a563486df5f9"
+        },
+        "metadata": {
+          "bytes": 665,
+          "sha256": "9702b645baa4e578e70fac4b8b9fcce047cd0652fb0952622064e1b5c024af04"
+        },
+        "training_log": {
+          "bytes": 6376,
+          "sha256": "1b1173633e3f2017b4f9c8927067da4142eb4ddf7ddb578db41b0b19a10a6cb0"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "64bd72be1ccae36bc79064c3dbcdfd4824759e8b61278a40e2fc11dc81100a61"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-11",
+        "version": 1
+      },
+      "seed": 11
+    },
+    "gap2_seed23": {
+      "arm": "gap2",
+      "checkpoint_sha256": "6321d1f23aeffa587c3d04236862b47d44bb47fed35eb8ef599ee50fc0223f78",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "6321d1f23aeffa587c3d04236862b47d44bb47fed35eb8ef599ee50fc0223f78"
+        },
+        "metadata": {
+          "bytes": 662,
+          "sha256": "77201e65aac1b722dd2a8c93b8f1d9cdf3919295ddca1479ed97f352660b95f5"
+        },
+        "training_log": {
+          "bytes": 6373,
+          "sha256": "ca047faf8b935391a9cd4f867fe5abb67fb506a194b2a8b5c976c0a99504eb3e"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "911be6fde38e2d06dc521e8fa9d2e88f34e6bb0a74da3c9d07c4232ec8e0a6f6"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-23",
+        "version": 1
+      },
+      "seed": 23
+    },
+    "gap2_seed47": {
+      "arm": "gap2",
+      "checkpoint_sha256": "b89f046ab156ced0e054e9f99f83e39a480292d9777eeebefea94765824fb730",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "b89f046ab156ced0e054e9f99f83e39a480292d9777eeebefea94765824fb730"
+        },
+        "metadata": {
+          "bytes": 662,
+          "sha256": "fa68924c5c320c78eeeffc468859e26812517019eb4b3ecee505b2377884002a"
+        },
+        "training_log": {
+          "bytes": 6373,
+          "sha256": "abc9ae152e21957229f864ac4e1ce95cb45ca23b46a8ee619e11cb4e342106cb"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "0ffc294cac0e26f259daa2fa315b02c045e83d32923c39632b024d33410659db"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap2-seed-47",
+        "version": 1
+      },
+      "seed": 47
+    },
+    "gap4_seed11": {
+      "arm": "gap4",
+      "checkpoint_sha256": "b7cebb32cdc2d33d31debfe6f247ec829f9ea53f38dc67c9b4e808416c5e2810",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "b7cebb32cdc2d33d31debfe6f247ec829f9ea53f38dc67c9b4e808416c5e2810"
+        },
+        "metadata": {
+          "bytes": 665,
+          "sha256": "751f30b82a9b6b4919fdc89e2a11486ee5608dbe10bc4a1554059d9295197f8c"
+        },
+        "training_log": {
+          "bytes": 6376,
+          "sha256": "e13f78d486ab95f2aa929f49e11a8b8e2d8caa5000948fb7914e2f3d00658f39"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "adc67ec50a183bc962ff546990cca3d0a58091cf58e080bda68d5f9d02b4ce85"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-11",
+        "version": 1
+      },
+      "seed": 11
+    },
+    "gap4_seed23": {
+      "arm": "gap4",
+      "checkpoint_sha256": "9cdaf4799343aeb7118fb506fb8f21b32a83935cdbd866d9a96c9f63719ad0c4",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "9cdaf4799343aeb7118fb506fb8f21b32a83935cdbd866d9a96c9f63719ad0c4"
+        },
+        "metadata": {
+          "bytes": 665,
+          "sha256": "67263cdf27e8cfcac666e254639d545a1ef61fadb72f539a36997c784e88624e"
+        },
+        "training_log": {
+          "bytes": 6376,
+          "sha256": "68a8d2f7a2cccfe71442787a2d627a970f8bb434a42d970b26006fe70406e118"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "fbd6cfdc3e9949461f3bde60edd0a07c57e3758a511ba3cc98cb5f4fe6bee9cb"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-23",
+        "version": 1
+      },
+      "seed": 23
+    },
+    "gap4_seed47": {
+      "arm": "gap4",
+      "checkpoint_sha256": "38132a260cf9152eaf850516748a0c8af89f66f5cc917325047b23a1f1cb0d89",
+      "files": {
+        "checkpoint": {
+          "bytes": 409568790,
+          "sha256": "38132a260cf9152eaf850516748a0c8af89f66f5cc917325047b23a1f1cb0d89"
+        },
+        "metadata": {
+          "bytes": 665,
+          "sha256": "97dc556a3d947a72c03822b440410dedf8ccd363980bd683d62514936f609755"
+        },
+        "training_log": {
+          "bytes": 6377,
+          "sha256": "212a3bd8dacb2748956f0ad8d6a903437a14787afc35ffe13c7de2138274b481"
+        },
+        "training_run_manifest": {
+          "bytes": 2463,
+          "sha256": "19bee58f0e2feaca4e64c34b3a2210c8edc750f8cc708d7d3d552b8295b2843d"
+        }
+      },
+      "kernel": {
+        "id": "aviadcohen1/vesuvius-gapbalance-gap4-seed-47",
+        "version": 1
+      },
+      "seed": 47
+    }
+  },
+  "schema_version": "1.0",
+  "source_checkpoint_sha256": "f1990a02ac91889c1f989522ae0e45421a91cb666320448aaf579d42b081636f",
+  "status": "all GapBalance and matched-control checkpoints frozen before development scoring"
+}

@@ -1,0 +1,160 @@
+{
+  "schema_version": "tifxyz-reliability-august-evidence-v1",
+  "submission_month": "2026-08",
+  "status": "frozen_for_review",
+  "novelty_boundary": {
+    "current_august_contribution": [
+      "ScrollPrize/villa PR #1299: explicit TIFXYZ UUID control"
+    ],
+    "historical_context_not_claimed_as_new": [
+      "TIFXYZ Doctor v0.2 reviewed-surface benchmark",
+      "ScrollPrize/villa PR #1264 final-quad geometry correction",
+      "ScrollPrize/villa PR #1278 community-project listing"
+    ]
+  },
+  "current_contribution": {
+    "repository": "ScrollPrize/villa",
+    "pull_request": 1299,
+    "url": "https://github.com/ScrollPrize/villa/pull/1299",
+    "title": "Allow explicit TIFXYZ UUIDs in obj2tifxyz",
+    "author": "aviad12g",
+    "created_at": "2026-08-02T16:49:42Z",
+    "merged_at": "2026-08-06T00:09:03Z",
+    "merge_commit_sha": "8b7c9df4191f01e52e28a8a9fd68add344349841",
+    "files": [
+      {
+        "path": "volume-cartographer/apps/src/vc_obj2tifxyz.cpp",
+        "git_blob_sha": "daba7b97096622019430fbba414c25dd50be962a",
+        "additions": 14,
+        "deletions": 5
+      },
+      {
+        "path": "volume-cartographer/apps/src/vc_obj2tifxyz_legacy.cpp",
+        "git_blob_sha": "50f36348b830a3e5c7ce5a14fbd61176fdcd5af7",
+        "additions": 26,
+        "deletions": 10
+      },
+      {
+        "path": "volume-cartographer/core/include/vc/core/util/TifxyzIdentity.hpp",
+        "git_blob_sha": "5ac625bddad6584b15108740e5e1164240b374b8",
+        "additions": 36,
+        "deletions": 0
+      },
+      {
+        "path": "volume-cartographer/core/test/CMakeLists.txt",
+        "git_blob_sha": "7cb192fa9a03d8a105b2b0afdee21afa71215c4b",
+        "additions": 2,
+        "deletions": 0
+      },
+      {
+        "path": "volume-cartographer/core/test/test_tifxyz_identity.cpp",
+        "git_blob_sha": "f7f89960915661e8cc12af91cf2de43c83ca6376",
+        "additions": 31,
+        "deletions": 0
+      }
+    ],
+    "reported_validation": [
+      "standalone strict C++20 build",
+      "4/4 resolver regression tests",
+      "git diff --check"
+    ]
+  },
+  "historical_references": [
+    {
+      "kind": "release",
+      "name": "TIFXYZ Doctor v0.2.0",
+      "commit_sha": "0c4c9762f95d051b677b821f937cc7ae7e61e255",
+      "url": "https://github.com/aviad12g/tifxyz-doctor/releases/tag/v0.2.0",
+      "novelty_class": "historical_context"
+    },
+    {
+      "kind": "pull_request",
+      "repository": "ScrollPrize/villa",
+      "number": 1264,
+      "merge_commit_sha": "2b1f48a84510de1fb14543ba3b3fcf20c8e424ff",
+      "url": "https://github.com/ScrollPrize/villa/pull/1264",
+      "novelty_class": "historical_context"
+    },
+    {
+      "kind": "pull_request",
+      "repository": "ScrollPrize/villa",
+      "number": 1278,
+      "merge_commit_sha": "03c74f5d50ef17050b580adbae3a56860014be9e",
+      "url": "https://github.com/ScrollPrize/villa/pull/1278",
+      "novelty_class": "historical_context"
+    }
+  ],
+  "local_artifacts": [
+    {
+      "path": "benchmarks/public-corpus-scan-2026-07-26.json",
+      "bytes": 20981,
+      "sha256": "ea312e269fd53d38c885bf7f08c0ec2a0130ced8d80e99c1272ae585ace8a9e1",
+      "role": "machine-readable source census"
+    },
+    {
+      "path": "benchmarks/public-empty-resolution-2026-07-27.json",
+      "bytes": 8435,
+      "sha256": "ed0a67025ba06c76d351bb7ed75482a08f2b15882b271b181ce2cee43563914c",
+      "role": "dated upstream-remediation record"
+    },
+    {
+      "path": "benchmarks/reviewed-same-wrap-results-v0.2.0.json",
+      "bytes": 3542384,
+      "sha256": "74f243eb57a84eb2ee9aa8df2f5674ef92d86fc1d54a8333c7b0b9e1fe21173c",
+      "role": "historical benchmark context"
+    },
+    {
+      "path": "benchmarks/reviewed-same-wrap-split-v1.json",
+      "bytes": 192234,
+      "sha256": "cbb13f8b18ab38ac32ea010348763fc65d0200fc36193b81ae372dc498731920",
+      "role": "historical benchmark split context"
+    },
+    {
+      "path": "verification/reader-differential-results-v1.json",
+      "bytes": 10104,
+      "sha256": "4663b32219a0495ed9980329048a42ea4281f4fa32774e78ddd13a76e908dc0b",
+      "role": "historical interoperability context"
+    },
+    {
+      "path": "docs/claims-review.md",
+      "bytes": 5281,
+      "sha256": "46c7153b43ddd13eb6d10e6b7f447184fd38ce9e6c6548dcc365b418afa58070",
+      "role": "claim and limitation boundary"
+    },
+    {
+      "path": "docs/reviewed-same-wrap-benchmark.md",
+      "bytes": 7130,
+      "sha256": "6728fb1676b6e2fbb62cb7865ecf92cb096f22e52055ed0e5dd520aac179b1a0",
+      "role": "historical benchmark documentation"
+    },
+    {
+      "path": "pyproject.toml",
+      "bytes": 1228,
+      "sha256": "7387184451169569f64b3b4fde1a87879ae7893b4b9edab747da3ff48a7c40b9",
+      "role": "package and dependency declaration"
+    },
+    {
+      "path": "LICENSE",
+      "bytes": 1062,
+      "sha256": "f4c2afa648ad8dd6e08626be897abd9689624b59be2e1dc6b97683f2ca4d40b2",
+      "role": "MIT license"
+    }
+  ],
+  "claims": {
+    "registry_roots_scanned": 450,
+    "original_roots_scanned": 186,
+    "normalized_roots_scanned": 264,
+    "roots_with_uuid_output_tifxyz": 277,
+    "normalized_roots_with_uuid_output_tifxyz": 264,
+    "original_roots_with_uuid_output_tifxyz": 13,
+    "distinct_uuid_values": 174
+  },
+  "limitations": [
+    "UUID reuse is not coordinate corruption.",
+    "Global UUID uniqueness is not claimed as a formal format requirement.",
+    "Path-keyed consumers are unaffected.",
+    "Existing artifacts are not rewritten by the upstream option.",
+    "Private producer commands are not observable and no producer attribution is claimed.",
+    "Historical July work is context and is not claimed as new August work."
+  ]
+}

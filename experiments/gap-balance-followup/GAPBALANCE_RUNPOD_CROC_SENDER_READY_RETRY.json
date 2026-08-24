@@ -1,0 +1,65 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "budget_guard_seconds": 300,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 1.495743,
+    "remaining_development_cutoff_usd": 10.504257
+  },
+  "croc_room_retry_payload_sha256": "b24067516da2af3bbc83998ae8c7c6b168625fb9e49c222b6b223e22cf77aa49",
+  "diagnostic_resumes": [
+    {
+      "conservative_spend_usd": 0.009084,
+      "elapsed_seconds": 37.162,
+      "pod_id": "qjyw7ovtfxfuog",
+      "scientific_endpoints_inspected": false
+    },
+    {
+      "conservative_spend_usd": 0.00655,
+      "elapsed_seconds": 26.794,
+      "pod_id": "vm12476vq95zie",
+      "scientific_endpoints_inspected": false
+    }
+  ],
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Receivers retried room not ready, but the sender exited before exposing a ready relay room.",
+    "failed_at": "2026-08-20T21:51:37.447540+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "vm12476vq95zie",
+      "ekj18fzh7bygi9"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "local_exact_archive_diagnostic": {
+    "archive_sha256": "64cf1fdf4f2f0d160367caad7b134421956d3d6225818c32db01732bb6a7eec4",
+    "post_hash_banner_seconds": 2.365,
+    "sender_waited_for_receiver_after_90_seconds": true,
+    "stdout_code_seconds": 1.013
+  },
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "payload_sha256": "20b6f7114f75a2d5deffa4b3616e8d11e4d10ddee890c8cb1b1e08cd32d36b69",
+  "public_parent_commit": "8ef08121338ead0090d1636e825eb1c8e0101ff2",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "sender_readiness": {
+    "maximum_banner_seconds": 120,
+    "post_banner_delay_seconds": 5,
+    "require_post_hash_banner": true,
+    "stderr_or_code_published_or_persisted": false
+  },
+  "status": "RESULT_BLIND_CROC_SENDER_READINESS_RETRY_FROZEN_BEFORE_REALLOCATION"
+}

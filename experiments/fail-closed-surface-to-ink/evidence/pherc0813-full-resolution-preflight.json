@@ -1,0 +1,456 @@
+{
+  "candidate_id": "PHerc0813-r18-growpatch-calibrated-mask-full",
+  "float32_reload": {
+    "area_cm2": 0.5083871974005328,
+    "area_delta_from_prewrite_cm2": -1.979770514193291e-08,
+    "mask_content_sha256": "db66c469dff1e28cb59c1e71a599a79e17b560c93762151a2e4299a6914bbd86",
+    "native_geometry_by_sign": {
+      "negative": {
+        "abrupt_normal_flip_edge_count": 0,
+        "continuity_limit_um": 37.511003669705126,
+        "coordinate_max_xyz": [
+          6372.53662109375,
+          4605.259765625,
+          4782.97314453125
+        ],
+        "coordinate_min_xyz": [
+          5788.86962890625,
+          3367.27685546875,
+          3938.45068359375
+        ],
+        "degenerate_quad_count": 0,
+        "discontinuity_edge_count": 0,
+        "distorted_quad_count": 0,
+        "folded_quad_count": 0,
+        "in_bounds_vertex_fraction": 1.0,
+        "max_neighbor_distance_um": 10.31531103300244,
+        "median_neighbor_distance_um": 9.377750917426281,
+        "median_quad_area_um2": 87.93905656185784,
+        "metric_distortion_p95": 1.0917048031442331,
+        "neighbor_wrap_limit_um": 75.02200733941025,
+        "neighbor_wrap_risk_edge_count": 0,
+        "normal_valid_vertex_fraction": 1.0,
+        "offset_sample_in_bounds_fraction": 1.0,
+        "p95_neighbor_distance_um": 9.772691167889441,
+        "pass": true,
+        "surface_shape": [
+          1640,
+          1640
+        ],
+        "valid_neighbor_edge_count": 1159020,
+        "valid_quad_count": 576951,
+        "valid_vertex_count": 582061,
+        "volume_shape_zyx": [
+          16993,
+          7947,
+          7947
+        ],
+        "warnings": []
+      },
+      "positive": {
+        "abrupt_normal_flip_edge_count": 0,
+        "continuity_limit_um": 37.511003669705126,
+        "coordinate_max_xyz": [
+          6372.53662109375,
+          4605.259765625,
+          4782.97314453125
+        ],
+        "coordinate_min_xyz": [
+          5788.86962890625,
+          3367.27685546875,
+          3938.45068359375
+        ],
+        "degenerate_quad_count": 0,
+        "discontinuity_edge_count": 0,
+        "distorted_quad_count": 0,
+        "folded_quad_count": 0,
+        "in_bounds_vertex_fraction": 1.0,
+        "max_neighbor_distance_um": 10.31531103300244,
+        "median_neighbor_distance_um": 9.377750917426281,
+        "median_quad_area_um2": 87.93905656185784,
+        "metric_distortion_p95": 1.0917048031442331,
+        "neighbor_wrap_limit_um": 75.02200733941025,
+        "neighbor_wrap_risk_edge_count": 0,
+        "normal_valid_vertex_fraction": 1.0,
+        "offset_sample_in_bounds_fraction": 1.0,
+        "p95_neighbor_distance_um": 9.772691167889441,
+        "pass": true,
+        "surface_shape": [
+          1640,
+          1640
+        ],
+        "valid_neighbor_edge_count": 1159020,
+        "valid_quad_count": 576951,
+        "valid_vertex_count": 582061,
+        "volume_shape_zyx": [
+          16993,
+          7947,
+          7947
+        ],
+        "warnings": []
+      }
+    },
+    "points_content_sha256": "853294af909201956b737b78b4c225a7efe002a0ebf96f0b17955b3b7134893e",
+    "surface": {
+      "directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface",
+      "files": {
+        "mask.tif": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/mask.tif",
+          "sha256": "c5f94a9553cb3b2dc89b8f534d77445a17bec3e022eb5d5b617e4a8ed94e6333"
+        },
+        "meta.json": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/meta.json",
+          "sha256": "f8a0cb256f92808f3b9fec68a0b3a43e82e6786f582474afae0a0986cfbec034"
+        },
+        "x.tif": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/x.tif",
+          "sha256": "dcf4461c1eee7534d22c10f1558be01d0bf341964bdbbd0c9cd6b0ee58bbbf89"
+        },
+        "y.tif": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/y.tif",
+          "sha256": "4f717501bbcece27d95d6a241e205be8a0aad996f93cdcbdf6d21224fe78ed77"
+        },
+        "z.tif": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/z.tif",
+          "sha256": "0c2ea3b612c3752e150b833a441cfcf3838b22e1fd1e2e5fc1dab79a35226e58"
+        }
+      }
+    },
+    "topology": {
+      "boundary_degree_histogram": {
+        "2": 10236
+      },
+      "boundary_edge_count": 10236,
+      "boundary_graph_component_count": 10,
+      "boundary_loops_if_manifold": 10,
+      "bowtie_coordinate_list_truncated": false,
+      "bowtie_vertex_count": 0,
+      "bowtie_vertices_row_column": [],
+      "complex": "full-render-grid all-four-valid axis-aligned quads",
+      "connected_quad_component_count": 1,
+      "edge_count": 1159020,
+      "euler_characteristic": -8,
+      "holes_if_manifold": 9,
+      "induced_quad_closure_exact": true,
+      "maximum_edge_incidence": 2,
+      "nonmanifold_risk": false,
+      "nonmanifold_risk_reasons": [],
+      "orphan_vertex_count": 0,
+      "quad_face_count": 576951,
+      "self_intersection_status": "unknown_not_computed",
+      "vertex_count_used_by_quads": 582061,
+      "vertex_mask_count": 582061
+    }
+  },
+  "gate_results": [
+    {
+      "expected": [
+        1640,
+        1640
+      ],
+      "name": "metadata_derived_shape",
+      "pass": true,
+      "value": [
+        1640,
+        1640
+      ]
+    },
+    {
+      "name": "strictly_subtractive_orphan_cleanup",
+      "pass": true,
+      "removed_vertices": 0
+    },
+    {
+      "name": "in_memory_manifold_topology",
+      "pass": true
+    },
+    {
+      "name": "in_memory_area",
+      "pass": true,
+      "threshold_cm2": 0.5,
+      "value_cm2": 0.508387217198238
+    },
+    {
+      "name": "in_memory_both_sign_native_qc",
+      "pass": true
+    },
+    {
+      "name": "float32_reload_mask_identity",
+      "pass": true
+    },
+    {
+      "ceiling_cm2": 5.08387217198238e-05,
+      "delta_cm2": -1.979770514193291e-08,
+      "name": "float32_reload_area_delta",
+      "pass": true
+    },
+    {
+      "name": "float32_reload_manifold_topology",
+      "pass": true
+    },
+    {
+      "name": "float32_reload_area",
+      "pass": true,
+      "threshold_cm2": 0.5,
+      "value_cm2": 0.5083871974005328
+    },
+    {
+      "name": "float32_reload_both_sign_native_qc",
+      "pass": true
+    },
+    {
+      "name": "stored_exact_nonadjacent_intersections_zero",
+      "pass": true
+    },
+    {
+      "lower_bound_voxels": 10.98317920268562,
+      "name": "full_nonadjacent_clearance_bound_positive",
+      "pass": true
+    }
+  ],
+  "go": true,
+  "in_memory": {
+    "area_cm2": 0.508387217198238,
+    "mask_content_sha256": "db66c469dff1e28cb59c1e71a599a79e17b560c93762151a2e4299a6914bbd86",
+    "native_geometry_by_sign": {
+      "negative": {
+        "abrupt_normal_flip_edge_count": 0,
+        "continuity_limit_um": 37.51088613483501,
+        "coordinate_max_xyz": [
+          6372.536673957204,
+          4605.259563517162,
+          4782.972960509949
+        ],
+        "coordinate_min_xyz": [
+          5788.869634683593,
+          3367.276862085692,
+          3938.4506884423204
+        ],
+        "degenerate_quad_count": 0,
+        "discontinuity_edge_count": 0,
+        "distorted_quad_count": 0,
+        "folded_quad_count": 0,
+        "in_bounds_vertex_fraction": 1.0,
+        "max_neighbor_distance_um": 10.311511692387954,
+        "median_neighbor_distance_um": 9.377721533708753,
+        "median_quad_area_um2": 87.938970385775,
+        "metric_distortion_p95": 1.09164552455618,
+        "neighbor_wrap_limit_um": 75.02177226967002,
+        "neighbor_wrap_risk_edge_count": 0,
+        "normal_valid_vertex_fraction": 1.0,
+        "offset_sample_in_bounds_fraction": 1.0,
+        "p95_neighbor_distance_um": 9.772822829064955,
+        "pass": true,
+        "surface_shape": [
+          1640,
+          1640
+        ],
+        "valid_neighbor_edge_count": 1159020,
+        "valid_quad_count": 576951,
+        "valid_vertex_count": 582061,
+        "volume_shape_zyx": [
+          16993,
+          7947,
+          7947
+        ],
+        "warnings": []
+      },
+      "positive": {
+        "abrupt_normal_flip_edge_count": 0,
+        "continuity_limit_um": 37.51088613483501,
+        "coordinate_max_xyz": [
+          6372.536673957204,
+          4605.259563517162,
+          4782.972960509949
+        ],
+        "coordinate_min_xyz": [
+          5788.869634683593,
+          3367.276862085692,
+          3938.4506884423204
+        ],
+        "degenerate_quad_count": 0,
+        "discontinuity_edge_count": 0,
+        "distorted_quad_count": 0,
+        "folded_quad_count": 0,
+        "in_bounds_vertex_fraction": 1.0,
+        "max_neighbor_distance_um": 10.311511692387954,
+        "median_neighbor_distance_um": 9.377721533708753,
+        "median_quad_area_um2": 87.938970385775,
+        "metric_distortion_p95": 1.09164552455618,
+        "neighbor_wrap_limit_um": 75.02177226967002,
+        "neighbor_wrap_risk_edge_count": 0,
+        "normal_valid_vertex_fraction": 1.0,
+        "offset_sample_in_bounds_fraction": 1.0,
+        "p95_neighbor_distance_um": 9.772822829064955,
+        "pass": true,
+        "surface_shape": [
+          1640,
+          1640
+        ],
+        "valid_neighbor_edge_count": 1159020,
+        "valid_quad_count": 576951,
+        "valid_vertex_count": 582061,
+        "volume_shape_zyx": [
+          16993,
+          7947,
+          7947
+        ],
+        "warnings": []
+      }
+    },
+    "topology": {
+      "boundary_degree_histogram": {
+        "2": 10236
+      },
+      "boundary_edge_count": 10236,
+      "boundary_graph_component_count": 10,
+      "boundary_loops_if_manifold": 10,
+      "bowtie_coordinate_list_truncated": false,
+      "bowtie_vertex_count": 0,
+      "bowtie_vertices_row_column": [],
+      "complex": "full-render-grid all-four-valid axis-aligned quads",
+      "connected_quad_component_count": 1,
+      "edge_count": 1159020,
+      "euler_characteristic": -8,
+      "holes_if_manifold": 9,
+      "induced_quad_closure_exact": true,
+      "maximum_edge_incidence": 2,
+      "nonmanifold_risk": false,
+      "nonmanifold_risk_reasons": [],
+      "orphan_vertex_count": 0,
+      "quad_face_count": 576951,
+      "self_intersection_status": "unknown_not_computed",
+      "vertex_count_used_by_quads": 582061,
+      "vertex_mask_count": 582061
+    }
+  },
+  "inputs": {
+    "self_intersection_audit": {
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stored-self-intersection-audit.json",
+      "sha256": "5d53665231f4e7e2f3533c50bc71149e39daa0fb4a31da80cf9bccd50b26b3bb"
+    },
+    "stored_manifest": {
+      "input_sha256": {
+        "mask.tif": "1eba93fe3a284e17d17f554307b0047f92b05463fca4920cd0a809b7fa30272f",
+        "meta.json": "6a6733cb68f103152bd043ff3ec1141e1ef5d295c1dda1486718f2c538ccb263",
+        "x.tif": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+        "y.tif": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+        "z.tif": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110"
+      },
+      "interpolation": "none",
+      "mask_source": "mask.tif:nonzero",
+      "metadata": {
+        "area_cm2": 0.5091672599437271,
+        "area_vx2": 580929.1867775108,
+        "bbox": [
+          [
+            5788.86962890625,
+            3367.27685546875,
+            3938.45068359375
+          ],
+          [
+            6372.962890625,
+            4606.044921875,
+            4783.7236328125
+          ]
+        ],
+        "elapsed_time_s": 1177745.550801333,
+        "format": "tifxyz",
+        "masked_component_lineage": {
+          "iteration": 2,
+          "selection": "largest 4-neighbor quad component outside one-cell source geometry defects whose nearest selected public-m7 run crosses offset0 and has absolute midpoint <=2 voxels",
+          "source_frames": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/public-m7-validation-v1/m7-quantized-offsets-minus15-plus15.npy",
+          "source_frames_sha256": "23cbfe8d5716b1ccc8b739347718a993bcc205ed30ed1ee1a49727bacf646c2e",
+          "strictly_subtractive": true
+        },
+        "max_gen": 40,
+        "scale": [
+          0.05000000074505806,
+          0.05000000074505806
+        ],
+        "seed": [
+          6051.0,
+          3882.0,
+          4298.0
+        ],
+        "source": "fixed_mask_only_no_coordinate_modification",
+        "target_volume": "20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr",
+        "type": "seg",
+        "uuid": "pherc0813-r18-growpatch-g40_calibrated_m7_fixed_point_stage_02",
+        "vc_gsfs_mode": "explicit_seed",
+        "vc_gsfs_params": {
+          "cache_root": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/cache",
+          "cache_size": 2147483648,
+          "generations": 40,
+          "growth_directions": [
+            "all"
+          ],
+          "min_area_cm": 0.0,
+          "normal_grid_level": 0,
+          "normal_grid_path": "<WORKSPACE>/work/first-letters/pherc0813-vc3d-growpatch/normal-grids",
+          "snapshot-interval": 0,
+          "thread_limit": 8,
+          "use_cuda": false,
+          "voxelsize": 9.362
+        },
+        "vc_gsfs_version": "dev"
+      },
+      "output_shape": [
+        82,
+        82
+      ],
+      "scale_yx": [
+        0.05000000074505806,
+        0.05000000074505806
+      ],
+      "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+      "stored_shape": [
+        82,
+        82
+      ]
+    },
+    "stored_tifxyz": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+    "volume_shape_zyx": [
+      16993,
+      7947,
+      7947
+    ],
+    "voxel_um": 9.362
+  },
+  "orphan_cleanup": {
+    "final_valid_vertices": 582061,
+    "initial_valid_vertices": 582061,
+    "quad_count": 576951,
+    "removed_unused_vertices": 0
+  },
+  "paid_compute_cost_usd": 0.0,
+  "raw_ct_network_bytes": 0,
+  "resampling": {
+    "expected_full_shape": [
+      1640,
+      1640
+    ],
+    "method": "canonical mask-aware linear TIFFXYZ",
+    "output_shape": [
+      1640,
+      1640
+    ],
+    "scale_yx": [
+      0.05000000074505806,
+      0.05000000074505806
+    ],
+    "stored_shape": [
+      82,
+      82
+    ]
+  },
+  "schema_version": 1,
+  "self_intersection_scope": {
+    "certified_full_nonadjacent_clearance_lower_bound_voxels": 10.98317920268562,
+    "local_full_raster_folds_and_topology": "covered by both-sign native QC and manifold gate",
+    "shared_source_vertex_pairs": "treated as local adjacency, not nonadjacent intersections",
+    "stored_nonadjacent_intersection_count": 0
+  },
+  "status": "complete",
+  "verdict": "pass_to_raw_ct_planning"
+}

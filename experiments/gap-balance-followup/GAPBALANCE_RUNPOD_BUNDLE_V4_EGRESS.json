@@ -1,0 +1,75 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.408409,
+    "remaining_development_cutoff_usd": 11.591591
+  },
+  "bundle": {
+    "archive_bytes": 4508665856,
+    "archive_file_entries": 317,
+    "archive_sha256": "64cf1fdf4f2f0d160367caad7b134421956d3d6225818c32db01732bb6a7eec4",
+    "archive_symlink_entries": 0,
+    "file_count_excluding_manifest": 316,
+    "logical_bytes_excluding_manifest": 4507906735,
+    "manifest_payload_sha256": "8d373e0fffad45d7099b0d8fdfd33504ae5d16268aefab9dc148f1a8321ae718"
+  },
+  "bundle_v2_continuity": {
+    "controller_only_changes": [
+      "add the already-public uniform hardware-substitution plan to the remote controller",
+      "accept only one GPU display name allowed by that public plan",
+      "add a result-blind pre-executor bundle verifier"
+    ],
+    "input_asset_records_byte_identical": 280,
+    "private_launcher_records_byte_identical": 12,
+    "private_run_input_records_byte_identical": 18,
+    "scientific_input_identity_changed": false,
+    "v2_manifest_payload_sha256": "7f46849aeed60db87ebca747a3e9b80885f2e257785951a73c70e8587d0e447c"
+  },
+  "destination_contract": {
+    "allowed_gpu_type_ids": [
+      "NVIDIA GeForce RTX 3090",
+      "NVIDIA RTX A5000",
+      "NVIDIA RTX A6000"
+    ],
+    "cloud_type": "COMMUNITY",
+    "exact_ids_recorded_in_private_provider_receipt_before_upload": true,
+    "maximum_aggregate_hourly_rate_usd": 2.38,
+    "maximum_total_gpu_count": 7,
+    "one_uniform_gpu_type_for_all_12_jobs": true,
+    "provider": "RunPod"
+  },
+  "egress_exclusions": {
+    "confirmation_seeds_500_504_included": false,
+    "pherc1218_included": false,
+    "scientific_outputs_included": false
+  },
+  "hardware_substitution_payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "jupyter_croc_retry_payload_sha256": "ef937b654ab8c337b9798388d1e40950b85ee6e92d81f86b52490d8ac5b27d41",
+  "local_preparation": {
+    "all_280_asset_records_reverified_by_exact_size_and_sha256": true,
+    "authoritative_bundle": "v4",
+    "bundle_v3_egress_bytes": 0,
+    "bundle_v3_local_manifest_payload_sha256": "9189bc376b975dcfcd21f1fe0010fcb3def5c4246be8b9df9fd0e14e3e4f57de",
+    "bundle_v3_status": "locally abandoned before archive or egress because macOS iCloud had evicted source files",
+    "materialized_tar_follows_no_remote_symlinks": true
+  },
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true,
+    "user_authorization": "i approve everthing you want uless its specfically using my credit card please i wnat to sleep work indepndtnly"
+  },
+  "payload_sha256": "adb0297ed6d9d62760b8326e5db4b310a386887c55d40b73a8a654b7a30e0951",
+  "public_parent_commit": "bffb52d7541f21597b7d847c573087c6fb9b22bb",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "EXACT_BUNDLE_V4_JUPYTER_CROC_EGRESS_FROZEN_BEFORE_ALLOCATION"
+}

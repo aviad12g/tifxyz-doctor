@@ -1,0 +1,9 @@
+BLOCKED_REAL_HOLDOUT_NOT_CERTIFIED
+
+PHerc1218 version 1 and version 2 are forbidden. No GapBalance compute,
+development scoring, or confirmation access is permitted while
+PHERC1218_HOLDOUT_QUARANTINE.json is active. Completed result-blind artifacts
+remain preserved and the original hash-bound protocol remains unchanged.
+
+Quarantine payload SHA-256:
+663cf15a2db85c26a6a895dafbacf259de0b2fe3a4c5c76f3d734cdf6ae60c01

@@ -1,0 +1,64 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_rate_usd": 1.54,
+    "confirmation_reserve_usd": 13.0,
+    "conservative_development_spend_usd": 0.083282,
+    "development_cutoff_usd": 12.0,
+    "remaining_development_cutoff_usd": 11.916718
+  },
+  "bundle_egress": {
+    "bundle_manifest_payload_sha256": "7f46849aeed60db87ebca747a3e9b80885f2e257785951a73c70e8587d0e447c",
+    "bundle_logical_bytes": 4507901245,
+    "explicit_approval_for_exact_replacement_ids_received": false,
+    "permitted": false
+  },
+  "confirmation_outputs_inspected": false,
+  "hardware_substitution_payload_sha256": "9ad5d82690133fa88a406cb1bddae47e229c0823a1bdd42c797fb3733a899f58",
+  "multi_pod_retry_payload_sha256": "bb4eb8d93ee527acaca0e32ddbbc33e7833d06dfe5dbc692161ebdadd6e74796",
+  "payload_sha256": "b0fa8db01672dea342c4ad602e1187ed3157d04b9a8f78d5d9bfe90e24e36ebe",
+  "pherc1218_v2_opened": false,
+  "pods": [
+    {
+      "aggregate_hourly_rate_usd": 0.88,
+      "desired_status": "EXITED",
+      "gpu_count": 4,
+      "gpu_name": "RTX 3090",
+      "id": "68e48azozqvnhb",
+      "jobs": [
+        "gapbalance-development-synthetic-seed11-shard00",
+        "gapbalance-development-synthetic-seed11-shard01",
+        "gapbalance-development-synthetic-seed11-shard02",
+        "gapbalance-development-synthetic-seed11-shard03",
+        "gapbalance-development-synthetic-seed23-shard00",
+        "gapbalance-development-synthetic-seed23-shard01",
+        "gapbalance-development-synthetic-seed23-shard02"
+      ]
+    },
+    {
+      "aggregate_hourly_rate_usd": 0.66,
+      "desired_status": "EXITED",
+      "gpu_count": 3,
+      "gpu_name": "RTX 3090",
+      "id": "b9outlq8lhhsnk",
+      "jobs": [
+        "gapbalance-development-synthetic-seed23-shard03",
+        "gapbalance-development-synthetic-seed47-shard00",
+        "gapbalance-development-synthetic-seed47-shard01",
+        "gapbalance-development-synthetic-seed47-shard02",
+        "gapbalance-development-synthetic-seed47-shard03"
+      ]
+    }
+  ],
+  "provider_action_at": "2026-08-20T17:50:26.591478+00:00",
+  "public_parent_commit": "895aef9b9cd5bb174a11e6222fe0611a14bcdb19",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "scientific_endpoints_inspected": false,
+  "selected_hardware": {
+    "gpu_name": "RTX 3090",
+    "uniform_across_all_12_jobs": true
+  },
+  "selected_layout": "four_plus_three",
+  "status": "STOPPED_SUBSTITUTE_PODS_PUBLICLY_FROZEN_AWAITING_EXACT_EGRESS_APPROVAL"
+}

@@ -1,0 +1,36 @@
+{
+  "artifacts": [
+    {
+      "bytes": 345175,
+      "file": "frozen_thresholds.json",
+      "relative_path": "artifacts/fusion-aware-threshold-freeze/frozen_thresholds.json",
+      "sha256": "a76b5db4316bb1eea1f28196d798cd6ccb83a78b4c6982f5c1f1f940c8da678b"
+    },
+    {
+      "bytes": 10760,
+      "file": "threshold_run_manifest.json",
+      "relative_path": "artifacts/fusion-aware-threshold-freeze/threshold_run_manifest.json",
+      "sha256": "68687d01042dea85aa9e2a56f4ec4ccad91b37b8d2b3667de1a7d3ea5b9f56db"
+    }
+  ],
+  "collector": {
+    "bytes": 4993,
+    "file": "collect_threshold_freeze.py",
+    "sha256": "8b6e284c41395216893539448c86f81c2b4bbf6c9b6d17e2e14267c4d89c2c0d"
+  },
+  "kernel_id": "aviadcohen1/vesuvius-fusion-aware-freeze-thresholds",
+  "kernel_version": 6,
+  "payload_sha256": "35cbc554d19c59a8d7b52e82a0e5c2eac5118b99ee5c58748367bd4bccd2b778",
+  "schema_version": "1.0",
+  "scientific_gate": {
+    "held_out_test_or_synthetic_outputs_downloaded_or_opened": false,
+    "kernel_log_downloaded_or_opened": false,
+    "kernel_status_complete_before_download": true,
+    "latest_version_matches_frozen_version": true,
+    "selected_threshold_values_reported_by_collector": false,
+    "server_source_matches_frozen_launcher": true,
+    "validation_probability_caches_downloaded_or_opened": false
+  },
+  "server_source_sha256": "115c8f27ca5f0a8dee9fe9e56883f9ecbfa4e76dd22742a0f8ba39d5b95a3af9",
+  "status": "exact threshold-freeze artifact pair collected after completion"
+}

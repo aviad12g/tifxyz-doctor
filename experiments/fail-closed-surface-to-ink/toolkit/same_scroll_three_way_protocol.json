@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "experiment": "same_scroll_three_way_falsification",
+  "group": "0139",
+  "sealed_cross_scroll_group": "841",
+  "partition_axis": "x",
+  "partitions": {
+    "train_a": {
+      "maximum_index_inclusive": 16
+    },
+    "buffer_ab": {
+      "minimum_index_inclusive": 17,
+      "maximum_index_inclusive": 17
+    },
+    "local_b": {
+      "minimum_index_inclusive": 18,
+      "maximum_index_inclusive": 20
+    },
+    "buffer_bc": {
+      "minimum_index_inclusive": 21,
+      "maximum_index_inclusive": 23
+    },
+    "distant_c": {
+      "minimum_index_inclusive": 24
+    }
+  },
+  "model": {
+    "class": "CoarseInkNet",
+    "base_channels": 16,
+    "expected_parameter_count": 1117217
+  },
+  "training": {
+    "seeds": [
+      13901,
+      13902,
+      13903
+    ],
+    "epochs": 80,
+    "batch_size": 4,
+    "learning_rate": 0.002,
+    "weight_decay": 0.0,
+    "augmentation": false,
+    "num_workers": 0,
+    "optimizer": "AdamW",
+    "scheduler": "none",
+    "positive_weight_rule": "clamp(negative_pixels / positive_pixels, 1, 8)",
+    "label_reduction_rule": "unchanged binary label and supervision arrays from the coarse-domain NPZ payloads"
+  },
+  "unseal_gate": {
+    "minimum_passing_seeds": 2,
+    "per_seed_train_a_auroc_minimum": 0.95,
+    "per_seed_local_b_auroc_minimum": 0.8,
+    "distant_c_loaded_only_after_collective_gate": true
+  },
+  "distant_support_gate": {
+    "minimum_passing_seeds": 2,
+    "per_seed_auroc_minimum": 0.7,
+    "per_seed_ap_above_prevalence_minimum": 0.1
+  },
+  "reporting": {
+    "metrics": [
+      "average_precision",
+      "prevalence",
+      "auroc",
+      "f1_at_0.5",
+      "brier_score",
+      "ece_15_equal_width_bins",
+      "forward_reverse_pearson",
+      "forward_reverse_top5_jaccard",
+      "precision_recall_curve_201_thresholds"
+    ],
+    "seed_variance": true,
+    "spatial_holdout_evaluations_per_seed": 1
+  },
+  "prohibitions": {
+    "hyperparameter_changes_after_local_b": true,
+    "pherc841_access": true,
+    "eligible_scroll_inference": true,
+    "runpod_or_paid_compute": true
+  }
+}

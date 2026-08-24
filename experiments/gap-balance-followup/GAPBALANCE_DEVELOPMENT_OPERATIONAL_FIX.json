@@ -1,0 +1,40 @@
+{
+  "confirmation_outputs_inspected": false,
+  "failure": {
+    "job_id": "gapbalance-development-synthetic-seed11-shard00",
+    "outcome": "Kaggle HTTP 400 before kernel creation",
+    "reason": "the v1 requested and title-derived synthetic slugs exceeded the provider's practical kernel-id limit",
+    "scientific_endpoints_computed": false
+  },
+  "frozen_scientific_identity": {
+    "all_config_payload_sha256_values_unchanged": true,
+    "all_generated_launcher_sha256_values_unchanged": true,
+    "public_source_commit": "e4fd7d507c21dae9e9d50af1bd35bf3402e67c3b",
+    "scoring_plan_payload_sha256": "7fe33fe7d8c975d013da0c660c8395a0c78854c0824fb1d3073d166716413dcd",
+    "training_freeze_payload_sha256": "8db7660a89182ff255ce391a75f0716e34197450cd4258796cb88d792e08137a"
+  },
+  "real_job": {
+    "job_id": "gapbalance-development-real",
+    "provider_kernel_id": "aviadcohen1/vesuvius-gapbalance-development-real-all-runs",
+    "status_when_fix_frozen": "running from the exact v1 package"
+  },
+  "payload_sha256": "f4ba915d701ad1742fe6eb2efb4875f8fb51c1f8dd4bbbfc1f982322a8fb2b41",
+  "schema_version": "1.0",
+  "status": "result-blind Kaggle synthetic kernel-id correction frozen before retry",
+  "synthetic_jobs": [
+    {"config_payload_sha256":"0bfe584b4a6722e716b7b4d622152eeac09f43acb1b97e88c44ee9e9eb8db9a8","job_id":"gapbalance-development-synthetic-seed11-shard00","kernel_id":"aviadcohen1/gapbalance-dev-syn-s11-q0","launcher_sha256":"a3767283ce69cba65c0259a1c595005231284bdfa46bbfb695fb47ff40ba7ac4","metadata_sha256":"1e13ad9d8fa0e0c4a4130b8fc40a0493f527db604996bd8d506a0cef31945b2e","package_sums_sha256":"7de51527091e45d4196dd2546e90ab8ad72b09a10d277fd5d3a5e279fb384e97"},
+    {"config_payload_sha256":"dcc1a4ad6349b49ba9588c2e1cd6a5cb2fc17b129a0a4652d867fd5701e1cebc","job_id":"gapbalance-development-synthetic-seed11-shard01","kernel_id":"aviadcohen1/gapbalance-dev-syn-s11-q1","launcher_sha256":"325ff3cae436181cb97f364d5052f91add207aaa0b44c87f3aa87ee54f08fe72","metadata_sha256":"04df27856375c637e21dc5481eb94859edce8523f124dce80f66e2c98f1c5163","package_sums_sha256":"67d7dcebc2e9bd6f10d2a1a2dae42fe740620e18444cd4ae38f2cb55aaaf3458"},
+    {"config_payload_sha256":"0333c3122d0f826e399f3f4f5eac7c4d4105f7c08c46181d848bcf4a4427fde7","job_id":"gapbalance-development-synthetic-seed11-shard02","kernel_id":"aviadcohen1/gapbalance-dev-syn-s11-q2","launcher_sha256":"096a15595b2f1a3c40971837af906f670b85ec9f49dfa70afc704ca1c9ad7cea","metadata_sha256":"0fd57422c6e5ed58f593d60baf683aff4848696da63f32d041d1c6995cc071f1","package_sums_sha256":"2987a5acef36229d72981ef70f65818c5cd4cd25bf89fe13245433a38a168841"},
+    {"config_payload_sha256":"9dd0441f2badddbf57a6fd671b6f52aeaefb2f281eb6e37cadcd7e8092f39f5e","job_id":"gapbalance-development-synthetic-seed11-shard03","kernel_id":"aviadcohen1/gapbalance-dev-syn-s11-q3","launcher_sha256":"b1b37b301a0a16dc5cb6c46f076bbc69ab154813bf1b2ce4a730a99b8f0efa5b","metadata_sha256":"c270966ea093716d3bee3f1ff87c2d6ab127c0015088e7abc512eb6fbfda05ae","package_sums_sha256":"617bcca8cf8e7201568b8b2325af08d75476d493e058a9fe75035abfcfb7f8a7"},
+    {"config_payload_sha256":"9352f845069b2241d4df8856445e0aa0ff51179cbd7fbec8fada6515f8f00919","job_id":"gapbalance-development-synthetic-seed23-shard00","kernel_id":"aviadcohen1/gapbalance-dev-syn-s23-q0","launcher_sha256":"78ba8d5e1294f0a1972feceed650102ed7b3f0430d68cd991ee9cbe370540104","metadata_sha256":"f11db9bf95e8c872bd7e22b499fc33f0e068b21ccaefac63e437b1f5a290df11","package_sums_sha256":"335862c90e8448e60ccf8a383cf9ed6498921e1b46a47fba12fac45d12aa2898"},
+    {"config_payload_sha256":"921725f7b0fc9e263c4249e027fa98282ddca00c88fc67b8085d7d1ee7137392","job_id":"gapbalance-development-synthetic-seed23-shard01","kernel_id":"aviadcohen1/gapbalance-dev-syn-s23-q1","launcher_sha256":"a57d6c181640631ae4bc20d04e29b685d596f9507cd55a4562d599d7e983c7b8","metadata_sha256":"9681c8a0fab86b95bb7a5a362b5fea81aea6aef187792635deccb49dcbdf9aaf","package_sums_sha256":"bc52c092045bdabc6d98f563e55a7f783a677256988037f85cabca1e22e03e1e"},
+    {"config_payload_sha256":"3ffb653708e1b404b79a588fe61a586ec6e723b1b7642983c555b6a46df0194b","job_id":"gapbalance-development-synthetic-seed23-shard02","kernel_id":"aviadcohen1/gapbalance-dev-syn-s23-q2","launcher_sha256":"0e21babe8bb2ec636dbbef8ab871271fd1e4143ae17afe58b9a20e679596a82b","metadata_sha256":"b4d52d89409a76292a0b1109655a29a13080b616a220dc0a25fb31f733010b04","package_sums_sha256":"7e64d0e0d11875286b7c414c95ccc90fe9ea36375d8517abc742b8f4d13e95e1"},
+    {"config_payload_sha256":"356e7e14e3c959c32166b313a9e0c547fe353afceaf1d1b1e97e355abf10d969","job_id":"gapbalance-development-synthetic-seed23-shard03","kernel_id":"aviadcohen1/gapbalance-dev-syn-s23-q3","launcher_sha256":"2bc68875f1028643659be66b08d7442b228482eee46f407b442cf63beb3a4a8e","metadata_sha256":"ad46d4b615fb092be3aed02545db040d51f41adb5b53763396c409d785f599af","package_sums_sha256":"3ea6e03bb59e13d49dfabdb45c0dc4820d7675148e9dc4ff242ef15f13e89d79"},
+    {"config_payload_sha256":"e7e920bd6a2cc6f3b6b1271ef0c5b4e833a8ab85ecbcc23f160891cb68686503","job_id":"gapbalance-development-synthetic-seed47-shard00","kernel_id":"aviadcohen1/gapbalance-dev-syn-s47-q0","launcher_sha256":"71c2b96c806b07acfef42fb8e9a32b100074516fe38d77a3ce4d4bc85dc55f7b","metadata_sha256":"645429f62619784e4ff2feb4a33361401df9637f9bc24c7b1dfe6c900f139e80","package_sums_sha256":"aaf01345c302e6545f80b13edf5a1bcca4e7ca0f58801dfb85c8d9026135295b"},
+    {"config_payload_sha256":"bd9832691dc73cce6c326309f7da65c6ac4db5bf8178d7dd6cc91809491f3b82","job_id":"gapbalance-development-synthetic-seed47-shard01","kernel_id":"aviadcohen1/gapbalance-dev-syn-s47-q1","launcher_sha256":"345867a2f4ff5ab333109f56b85c2b4bebe7525ad151738563a18c46988c6cae","metadata_sha256":"76cc5d6f2f87e5f0f1cd2e8b09236fac6eb6ff0f7cdc92b0f7b46d2c6f5a9983","package_sums_sha256":"586b727e0d7ac4d131a87ae15f3895053b86683fa2dabb44d51d2de9f6f53888"},
+    {"config_payload_sha256":"8356343b69d9c1ccc77cde0657e3abd0d4313c914593e67aa1bc6af717d1a804","job_id":"gapbalance-development-synthetic-seed47-shard02","kernel_id":"aviadcohen1/gapbalance-dev-syn-s47-q2","launcher_sha256":"21082f18f149fbbe2f2099e59a8727b5832d380b11bfc7b4854622d62886d437","metadata_sha256":"88952643d6bd131bd47c8098b7b556b061a1c2bfef7f5de281fe346d7699ed5d","package_sums_sha256":"502865169a37155f73c8f7ab7e65a463eecb474b0dc0feeae4efe524527d4cdf"},
+    {"config_payload_sha256":"32943bb7f5d9c61a582b5b1962fb0ed715b43f98fb09d82d544a1d4a37ea9efd","job_id":"gapbalance-development-synthetic-seed47-shard03","kernel_id":"aviadcohen1/gapbalance-dev-syn-s47-q3","launcher_sha256":"817ce015f2c8d7a607db3571ff81884634414151d178d95e5e14a44ca7356b8a","metadata_sha256":"cbd6c2b7e5396e061d199a06418a31999458053644353bd5582bf2d76f427b00","package_sums_sha256":"377b05269814b36aff25c8c644fab230c4bea9a017f14fedafc5e6b76cc7f196"}
+  ],
+  "v1_package_manifest_payload_sha256": "04b7114973f2538e0edaee77de4ee2ba8b52faa6f3d7e3496fb9a1b78dfe8711",
+  "v2_package_manifest_payload_sha256": "284c6775bbef798a070347a0b13f2daaac847680205ee4f4c6adcd4337c9309e"
+}

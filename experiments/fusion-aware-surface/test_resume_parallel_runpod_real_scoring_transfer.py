@@ -1,0 +1,69 @@
+import importlib.util
+import tempfile
+import unittest
+from pathlib import Path
+
+
+MODULE_PATH = Path(__file__).with_name("resume_parallel_runpod_real_scoring_transfer.py")
+SPEC = importlib.util.spec_from_file_location("parallel_transfer", MODULE_PATH)
+MODULE = importlib.util.module_from_spec(SPEC)
+assert SPEC.loader is not None
+SPEC.loader.exec_module(MODULE)
+
+
+class ParallelTransferLayoutTest(unittest.TestCase):
+    def test_exact_seven_job_layout(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "runpod_real_input_manifest.json").write_text("{}")
+            jobs = root / "jobs"
+            jobs.mkdir()
+            for name in MODULE.EXPECTED_JOBS:
+                (jobs / name).mkdir()
+            self.assertEqual(
+                tuple(path.name for path in MODULE.validate_input_layout(root)),
+                MODULE.EXPECTED_JOBS,
+            )
+            for name in MODULE.EXPECTED_JOBS:
+                (jobs / name / "sealed.bin").write_bytes(b"sealed")
+            self.assertEqual(len(MODULE.regular_input_files(root)), 7)
+
+    def test_rejects_extra_job(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "runpod_real_input_manifest.json").write_text("{}")
+            jobs = root / "jobs"
+            jobs.mkdir()
+            for name in MODULE.EXPECTED_JOBS + ("extra",):
+                (jobs / name).mkdir()
+            with self.assertRaises(RuntimeError):
+                MODULE.validate_input_layout(root)
+
+    def test_rejects_symlinked_sealed_file(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            jobs = root / "jobs"
+            jobs.mkdir()
+            job = jobs / MODULE.EXPECTED_JOBS[0]
+            job.mkdir()
+            source = root / "source"
+            source.write_bytes(b"sealed")
+            (job / "sealed.bin").symlink_to(source)
+            with self.assertRaises(RuntimeError):
+                MODULE.regular_input_files(root)
+
+    def test_public_tree_accepts_copy_link_source(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            source = root / "source"
+            source.write_bytes(b"public")
+            link = root / "link"
+            link.symlink_to(source)
+            self.assertEqual(
+                {path.name for path in MODULE.public_tree_files(root)},
+                {"source", "link"},
+            )
+
+
+if __name__ == "__main__":
+    unittest.main()

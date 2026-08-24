@@ -1,0 +1,51 @@
+{
+  "account_key_precheck": {
+    "checked_result_blind": true,
+    "registered_account_key_count": 3,
+    "target_public_key_already_registered": false
+  },
+  "account_key_registration": {
+    "credit_card_charge_permitted": false,
+    "official_cli_command": "runpodctl ssh add-key --key-file ~/.ssh/id_ed25519.pub",
+    "private_key_leaves_local_mac": false,
+    "public_key_fingerprint": "SHA256:e+q6i7OGbRVczoh8nObWeusmT4J8FIGshwhlHzBN/Mg",
+    "public_key_material_published_in_repo": false,
+    "registration_required_before_new_pod_creation": true,
+    "runpodctl": {
+      "darwin_arm64_sha256": "67cc575f518d05258f35c4334422f6f730446b7b88864933ed65a05e990ea1f2",
+      "version": "2.8.0"
+    }
+  },
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.159383,
+    "remaining_development_cutoff_usd": 11.840617
+  },
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "Permission denied (publickey,password).",
+    "failed_at": "2026-08-20T19:54:56.725063+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "h3rlmwe7dydtpg",
+      "dyx0gchkguob6y"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payload_sha256": "aac6c1da1126ed8880f39c726cac2cc91c26eff898929db0b92fd81deda9b2e2",
+  "public_parent_commit": "084fb56a6590e36716e0ceae8b5d53d927c5672e",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "schema_version": "1.0",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "ssh_injection_retry_payload_sha256": "47e0510ebf7ddf690495eed8cc87ebc947518f48cf54c48299ad0ddefa86eb1c",
+  "status": "RESULT_BLIND_ACCOUNT_SSH_KEY_REGISTRATION_RETRY_FROZEN_BEFORE_ACCOUNT_MUTATION"
+}

@@ -1,0 +1,99 @@
+{
+  "audit_scope": {
+    "inspected": [
+      "public Kaggle provider version metadata",
+      "public Kaggle provider path and size inventory",
+      "MANIFEST.jsonl",
+      "GitHub Issue #191 comments"
+    ],
+    "not_inspected": [
+      "NPZ payloads",
+      "CT crops",
+      "surface labels",
+      "instance labels",
+      "model predictions",
+      "probabilities",
+      "panels",
+      "scientific endpoints"
+    ]
+  },
+  "correction": {
+    "issue_comment": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339174393",
+    "response": {
+      "author": "Jinhojeong",
+      "created_at": "2026-08-19T09:05:22Z",
+      "issue_comment_id": 5339946340,
+      "url": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5339946340"
+    },
+    "response_present_when_audited": true,
+    "version_notes": "v2: corrected membership. Six crops left over from a pilot extraction were present in v1 (0-2 band 17 not 14, 10+ band 63 not 60). The authoritative set is the 254 the frozen selection rule yields in one clean pass, plus 60 controls. Manifest and all derived counts recomputed: 209 of 254 contact crops carry both split instances."
+  },
+  "dataset": {
+    "creation_date": "2026-08-19T08:43:33.110000",
+    "dataset_id": 11704096,
+    "provider": "kaggle",
+    "ref": "jhjeong0815/pherc1218-tight-contact-val",
+    "status": "Ready",
+    "version": 2
+  },
+  "eligibility": {
+    "contact": {
+      "by_band": {
+        "0-2": 12,
+        "10+": 46,
+        "2-4": 39,
+        "4-6": 42,
+        "6-10": 32
+      },
+      "count": 171,
+      "rule": "arm=crops AND both_instances_present=true AND ct_empty_frac<=0.10",
+      "under_4_voxels": 51
+    },
+    "control": {
+      "count": 48,
+      "rule": "arm=control AND ct_empty_frac<=0.10"
+    }
+  },
+  "manifest": {
+    "bytes": 90251,
+    "contact": {
+      "bands": {
+        "0-2": 14,
+        "10+": 60,
+        "2-4": 60,
+        "4-6": 60,
+        "6-10": 60
+      },
+      "both_instances_present": 209,
+      "count": 254,
+      "missing_one_or_both_instances": 45
+    },
+    "control": 60,
+    "rows": 314,
+    "sha256": "b62e5a8f3e8ff4e2de7a5b3626f85fcee91df338c9e250867b2342b903ea9dfe",
+    "unique_file_paths": 314,
+    "unique_file_sha256": 314
+  },
+  "provider_inventory": {
+    "all_files": 324,
+    "manifest_npz_paths_equal_provider_npz_paths": true,
+    "missing_manifest_npz_on_provider": [],
+    "non_npz_files": [
+      "AMENDMENT_1.md",
+      "CORRECTION_v2.json",
+      "MANIFEST.jsonl",
+      "PREREGISTRATION.md",
+      "RESULTS.md",
+      "control_summary.json",
+      "crops_summary.json",
+      "emptiness_summary.json",
+      "gaps_summary.json",
+      "labels_summary.json"
+    ],
+    "npz_files": 314,
+    "provider_npz_not_in_manifest": [],
+    "total_bytes": 605568763
+  },
+  "schema_version": "1.0",
+  "status": "CORRECTED_V2_READY_METADATA_ONLY_AUDIT_PASS"
+}

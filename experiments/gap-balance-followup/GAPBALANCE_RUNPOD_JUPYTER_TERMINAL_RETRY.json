@@ -1,0 +1,45 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "budget_guard_seconds": 300,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 0.61748,
+    "remaining_development_cutoff_usd": 11.38252
+  },
+  "failed_deployment": {
+    "bundle_bytes_uploaded": 0,
+    "confirmation_outputs_inspected": false,
+    "error": "The Jupyter REST terminal was created, but the kernel-style WebSocket URL returned HTTP 404.",
+    "failed_at": "2026-08-20T21:05:08.976141+00:00",
+    "pherc1218_v2_opened": false,
+    "pods_stopped": [
+      "gsi94er70i7fsq",
+      "a9ipinizimqz15"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "jupyter_croc_retry_payload_sha256": "ef937b654ab8c337b9798388d1e40950b85ee6e92d81f86b52490d8ac5b27d41",
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "payload_sha256": "b3ffe8b86a04f5093f0889d13e755cc1b1a131e4b8a09c3e0ef0a67f4276c31c",
+  "public_parent_commit": "ba40503efa6f347b04e84a9eb4c1c69588efb181",
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_JUPYTER_TERMINAL_PATH_RETRY_FROZEN_BEFORE_REALLOCATION",
+  "terminal_control": {
+    "delete_terminal_after_failed_handshake": true,
+    "failed_websocket_path_template": "/api/terminals/{terminal_name}/channels",
+    "rest_create_path": "/api/terminals",
+    "websocket_path_template": "/terminals/websocket/{terminal_name}"
+  }
+}

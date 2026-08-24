@@ -1,0 +1,9 @@
+{
+  "content_bytes": 8482026,
+  "content_file_count": 94,
+  "generated_date": "2026-08-15",
+  "manifest_algorithm": "SHA-256",
+  "manifest_path": "SHA256SUMS",
+  "release": "fail-closed-surface-to-ink-v1",
+  "schema_version": 1
+}

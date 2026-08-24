@@ -1,0 +1,1314 @@
+{
+  "artifacts": {
+    "adjacent_depth_persistence.png": {
+      "bytes": 411668,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/adjacent_depth_persistence.png",
+      "sha256": "693ba38e26626342bbea2cb116c76a0506ee4a677e573a0a07139b0b9f756e36"
+    },
+    "adjacent_depth_persistence.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 2.06974458694458,
+      "mean_interior": 0.15014834702014923,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/adjacent_depth_persistence.tif",
+      "sha256": "95f9cc3db47c43d78251050ff5844db107c63c1e186c0b048c63c8a7a8dec226",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "center_offset0.png": {
+      "bytes": 370810,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/center_offset0.png",
+      "sha256": "59a8b4ca36cd29b55bf3e42553cf4096c8e60d60224999421678ec7e18a79123"
+    },
+    "components.tsv": {
+      "bytes": 38812,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/components.tsv",
+      "sha256": "1830eabd65f7d793cb341e496dd65481bb91dc19f9485bebbb9c6e385faac314"
+    },
+    "far_depth_persistence.png": {
+      "bytes": 426160,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/far_depth_persistence.png",
+      "sha256": "5d02e8105cae2ce17b2d5b06529050ca343a14a947cc1a80d748cd43831fd634"
+    },
+    "far_depth_persistence.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 1.5885212421417236,
+      "mean_interior": 0.1333492547273636,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/far_depth_persistence.tif",
+      "sha256": "780bba3e07f387f5c634273576aa515887e4f8c158a0d926a7000a18928aca02",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "fiber_likelihood.png": {
+      "bytes": 191000,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/fiber_likelihood.png",
+      "sha256": "aee3ddcdd1ba4409f8dc2fd330fc13a59ddaae65f59cdd29a1d2ebe571ca22f0"
+    },
+    "fiber_likelihood.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 1.0,
+      "mean_interior": 0.06987043470144272,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/fiber_likelihood.tif",
+      "sha256": "af15c54d273975228c2a03b28ef0ace4d546b7c634e4f83b82ce052edefcd2da",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "fiber_ridge_likelihood.png": {
+      "bytes": 153879,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/fiber_ridge_likelihood.png",
+      "sha256": "130ee6a232ed83b5e8de3a2f1daac532cdbe8c2d1553ac2cbe178fbff18d2848"
+    },
+    "fiber_ridge_likelihood.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 1.0,
+      "mean_interior": 0.029280608519911766,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/fiber_ridge_likelihood.tif",
+      "sha256": "00c4efd4d3717bd401727ec074ee036b4870e7a1aba5dcc1cd122ee5f1fd0d5b",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "independent_ink_score.png": {
+      "bytes": 274114,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/independent_ink_score.png",
+      "sha256": "b778555333127158432fc1bd27b3fb74bd816b89c1e869f0f1eeee4a37952cd1"
+    },
+    "independent_ink_score.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 1.0,
+      "mean_interior": 0.06899642199277878,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/independent_ink_score.tif",
+      "sha256": "c93a7f6b596267a6514bd4db5a422737ec4db67c627d58d2b4ece3a480be63f0",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "near_depth_support.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 0.75,
+      "mean_interior": 0.23234207928180695,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/near_depth_support.tif",
+      "sha256": "bd699c1132a5814cea92cbddb27a8004f151eeb8f7023f2551544ed12840f3ec",
+      "shape": [
+        1640,
+        1640
+      ]
+    },
+    "ranked_row_hypotheses.json": {
+      "bytes": 8942,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/ranked_row_hypotheses.json",
+      "sha256": "3c0387f4365483e5ef5a29fc5f408f1da444ee892e30fb1ad5d366ecee3c06fa"
+    },
+    "ranked_rows_contact_sheet.png": {
+      "bytes": 3440594,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/ranked_rows_contact_sheet.png",
+      "sha256": "9719e6b2a7350318dd5684a6e1a2c5e951efcc09da8a15a81c676a73a593b9fc"
+    },
+    "row_01.png": {
+      "bytes": 571736,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_01.png",
+      "sha256": "d7b5ac2d5b892ce9accfbcd151bd510bfd440f904fb1b4b0c1c0f36388e6c361"
+    },
+    "row_01_depth_controls.png": {
+      "bytes": 1028999,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_01_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "2598f9d51fc146fbc231d5d2382252aef62d0e60415675804e68ba1d2beab84d",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_01_native_evidence.png": {
+      "bytes": 669396,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_01_native_evidence.png",
+      "sha256": "33f55e1c9a78df46ec842a5bf0909f5235e060aa5c7d9acf90072621105f141a"
+    },
+    "row_01_native_raw.png": {
+      "bytes": 561619,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_01_native_raw.png",
+      "sha256": "e6c18d4fe2000ef14a5c2d4f96cd2d4b530af9a311ad1a4d5e79bc02b9e1d4a7"
+    },
+    "row_02.png": {
+      "bytes": 895580,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_02.png",
+      "sha256": "440c5ba2a36f7d0f6f26ac2b8274c7d366e0398c373b570bca0ef81914c589a2"
+    },
+    "row_02_depth_controls.png": {
+      "bytes": 1625275,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_02_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "93a25d97c6aeb12075c524fc4a90d23a883af7515dba9cf2f27de9e9aa44d305",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_02_native_evidence.png": {
+      "bytes": 377446,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_02_native_evidence.png",
+      "sha256": "17d9d78adb95fd8342964310fa34f01f32a8f4fc5e512964a1f0d7e8d0abdad6"
+    },
+    "row_02_native_raw.png": {
+      "bytes": 303239,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_02_native_raw.png",
+      "sha256": "70074967a6e6ff0d12a9c5e424ef4d91f849c8b6c3dbc9945bfbffc436b4b625"
+    },
+    "row_03.png": {
+      "bytes": 677934,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_03.png",
+      "sha256": "df2662cf2ba0bf022915239311b5b67ec69d1a7e0fc09f25f77a6c660b0c0216"
+    },
+    "row_03_depth_controls.png": {
+      "bytes": 1291936,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_03_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "99794bc986c8fd59443cc86946fbb497858f35fd2c5a32db3318f921a72d568d",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_03_native_evidence.png": {
+      "bytes": 301940,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_03_native_evidence.png",
+      "sha256": "13eeb035cd696de8daa14ff616bb3c093c400d6f9edfb02a4e85e890ba668672"
+    },
+    "row_03_native_raw.png": {
+      "bytes": 262094,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_03_native_raw.png",
+      "sha256": "cf888d8a345c75d8685b362924de164e3276c96f9ea948ad75e8448747d5a446"
+    },
+    "row_04.png": {
+      "bytes": 680086,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_04.png",
+      "sha256": "45d80a02d4f8a8f66214c84a8b348f42e8bf994189dd2bf0f3f6ee4b16422030"
+    },
+    "row_04_depth_controls.png": {
+      "bytes": 1196131,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_04_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "ecf934fae270ad5be5a448df22176976be6983eb556b8340c20adc75eaad2c35",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_04_native_evidence.png": {
+      "bytes": 218006,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_04_native_evidence.png",
+      "sha256": "7788a6c89e9c9ae5790a8b7e1c54c2f452e1377be72342ee7aaa1a4d3d3aaa10"
+    },
+    "row_04_native_raw.png": {
+      "bytes": 171228,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_04_native_raw.png",
+      "sha256": "2d69112277998909ef4de90567d22caa33f5b75de80292d377266dafa44a3b4c"
+    },
+    "row_05.png": {
+      "bytes": 239343,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_05.png",
+      "sha256": "0b59fbde3f20038e0b7035c6be45bb77889074a48d49510b87e66c60ab06a2b8"
+    },
+    "row_05_depth_controls.png": {
+      "bytes": 502104,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_05_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "071ae279769b9388cad5ca68be5cee2fe7ebca272294527cacbe46d288176e4a",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_05_native_evidence.png": {
+      "bytes": 178924,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_05_native_evidence.png",
+      "sha256": "fe27aff623cad80924b6c8867511b975152c5a3b0ba98c4e9fae8a8a579105b0"
+    },
+    "row_05_native_raw.png": {
+      "bytes": 161672,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_05_native_raw.png",
+      "sha256": "2a8f37dd74a7896823e78f256d1237d54dbda2c2274300569c71dab1923b2482"
+    },
+    "row_06.png": {
+      "bytes": 375656,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_06.png",
+      "sha256": "e97a37496fee91296f5ddba8bc960210b7a0ea7712268fe3d19e08215365a3b9"
+    },
+    "row_06_depth_controls.png": {
+      "bytes": 649015,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_06_depth_controls.png",
+      "raw_frame_indices": [
+        15,
+        31,
+        39,
+        46,
+        53,
+        61,
+        77
+      ],
+      "raw_offsets_voxels": [
+        -31,
+        -15,
+        -7,
+        0,
+        7,
+        15,
+        31
+      ],
+      "sha256": "3a8758effd6cfb049e51c18e1b2f2f6d897acd311bfb8629b87efb8db31bbde0",
+      "shared_raw_intensity_window": {
+        "high": 181.0,
+        "low": 19.0
+      }
+    },
+    "row_06_native_evidence.png": {
+      "bytes": 124196,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_06_native_evidence.png",
+      "sha256": "e3f59ce65f5606037c1c50ccab459fe9a6273ae196dfba258199256fc06b37f1"
+    },
+    "row_06_native_raw.png": {
+      "bytes": 96963,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/row_06_native_raw.png",
+      "sha256": "8caa68e32d3ace4324526050da052582b8ef01cd8346c088c8a04f41c7a370c9"
+    },
+    "surface_specificity.png": {
+      "bytes": 431848,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/surface_specificity.png",
+      "sha256": "3a3c982cffdcec2d0ec75d6ea2a2aa76cb170bbcb68ec45909f0518210082e32"
+    },
+    "surface_specificity.tif": {
+      "bytes": 10758672,
+      "dtype": "float32",
+      "maximum_interior": 0.7885716557502747,
+      "mean_interior": 0.14337845146656036,
+      "minimum_interior": 0.0,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-independent-ink-audit/surface_specificity.tif",
+      "sha256": "f8f694f3898a26a1a0b0c922232955dac43036feffa63d6f4dd104986ffbf1bb",
+      "shape": [
+        1640,
+        1640
+      ]
+    }
+  },
+  "candidates": [
+    {
+      "angle_degrees": 36,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.831003535925,
+      "bbox_height_mm": 9.59605,
+      "bbox_width_mm": 8.65985,
+      "bbox_xyxy": [
+        468,
+        377,
+        1393,
+        1402
+      ],
+      "component_row_parallel_fraction": 0.0101912305747773,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.5445707594120951,
+      "gap_cv": 0.3282291530079177,
+      "glyph_proxy_centres_xy": [
+        [
+          545.815,
+          452.25
+        ],
+        [
+          602.395,
+          456.166
+        ],
+        [
+          515.137,
+          641.246
+        ],
+        [
+          654.028,
+          628.28
+        ],
+        [
+          621.505,
+          759.357
+        ],
+        [
+          706.397,
+          774.602
+        ],
+        [
+          720.762,
+          870.601
+        ],
+        [
+          842.046,
+          796.046
+        ],
+        [
+          957.402,
+          742.492
+        ],
+        [
+          1035.914,
+          758.596
+        ],
+        [
+          1077.157,
+          787.992
+        ],
+        [
+          960.933,
+          1025.418
+        ],
+        [
+          1061.886,
+          959.449
+        ],
+        [
+          1153.532,
+          907.98
+        ],
+        [
+          1130.779,
+          1003.517
+        ],
+        [
+          1296.108,
+          951.565
+        ],
+        [
+          1315.525,
+          1049.303
+        ],
+        [
+          1261.728,
+          1195.408
+        ],
+        [
+          1310.354,
+          1275.692
+        ],
+        [
+          1348.798,
+          1324.437
+        ]
+      ],
+      "glyph_proxy_count": 20,
+      "mean_component_score": 0.5845955789089203,
+      "orientation_entropy": 0.8558580017714936,
+      "quality": 23.255870682444797,
+      "rank": 1,
+      "span_mm": 10.881318535047441,
+      "weighted_fiber_likelihood": 0.3183536583553841,
+      "within_four_cm2_axis_aligned_bbox": true
+    },
+    {
+      "angle_degrees": -90,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.30808724789395997,
+      "bbox_height_mm": 8.416438,
+      "bbox_width_mm": 3.660542,
+      "bbox_xyxy": [
+        992,
+        626,
+        1383,
+        1525
+      ],
+      "component_row_parallel_fraction": 0.1845064343391909,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.5392398379615212,
+      "gap_cv": 0.29296655210532563,
+      "glyph_proxy_centres_xy": [
+        [
+          1061.091,
+          1446.051
+        ],
+        [
+          1244.242,
+          1407.614
+        ],
+        [
+          1296.202,
+          1339.357
+        ],
+        [
+          1247.809,
+          1287.316
+        ],
+        [
+          1047.461,
+          1236.004
+        ],
+        [
+          1261.728,
+          1195.408
+        ],
+        [
+          1319.038,
+          1150.115
+        ],
+        [
+          1311.347,
+          1102.502
+        ],
+        [
+          1315.525,
+          1049.303
+        ],
+        [
+          1098.225,
+          1003.589
+        ],
+        [
+          1136.613,
+          947.738
+        ],
+        [
+          1153.532,
+          907.98
+        ],
+        [
+          1147.116,
+          807.808
+        ],
+        [
+          1123.784,
+          742.451
+        ],
+        [
+          1108.367,
+          699.898
+        ]
+      ],
+      "glyph_proxy_count": 15,
+      "mean_component_score": 0.6109252611796061,
+      "orientation_entropy": 0.848923781519471,
+      "quality": 17.710221414568885,
+      "rank": 2,
+      "span_mm": 6.985486597040274,
+      "weighted_fiber_likelihood": 0.3294352388450908,
+      "within_four_cm2_axis_aligned_bbox": true
+    },
+    {
+      "angle_degrees": 72,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.25905661500992,
+      "bbox_height_mm": 6.815536,
+      "bbox_width_mm": 3.8009720000000002,
+      "bbox_xyxy": [
+        474,
+        377,
+        880,
+        1105
+      ],
+      "component_row_parallel_fraction": 0.022062456185979552,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.4915597443357105,
+      "gap_cv": 0.23894056564029922,
+      "glyph_proxy_centres_xy": [
+        [
+          602.395,
+          456.166
+        ],
+        [
+          683.729,
+          491.776
+        ],
+        [
+          664.253,
+          584.273
+        ],
+        [
+          654.028,
+          628.28
+        ],
+        [
+          545.552,
+          751.712
+        ],
+        [
+          521.55,
+          836.917
+        ],
+        [
+          538.981,
+          888.766
+        ],
+        [
+          720.762,
+          870.601
+        ],
+        [
+          702.767,
+          943.92
+        ],
+        [
+          831.144,
+          971.37
+        ],
+        [
+          834.568,
+          1031.246
+        ]
+      ],
+      "glyph_proxy_count": 11,
+      "mean_component_score": 0.5806891620159149,
+      "orientation_entropy": 0.75755297177286,
+      "quality": 13.445123007160316,
+      "rank": 3,
+      "span_mm": 5.79207145512762,
+      "weighted_fiber_likelihood": 0.2854434160190611,
+      "within_four_cm2_axis_aligned_bbox": true
+    },
+    {
+      "angle_degrees": -54,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.154718944421,
+      "bbox_height_mm": 5.38315,
+      "bbox_width_mm": 2.874134,
+      "bbox_xyxy": [
+        1172,
+        969,
+        1479,
+        1544
+      ],
+      "component_row_parallel_fraction": 0.0,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.5328002696261622,
+      "gap_cv": 0.24966694882767687,
+      "glyph_proxy_centres_xy": [
+        [
+          1237.263,
+          1462.297
+        ],
+        [
+          1244.242,
+          1407.614
+        ],
+        [
+          1225.629,
+          1334.304
+        ],
+        [
+          1247.809,
+          1287.316
+        ],
+        [
+          1310.354,
+          1275.692
+        ],
+        [
+          1315.696,
+          1211.222
+        ],
+        [
+          1365.248,
+          1151.419
+        ],
+        [
+          1365.446,
+          1102.503
+        ],
+        [
+          1430.761,
+          1050.775
+        ]
+      ],
+      "glyph_proxy_count": 9,
+      "mean_component_score": 0.6314312285847135,
+      "orientation_entropy": 0.8579790035409327,
+      "quality": 11.367833540914262,
+      "rank": 4,
+      "span_mm": 4.181660649757547,
+      "weighted_fiber_likelihood": 0.3364267288403142,
+      "within_four_cm2_axis_aligned_bbox": true
+    },
+    {
+      "angle_degrees": 6,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.16499030150736002,
+      "bbox_height_mm": 3.033288,
+      "bbox_width_mm": 5.439322,
+      "bbox_xyxy": [
+        423,
+        340,
+        1004,
+        664
+      ],
+      "component_row_parallel_fraction": 0.41785216105724476,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.5200507791837807,
+      "gap_cv": 0.5394540192241211,
+      "glyph_proxy_centres_xy": [
+        [
+          464.501,
+          456.153
+        ],
+        [
+          545.815,
+          452.25
+        ],
+        [
+          602.395,
+          456.166
+        ],
+        [
+          694.049,
+          418.582
+        ],
+        [
+          754.513,
+          442.312
+        ],
+        [
+          791.839,
+          448.252
+        ],
+        [
+          956.197,
+          591.161
+        ]
+      ],
+      "glyph_proxy_count": 7,
+      "mean_component_score": 0.5435283482074738,
+      "orientation_entropy": 0.6820576315964018,
+      "quality": 8.781152970523419,
+      "rank": 5,
+      "span_mm": 4.710159241540432,
+      "weighted_fiber_likelihood": 0.28266234099377,
+      "within_four_cm2_axis_aligned_bbox": true
+    },
+    {
+      "angle_degrees": 18,
+      "automated_morphology_gate": false,
+      "bbox_area_cm2": 0.06907638831728,
+      "bbox_height_mm": 2.284328,
+      "bbox_width_mm": 3.023926,
+      "bbox_xyxy": [
+        1010,
+        1312,
+        1333,
+        1556
+      ],
+      "component_row_parallel_fraction": 0.0,
+      "defensible_text_candidate": false,
+      "fiber_dominance_ratio": 0.5060363252463523,
+      "gap_cv": 0.16864213109428527,
+      "glyph_proxy_centres_xy": [
+        [
+          1061.091,
+          1446.051
+        ],
+        [
+          1100.271,
+          1455.094
+        ],
+        [
+          1170.902,
+          1449.473
+        ],
+        [
+          1244.242,
+          1407.614
+        ],
+        [
+          1280.263,
+          1471.941
+        ]
+      ],
+      "glyph_proxy_count": 5,
+      "mean_component_score": 0.5852345526218414,
+      "orientation_entropy": 0.8571825183005507,
+      "quality": 7.135229733382237,
+      "rank": 6,
+      "span_mm": 2.026365891830386,
+      "weighted_fiber_likelihood": 0.29614994241594966,
+      "within_four_cm2_axis_aligned_bbox": true
+    }
+  ],
+  "finished_utc": "2026-08-12T10:52:57.756799+00:00",
+  "implementation": {
+    "path": "<WORKSPACE>/work/first-letters/independent_raw_ink_audit.py",
+    "sha256": "44a2c0ec27698f6517969b8402aa8764c22e08c2400f8db5397f2df5ab6ec16d",
+    "tests_path": "<WORKSPACE>/work/first-letters/tests/test_independent_raw_ink_audit.py",
+    "tests_sha256": "3af2bb1fcbc137b65090840c9179d9dbb377fd459450bee5a1b4b023063a4d8f"
+  },
+  "inputs": {
+    "input_manifest": {
+      "exact_93_layer_contract": {
+        "candidate_id": "PHerc0813-r18-growpatch-calibrated-mask-full",
+        "center_index": 46,
+        "center_offset_voxels": 0,
+        "contract_checks": {
+          "center_frame_46_is_offset_zero": true,
+          "directory_identity": true,
+          "dtype_uint8": true,
+          "layer_count": true,
+          "negative_stack_exact_reversal_policy": true,
+          "offsets_voxels_exact_minus46_through_plus46": true,
+          "shape_frame_row_column": true
+        },
+        "explicit_mask": {
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/mask.tif",
+          "sha256": "c5f94a9553cb3b2dc89b8f534d77445a17bec3e022eb5d5b617e4a8ed94e6333"
+        },
+        "frame_count": 93,
+        "layer_record_hashes_verified": 93,
+        "manifest_sha256": "ba6237958e31972eac34283dc8222279f0d05b654a49069f7a02b312c53eb863",
+        "offsets_voxels": [
+          -46,
+          -45,
+          -44,
+          -43,
+          -42,
+          -41,
+          -40,
+          -39,
+          -38,
+          -37,
+          -36,
+          -35,
+          -34,
+          -33,
+          -32,
+          -31,
+          -30,
+          -29,
+          -28,
+          -27,
+          -26,
+          -25,
+          -24,
+          -23,
+          -22,
+          -21,
+          -20,
+          -19,
+          -18,
+          -17,
+          -16,
+          -15,
+          -14,
+          -13,
+          -12,
+          -11,
+          -10,
+          -9,
+          -8,
+          -7,
+          -6,
+          -5,
+          -4,
+          -3,
+          -2,
+          -1,
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24,
+          25,
+          26,
+          27,
+          28,
+          29,
+          30,
+          31,
+          32,
+          33,
+          34,
+          35,
+          36,
+          37,
+          38,
+          39,
+          40,
+          41,
+          42,
+          43,
+          44,
+          45,
+          46
+        ],
+        "renderer_valid_all_mask": {
+          "identical_to_explicit_mask": true,
+          "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-raw-stack-93/raw-surface-stack/positive/valid-all.tif",
+          "sha256": "9b4f6a1166145650cfb1de4feba129abbb0b27563fb3240e906ae20222443c92"
+        },
+        "status": "pass",
+        "voxel_um": 9.362
+      },
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-raw-stack-93/raw-stack-manifest.json",
+      "sha256": "ba6237958e31972eac34283dc8222279f0d05b654a49069f7a02b312c53eb863"
+    },
+    "mask": {
+      "interior_pixels": 332957,
+      "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/full-resolution-preflight-v1/full-resolution-surface/mask.tif",
+      "sha256": "c5f94a9553cb3b2dc89b8f534d77445a17bec3e022eb5d5b617e4a8ed94e6333",
+      "valid_pixels": 582061
+    },
+    "stack_directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-r18-growpatch-raw-stack-93/raw-surface-stack/positive",
+    "stack_layer_sha256_index_sha256": "45b98203eb1a3b9ab37d76d7f0306d63d3ad735ede51f5f18104adbceb0332cf",
+    "stack_shape_zyx": [
+      93,
+      1640,
+      1640
+    ]
+  },
+  "layer_normalization": {
+    "12": {
+      "residual_mad": 16.559036254882812,
+      "residual_median": -1.698394775390625,
+      "robust_sigma": 24.550427151489256
+    },
+    "16": {
+      "residual_mad": 16.99414825439453,
+      "residual_median": -1.3210296630859375,
+      "robust_sigma": 25.19552420196533
+    },
+    "20": {
+      "residual_mad": 18.222366333007812,
+      "residual_median": -1.6628265380859375,
+      "robust_sigma": 27.01648032531738
+    },
+    "24": {
+      "residual_mad": 19.624603271484375,
+      "residual_median": -1.390380859375,
+      "robust_sigma": 29.095436810302733
+    },
+    "32": {
+      "residual_mad": 19.959869384765625,
+      "residual_median": -0.7130355834960938,
+      "robust_sigma": 29.592502349853515
+    },
+    "33": {
+      "residual_mad": 19.000350952148438,
+      "residual_median": -0.887115478515625,
+      "robust_sigma": 28.169920321655272
+    },
+    "34": {
+      "residual_mad": 19.022567749023438,
+      "residual_median": -0.9295806884765625,
+      "robust_sigma": 28.202858944702147
+    },
+    "35": {
+      "residual_mad": 19.017532348632812,
+      "residual_median": -1.0278472900390625,
+      "robust_sigma": 28.195393460083007
+    },
+    "36": {
+      "residual_mad": 17.956832885742188,
+      "residual_median": -1.1794586181640625,
+      "robust_sigma": 26.622800436401366
+    },
+    "37": {
+      "residual_mad": 17.102798461914062,
+      "residual_median": -1.4788742065429688,
+      "robust_sigma": 25.35660899963379
+    },
+    "38": {
+      "residual_mad": 17.30498504638672,
+      "residual_median": -1.4099807739257812,
+      "robust_sigma": 25.656370829772946
+    },
+    "39": {
+      "residual_mad": 17.037628173828125,
+      "residual_median": -1.45343017578125,
+      "robust_sigma": 25.259987530517577
+    },
+    "4": {
+      "residual_mad": 17.64910125732422,
+      "residual_median": -1.980743408203125,
+      "robust_sigma": 26.166557524108885
+    },
+    "40": {
+      "residual_mad": 17.496963500976562,
+      "residual_median": -1.8114471435546875,
+      "robust_sigma": 25.94099808654785
+    },
+    "41": {
+      "residual_mad": 18.040252685546875,
+      "residual_median": -1.6300811767578125,
+      "robust_sigma": 26.746478631591796
+    },
+    "42": {
+      "residual_mad": 17.807510375976562,
+      "residual_median": -2.1928558349609375,
+      "robust_sigma": 26.40141488342285
+    },
+    "43": {
+      "residual_mad": 17.02117919921875,
+      "residual_median": -2.3787689208984375,
+      "robust_sigma": 25.235600280761716
+    },
+    "44": {
+      "residual_mad": 16.076904296875,
+      "residual_median": -2.450286865234375,
+      "robust_sigma": 23.835618310546874
+    },
+    "45": {
+      "residual_mad": 15.876800537109375,
+      "residual_median": -2.7316741943359375,
+      "robust_sigma": 23.53894447631836
+    },
+    "46": {
+      "residual_mad": 16.545242309570312,
+      "residual_median": -2.163330078125,
+      "robust_sigma": 24.529976248168943
+    },
+    "47": {
+      "residual_mad": 17.974960327148438,
+      "residual_median": -1.207122802734375,
+      "robust_sigma": 26.649676181030273
+    },
+    "48": {
+      "residual_mad": 18.50381851196289,
+      "residual_median": 0.8066139221191406,
+      "robust_sigma": 27.43376132583618
+    },
+    "49": {
+      "residual_mad": 17.394718170166016,
+      "residual_median": 2.574371337890625,
+      "robust_sigma": 25.789409159088134
+    },
+    "50": {
+      "residual_mad": 14.190387725830078,
+      "residual_median": 2.571239471435547,
+      "robust_sigma": 21.038668842315673
+    },
+    "51": {
+      "residual_mad": 10.519523620605469,
+      "residual_median": 1.9223480224609375,
+      "robust_sigma": 15.596245719909668
+    },
+    "52": {
+      "residual_mad": 7.772771835327148,
+      "residual_median": 1.1728515625,
+      "robust_sigma": 11.52391152305603
+    },
+    "53": {
+      "residual_mad": 6.293460845947266,
+      "residual_median": 0.557861328125,
+      "robust_sigma": 9.330685050201415
+    },
+    "54": {
+      "residual_mad": 5.636989593505859,
+      "residual_median": 0.3220367431640625,
+      "robust_sigma": 8.357400771331786
+    },
+    "55": {
+      "residual_mad": 5.19287109375,
+      "residual_median": 0.34145355224609375,
+      "robust_sigma": 7.69895068359375
+    },
+    "56": {
+      "residual_mad": 5.397834777832031,
+      "residual_median": 0.3288726806640625,
+      "robust_sigma": 8.002829841613769
+    },
+    "57": {
+      "residual_mad": 5.814052581787109,
+      "residual_median": 0.2830009460449219,
+      "robust_sigma": 8.619914357757567
+    },
+    "58": {
+      "residual_mad": 6.676090240478516,
+      "residual_median": 0.15359878540039062,
+      "robust_sigma": 9.897971390533447
+    },
+    "59": {
+      "residual_mad": 7.983558654785156,
+      "residual_median": -0.02703857421875,
+      "robust_sigma": 11.836424061584472
+    },
+    "68": {
+      "residual_mad": 16.68429946899414,
+      "residual_median": -0.49497222900390625,
+      "robust_sigma": 24.736142392730713
+    },
+    "72": {
+      "residual_mad": 17.257774353027344,
+      "residual_median": -0.9661407470703125,
+      "robust_sigma": 25.58637625579834
+    },
+    "76": {
+      "residual_mad": 18.92743682861328,
+      "residual_median": -1.135345458984375,
+      "robust_sigma": 28.061817842102048
+    },
+    "8": {
+      "residual_mad": 16.473106384277344,
+      "residual_median": -1.7662277221679688,
+      "robust_sigma": 24.423027525329587
+    },
+    "80": {
+      "residual_mad": 19.895835876464844,
+      "residual_median": -1.9692459106445312,
+      "robust_sigma": 29.497566270446775
+    },
+    "84": {
+      "residual_mad": 18.660110473632812,
+      "residual_median": -1.6798782348632812,
+      "robust_sigma": 27.665479788208007
+    },
+    "88": {
+      "residual_mad": 17.5045166015625,
+      "residual_median": -0.4492645263671875,
+      "robust_sigma": 25.952196313476563
+    }
+  },
+  "method": {
+    "contrast_polarity": "dark relative to a mask-normalized local sheet baseline",
+    "cost_usd": 0.0,
+    "depth_persistence": "maximum minimum of adjacent seven-layer block medians",
+    "far_control_indices": [
+      4,
+      8,
+      12,
+      16,
+      20,
+      24,
+      68,
+      72,
+      76,
+      80,
+      84,
+      88
+    ],
+    "fiber_suppression": "maximum of 24-pixel structure-tensor directional evidence and multi-scale 1..4-pixel Frangi ridge evidence",
+    "gpu_used": false,
+    "learned_models_used": [],
+    "manual_review_depth_indices": [
+      15,
+      31,
+      39,
+      46,
+      53,
+      61,
+      77
+    ],
+    "manual_review_depth_offsets_voxels": [
+      -31,
+      -15,
+      -7,
+      0,
+      7,
+      15,
+      31
+    ],
+    "maximum_row_context_millimeters": 20.0,
+    "model_probability_maps_used": [],
+    "near_blocks_half_open": [
+      [
+        32,
+        39
+      ],
+      [
+        39,
+        46
+      ],
+      [
+        46,
+        53
+      ],
+      [
+        53,
+        60
+      ]
+    ],
+    "network_services_used": [],
+    "row_baseline_angle_degrees": [
+      -90,
+      -84,
+      -78,
+      -72,
+      -66,
+      -60,
+      -54,
+      -48,
+      -42,
+      -36,
+      -30,
+      -24,
+      -18,
+      -12,
+      -6,
+      0,
+      6,
+      12,
+      18,
+      24,
+      30,
+      36,
+      42,
+      48,
+      54,
+      60,
+      66,
+      72,
+      78,
+      84
+    ],
+    "row_gate_is_only_morphological": true,
+    "surface_specificity": "adjacent / (adjacent + 0.75 * far_median + 0.5)"
+  },
+  "parameters": {
+    "background_size_pixels": 41,
+    "edge_margin_pixels": 28,
+    "final_score_window": {
+      "high": 0.3507054269313804,
+      "low": 2.7236856678778407e-08
+    },
+    "require_exact_93_manifest": true,
+    "score_threshold": 0.42,
+    "score_window": {
+      "high": 0.5868420403003686,
+      "low": 0.01747195348143577
+    },
+    "shared_manual_review_raw_window": {
+      "high": 181.0,
+      "low": 19.0
+    },
+    "top_rows": 20,
+    "voxel_um": 9.362
+  },
+  "role": "model_independent_raw_stack_triage_not_text_or_prize_validation",
+  "schema_version": 1,
+  "statistics": {
+    "automated_morphology_gate_passes": 0,
+    "components": 234,
+    "defensible_text_candidates": 0,
+    "long_thin_fiber_proxy_components": 0,
+    "ranked_row_hypotheses": 6,
+    "threshold_fraction_of_interior": 0.05272152259901429,
+    "threshold_pixels": 17554
+  },
+  "status": "complete",
+  "verdict": {
+    "automated_morphology_gate_pass": false,
+    "defensible_candidate_count_before_manual_review": 0,
+    "reason": "Raw morphology can prioritize review, but cannot establish legible letters. Every hypothesis remains fail-closed until its raw panels are manually reviewed for fiber/crack explanations and actual character sequences.",
+    "ten_letter_criterion_established": false,
+    "visible_legible_letters_established": false
+  }
+}

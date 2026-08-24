@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "recorded_date": "2026-08-12",
+  "prize_gate": {
+    "minimum_visible_legible_letters": 10,
+    "maximum_region_area_cm2": 4.0
+  },
+  "decision": {
+    "automated_public_asset_breadth_route": "exhausted_fail_closed",
+    "gpu_inference_now": "not_justified",
+    "runpod_required_now": false,
+    "new_paid_compute_usd": 0.0,
+    "discovery_status": "no defensible text candidate approaching the prize criterion",
+    "next_reopen_condition": "materially new physical evidence: a new public surface/acquisition, a genuinely independent expert-corrected single-sheet ROI, or direct repeatable raw stroke evidence"
+  },
+  "eligible_scroll_coverage": {
+    "eligible_scroll_count": 13,
+    "covered_scroll_count": 13,
+    "newly_audited_scrolls": [
+      "PHerc0191",
+      "PHerc0211",
+      "PHerc0268",
+      "PHerc0358",
+      "PHerc0813",
+      "PHerc0826",
+      "PHerc1545"
+    ],
+    "previously_audited_scrolls": [
+      "PHerc0125",
+      "PHerc0257",
+      "PHerc0800",
+      "PHerc1203",
+      "PHerc1218",
+      "PHerc1447"
+    ]
+  },
+  "newly_audited_scroll_results": [
+    {
+      "scroll": "PHerc0191",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "best calibrated automated patch 0.00556 cm2; no extension",
+      "terminal_reason": "far below the 0.5 cm2 internal raw-render gate"
+    },
+    {
+      "scroll": "PHerc0211",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "two strict bootstraps reached approximately 0.00562 cm2; neither extended",
+      "terminal_reason": "far below the 0.5 cm2 internal raw-render gate"
+    },
+    {
+      "scroll": "PHerc0268",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "best exact seed candidates failed the first strict complete ring",
+      "terminal_reason": "no established single-sheet patch"
+    },
+    {
+      "scroll": "PHerc0358",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "35 of 36 exact candidates failed; the sole pass was a specimen/mask boundary",
+      "terminal_reason": "boundary artifact, not an ink-bearing sheet ROI"
+    },
+    {
+      "scroll": "PHerc0813",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "one official VC3D seed yielded a 0.509167 cm2 calibrated patch and a complete 93-layer raw stack; independent review found 0 of 6 defensible or borderline ROIs",
+      "terminal_reason": "raw morphology is fiber/fold/void/hole/mask-boundary texture; no stable baseline or glyph bodies"
+    },
+    {
+      "scroll": "PHerc0826",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "four early exact passes were boundaries or failed independent geometry; remaining candidates failed",
+      "terminal_reason": "no established single-sheet patch"
+    },
+    {
+      "scroll": "PHerc1545",
+      "public_surface_or_tifxyz_assets": 0,
+      "result": "five exact passes were boundary/fold candidates; strict bootstraps failed",
+      "terminal_reason": "no established single-sheet patch"
+    }
+  ],
+  "pherc0813_terminal_evidence": {
+    "seed_xyz": [6051.0, 3882.0, 4298.0],
+    "generation_40": {
+      "calibrated_area_cm2": 0.5091672599437271,
+      "stored_validation_path": "pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/validation.json",
+      "stored_validation_sha256": "f09b9469a8b17a48c64ae8c21fefdd271a14f99deb4f9bb92fc54093d88b0e96",
+      "stored_self_intersection_audit_sha256": "5d53665231f4e7e2f3533c50bc71149e39daa0fb4a31da80cf9bccd50b26b3bb",
+      "full_resolution_preflight_sha256": "787de7b2d9a310d87ca62e2c90e3574e8e15d7baa8380dd815a26e79773700aa",
+      "raw_stack_manifest_sha256": "ba6237958e31972eac34283dc8222279f0d05b654a49069f7a02b312c53eb863",
+      "raw_stack": "93x1640x1640 uint8 at offsets -46..+46 with exact mask identity and zero outside mask",
+      "independent_audit_report_sha256": "cb86d84f5b9bf311eefe104d242ab729c45622c87ddf75b578cecf1251c69e77",
+      "manual_review_sha256": "feefc6d4cc96ea7024a6e74174d3a6c8fb2d5d12207987aaef07d5fd75a51ff5",
+      "manual_review": "0/6 defensible, 0/6 borderline, no visible letters"
+    },
+    "independent_second_seed": {
+      "seed_xyz": [5259.0, 2404.0, 4948.0],
+      "whole_surface_area_cm2": 2.2293141259821594,
+      "largest_calibrated_component_cm2": 0.193634262,
+      "terminal_reason": "below 0.5 cm2; no raw render"
+    },
+    "saturation_test": {
+      "generation_60_whole_proposal_cm2": 5.32838,
+      "generation_80_whole_proposal_cm2": 10.102793,
+      "generation_60_calibrated_component_cm2": 0.5362687874020953,
+      "generation_80_calibrated_component_cm2": 0.5362687874020953,
+      "generation_60_to_80_shared_exact_quad_count": 1520,
+      "generation_60_to_80_new_exact_quad_count": 0,
+      "generation_40_to_80_shared_area_cm2": 0.4937608654199435,
+      "generation_40_to_80_new_only_area_cm2": 0.04250792198215183,
+      "generation_40_to_80_new_area_fraction_byte_exactly_shared": 0.9207339248885292,
+      "generation_80_validation_sha256": "a775204abc1b82ffae7d1a136dbb02933fb4e0afd2cb32f3fa6b21f351761537",
+      "generation_60_to_80_increment_audit_sha256": "e8c760e889857c68a62755941692f9fd6bca9de556c5c54666c80e7489132312",
+      "terminal_reason": "calibrated component plateaued byte-exactly; rerender would be almost entirely duplicate physical evidence"
+    }
+  },
+  "previous_campaign_summary": {
+    "PHerc0125": "0.503486 cm2 calibrated surface; independent raw and TimeSformer reviews negative",
+    "PHerc0257": "best calibrated automated patch approximately 0.1283 cm2; below raw-render gate",
+    "PHerc0800": "multiple approximately 1.2 cm2 surfaces; independent raw and model reviews negative",
+    "PHerc1203": "1.913961 cm2 calibrated surface; independent raw and model reviews negative",
+    "PHerc1218": "best automated patch approximately 0.0190 cm2",
+    "PHerc1447": "extensive automated/public-surface routes exhausted; best agent-locked patch approximately 0.1383 cm2"
+  },
+  "closed_model_branch": {
+    "status": "closed_fail_closed",
+    "reason": "three-seed same-scroll falsification memorized train-A (AUROC 0.99595 mean) but failed nearby local-B (AUROC 0.51207 mean); no more decoder/full-finetune/target-domain-SSL/super-resolution work on the same coarse representation"
+  },
+  "interpretation_limits": [
+    "This closes the current automated route against the public assets available in this campaign; it is not a claim that the scrolls contain no writing.",
+    "A new scan, public surface, acquisition method, or expert-corrected independent ROI can materially change the evidence.",
+    "The 0.5 cm2 threshold is an internal cost-control gate, not the prize criterion; the prize permits any one region up to 4 cm2 containing at least 10 visible and legible letters."
+  ]
+}

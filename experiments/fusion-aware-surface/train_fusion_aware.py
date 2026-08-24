@@ -30,6 +30,19 @@ REAL_PER_SYNTHETIC = 3
 TRAIN_SEEDS = tuple(range(100, 116))
 PITCHES = (170.0, 200.0, 230.0, 260.0)
 PAPYRUS = (35, 50, 65, 90)
+GAP_WEIGHTS = {
+    "control": 1.0,
+    "gap2": 2.0,
+    "gap4": 4.0,
+    "gap8": 8.0,
+}
+
+
+def gap_weight_for_arm(arm: str) -> float:
+    try:
+        return GAP_WEIGHTS[arm]
+    except KeyError as error:
+        raise ValueError(f"unsupported gap-supervision arm: {arm}") from error
 
 
 def sha256_file(path: Path) -> str:
@@ -164,7 +177,7 @@ def configure_decoder_only(model: torch.nn.Module) -> int:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--arm", choices=("control", "gap8"), required=True)
+    parser.add_argument("--arm", choices=tuple(GAP_WEIGHTS), required=True)
     parser.add_argument("--seed", type=int, choices=(11, 23, 47), required=True)
     parser.add_argument("--real-data", type=Path, required=True)
     parser.add_argument("--split-manifest", type=Path, required=True)
@@ -213,7 +226,7 @@ def main() -> int:
         optimizer, T_max=STEPS, eta_min=1e-6
     )
     scaler = torch.amp.GradScaler("cuda")
-    gap_weight = 1.0 if args.arm == "control" else 8.0
+    gap_weight = gap_weight_for_arm(args.arm)
 
     optimizer.zero_grad(set_to_none=True)
     start = time.monotonic()

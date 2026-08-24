@@ -1,0 +1,65 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 6.054676,
+    "remaining_development_cutoff_usd": 5.945324
+  },
+  "chunked_reallocation_retry_payload_sha256": "414f476230fb9ceac3503bd79a923e3d37787523df52494492bb8baa05a80a17",
+  "diagnostic_resumes": [
+    {
+      "conservative_spend_usd": 0.004146,
+      "elapsed_seconds": 22.616,
+      "pod_id": "bij7jheyqbpggf",
+      "scientific_endpoints_inspected": false
+    },
+    {
+      "conservative_spend_usd": 0.00665,
+      "elapsed_seconds": 27.206,
+      "pod_id": "jsoco4r0ijfswk",
+      "scientific_endpoints_inspected": false
+    }
+  ],
+  "failed_deployment": {
+    "bundle_archives_sha256_verified_before_extraction": true,
+    "bundle_commit": "fbccf004d4093e011fa839b675fb51c38f108120",
+    "bundle_extracted_on_both_pods": true,
+    "confirmation_outputs_inspected": false,
+    "error": "The verifier imported a sibling controller before comparing the extracted file set, creating an unlisted controller/__pycache__ bytecode file and then failing closed on the extra generated file.",
+    "failed_at": "2026-08-21T01:08:09.077636+00:00",
+    "pods_stopped": [
+      "jsoco4r0ijfswk",
+      "bij7jheyqbpggf"
+    ],
+    "provider_status_after_failure": [
+      "EXITED",
+      "EXITED"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payload_sha256": "584ad9b2a05a2bce77db1e6fe9775718eb3d7926a4944c21e4cf3389a92660f2",
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "public_parent_commit": "fbccf004d4093e011fa839b675fb51c38f108120",
+  "retry": {
+    "delete_only_generated_controller_pycache_before_verification": true,
+    "execute_verifier_with_python_dash_B": true,
+    "reopen_only_existing_verified_extracted_bundles": true,
+    "reupload_bundle": false,
+    "rerun_scientific_cache_jobs_before_verification": false,
+    "stop_all_pods_if_verification_or_executor_start_fails": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_GENERATED_PYCACHE_VERIFICATION_RETRY_FROZEN"
+}

@@ -1,0 +1,148 @@
+{
+  "eight_cell_manifest_sha256": "506f3353ba834bcdb839cf4000d2ec6b1a18e074ce1fb9c10dce24696e7299dd",
+  "gap8_immutable_verdict": {
+    "gates_failed": 2,
+    "gates_passed": 5,
+    "retuned": false,
+    "status": "MIXED_RESULT_UNCHANGED"
+  },
+  "gapbalance": {
+    "holdout_certified_by_this_evidence": false,
+    "unblocked": false
+  },
+  "harness_repository": {
+    "commit": "0c5ed007cf6c875c9712cec8677528952a64c14f",
+    "files": [
+      {
+        "bytes": 11194,
+        "git_blob_sha1": "78d572708baf9ca26d05ddd494f37570e6ec1345",
+        "path": "README.md",
+        "sha256": "9792e6c5efee0573cc769a9fbe0c603235bc30f547eb3de573f1c564b8bceb6b"
+      },
+      {
+        "bytes": 24059,
+        "git_blob_sha1": "e209dd2eee529239f97740420908c6f264fecfc9",
+        "path": "facing_pairs.py",
+        "sha256": "86336bf7067c1384914505ad2f53c4d9e1ed5b258ef749c1507bf91238463d19"
+      },
+      {
+        "bytes": 6978,
+        "git_blob_sha1": "bc0a588a8691b059203e0322b3acc418dd7fb166",
+        "path": "self_test.py",
+        "sha256": "383705571780ab7e11fe01dae5d9a6636f2d43bb528af3c1abe239fee669013b"
+      },
+      {
+        "bytes": 8929,
+        "git_blob_sha1": "9b6e19c0fbbc93285c416c2211b25829e2567b3f",
+        "path": "verify_against_original.py",
+        "sha256": "383888d289128b499f1893ae281e160f4874bd7831c7175d3e3d61bddaa7cba8"
+      },
+      {
+        "bytes": 1098,
+        "git_blob_sha1": "b7d6aaa3e5ad847ee82cd2bba4a0d62508fd98c1",
+        "path": "verify_report.json",
+        "sha256": "d6f76e5d70103c1bb9c4c72a21bd65fb5b051e7bdadab35ad6f06d9b4914a911"
+      },
+      {
+        "bytes": 10897,
+        "git_blob_sha1": "c03bfb1b52d2f003d34887194ae60a5fe0108e34",
+        "path": "original/extract_fusion_sites.py",
+        "sha256": "209b0141e10768642d537fb88d4324c7f7c6fa248c5896c9608d6c54e4027ab9"
+      },
+      {
+        "bytes": 27,
+        "git_blob_sha1": "b2c8174712815cd13bff215d4cd4238b180df145",
+        "path": "requirements.txt",
+        "sha256": "cf4d1dc9a101f290fca565d8a6fb4f3ca3f1ada0912c93a81bf37f3fcdf20973"
+      }
+    ],
+    "url": "https://github.com/flummoxjr/facing-pairs-harness"
+  },
+  "local_verification": {
+    "bin_total_arithmetic_checked": true,
+    "external_scoring_rerun_locally": false,
+    "file_hashes_checked_at_exact_commits": true,
+    "full_pair_csvs_present_in_bound_public_result_directory": false,
+    "repository_full_tests_passed": 480,
+    "scientific_endpoints_reopened": false
+  },
+  "payload_sha256": "b10d7dd23e86cded742013be12254503f279961e123cead325cbbbe266cfb427",
+  "recorded_at_utc": "2026-08-24T10:42:22Z",
+  "reported_results": {
+    "accepted_sites": 2400,
+    "bins": [
+      {
+        "accepted_sites": 790,
+        "d12": "2-3",
+        "false_accepts": 0,
+        "rejected_pairs": 93205,
+        "truly_different_percent": 97.6
+      },
+      {
+        "accepted_sites": 954,
+        "d12": "3-4",
+        "false_accepts": 0,
+        "rejected_pairs": 913,
+        "truly_different_percent": 99.2
+      },
+      {
+        "accepted_sites": 308,
+        "d12": "4-5",
+        "false_accepts": 0,
+        "rejected_pairs": 16,
+        "truly_different_percent": 0.0
+      },
+      {
+        "accepted_sites": 348,
+        "d12": "5-6.01",
+        "false_accepts": 0,
+        "rejected_pairs": 0,
+        "truly_different_percent": null
+      }
+    ],
+    "false_accept_rate_percent": 0.0,
+    "false_accepts": 0,
+    "pitch_300_rejected_pairs": 941,
+    "pitch_300_truly_different_percent": 0.0,
+    "rejected_pairs": 94134,
+    "rejected_truly_different_percent": 97.6
+  },
+  "result_repository": {
+    "commit": "9cfcaa8eb126264b85612f467ea20154a65dd7c3",
+    "files": [
+      {
+        "bytes": 3030,
+        "git_blob_sha1": "b563121f697f0a4bfda03a06f561558f2e27468d",
+        "path": "results/ccguard_pilot/RESULTS.md",
+        "sha256": "8a0d1cdc13c972df13ec7ab39f92453501c0b21efd4b4f2cde00fc3db0a6806a"
+      },
+      {
+        "bytes": 711,
+        "git_blob_sha1": "847286d0dd28bb0dddefa117e1389f5050027f00",
+        "path": "results/ccguard_pilot/facing_pairs_case_diag.csv",
+        "sha256": "66e19d10f04d61509826c5e402f8a4fc348a8ffb807773c61d5b954ce819bd73"
+      },
+      {
+        "bytes": 2240,
+        "git_blob_sha1": "22f8a5facdfcbbd12d4b05e8c7cf14caf1f4b16b",
+        "path": "results/ccguard_pilot/fp_score.py",
+        "sha256": "276129cdf2367986375ba998a65872fecde08e3029c992dce759ef4e194cdd6c"
+      }
+    ],
+    "url": "https://github.com/Jinhojeong/vesuvius-surface-geometry-diagnostic"
+  },
+  "schema_version": "1.0",
+  "scope": "POST_SUBMISSION_SYNTHETIC_INSTRUMENT_INTERPRETATION_ONLY",
+  "source_comment": {
+    "author": "Jinhojeong",
+    "author_association": "CONTRIBUTOR",
+    "created_at": "2026-08-24T10:33:40Z",
+    "id": 5394005579,
+    "updated_at": "2026-08-24T10:33:40Z",
+    "url": "https://github.com/ScrollPrize/villa/issues/191#issuecomment-5394005579"
+  },
+  "submission": {
+    "form_resubmitted": false,
+    "post_submission_addendum_only": true
+  }
+}

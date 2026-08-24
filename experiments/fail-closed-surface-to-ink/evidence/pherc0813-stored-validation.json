@@ -1,0 +1,1161 @@
+{
+  "candidate_id": "PHerc0813-r18-growpatch-calibrated-mask",
+  "final": {
+    "active_quad_count": 1444,
+    "area_cm2": 0.5091672599437271,
+    "fixed_point": true,
+    "self_intersection_status": "unknown_not_computed",
+    "tifxyz": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+    "valid_vertex_count": 1692
+  },
+  "go": true,
+  "inputs": {
+    "m7_array_metadata_provenance": {
+      "bytes": 402,
+      "sha256": "51523f05249abc3915f7fc401f43f2867bda5bcc0e5dbf5f3ddd3d83a2f6f62d",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0813/representations/predictions/surfaces/20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr/0/.zarray"
+    },
+    "m7_array_path": "0",
+    "m7_attributes_provenance": {
+      "bytes": 3018,
+      "sha256": "97e968dbbf11cc856dc57648aaaa9e6cade5e6575472dcfdeac7cfa50f546dd9",
+      "url": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0813/representations/predictions/surfaces/20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr/.zattrs"
+    },
+    "m7_root": "https://vesuvius-challenge-open-data.s3.amazonaws.com/PHerc0813/representations/predictions/surfaces/20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr",
+    "source": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz",
+    "source_frames": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/public-m7-validation-v1/m7-quantized-offsets-minus15-plus15.npy",
+    "source_frames_sha256": "23cbfe8d5716b1ccc8b739347718a993bcc205ed30ed1ee1a49727bacf646c2e",
+    "volume_shape_zyx": [
+      16993,
+      7947,
+      7947
+    ],
+    "voxel_um": 9.362
+  },
+  "iterations": [
+    {
+      "evaluation": {
+        "calibrated_vertex_count_before_component": 1699,
+        "competitor_gap_min": 1,
+        "eligible_vertex_count": 1704,
+        "frames_content_sha256": "5ffc2e0ca6a6ec5c048dc98d4725737cc0f4b9f2b568a21510689c2b08ebc847",
+        "input_area_cm2": 0.5124054777818345,
+        "input_mask_content_sha256": "4c221770e1ccc3cbd8e216ae24a5f248e4f2453eb5bacf9e21df97cac7299bf5",
+        "input_valid_vertex_count": 1704,
+        "largest_component": {
+          "components": {
+            "active_quad_count": 1445,
+            "anti_gaming_rule": "components cannot connect through isolated vertices or vertex-only tendrils",
+            "component_count": 2,
+            "connectivity": "4-neighbor fully centered four-vertex quads",
+            "largest_component": {
+              "area_cm2": 0.5091672599437271,
+              "component_id": 0,
+              "quad_bounds_half_open_r0_r1_c0_c1": [
+                16,
+                78,
+                20,
+                75
+              ],
+              "quad_count": 1444,
+              "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+              "vertex_bounds_half_open_r0_r1_c0_c1": [
+                16,
+                79,
+                20,
+                76
+              ]
+            },
+            "top_components": [
+              {
+                "area_cm2": 0.5091672599437271,
+                "component_id": 0,
+                "quad_bounds_half_open_r0_r1_c0_c1": [
+                  16,
+                  78,
+                  20,
+                  75
+                ],
+                "quad_count": 1444,
+                "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+                "vertex_bounds_half_open_r0_r1_c0_c1": [
+                  16,
+                  79,
+                  20,
+                  76
+                ]
+              },
+              {
+                "area_cm2": 0.00035974764364466697,
+                "component_id": 1,
+                "quad_bounds_half_open_r0_r1_c0_c1": [
+                  23,
+                  24,
+                  50,
+                  51
+                ],
+                "quad_count": 1,
+                "quad_fill_fraction_in_bounding_box": 1.0,
+                "vertex_bounds_half_open_r0_r1_c0_c1": [
+                  23,
+                  25,
+                  50,
+                  52
+                ]
+              }
+            ]
+          },
+          "largest": {
+            "area_cm2": 0.5091672599437271,
+            "component_id": 0,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              78,
+              20,
+              75
+            ],
+            "quad_count": 1444,
+            "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              79,
+              20,
+              76
+            ]
+          }
+        },
+        "native_geometry_pass": true,
+        "native_hard_defect_counts": {
+          "abrupt_normal_flip_edge_count": 0,
+          "degenerate_quad_count": 0,
+          "discontinuity_edge_count": 0,
+          "distorted_quad_count": 0,
+          "folded_quad_count": 0,
+          "neighbor_wrap_risk_edge_count": 0
+        },
+        "output_active_quad_count": 1444,
+        "output_area_cm2": 0.5091672599437271,
+        "output_mask_content_sha256": "27bcc7d5330acc95e794033ce677908c203a90954414b212033e3ef4d0bf3ce0",
+        "output_valid_vertex_count": 1692,
+        "passes_iteration_gates": true,
+        "sample_validity_content_sha256": "4be3671d44cae1882c03462225a093fd5df801cb79c3bf5aaa3d401d3e8be3bf",
+        "sampling_complete": true,
+        "selected_run_diagnostics": {
+          "centered_selected_run_vertex_count": 1692,
+          "nearest_competitor_empty_gap": {
+            "count": 1692,
+            "mean": 9.31323877068558,
+            "quantiles": {
+              "maximum": 15.0,
+              "median": 8.0,
+              "minimum": 1.0,
+              "p05": 4.0,
+              "p25": 6.0,
+              "p75": 15.0,
+              "p95": 15.0
+            }
+          },
+          "selected_run_center_absolute": {
+            "count": 1692,
+            "mean": 0.5047281323877069,
+            "quantiles": {
+              "maximum": 2.0,
+              "median": 0.5,
+              "minimum": 0.0,
+              "p05": 0.0,
+              "p25": 0.0,
+              "p75": 0.5,
+              "p95": 1.5
+            }
+          },
+          "selected_run_center_signed": {
+            "count": 1692,
+            "mean": 0.12588652482269502,
+            "quantiles": {
+              "maximum": 2.0,
+              "median": 0.0,
+              "minimum": -2.0,
+              "p05": -1.0,
+              "p25": 0.0,
+              "p75": 0.5,
+              "p95": 1.5
+            }
+          },
+          "selected_run_vertex_count": 1692,
+          "spatial_continuity": {
+            "edge_count": 3144,
+            "interpretation": "diagnostic only; no uncalibrated numerical continuity threshold is imposed",
+            "interval_overlap_fraction": 1.0,
+            "selected_center_absolute_jump": {
+              "count": 3144,
+              "mean": 0.5165394402035624,
+              "quantiles": {
+                "maximum": 3.5,
+                "median": 0.5,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 1.5
+              }
+            },
+            "selected_interval_empty_gap": {
+              "count": 3144,
+              "mean": 0.0,
+              "quantiles": {
+                "maximum": 0.0,
+                "median": 0.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 0.0,
+                "p95": 0.0
+              }
+            },
+            "selected_lower_endpoint_absolute_jump": {
+              "count": 3144,
+              "mean": 0.5830152671755725,
+              "quantiles": {
+                "maximum": 5.0,
+                "median": 0.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "selected_upper_endpoint_absolute_jump": {
+              "count": 3144,
+              "mean": 0.587468193384224,
+              "quantiles": {
+                "maximum": 9.0,
+                "median": 0.5,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "selected_width_absolute_jump": {
+              "count": 3144,
+              "mean": 0.6991094147582697,
+              "quantiles": {
+                "maximum": 13.0,
+                "median": 1.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "zero_empty_gap_fraction": 1.0
+          },
+          "vertex_count": 1692
+        },
+        "source": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz",
+        "topology": {
+          "anomalous_boundary_vertices_row_column": [],
+          "boundary_degree_histogram": {
+            "2": 512
+          },
+          "boundary_edge_count": 512,
+          "boundary_graph_component_count": 10,
+          "boundary_loops_if_manifold": 10,
+          "bowtie_vertex_count": 0,
+          "bowtie_vertices": [],
+          "complex": "axis-aligned stored-grid quads with all four vertices valid",
+          "connected_quad_component_count": 1,
+          "edge_count": 3144,
+          "euler_characteristic": -8,
+          "holes_if_manifold": 9,
+          "maximum_edge_incidence": 2,
+          "nonmanifold_risk": false,
+          "nonmanifold_risk_reasons": [],
+          "quad_face_count": 1444,
+          "self_intersection_status": "unknown_not_computed",
+          "vertex_count_used_by_quads": 1692
+        },
+        "topology_repair": {
+          "algorithm": "simultaneously delete every diagonal 1001/0110 pinch vertex; recompute induced quads; retain the component ranked by physical area descending, quad count descending, then row-major component; rebuild vertices from quad union; repeat to fixed point",
+          "coordinate_policy": "strictly subtractive; no add/fill/move/clamp",
+          "fixed_point_topology": {
+            "anomalous_boundary_vertices_row_column": [],
+            "boundary_degree_histogram": {
+              "2": 512
+            },
+            "boundary_edge_count": 512,
+            "boundary_graph_component_count": 10,
+            "boundary_loops_if_manifold": 10,
+            "bowtie_vertex_count": 0,
+            "bowtie_vertices": [],
+            "complex": "axis-aligned stored-grid quads with all four vertices valid",
+            "connected_quad_component_count": 1,
+            "edge_count": 3144,
+            "euler_characteristic": -8,
+            "holes_if_manifold": 9,
+            "maximum_edge_incidence": 2,
+            "nonmanifold_risk": false,
+            "nonmanifold_risk_reasons": [],
+            "quad_face_count": 1444,
+            "self_intersection_status": "unknown_not_computed",
+            "vertex_count_used_by_quads": 1692
+          },
+          "idempotent": true,
+          "initial_area_cm2": 0.5091672599437271,
+          "initial_quad_count": 1444,
+          "initial_vertex_count": 1692,
+          "iteration_count": 0,
+          "iterations": [],
+          "removed_area_cm2": 0.0,
+          "removed_quad_count": 0,
+          "removed_vertex_count": 0,
+          "repaired_area_cm2": 0.5091672599437271,
+          "repaired_quad_count": 1444,
+          "repaired_vertex_count": 1692,
+          "strict_quad_subset_of_input": true
+        }
+      },
+      "fixed_point": false,
+      "iteration": 1,
+      "materialized": {
+        "active_quad_count": 1453,
+        "coordinate_policy": "byte-exact source copies; explicit mask only",
+        "directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz",
+        "files": [
+          {
+            "byte_exact_source_copy": true,
+            "filename": "x.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz/x.tif",
+            "sha256": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/x.tif"
+          },
+          {
+            "byte_exact_source_copy": true,
+            "filename": "y.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz/y.tif",
+            "sha256": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/y.tif"
+          },
+          {
+            "byte_exact_source_copy": true,
+            "filename": "z.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz/z.tif",
+            "sha256": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/z.tif"
+          },
+          {
+            "array_content_sha256": "4c221770e1ccc3cbd8e216ae24a5f248e4f2453eb5bacf9e21df97cac7299bf5",
+            "filename": "mask.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz/mask.tif",
+            "sha256": "e54c89bcf6b7c51cebb62fbd01555a56dd847a02fa8137542b87a6f0120d2501"
+          },
+          {
+            "filename": "meta.json",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz/meta.json",
+            "sha256": "a574cb87361bec0b6c51d53a5f0971792e03b0e4a2083f51de640774c1da99d7"
+          }
+        ],
+        "no_bridging_proof": true,
+        "physical_area_cm2": 0.5124054777818345,
+        "reload_manifest": {
+          "input_sha256": {
+            "mask.tif": "e54c89bcf6b7c51cebb62fbd01555a56dd847a02fa8137542b87a6f0120d2501",
+            "meta.json": "a574cb87361bec0b6c51d53a5f0971792e03b0e4a2083f51de640774c1da99d7",
+            "x.tif": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+            "y.tif": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+            "z.tif": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110"
+          },
+          "interpolation": "none",
+          "mask_source": "mask.tif:nonzero",
+          "metadata": {
+            "area_cm2": 0.5124054777818345,
+            "area_vx2": 584623.7983586012,
+            "bbox": [
+              [
+                5788.86962890625,
+                3367.27685546875,
+                3938.45068359375
+              ],
+              [
+                6372.962890625,
+                4606.044921875,
+                4783.7236328125
+              ]
+            ],
+            "elapsed_time_s": 1177745.550801333,
+            "format": "tifxyz",
+            "masked_component_lineage": {
+              "iteration": 1,
+              "selection": "largest 4-neighbor quad component outside one-cell source geometry defects whose nearest selected public-m7 run crosses offset0 and has absolute midpoint <=2 voxels",
+              "source_frames": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/public-m7-validation-v1/m7-quantized-offsets-minus15-plus15.npy",
+              "source_frames_sha256": "23cbfe8d5716b1ccc8b739347718a993bcc205ed30ed1ee1a49727bacf646c2e",
+              "strictly_subtractive": true
+            },
+            "max_gen": 40,
+            "scale": [
+              0.05000000074505806,
+              0.05000000074505806
+            ],
+            "seed": [
+              6051.0,
+              3882.0,
+              4298.0
+            ],
+            "source": "fixed_mask_only_no_coordinate_modification",
+            "target_volume": "20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr",
+            "type": "seg",
+            "uuid": "pherc0813-r18-growpatch-g40_calibrated_m7_fixed_point_stage_01",
+            "vc_gsfs_mode": "explicit_seed",
+            "vc_gsfs_params": {
+              "cache_root": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/cache",
+              "cache_size": 2147483648,
+              "generations": 40,
+              "growth_directions": [
+                "all"
+              ],
+              "min_area_cm": 0.0,
+              "normal_grid_level": 0,
+              "normal_grid_path": "<WORKSPACE>/work/first-letters/pherc0813-vc3d-growpatch/normal-grids",
+              "snapshot-interval": 0,
+              "thread_limit": 8,
+              "use_cuda": false,
+              "voxelsize": 9.362
+            },
+            "vc_gsfs_version": "dev"
+          },
+          "output_shape": [
+            82,
+            82
+          ],
+          "scale_yx": [
+            0.05000000074505806,
+            0.05000000074505806
+          ],
+          "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-01-tifxyz",
+          "stored_shape": [
+            82,
+            82
+          ]
+        },
+        "role": "calibrated_m7_fixed_point_stage_01",
+        "shape": [
+          82,
+          82
+        ],
+        "valid_vertex_count": 1704
+      }
+    },
+    {
+      "evaluation": {
+        "calibrated_vertex_count_before_component": 1692,
+        "competitor_gap_min": 1,
+        "eligible_vertex_count": 1692,
+        "frames_content_sha256": "32b907d2fbd5c59cea670351331c1a97b85caea81c8bc91ae9ff5e1f1459cf63",
+        "input_area_cm2": 0.5091672599437271,
+        "input_mask_content_sha256": "27bcc7d5330acc95e794033ce677908c203a90954414b212033e3ef4d0bf3ce0",
+        "input_valid_vertex_count": 1692,
+        "largest_component": {
+          "components": {
+            "active_quad_count": 1444,
+            "anti_gaming_rule": "components cannot connect through isolated vertices or vertex-only tendrils",
+            "component_count": 1,
+            "connectivity": "4-neighbor fully centered four-vertex quads",
+            "largest_component": {
+              "area_cm2": 0.5091672599437271,
+              "component_id": 0,
+              "quad_bounds_half_open_r0_r1_c0_c1": [
+                16,
+                78,
+                20,
+                75
+              ],
+              "quad_count": 1444,
+              "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+              "vertex_bounds_half_open_r0_r1_c0_c1": [
+                16,
+                79,
+                20,
+                76
+              ]
+            },
+            "top_components": [
+              {
+                "area_cm2": 0.5091672599437271,
+                "component_id": 0,
+                "quad_bounds_half_open_r0_r1_c0_c1": [
+                  16,
+                  78,
+                  20,
+                  75
+                ],
+                "quad_count": 1444,
+                "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+                "vertex_bounds_half_open_r0_r1_c0_c1": [
+                  16,
+                  79,
+                  20,
+                  76
+                ]
+              }
+            ]
+          },
+          "largest": {
+            "area_cm2": 0.5091672599437271,
+            "component_id": 0,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              78,
+              20,
+              75
+            ],
+            "quad_count": 1444,
+            "quad_fill_fraction_in_bounding_box": 0.42346041055718475,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              79,
+              20,
+              76
+            ]
+          }
+        },
+        "native_geometry_pass": true,
+        "native_hard_defect_counts": {
+          "abrupt_normal_flip_edge_count": 0,
+          "degenerate_quad_count": 0,
+          "discontinuity_edge_count": 0,
+          "distorted_quad_count": 0,
+          "folded_quad_count": 0,
+          "neighbor_wrap_risk_edge_count": 0
+        },
+        "output_active_quad_count": 1444,
+        "output_area_cm2": 0.5091672599437271,
+        "output_mask_content_sha256": "27bcc7d5330acc95e794033ce677908c203a90954414b212033e3ef4d0bf3ce0",
+        "output_valid_vertex_count": 1692,
+        "passes_iteration_gates": true,
+        "sample_validity_content_sha256": "e6888037fc73346c02fce44a696f0ec9ce3b8e9acafe396083227cf2dfa62789",
+        "sampling_complete": true,
+        "selected_run_diagnostics": {
+          "centered_selected_run_vertex_count": 1692,
+          "nearest_competitor_empty_gap": {
+            "count": 1692,
+            "mean": 9.313829787234043,
+            "quantiles": {
+              "maximum": 15.0,
+              "median": 8.0,
+              "minimum": 1.0,
+              "p05": 4.0,
+              "p25": 6.0,
+              "p75": 15.0,
+              "p95": 15.0
+            }
+          },
+          "selected_run_center_absolute": {
+            "count": 1692,
+            "mean": 0.5050236406619385,
+            "quantiles": {
+              "maximum": 2.0,
+              "median": 0.5,
+              "minimum": 0.0,
+              "p05": 0.0,
+              "p25": 0.0,
+              "p75": 0.5,
+              "p95": 1.5
+            }
+          },
+          "selected_run_center_signed": {
+            "count": 1692,
+            "mean": 0.12559101654846336,
+            "quantiles": {
+              "maximum": 2.0,
+              "median": 0.0,
+              "minimum": -2.0,
+              "p05": -1.0,
+              "p25": 0.0,
+              "p75": 0.5,
+              "p95": 1.5
+            }
+          },
+          "selected_run_vertex_count": 1692,
+          "spatial_continuity": {
+            "edge_count": 3144,
+            "interpretation": "diagnostic only; no uncalibrated numerical continuity threshold is imposed",
+            "interval_overlap_fraction": 1.0,
+            "selected_center_absolute_jump": {
+              "count": 3144,
+              "mean": 0.5170165394402035,
+              "quantiles": {
+                "maximum": 3.5,
+                "median": 0.5,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 1.5
+              }
+            },
+            "selected_interval_empty_gap": {
+              "count": 3144,
+              "mean": 0.0,
+              "quantiles": {
+                "maximum": 0.0,
+                "median": 0.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 0.0,
+                "p95": 0.0
+              }
+            },
+            "selected_lower_endpoint_absolute_jump": {
+              "count": 3144,
+              "mean": 0.583969465648855,
+              "quantiles": {
+                "maximum": 6.0,
+                "median": 0.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "selected_upper_endpoint_absolute_jump": {
+              "count": 3144,
+              "mean": 0.587468193384224,
+              "quantiles": {
+                "maximum": 9.0,
+                "median": 0.5,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "selected_width_absolute_jump": {
+              "count": 3144,
+              "mean": 0.7000636132315522,
+              "quantiles": {
+                "maximum": 13.0,
+                "median": 1.0,
+                "minimum": 0.0,
+                "p05": 0.0,
+                "p25": 0.0,
+                "p75": 1.0,
+                "p95": 2.0
+              }
+            },
+            "zero_empty_gap_fraction": 1.0
+          },
+          "vertex_count": 1692
+        },
+        "source": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+        "topology": {
+          "anomalous_boundary_vertices_row_column": [],
+          "boundary_degree_histogram": {
+            "2": 512
+          },
+          "boundary_edge_count": 512,
+          "boundary_graph_component_count": 10,
+          "boundary_loops_if_manifold": 10,
+          "bowtie_vertex_count": 0,
+          "bowtie_vertices": [],
+          "complex": "axis-aligned stored-grid quads with all four vertices valid",
+          "connected_quad_component_count": 1,
+          "edge_count": 3144,
+          "euler_characteristic": -8,
+          "holes_if_manifold": 9,
+          "maximum_edge_incidence": 2,
+          "nonmanifold_risk": false,
+          "nonmanifold_risk_reasons": [],
+          "quad_face_count": 1444,
+          "self_intersection_status": "unknown_not_computed",
+          "vertex_count_used_by_quads": 1692
+        },
+        "topology_repair": {
+          "algorithm": "simultaneously delete every diagonal 1001/0110 pinch vertex; recompute induced quads; retain the component ranked by physical area descending, quad count descending, then row-major component; rebuild vertices from quad union; repeat to fixed point",
+          "coordinate_policy": "strictly subtractive; no add/fill/move/clamp",
+          "fixed_point_topology": {
+            "anomalous_boundary_vertices_row_column": [],
+            "boundary_degree_histogram": {
+              "2": 512
+            },
+            "boundary_edge_count": 512,
+            "boundary_graph_component_count": 10,
+            "boundary_loops_if_manifold": 10,
+            "bowtie_vertex_count": 0,
+            "bowtie_vertices": [],
+            "complex": "axis-aligned stored-grid quads with all four vertices valid",
+            "connected_quad_component_count": 1,
+            "edge_count": 3144,
+            "euler_characteristic": -8,
+            "holes_if_manifold": 9,
+            "maximum_edge_incidence": 2,
+            "nonmanifold_risk": false,
+            "nonmanifold_risk_reasons": [],
+            "quad_face_count": 1444,
+            "self_intersection_status": "unknown_not_computed",
+            "vertex_count_used_by_quads": 1692
+          },
+          "idempotent": true,
+          "initial_area_cm2": 0.5091672599437271,
+          "initial_quad_count": 1444,
+          "initial_vertex_count": 1692,
+          "iteration_count": 0,
+          "iterations": [],
+          "removed_area_cm2": 0.0,
+          "removed_quad_count": 0,
+          "removed_vertex_count": 0,
+          "repaired_area_cm2": 0.5091672599437271,
+          "repaired_quad_count": 1444,
+          "repaired_vertex_count": 1692,
+          "strict_quad_subset_of_input": true
+        }
+      },
+      "fixed_point": true,
+      "iteration": 2,
+      "materialized": {
+        "active_quad_count": 1444,
+        "coordinate_policy": "byte-exact source copies; explicit mask only",
+        "directory": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+        "files": [
+          {
+            "byte_exact_source_copy": true,
+            "filename": "x.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz/x.tif",
+            "sha256": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/x.tif"
+          },
+          {
+            "byte_exact_source_copy": true,
+            "filename": "y.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz/y.tif",
+            "sha256": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/y.tif"
+          },
+          {
+            "byte_exact_source_copy": true,
+            "filename": "z.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz/z.tif",
+            "sha256": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110",
+            "source_path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/tifxyz/z.tif"
+          },
+          {
+            "array_content_sha256": "27bcc7d5330acc95e794033ce677908c203a90954414b212033e3ef4d0bf3ce0",
+            "filename": "mask.tif",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz/mask.tif",
+            "sha256": "1eba93fe3a284e17d17f554307b0047f92b05463fca4920cd0a809b7fa30272f"
+          },
+          {
+            "filename": "meta.json",
+            "path": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz/meta.json",
+            "sha256": "6a6733cb68f103152bd043ff3ec1141e1ef5d295c1dda1486718f2c538ccb263"
+          }
+        ],
+        "no_bridging_proof": true,
+        "physical_area_cm2": 0.5091672599437271,
+        "reload_manifest": {
+          "input_sha256": {
+            "mask.tif": "1eba93fe3a284e17d17f554307b0047f92b05463fca4920cd0a809b7fa30272f",
+            "meta.json": "6a6733cb68f103152bd043ff3ec1141e1ef5d295c1dda1486718f2c538ccb263",
+            "x.tif": "543e1f4122089ceee8db05954971ba013c254a1eec67d212e91d274a9944e608",
+            "y.tif": "a6bbef95af6bc2c3692519d90a773ea92a951670502781a4c4b4964775ae9d8c",
+            "z.tif": "c81da886d2db9584d2687c9c2506100df66c87ece692ef72cb18e05ed6ddc110"
+          },
+          "interpolation": "none",
+          "mask_source": "mask.tif:nonzero",
+          "metadata": {
+            "area_cm2": 0.5091672599437271,
+            "area_vx2": 580929.1867775108,
+            "bbox": [
+              [
+                5788.86962890625,
+                3367.27685546875,
+                3938.45068359375
+              ],
+              [
+                6372.962890625,
+                4606.044921875,
+                4783.7236328125
+              ]
+            ],
+            "elapsed_time_s": 1177745.550801333,
+            "format": "tifxyz",
+            "masked_component_lineage": {
+              "iteration": 2,
+              "selection": "largest 4-neighbor quad component outside one-cell source geometry defects whose nearest selected public-m7 run crosses offset0 and has absolute midpoint <=2 voxels",
+              "source_frames": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/public-m7-validation-v1/m7-quantized-offsets-minus15-plus15.npy",
+              "source_frames_sha256": "23cbfe8d5716b1ccc8b739347718a993bcc205ed30ed1ee1a49727bacf646c2e",
+              "strictly_subtractive": true
+            },
+            "max_gen": 40,
+            "scale": [
+              0.05000000074505806,
+              0.05000000074505806
+            ],
+            "seed": [
+              6051.0,
+              3882.0,
+              4298.0
+            ],
+            "source": "fixed_mask_only_no_coordinate_modification",
+            "target_volume": "20250821151723-surface-20260413222639-surface-m7-L0-th0.2.zarr",
+            "type": "seg",
+            "uuid": "pherc0813-r18-growpatch-g40_calibrated_m7_fixed_point_stage_02",
+            "vc_gsfs_mode": "explicit_seed",
+            "vc_gsfs_params": {
+              "cache_root": "<WORKSPACE>/outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/cache",
+              "cache_size": 2147483648,
+              "generations": 40,
+              "growth_directions": [
+                "all"
+              ],
+              "min_area_cm": 0.0,
+              "normal_grid_level": 0,
+              "normal_grid_path": "<WORKSPACE>/work/first-letters/pherc0813-vc3d-growpatch/normal-grids",
+              "snapshot-interval": 0,
+              "thread_limit": 8,
+              "use_cuda": false,
+              "voxelsize": 9.362
+            },
+            "vc_gsfs_version": "dev"
+          },
+          "output_shape": [
+            82,
+            82
+          ],
+          "scale_yx": [
+            0.05000000074505806,
+            0.05000000074505806
+          ],
+          "source": "outputs/first-letters-geometry/pherc0813-vc3d-growpatch/rank18/calibrated-mask-salvage-v2/stage-02-tifxyz",
+          "stored_shape": [
+            82,
+            82
+          ]
+        },
+        "role": "calibrated_m7_fixed_point_stage_02",
+        "shape": [
+          82,
+          82
+        ],
+        "valid_vertex_count": 1692
+      }
+    }
+  ],
+  "paid_compute_cost_usd": 0.0,
+  "policy": {
+    "coordinate_changes": "none; masks only; every iteration subtractive",
+    "maximum_selected_run_midpoint_absolute_voxels": 2.0,
+    "minimum_area_cm2": 0.5,
+    "other_runs": "diagnostic; minimum empty gap >=1 voxel",
+    "selected_run": "nearest public-m7 run must cross offset0",
+    "self_intersection": "not yet evaluated; required before raw render"
+  },
+  "precommit": {
+    "initial_area_cm2": 0.5124054777818345,
+    "initial_mask_content_sha256": "4c221770e1ccc3cbd8e216ae24a5f248e4f2453eb5bacf9e21df97cac7299bf5",
+    "initial_topology_repair": {
+      "algorithm": "simultaneously delete every diagonal 1001/0110 pinch vertex; recompute induced quads; retain the component ranked by physical area descending, quad count descending, then row-major component; rebuild vertices from quad union; repeat to fixed point",
+      "coordinate_policy": "strictly subtractive; no add/fill/move/clamp",
+      "fixed_point_topology": {
+        "anomalous_boundary_vertices_row_column": [],
+        "boundary_degree_histogram": {
+          "2": 520
+        },
+        "boundary_edge_count": 520,
+        "boundary_graph_component_count": 11,
+        "boundary_loops_if_manifold": 11,
+        "bowtie_vertex_count": 0,
+        "bowtie_vertices": [],
+        "complex": "axis-aligned stored-grid quads with all four vertices valid",
+        "connected_quad_component_count": 1,
+        "edge_count": 3166,
+        "euler_characteristic": -9,
+        "holes_if_manifold": 10,
+        "maximum_edge_incidence": 2,
+        "nonmanifold_risk": false,
+        "nonmanifold_risk_reasons": [],
+        "quad_face_count": 1453,
+        "self_intersection_status": "unknown_not_computed",
+        "vertex_count_used_by_quads": 1704
+      },
+      "idempotent": true,
+      "initial_area_cm2": 0.5124054777818345,
+      "initial_quad_count": 1453,
+      "initial_vertex_count": 1704,
+      "iteration_count": 0,
+      "iterations": [],
+      "removed_area_cm2": 0.0,
+      "removed_quad_count": 0,
+      "removed_vertex_count": 0,
+      "repaired_area_cm2": 0.5124054777818345,
+      "repaired_quad_count": 1453,
+      "repaired_vertex_count": 1704,
+      "strict_quad_subset_of_input": true
+    },
+    "largest_component": {
+      "components": {
+        "active_quad_count": 1776,
+        "anti_gaming_rule": "components cannot connect through isolated vertices or vertex-only tendrils",
+        "component_count": 22,
+        "connectivity": "4-neighbor fully centered four-vertex quads",
+        "largest_component": {
+          "area_cm2": 0.5124054777818345,
+          "component_id": 6,
+          "quad_bounds_half_open_r0_r1_c0_c1": [
+            16,
+            78,
+            20,
+            75
+          ],
+          "quad_count": 1453,
+          "quad_fill_fraction_in_bounding_box": 0.426099706744868,
+          "vertex_bounds_half_open_r0_r1_c0_c1": [
+            16,
+            79,
+            20,
+            76
+          ]
+        },
+        "top_components": [
+          {
+            "area_cm2": 0.5124054777818345,
+            "component_id": 6,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              78,
+              20,
+              75
+            ],
+            "quad_count": 1453,
+            "quad_fill_fraction_in_bounding_box": 0.426099706744868,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              16,
+              79,
+              20,
+              76
+            ]
+          },
+          {
+            "area_cm2": 0.09743169254428174,
+            "component_id": 13,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              51,
+              78,
+              20,
+              46
+            ],
+            "quad_count": 273,
+            "quad_fill_fraction_in_bounding_box": 0.3888888888888889,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              51,
+              79,
+              20,
+              47
+            ]
+          },
+          {
+            "area_cm2": 0.005245553511013022,
+            "component_id": 0,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              3,
+              8,
+              28,
+              33
+            ],
+            "quad_count": 15,
+            "quad_fill_fraction_in_bounding_box": 0.6,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              3,
+              9,
+              28,
+              34
+            ]
+          },
+          {
+            "area_cm2": 0.0030118584341139384,
+            "component_id": 17,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              73,
+              78,
+              34,
+              36
+            ],
+            "quad_count": 8,
+            "quad_fill_fraction_in_bounding_box": 0.8,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              73,
+              79,
+              34,
+              37
+            ]
+          },
+          {
+            "area_cm2": 0.0021903128096383054,
+            "component_id": 12,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              43,
+              47,
+              75,
+              78
+            ],
+            "quad_count": 6,
+            "quad_fill_fraction_in_bounding_box": 0.5,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              43,
+              48,
+              75,
+              79
+            ]
+          },
+          {
+            "area_cm2": 0.0010496140417834486,
+            "component_id": 18,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              73,
+              76,
+              72,
+              73
+            ],
+            "quad_count": 3,
+            "quad_fill_fraction_in_bounding_box": 1.0,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              73,
+              77,
+              72,
+              74
+            ]
+          },
+          {
+            "area_cm2": 0.000742990591339404,
+            "component_id": 16,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              71,
+              73,
+              27,
+              28
+            ],
+            "quad_count": 2,
+            "quad_fill_fraction_in_bounding_box": 1.0,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              71,
+              74,
+              27,
+              29
+            ]
+          },
+          {
+            "area_cm2": 0.0006766524161654469,
+            "component_id": 4,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              14,
+              16,
+              28,
+              29
+            ],
+            "quad_count": 2,
+            "quad_fill_fraction_in_bounding_box": 1.0,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              14,
+              17,
+              28,
+              30
+            ]
+          },
+          {
+            "area_cm2": 0.0003958044744769684,
+            "component_id": 21,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              77,
+              78,
+              26,
+              27
+            ],
+            "quad_count": 1,
+            "quad_fill_fraction_in_bounding_box": 1.0,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              77,
+              79,
+              26,
+              28
+            ]
+          },
+          {
+            "area_cm2": 0.0003843608891686103,
+            "component_id": 20,
+            "quad_bounds_half_open_r0_r1_c0_c1": [
+              75,
+              76,
+              30,
+              31
+            ],
+            "quad_count": 1,
+            "quad_fill_fraction_in_bounding_box": 1.0,
+            "vertex_bounds_half_open_r0_r1_c0_c1": [
+              75,
+              77,
+              30,
+              32
+            ]
+          }
+        ]
+      },
+      "largest": {
+        "area_cm2": 0.5124054777818345,
+        "component_id": 6,
+        "quad_bounds_half_open_r0_r1_c0_c1": [
+          16,
+          78,
+          20,
+          75
+        ],
+        "quad_count": 1453,
+        "quad_fill_fraction_in_bounding_box": 0.426099706744868,
+        "vertex_bounds_half_open_r0_r1_c0_c1": [
+          16,
+          79,
+          20,
+          76
+        ]
+      }
+    },
+    "source_candidate_vertex_count": 2726,
+    "source_geometry": {
+      "continuity_limit_um": 751.5523963696921,
+      "distorted_quad_count": 2,
+      "explicitly_masked_finite_nonnegative_coordinate_count": 0,
+      "known_clean_vertex_count": 5210,
+      "localization_limitations": {
+        "resolution": "stored TIFFXYZ control-grid normals; not calibrated as pixel-equivalent to the official full-resolution renderer",
+        "self_intersections": "not localized by native_surface_sampler; never assumed zero; a positive preflight therefore requires later native/full validation"
+      },
+      "median_neighbor_distance_um": 187.88809909242303,
+      "neighbor_wrap_limit_um": 1503.1047927393843,
+      "one_cell_dilated_forbidden_vertex_count": 1514,
+      "raw_defect_vertex_count": 955,
+      "raw_reason_vertex_counts": {
+        "abrupt_normal_flip_edge": 203,
+        "degenerate_quad": 0,
+        "discontinuity_edge": 0,
+        "folded_quad": 283,
+        "invalid_vertex": 640,
+        "neighbor_wrap_edge": 0,
+        "normal_invalid_vertex": 0,
+        "offset_out_vertex": 0,
+        "out_of_bounds_vertex": 0
+      },
+      "strict_validity_matches_loader": true,
+      "surface_shape": [
+        82,
+        82
+      ]
+    }
+  },
+  "schema_version": 1,
+  "status": "complete",
+  "verdict": "pass_stored_calibrated_geometry"
+}

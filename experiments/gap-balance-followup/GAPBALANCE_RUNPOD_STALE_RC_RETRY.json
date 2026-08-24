@@ -1,0 +1,48 @@
+{
+  "billing": {
+    "absolute_campaign_cap_usd": 25.0,
+    "aggregate_hourly_ceiling_usd": 2.38,
+    "confirmation_reserve_usd": 13.0,
+    "development_cutoff_usd": 12.0,
+    "prior_conservative_development_spend_usd": 6.078399,
+    "remaining_development_cutoff_usd": 5.921601
+  },
+  "failed_retry": {
+    "bundle_reuploaded": false,
+    "confirmation_outputs_inspected": false,
+    "error": "The corrected verifier was launched, but the controller polled the prior failed attempt's rc=1 marker before the new process could replace it.",
+    "failed_at": "2026-08-21T01:34:00+00:00",
+    "pods_stopped": [
+      "jsoco4r0ijfswk",
+      "bij7jheyqbpggf"
+    ],
+    "provider_status_after_failure": [
+      "EXITED",
+      "EXITED"
+    ],
+    "scientific_endpoints_inspected": false
+  },
+  "payload_sha256": "4a29a150b82876f5735a1badbc3f1d669afe040a87c15b47b97d4729a6276c9e",
+  "payment_authority": {
+    "direct_credit_card_charge_permitted": false,
+    "runpod_auto_pay_verified_disabled": true,
+    "runpod_prepaid_balance_only": true
+  },
+  "public_parent_commit": "4a7cd9c38a4c03ba6cc739cf4b91495d03f6ed01",
+  "pycache_verification_retry_payload_sha256": "584ad9b2a05a2bce77db1e6fe9775718eb3d7926a4944c21e4cf3389a92660f2",
+  "retry": {
+    "delete_only_exact_prior_verifier_log_and_rc_before_launch": true,
+    "execute_verifier_with_python_dash_B": true,
+    "reopen_only_existing_verified_extracted_bundles": true,
+    "reupload_bundle": false,
+    "stop_all_pods_if_verification_or_executor_start_fails": true
+  },
+  "runpod_development_plan_payload_sha256": "68b5240ba5e0e1c2956d83d75f893474731f877fcbf8661ad4992d020d807938",
+  "sealed_gates": {
+    "confirmation_outputs_inspected": false,
+    "confirmation_seeds_500_504_opened": false,
+    "pherc1218_v2_opened": false,
+    "scientific_endpoints_scored": false
+  },
+  "status": "RESULT_BLIND_STALE_VERIFIER_RC_RETRY_FROZEN"
+}

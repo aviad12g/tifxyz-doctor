@@ -1,0 +1,48 @@
+{
+  "budget": {
+    "absolute_campaign_cap_usd": 13.5,
+    "first_replacement_guarded_spend_upper_bound_usd": 3.5385319338666667,
+    "guard_seconds": 300,
+    "prior_attempt_compute_upper_bound_usd": 3.391445323,
+    "second_replacement_absolute_remaining_usd": 6.6766894098,
+    "second_replacement_compute_cutoff_usd": 6.220022743133333,
+    "total_campaign_compute_cutoff_usd": 13.15
+  },
+  "exact_scientific_route": {
+    "base_runpod_plan_payload_sha256": "5faacc1617fcd971a7db40a311e381a0092590f227fd8cd8d2a5fec5702dcc6a",
+    "launcher_file": "one_shot_scoring_launcher_cpu_exact.py",
+    "launcher_sha256": "d1342167b8e68af6eb10743f611bfdc007ba95c05783336272000c55e36d1179",
+    "model_metric_threshold_seed_panel_endpoint_gate_aggregation_or_claim_changed": false,
+    "score_real_test_sha256": "3529b8213237a60d392ffec04efca602988b3242f6af8cadc87423e8e224bb79",
+    "scientific_outputs_inspected": false
+  },
+  "payload_sha256": "a0975fdfb647cd9f104abe572bf555b48598b8c2cf36171577283795f907385f",
+  "predecessor": {
+    "first_replacement_pod_id": "21af72v0or2nfj",
+    "first_replacement_state": "EXITED",
+    "launcher_identity_error_before_sealed_input_verification": true,
+    "provider_resume_error": "There are not enough free memory on the host machine to start this pod.",
+    "scientific_outputs_inspected": false
+  },
+  "provider": {
+    "cloud_type": "SECURE",
+    "compute_type": "CPU",
+    "gpu_count": 0,
+    "image": "runpod/stack",
+    "instance_id": "cpu3g-32-128",
+    "maximum_price_usd_per_hour": 1.28,
+    "minimum_memory_gb": 128,
+    "new_temporary_pod": true,
+    "terminate_after_verified_result_copy": true,
+    "vcpu_count": 32
+  },
+  "schema_version": "1.0",
+  "sealed_transfer": {
+    "destination": "one second replacement CPU-only RunPod pod",
+    "same_sealed_real_caches": true,
+    "scientific_payloads_opened_before_transfer": false,
+    "source_manifest_payload_sha256": "2fb69291f961f84baf6cb855ef08aee7797987832b7bbe0b91f1066b454f4563"
+  },
+  "status": "result-blind second replacement CPU execution frozen before provider creation or private transfer",
+  "user_authorization": "go go im afk i approve all; work end to end i exped this to be fully done once im back"
+}

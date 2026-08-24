@@ -1,0 +1,89 @@
+{
+  "access": {
+    "npz_opened_or_parsed": false,
+    "scope": [
+      "provider metadata",
+      "MANIFEST.jsonl",
+      "public extraction code",
+      "public extraction summaries"
+    ]
+  },
+  "dataset": {
+    "dataset_id": 11704096,
+    "provider": "kaggle",
+    "ref": "jhjeong0815/pherc1218-tight-contact-val",
+    "total_bytes": 615710185,
+    "version": 1
+  },
+  "eligibility_diagnostic_only": {
+    "contact": {
+      "bands": {
+        "0-2": 13,
+        "10+": 48,
+        "2-4": 39,
+        "4-6": 42,
+        "6-10": 32
+      },
+      "count": 174,
+      "rule": "arm=crops AND both_instances_present=true AND ct_empty_frac<=0.10"
+    },
+    "control": {
+      "count": 48,
+      "rule": "arm=control AND ct_empty_frac<=0.10"
+    },
+    "warning": "Version 1 is disputed and these rows are forbidden for inference or final selection."
+  },
+  "hashes": {
+    "dataset_metadata_json": "f41ba2257616411df54647b10228b7f98c81382fa8b35681e57004a740815f5a",
+    "manifest_jsonl": "407951ebfd1cadb378c093b156ff68f320ebcb7995a4b69198029ac644d170b3",
+    "upstream_amendment_1_md": "a07c2f86f39b3bd837510f207f75ffd9619162686b5d2f6347662fa2629b0475",
+    "upstream_crops_summary_json": "f336a04a969882715c8c87e7b5e0ea88e5bbf9f814fa11115473ec9b658c6ddf",
+    "upstream_emptiness_summary_json": "8f0f607efd2e77b554c0858640f5ea2a84b13a03e62cd4a80deb9c8659bc0766",
+    "upstream_labels_summary_json": "c030fb7283f051386af9cb20171523022b204ae64eb5497e382f97500f6d29ae",
+    "upstream_p11_crops_py": "13ebd8fee7215d7bff27db28f61e2d89672115e268a912deb2334eceb365ddbd",
+    "upstream_p11_final_py": "7d72d4b34bbd4b860179ae91c16b8af0ca889f93f792daf3df3d4222777d7e4d",
+    "upstream_p11_labels2_py": "594fad9853bda143973ed0c66842dcac550d55765f8eabcb560bf5c0d8963f45",
+    "upstream_preregistration_md": "9d5d71dbaf45ab85cb3303a0f6120b2ed57c3b621f3cc3bfc30e480fcb0811ce",
+    "upstream_results_md": "60f8de2d65e77a0d641e7cc8e954ff227e60bdd6c741b0fef02350c5b3765db7"
+  },
+  "manifest_inventory": {
+    "contact": {
+      "bands": {
+        "0-2": 17,
+        "10+": 63,
+        "2-4": 60,
+        "4-6": 60,
+        "6-10": 60
+      },
+      "both_instances_present": 213,
+      "count": 260,
+      "missing_one_or_both_instances": 47
+    },
+    "control": 60,
+    "duplicate_file_paths": 0,
+    "duplicate_sha256_values": 0,
+    "rows": 320
+  },
+  "reconciliation": {
+    "difference": {
+      "0-2": 3,
+      "10+": 3,
+      "total_contact": 6
+    },
+    "extraction_summary_bands": {
+      "0-2": 14,
+      "10+": 60,
+      "2-4": 60,
+      "4-6": 60,
+      "6-10": 60
+    },
+    "extraction_summary_contact": 254,
+    "reason_for_fail_closed": "The provider manifest does not match the frozen current-run extraction summary. The extraction output directory was not required to be absent or empty, and downstream passes globbed all NPZ files, so stale membership is plausible but not proven file-by-file.",
+    "status": "BLOCKED_MEMBERSHIP_MISMATCH"
+  },
+  "schema_version": "1.0",
+  "upstream": {
+    "commit": "227eadae7a3bfbfa801da8b06d22eb4b9d26990f",
+    "repository": "https://github.com/Jinhojeong/vesuvius-surface-geometry-diagnostic"
+  }
+}
